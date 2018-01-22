@@ -21,6 +21,6 @@
 	</dependency>
   </dependencies>
   <build>
-    <finalName>Serveur</finalName>
+    <finalName>serveur</finalName>
   </build>
 </project>
