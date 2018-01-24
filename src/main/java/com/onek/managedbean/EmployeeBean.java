@@ -1,22 +1,22 @@
-package managedbean;
+package com.onek.managedbean;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ManagedBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import com.onek.model.Department;
 import com.onek.model.Employee;
+import com.onek.service.EmployeeService;
 
-@ManagedBean(name = "empBean")
+@Component("empBean")
 public class EmployeeBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Employee employee = new Employee();
+	@Autowired
+	private EmployeeService empService;
 
 	public Employee getEmployee() {
-		employee.setEmpId(1L);
-		employee.setDepartment(new Department());
-		employee.setFirstName("Onek");
-		employee.setLastName("Team");
+		employee = empService.findEmployeeById(1L);
 		return employee;
 	}
 
