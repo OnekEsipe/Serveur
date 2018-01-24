@@ -12,7 +12,7 @@ public class EmployeeTest {
 	@Autowired
 	private Employee employee;
 
-	@org.junit.Test
+	@Test
 	  public void testSomeMethod() {
 	    System.out.println("Tests have been found");
 	    assertEquals("Super", "Super");
