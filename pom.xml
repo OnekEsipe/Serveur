@@ -75,7 +75,7 @@
             	<artifactId>maven-war-plugin</artifactId>
             	<version>2.6</version>
             	<configuration>
-                	<failOnMissingWebXml>false</failOnMissingWebXml>
+            		<warSourceDirectory>WebContent</warSourceDirectory>
             	</configuration>
        		</plugin>
 		</plugins>
