@@ -1,37 +1,26 @@
 package com.onek.service;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.onek.dao.EmployeeDao;
 import com.onek.model.Employee;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService, Serializable {
 	private static final long serialVersionUID = 1L;
-	private List<Employee> empList = new ArrayList<Employee>();
+	@Autowired
+	private EmployeeDao empDao;
 
-	public EmployeeServiceImpl() {
-		Employee emp1 = new Employee();
-		emp1.setEmpId(1L);
-		emp1.setFirstName("Onek");
-		emp1.setLastName("User");
-		Employee emp2 = new Employee();
-		emp2.setEmpId(2L);
-		emp2.setFirstName("Onek2");
-		emp2.setLastName("user2");
-		empList.add(emp1);
-		empList.add(emp2);
+	@Override
+	public Employee findEmployeeByFirstName(String firstName) {
+		return empDao.findEmployeeByFirstName(firstName);
 	}
 
-	public Employee findEmployeeById(long empId) {
-		for (Employee emp : empList) {
-			if (emp.getEmpId() == empId) {
-				return emp;
-			}
-		}
-		return null;
+	@Override
+	public void addEmployee(Employee emp) {
+		empDao.addEmployee(emp);
 	}
 }
