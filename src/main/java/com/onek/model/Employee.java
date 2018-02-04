@@ -1,11 +1,26 @@
 package com.onek.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-public class Employee implements Serializable{
+@Entity
+@Table(name = "Employee")
+public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long empId;
+	@Column(nullable = false)
 	private String firstName;
+	@Column(nullable = false)
 	private String lastName;
 	private String gender;
 	private String company;
@@ -14,6 +29,8 @@ public class Employee implements Serializable{
 	private String job;
 	private String imagePath;
 	private String email;
+	@ManyToOne
+	@JoinColumn(name = "deptId")
 	private Department department;
 
 	public Long getEmpId() {
