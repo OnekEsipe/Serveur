@@ -5,9 +5,11 @@ import java.io.Serializable;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.onek.model.Evenement;
 
+@Repository
 public class EvenementDaoImpl implements EvenementDao, Serializable {
 	private static final long serialVersionUID = 1L;
 	
