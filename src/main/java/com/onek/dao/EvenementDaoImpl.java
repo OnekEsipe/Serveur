@@ -6,15 +6,17 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class EventDaoImpl implements EventDao, Serializable {
-	private static final long serialVersionUID = 1L;
+import com.onek.model.Evenement;
 
+public class EvenementDaoImpl implements EvenementDao, Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
-	public void addEvent(Event event) {
-		System.out.println("DAO called - insert of : " + event.getFirstName());
+	public void addEvenement(Evenement event) {
+		System.out.println("DAO called - insert of : " + event.getNom());
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -23,6 +25,6 @@ public class EventDaoImpl implements EventDao, Serializable {
 		session.close();
 
 		System.out.println("Add done");		
-	}
+	}	
 
 }
