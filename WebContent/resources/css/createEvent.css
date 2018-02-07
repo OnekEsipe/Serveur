@@ -37,3 +37,8 @@ p {
 #createEvent{
 	padding-left: 40px;
 }
+#errorCreationEvent{
+	text-align: center;
+	color: red;
+	font: bold;
+}
