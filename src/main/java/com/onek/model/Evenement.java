@@ -2,6 +2,9 @@ package com.onek.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +14,7 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="evenements")
+@Table(name="evenements") 
 @NamedQuery(name="Evenement.findAll", query="SELECT e FROM Evenement e")
 public class Evenement implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -44,10 +47,12 @@ public class Evenement implements Serializable {
 	private List<Critere> criteres;
 
 	//bi-directional many-to-one association to Evaluation
+	@JsonIgnore
 	@OneToMany(mappedBy="evenement")
 	private List<Evaluation> evaluations;
 
 	//bi-directional many-to-one association to Utilisateur
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="iduser")
 	private Utilisateur utilisateur;

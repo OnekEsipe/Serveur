@@ -1,6 +1,7 @@
 package com.onek.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onek.dao.EvenementDao;
+import com.onek.model.Evenement;
 
 @Service
 public class ApplicationServiceImpl implements ApplicationService, Serializable {
@@ -30,17 +32,24 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	}
 
 	@Override
-	public void export(List<String> filenames) {
+	public Evenement export(List<String> filenames) {
+		List<String> eventsNotFound = new ArrayList<>();		
 		
-		filenames.forEach(name -> {
+		for(String name : filenames) {
 			try {
-				eventDao.findByName(name);
+				return eventDao.findByName(name);
 			}
 			catch(NoResultException nre) {
-				throw new IllegalStateException();
-			}
-		});		
+				eventsNotFound.add(name);
+			}			
+		}		
 		
+		if (eventsNotFound.size() > 0) {
+			System.out.println("Events not found : " + eventsNotFound);
+			throw new IllegalStateException();
+		}	
+		
+		return null;
 	}
 
 }
