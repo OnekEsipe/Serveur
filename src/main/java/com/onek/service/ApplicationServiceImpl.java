@@ -21,31 +21,39 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	private EvenementDao eventDao;
 	
 	@Override
-	public List<String> parser(String filenames) {				
-		if (filenames != null && (!filenames.startsWith("[") || !filenames.endsWith("]"))) {
+	public List<Integer> parser(String ids) {				
+		if (ids != null && (!ids.startsWith("[") || !ids.endsWith("]"))) {
 			throw new IllegalArgumentException();
 		}
 		
-		filenames = filenames.substring(1, filenames.length() - 1);			
+		ids = ids.substring(1, ids.length() - 1);			
 		
-		return Arrays.asList(filenames.split(","));
+		List<String> listIds = Arrays.asList(ids.split(","));
+		List<Integer> idEvents = new ArrayList<>();
+		for(String id : listIds) {
+			try {
+				idEvents.add(Integer.valueOf(id));
+			}
+			catch(NumberFormatException nfe) {
+				throw new IllegalArgumentException();
+			}
+		}
+		
+		return idEvents;		
 	}
 
 	@Override
-	public Evenement export(List<String> filenames) {
-		List<String> eventsNotFound = new ArrayList<>();		
+	public Evenement export(List<Integer> idEvents) {
+		List<Integer> eventsNotFound = new ArrayList<>();		
 		
-		for(String name : filenames) {
+		for(Integer id : idEvents) {
 			try {
-				Evenement event = eventDao.findByName(name);
-				
-				System.out.println(event.getCriteres().get(0).getTexte());
-				
+				Evenement event = eventDao.findById(id);				
 				return event;
 				
 			}
 			catch(NoResultException nre) {
-				eventsNotFound.add(name);
+				eventsNotFound.add(id);
 			}			
 		}		
 		
