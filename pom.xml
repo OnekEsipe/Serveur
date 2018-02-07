@@ -88,7 +88,7 @@
 			<artifactId>spring-orm</artifactId>
 			<version>4.3.13.RELEASE</version>
 		</dependency>	
-		<!-- Jackson for json -->
+		<!-- Jackson and jaxb for json and xml -->
 		<dependency>
    			<groupId>com.fasterxml.jackson.core</groupId>
 	    	<artifactId>jackson-core</artifactId>
