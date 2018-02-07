@@ -1,0 +1,20 @@
+@charset "ISO-8859-1";
+
+
+h2{
+	letter-spacing: 0.3cm;
+	front-size: 5px;
+	text-align: center;
+	font-weight: bold;
+	
+}
+
+
+.panelGrid{
+	margin-left: auto;
+	margin-right: auto;
+}
+.form{
+	text-align: center;
+
+	}
