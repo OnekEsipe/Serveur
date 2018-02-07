@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.onek.model.Employee;
 import com.onek.model.Evenement;
 
 @Repository
@@ -35,9 +34,10 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 		Evenement result = new Evenement();
 		
 		Session session = sessionFactory.openSession();
+		
         session.beginTransaction();
         
-        result = (Evenement) session.createQuery("from Evenement where nom = :name").setParameter("name", name).getSingleResult();
+        result = (Evenement) session.createQuery("FROM Evenement WHERE nom = :name").setParameter("name", name).getSingleResult();
         
         session.getTransaction().commit();
         session.close();

@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.onek.model.Evenement;
 import com.onek.service.ApplicationService;
 
 @RestController
@@ -32,8 +34,8 @@ public class ApplicationController {
 	}
 	
 	/* event export */
-	@RequestMapping(value = "/events/{filenames}/export", method = RequestMethod.GET)
-	public ResponseEntity<String> export(@PathVariable("filenames") String filenames) {
+	@RequestMapping(value = "/events/export", method = RequestMethod.POST)
+	public ResponseEntity<?> export(@RequestBody String filenames) {
 		List<String> filenamesList;
 		
 		/* get filenames */
@@ -45,9 +47,15 @@ public class ApplicationController {
 		}
 		
 		/* create the response body */
-		applicationService.export(filenamesList);
+		Evenement event;
+		try {
+			event = applicationService.export(filenamesList);
+		}
+		catch(IllegalStateException e) {
+			return new ResponseEntity<String>("test", HttpStatus.PARTIAL_CONTENT);
+		}
 		
-		return new ResponseEntity<String>("test", HttpStatus.OK);
+		return new ResponseEntity<Evenement>(event, HttpStatus.OK);
 	}
 	
 	
