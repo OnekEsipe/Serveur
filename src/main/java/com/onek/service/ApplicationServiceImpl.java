@@ -37,7 +37,12 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		
 		for(String name : filenames) {
 			try {
-				return eventDao.findByName(name);
+				Evenement event = eventDao.findByName(name);
+				
+				System.out.println(event.getCriteres().get(0).getTexte());
+				
+				return event;
+				
 			}
 			catch(NoResultException nre) {
 				eventsNotFound.add(name);

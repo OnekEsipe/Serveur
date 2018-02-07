@@ -38,6 +38,7 @@ public class Evenement implements Serializable {
 	private String status;
 
 	//bi-directional many-to-one association to Critere
+	@JsonIgnore
 	@OneToMany(mappedBy="evenement")
 	private List<Critere> criteres;
 
