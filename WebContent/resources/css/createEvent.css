@@ -1,0 +1,39 @@
+h2{
+	font: normal;
+	color: blue;
+}
+
+#formdiv{
+	margin: 0 auto;
+}
+.inputgroup{
+	/*text-align: center;*/
+}
+
+.paddingLeft {
+    padding-left:12px;
+    padding-bottom: 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    color: gray;
+}
+.inputsName{
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 12px;
+}
+.inputType{
+	border: 2px solid;
+	font-size: 14px;
+}
+/*
+p {
+    font-family: "Times New Roman", Times, serif;
+}*/
+.panelGrid{
+	margin: auto;
+	/*text-align: center;*/
+}
+#createEvent{
+	padding-left: 40px;
+}

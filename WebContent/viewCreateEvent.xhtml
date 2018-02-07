@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Onek team</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+</h:head>
+
+<h:body>
+	<h:outputStylesheet library="css" name="createEvent.css" />
+	<h2>Creer un nouvel evenement</h2>
+	<div id="formdiv">
+		<h:form >
+
+			<!-- Inputs of date -->
+			<p:growl id="msgs" showDetail="true" />
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="nameEvent" value="Nom:" />
+				<p:inputText id="nameEvent" name="nameEvent"
+					placeholder="Entrer le nom" size="20" value="#{evenement.nom}" />
+				<p:outputLabel for="date1" value="Date de début:" />
+				<p:calendar id="date1" value="#{calendarView.date1}" locale="de"
+					navigator="true" pattern="dd-MM-yyyy" placeholder="10-03-2018" />
+
+				<p:outputLabel for="date2" value="Date de fin:" />
+				<p:calendar id="date2" value="#{calendarView.date2}"
+					mindate="#{calendarView.date1}" maxdate="31/12/20"
+					pattern="dd/MM/yyyy" placeholder="11-03-2018" />
+
+				<p:outputLabel for="time1" value="Heure de début:" />
+				<p:calendar id="time1" value="#{calendarView.hour1}" pattern="HH:mm"
+					timeOnly="true" placeholder="09:00" />
+				<p:outputLabel for="time2" value="Heure de fin:" />
+				<p:calendar id="time2" value="#{calendarView.hour2}" pattern="HH:mm"
+					timeOnly="true" placeholder="12:30" />
+			</h:panelGrid>
+			<p:commandButton value="Créer l'évènement" update="msgs"
+				actionListener="#{calendarView.click}" icon="ui-icon-check" />
+
+		</h:form>
+	</div>
+
+</h:body>
+</html>
