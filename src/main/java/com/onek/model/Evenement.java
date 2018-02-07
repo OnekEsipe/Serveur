@@ -17,8 +17,9 @@ public class Evenement implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer idevent;
+
+	private String code;
 
 	@Temporal(TemporalType.DATE)
 	private Date datestart;
@@ -33,6 +34,10 @@ public class Evenement implements Serializable {
 	private String nom;
 
 	private String status;
+
+	//bi-directional many-to-one association to Candidat
+	@OneToMany(mappedBy="evenement")
+	private List<Candidat> candidats;
 
 	//bi-directional many-to-one association to Critere
 	@OneToMany(mappedBy="evenement")
@@ -56,6 +61,14 @@ public class Evenement implements Serializable {
 
 	public void setIdevent(Integer idevent) {
 		this.idevent = idevent;
+	}
+
+	public String getCode() {
+		return this.code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public Date getDatestart() {
@@ -104,6 +117,28 @@ public class Evenement implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public List<Candidat> getCandidats() {
+		return this.candidats;
+	}
+
+	public void setCandidats(List<Candidat> candidats) {
+		this.candidats = candidats;
+	}
+
+	public Candidat addCandidat(Candidat candidat) {
+		getCandidats().add(candidat);
+		candidat.setEvenement(this);
+
+		return candidat;
+	}
+
+	public Candidat removeCandidat(Candidat candidat) {
+		getCandidats().remove(candidat);
+		candidat.setEvenement(null);
+
+		return candidat;
 	}
 
 	public List<Critere> getCriteres() {
