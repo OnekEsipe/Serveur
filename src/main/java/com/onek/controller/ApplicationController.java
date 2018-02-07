@@ -35,12 +35,12 @@ public class ApplicationController {
 	
 	/* event export */
 	@RequestMapping(value = "/events/export", method = RequestMethod.POST)
-	public ResponseEntity<?> export(@RequestBody String filenames) {
-		List<String> filenamesList;
+	public ResponseEntity<?> export(@RequestBody String ids) {
+		List<Integer> idEvents;
 		
 		/* get filenames */
 		try {
-			filenamesList = applicationService.parser(filenames);
+			idEvents = applicationService.parser(ids);
 		} 
 		catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -49,10 +49,10 @@ public class ApplicationController {
 		/* create the response body */
 		Evenement event;
 		try {
-			event = applicationService.export(filenamesList);
+			event = applicationService.export(idEvents);
 		}
 		catch(IllegalStateException e) {
-			return new ResponseEntity<String>("test", HttpStatus.PARTIAL_CONTENT);
+			return new ResponseEntity<String>("TODO", HttpStatus.PARTIAL_CONTENT); // TODO
 		}
 		
 		return new ResponseEntity<Evenement>(event, HttpStatus.OK);

@@ -2,6 +2,9 @@ package com.onek.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -25,6 +28,7 @@ public class Critere implements Serializable {
 	private String texte;
 
 	//bi-directional many-to-one association to Evenement
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="idevent")
 	private Evenement evenement;
@@ -34,6 +38,7 @@ public class Critere implements Serializable {
 	private List<Descripteur> descripteurs;
 
 	//bi-directional many-to-one association to Note
+	@JsonIgnore
 	@OneToMany(mappedBy="critere")
 	private List<Note> notes;
 

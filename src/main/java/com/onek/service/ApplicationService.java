@@ -6,7 +6,7 @@ import com.onek.model.Evenement;
 
 public interface ApplicationService {
 	
-	public List<String> parser(String filenames);
-	public Evenement export(List<String> filenames);
+	public List<Integer> parser(String ids);
+	public Evenement export(List<Integer> idEvents);
 	
 }

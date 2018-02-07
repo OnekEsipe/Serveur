@@ -3,6 +3,8 @@ package com.onek.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the descripteur database table.
@@ -23,6 +25,7 @@ public class Descripteur implements Serializable {
 	private String texte;
 
 	//bi-directional many-to-one association to Critere
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="idcritere")
 	private Critere critere;

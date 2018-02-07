@@ -1,12 +1,15 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.onek.model.Critere;
 import com.onek.model.Evenement;
 
 @Repository
@@ -30,20 +33,26 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 	}
 
 	@Override
-	public Evenement findByName(String name) {
-		Evenement result = new Evenement();
+	public Evenement findById(int id) {
+		Evenement event = new Evenement();
 		
 		Session session = sessionFactory.openSession();
 		
         session.beginTransaction();
         
-        result = (Evenement) session.createQuery("FROM Evenement WHERE nom = :name").setParameter("name", name).getSingleResult();
+        event = (Evenement) session.createQuery("FROM Evenement WHERE idevent = :id").setParameter("id", id).getSingleResult();
+        Hibernate.initialize(event.getCriteres());        
+        
+        List<Critere> criteres = event.getCriteres();
+        for(Critere c : criteres) {
+        	Hibernate.initialize(c.getDescripteurs());
+        }
         
         session.getTransaction().commit();
         session.close();
         
-        System.out.println("Find done - Name: " + result.getNom());
-		return result;		
+        System.out.println("Find done - Name: " + event.getNom());
+		return event;		
 	}	
 
 }
