@@ -16,12 +16,16 @@ public class Candidat implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer idcandidat;
 
 	private String nom;
 
 	private String prenom;
+
+	//bi-directional many-to-one association to Evenement
+	@ManyToOne
+	@JoinColumn(name="idevent")
+	private Evenement evenement;
 
 	//bi-directional many-to-one association to Evaluation
 	@OneToMany(mappedBy="candidat")
@@ -52,6 +56,14 @@ public class Candidat implements Serializable {
 
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
+	}
+
+	public Evenement getEvenement() {
+		return this.evenement;
+	}
+
+	public void setEvenement(Evenement evenement) {
+		this.evenement = evenement;
 	}
 
 	public List<Evaluation> getEvaluations() {

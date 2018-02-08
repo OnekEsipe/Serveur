@@ -4,21 +4,48 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-  
-	<h:head>
-		<title>Onek team</title>
-	</h:head>
-	
-	<h:body>
-	<h:outputStylesheet library="css" name="createEvent.css" />
-	<h2>Onek team</h2>
-		<hr/>
-		<h:outputText value="Hello JSF"/>
-		<p:editor value="Hello Primefaces"/>
-		<h:form id="empForm">
-			<p:commandButton value="Add default" action="#{empBean.addEmployee}" update="empForm"/>
-			<h3>Hello</h3>
-			<h:outputText id="employeeId" value="#{empBean.employee.firstName} #{empBean.employee.lastName}"/>
-		</h:form>
-	</h:body>
+
+<h:head>
+	<title>Onek team</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+</h:head>
+
+<h:body>
+	<h:outputStylesheet library="css" name="style.css" />
+
+	<h2>ONEK'</h2>
+
+	<h:form class="form">
+		<h:panelGrid columns="2" cellpadding="5" class="panelGrid">
+			<div class="ui-inputgroup">
+				<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+				<p:inputText placeholder="login" value="#{login.login}" />
+			</div>
+
+
+			<div class="ui-inputgroup">
+				<div class="ui-inputgroup">
+					<span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
+					<p:password value="#{login.motDePasse}" placeholder="mot de passe" />
+				</div>
+			</div>
+		</h:panelGrid>
+		<p:spacer height="5" />
+		<p:selectBooleanCheckbox value="#{login.checkbox}" />
+		<h:outputText value="Se souvenir de moi" />
+		<br />
+		<a href="url">Mot de passe oublié</a>
+		<br />
+		<br />
+
+		<p:growl id="growl" life="2000" />
+
+		<h:commandButton value="Connexion"
+			action="#{login.buttonAction}" />
+
+	</h:form>
+	<h2>#{login.message}</h2>
+</h:body>
 </html>
