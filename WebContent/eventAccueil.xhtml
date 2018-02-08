@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Onek team</title>
+</h:head>
+
+<h:body>
+	<p:panel id="infoEvt" header="Infos evenements"
+		style="margin-bottom:20px">
+		<h:form>
+			<h:panelGrid columns="2" cellpadding="10">
+				<p:outputLabel for="statut" value="Statut" />
+				<p:selectOneMenu id="statut" value="#{eventAccueil.statut}"
+					style="width:125px">
+					<f:selectItem itemLabel="Brouillon" itemValue="Brouillon" />
+					<f:selectItem itemLabel="Ouvert" itemValue="Ouvert" />
+					<f:selectItem itemLabel="Demarré" itemValue="Demarré" />
+					<f:selectItem itemLabel="Stoppé" itemValue="Stoppé" />
+					<f:selectItem itemLabel="Fermé" itemValue="Fermé" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="dateStart" value="Date début" />
+				<p:calendar id="dateStart" value="#{eventAccueil.dateStart}" />
+
+				<p:outputLabel for="dateEnd" value="Date fin" />
+				<p:calendar id="dateEnd" value="#{eventAccueil.dateEnd}" />
+
+				<p:outputLabel for="timeStart" value="Heure début" />
+				<p:calendar id="timeStart" value="#{eventAccueil.timeStart}"
+					pattern="HH:mm" timeOnly="true" />
+
+				<p:outputLabel for="timeEnd" value="Heure fin" />
+				<p:calendar id="timeEnd" value="#{eventAccueil.timeEnd}"
+					pattern="HH:mm" timeOnly="true" />
+
+				<h:commandButton value="Valider"
+					action="#{eventAccueil.eventUpdateButton}" />
+			</h:panelGrid>
+		</h:form>
+	</p:panel>
+
+
+	<p:outputLabel for="candidat" value="Candidat" />
+	<p:selectOneListbox id="candidat" value="#{eventAccueil.candidat}" filter="true" filterMatchMode="contains">
+		<f:selectItems value="#{eventAccueil.candidats}" var="candidat"
+			itemLabel="#{candidat.nom}" itemValue="#{candidat}" />
+
+		<p:column>
+			<h:outputText value="#{candidat.nom}" />
+		</p:column>
+
+		<p:column>
+			<h:outputText value="#{candidat.prenom}" />
+		</p:column>
+	</p:selectOneListbox>
+			
+	#{eventAccueil.message}
+</h:body>
+</html>
