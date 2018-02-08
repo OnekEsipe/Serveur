@@ -131,7 +131,7 @@ public class EventAccueilBean implements Serializable {
 	}
 	
 	public void addJuryAnonymeButton() {
-		message = "Nombre de jury anonymes Ã  ajouter : " + juryAnonyme;
+		message = "Nombre de jury anonymes à ajouter : " + juryAnonyme;
 	}
 
 	public void eventUpdateButton() {
