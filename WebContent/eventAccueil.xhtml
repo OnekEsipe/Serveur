@@ -10,55 +10,91 @@
 </h:head>
 
 <h:body>
-	<p:panel id="infoEvt" header="Infos evenements"
-		style="margin-bottom:20px">
-		<h:form>
-			<h:panelGrid columns="2" cellpadding="10">
-				<p:outputLabel for="statut" value="Statut" />
-				<p:selectOneMenu id="statut" value="#{eventAccueil.statut}"
-					style="width:125px">
-					<f:selectItem itemLabel="Brouillon" itemValue="Brouillon" />
-					<f:selectItem itemLabel="Ouvert" itemValue="Ouvert" />
-					<f:selectItem itemLabel="Demarré" itemValue="Demarré" />
-					<f:selectItem itemLabel="Stoppé" itemValue="Stoppé" />
-					<f:selectItem itemLabel="Fermé" itemValue="Fermé" />
-				</p:selectOneMenu>
+	<h:outputStylesheet library="css" name="style.css" />
+	<div class="ui-g">
+		<div class="ui-g-6">
+			<p:panel id="infoEvt" header="Infos evenements"
+				style="margin-bottom:20px">
+				<h:form>
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:outputLabel for="statut" value="Statut" />
+						<p:selectOneMenu id="statut" value="#{eventAccueil.statut}"
+							style="width:125px">
+							<f:selectItem itemLabel="Brouillon" itemValue="Brouillon" />
+							<f:selectItem itemLabel="Ouvert" itemValue="Ouvert" />
+							<f:selectItem itemLabel="Demarré" itemValue="Demarré" />
+							<f:selectItem itemLabel="Stoppé" itemValue="Stoppé" />
+							<f:selectItem itemLabel="Fermé" itemValue="Fermé" />
+						</p:selectOneMenu>
 
-				<p:outputLabel for="dateStart" value="Date début" />
-				<p:calendar id="dateStart" value="#{eventAccueil.dateStart}" />
+						<p:outputLabel for="dateStart" value="Date début" />
+						<p:calendar id="dateStart" value="#{eventAccueil.dateStart}" />
 
-				<p:outputLabel for="dateEnd" value="Date fin" />
-				<p:calendar id="dateEnd" value="#{eventAccueil.dateEnd}" />
+						<p:outputLabel for="dateEnd" value="Date fin" />
+						<p:calendar id="dateEnd" value="#{eventAccueil.dateEnd}" />
 
-				<p:outputLabel for="timeStart" value="Heure début" />
-				<p:calendar id="timeStart" value="#{eventAccueil.timeStart}"
-					pattern="HH:mm" timeOnly="true" />
+						<p:outputLabel for="timeStart" value="Heure début" />
+						<p:calendar id="timeStart" value="#{eventAccueil.timeStart}"
+							pattern="HH:mm" timeOnly="true" />
 
-				<p:outputLabel for="timeEnd" value="Heure fin" />
-				<p:calendar id="timeEnd" value="#{eventAccueil.timeEnd}"
-					pattern="HH:mm" timeOnly="true" />
+						<p:outputLabel for="timeEnd" value="Heure fin" />
+						<p:calendar id="timeEnd" value="#{eventAccueil.timeEnd}"
+							pattern="HH:mm" timeOnly="true" />
 
-				<h:commandButton value="Valider"
-					action="#{eventAccueil.eventUpdateButton}" />
-			</h:panelGrid>
-		</h:form>
-	</p:panel>
+						<h:commandButton value="Valider"
+							action="#{eventAccueil.eventUpdateButton}" />
+					</h:panelGrid>
+				</h:form>
+			</p:panel>
 
+			<p:outputLabel for="candidat" value="Candidats" />
+			<p:selectOneListbox id="candidat" value="#{eventAccueil.candidat}"
+				filter="true" filterMatchMode="contains" scrollHeight="100">
+				<f:selectItems value="#{eventAccueil.candidats}" var="candidat"
+					itemLabel="#{candidat.prenom} #{candidat.nom}"
+					itemValue="#{candidat}" />
+			</p:selectOneListbox>
+			<br />
+			<h:commandButton value="Ajouter un candidat" />
+			#{eventAccueil.message}
+		</div>
 
-	<p:outputLabel for="candidat" value="Candidat" />
-	<p:selectOneListbox id="candidat" value="#{eventAccueil.candidat}" filter="true" filterMatchMode="contains">
-		<f:selectItems value="#{eventAccueil.candidats}" var="candidat"
-			itemLabel="#{candidat.nom}" itemValue="#{candidat}" />
-
-		<p:column>
-			<h:outputText value="#{candidat.nom}" />
-		</p:column>
-
-		<p:column>
-			<h:outputText value="#{candidat.prenom}" />
-		</p:column>
-	</p:selectOneListbox>
-			
-	#{eventAccueil.message}
+		<div class="ui-g-6">
+			<h:form>
+				<p:outputLabel for="jury" value="Jury" />
+				<p:selectOneListbox id="jury" value="jury" filter="true"
+					filterMatchMode="contains" scrollHeight="100">
+					<f:selectItems value="#{eventAccueil.utilisateurs}"
+						var="utilisateur"
+						itemLabel="#{utilisateur.prenom} #{utilisateur.nom}"
+						itemValue="#{utilisateur}" />
+				</p:selectOneListbox>
+				<p:spacer width="0" height="30" />
+				<h:commandButton value="Attribuer un jury à cet évenement" />
+				<br />
+				<p:spacer width="0" height="50" />
+				<h:outputLabel for="juryAnonyme"
+					value="Ajouter des jurys anonymes : " />
+				<p:spacer width="10" />
+				<p:spinner id="juryAnonyme" value="#{eventAccueil.juryAnonyme}"
+					min="0" max="100" size="1" />
+				<p:spacer width="20" />
+				<h:commandButton value="Ajouter"
+					action="#{eventAccueil.addJuryAnonymeButton}" />
+				<p:spacer width="20" />
+				<h:commandLink>
+					<p:graphicImage name="images/csv.png" />
+					<p:dataExporter type="csv" target="jury" fileName="jurysAnonymes"
+						pageOnly="true" />
+				</h:commandLink>
+				<br />
+				<p:spacer width="0" height="300" />
+				<h:commandButton value="Gérer la grille critériée" />
+				<br />
+				<p:spacer width="0" height="30" />
+				<h:commandButton value="Gestion attribution Jury / Candidat" />
+			</h:form>
+		</div>
+	</div>
 </h:body>
 </html>
