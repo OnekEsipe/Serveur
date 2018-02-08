@@ -7,9 +7,19 @@
 
 <h:head>
 	<title>Onek team</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+	<h:outputStylesheet library="css" name="accueilEvent.css" />
 </h:head>
 
 <h:body>
+	<!-- Insertion du menu -->
+	<h:outputStylesheet library="css" name="accueil.css" />
+	<ui:include src="menu.xhtml" />
+	<br />
+	<br />
+	
 	<div class="ui-g">
 		<div class="ui-g-6">
 			<p:panel id="infoEvt" header="Infos evenements"

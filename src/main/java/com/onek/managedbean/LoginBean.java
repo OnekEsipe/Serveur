@@ -69,8 +69,8 @@ public class LoginBean implements Serializable {
 
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "eventAccueil.xhtml",
-				"eventAccueil.xhtml".contains("?") ? "&" : "?"));
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "accueil.xhtml",
+				"accueil.xhtml".contains("?") ? "&" : "?"));
 
 	}
 
