@@ -82,6 +82,8 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		// create jury list with map
 		//Set<Entry<Utilisateur, List<Candidat>>> set = map.entrySet();
 		
+		return null;
 	}
-
+	
 }
+		

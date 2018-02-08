@@ -151,7 +151,7 @@ public class Utilisateur implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		
+		return false;
 	}	
 
 }

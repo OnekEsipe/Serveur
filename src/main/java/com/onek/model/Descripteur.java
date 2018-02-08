@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the descripteur database table.
@@ -28,6 +30,7 @@ public class Descripteur implements Serializable {
 	private String texte;
 
 	//bi-directional many-to-one association to Critere
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="idcritere")
 	private Critere critere;

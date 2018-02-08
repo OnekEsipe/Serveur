@@ -42,6 +42,5 @@ public class ApplicationController {
 		}	
 		
 		return new ResponseEntity<EvenementResource>(event.get(), HttpStatus.OK);
-	}	
-	
+	}		
 }
