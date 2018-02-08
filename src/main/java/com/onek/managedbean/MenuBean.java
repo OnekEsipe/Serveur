@@ -17,7 +17,7 @@ public class MenuBean {
 	}
 	
 	public void event() {
-		redirect("eventAccueil.xhtml");
+		redirect("accueil.xhtml");
 	}
 	
 	public void user() {
