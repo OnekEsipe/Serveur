@@ -101,4 +101,9 @@ public class AccueilBean implements Serializable {
 		NavigationHandler nh = fc.getApplication().getNavigationHandler();
 		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "index.xhtml", "index.xhtml".contains("?") ? "&" : "?"));
 	}
+	public void buttonAction() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "index.xhtml", "index.xhtml".contains("?") ? "&" : "?"));
+    }
 }
