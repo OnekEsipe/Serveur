@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+	<title>Onek team</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+</h:head>
+
+<h:body>
+	<h:form>
+		<p:menu>
+			<p:menuitem value="Mes événements" actionListener="#{principalMenu.event}"/>
+			<p:menuitem value="Créer utilisateur" actionListener="#{principalMenu.user}"/>
+			<p:menuitem value="Mon compte" actionListener="#{principalMenu.account}"/>
+			<p:menuitem value="Aide" actionListener="#{principalMenu.help}"/>
+			<p:menuitem value="Déconnexion" actionListener="#{principalMenu.exit}"/>
+		</p:menu>
+	</h:form>
+</h:body>
+</html>
