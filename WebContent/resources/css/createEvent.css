@@ -1,6 +1,7 @@
 h2{
 	font: normal;
 	color: blue;
+	text-align: left;
 }
 
 #formdiv{
@@ -41,4 +42,5 @@ p {
 	text-align: center;
 	color: red;
 	font: bold;
+	font-size: medium;
 }
