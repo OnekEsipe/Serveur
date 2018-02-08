@@ -49,6 +49,12 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		if (!loginDao.userExist(login)) {
 			return Optional.empty();
 		}
+		
+		// check if jury is assigned
+		int idJury = loginDao.findUserByLogin(login).getIduser();
+		if (!evaluationDao.juryIsAssigned(idJury, id)) {
+			return Optional.empty();
+		}
 
 		try {
 			EvenementResource event = new EvenementResource(eventDao.findById(id));
@@ -69,6 +75,13 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		/* associate jury with its candidates */
 		for (Evaluation evaluation : evaluations) {
 			Utilisateur user = evaluation.getUtilisateur();
+			
+			// TODO update this when anonyme attribut will be add in Utilisateur class
+			//if (!user.isAnonyme())) {
+				if (!user.getLogin().equals(login)) {
+					continue;
+				}
+			//}
 
 			if (!map.containsKey(user)) {
 				map.put(user, new ArrayList<>());
