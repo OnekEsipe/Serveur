@@ -150,8 +150,13 @@ public class Utilisateur implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		return false;
+	public boolean equals(Object o) {
+		if (o == null || !(o instanceof Utilisateur)) {
+			return false;
+		}
+		
+		Utilisateur user = (Utilisateur) o;		
+		return user.login.equals(login);
 	}	
 
 }

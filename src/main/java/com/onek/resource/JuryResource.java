@@ -10,7 +10,7 @@ public class JuryResource implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonProperty("Id")
-	private final Integer idUser;
+	private final Integer idJury;
 	
 	@JsonProperty("LastName")
 	private final String nom;
@@ -22,7 +22,7 @@ public class JuryResource implements Serializable {
 	private List<CandidatResource> candidats;
 	
 	public JuryResource(Utilisateur user) {
-		idUser = user.getIduser();
+		idJury = user.getIduser();
 		nom = user.getNom();
 		prenom = user.getPrenom();
 	}
