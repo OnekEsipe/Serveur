@@ -12,4 +12,82 @@
 	</link>
 </h:head>
 
+<h:body>
+	<h:form>
+		<div title="addCritère">
+			<div>
+				Nom :
+				<p:inputText value="#{grille.nom}" />
+			</div>
+			<div>
+				Coefficient :
+				<p:inputNumber id="coef" value="#{grille.coefficient}" minValue="0"
+					decimalPlaces="2" />
+			</div>
+			<div>
+				Catégorie (Optionnel) :
+				<p:inputText value="#{grille.categorie}" />
+			</div>
+			Nombre de Niveau :
+			<p:selectOneMenu id="nbNiveau" value="#{grille.nbDescripteur}"
+				required="true" style="width:125px">
+				<f:selectItems value="#{grille.numbers}" />
+				<!-- <p:ajax event="change" update="number" /> -->
+			</p:selectOneMenu>
+			<br />
 
+			<table style="border:4px" >
+				<thead>A</thead>
+				<tr>
+					<td>Poids</td>
+					<td>Description</td>
+				</tr>
+				<tr>
+					<td><p:inputNumber value="#{grille.poids1}" decimalPlaces="0" /></td>
+					<td><p:inputText value="#{grille.texte1}" /></td>
+				</tr>
+			</table>
+			<div>
+				<h:commandButton value="Ajouter" action="#{grille.onClicAdd}" />
+			</div>
+			<table style="border:4px" >
+				<thead>B</thead>
+				<tr>
+					<td>Poids</td>
+					<td>Description</td>
+				</tr>
+				<tr>
+					<td><p:inputNumber value="#{grille.poids2}" decimalPlaces="0" /></td>
+					<td><p:inputText value="#{grille.texte2}" /></td>
+				</tr>
+			</table>
+			<div>
+				<h:commandButton value="Ajouter" action="#{grille.onClicAdd}" />
+			</div>
+			<table style="border:4px" >
+				<thead>C</thead>
+				<tr>
+					<td>Poids</td>
+					<td>Description</td>
+				</tr>
+				<tr>
+					<td><p:inputNumber value="#{grille.poids3}" decimalPlaces="0" /></td>
+					<td><p:inputText value="#{grille.texte3}" /></td>
+				</tr>
+			</table>
+			<div>
+				<h:commandButton value="Ajouter" action="#{grille.onClicAdd}" />
+			</div>
+		</div>
+	</h:form>
+	<h:form>
+		<div>
+			#{grille.criteres}
+		</div>
+		<!-- <div>
+			<h:commandButton value="Enregistrer" action="#{grille.onClicSave}" />
+		</div> -->
+	</h:form>
+</h:body>
+
+</html>
