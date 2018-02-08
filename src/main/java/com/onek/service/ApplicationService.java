@@ -1,12 +1,11 @@
 package com.onek.service;
 
-import java.util.List;
+import java.util.Optional;
 
-import com.onek.model.Evenement;
+import com.onek.resource.EvenementResource;
 
 public interface ApplicationService {
 	
-	public List<Integer> parser(String ids);
-	public Evenement export(List<Integer> idEvents);
+	public Optional<EvenementResource> export(String idEvent, String login);
 	
 }

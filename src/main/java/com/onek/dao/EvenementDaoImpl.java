@@ -34,13 +34,11 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 
 	@Override
 	public Evenement findById(int id) {
-		Evenement event = new Evenement();
-		
-		Session session = sessionFactory.openSession();
-		
+		Session session = sessionFactory.openSession();		
         session.beginTransaction();
         
-        event = (Evenement) session.createQuery("FROM Evenement WHERE idevent = :id").setParameter("id", id).getSingleResult();
+		Evenement event = (Evenement) session.createQuery("FROM Evenement WHERE idevent = :id").setParameter("id", id)
+				.getSingleResult();
         Hibernate.initialize(event.getCriteres());        
         
         List<Critere> criteres = event.getCriteres();
@@ -51,7 +49,7 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
         session.getTransaction().commit();
         session.close();
         
-        System.out.println("Find done - Name: " + event.getNom());
+        System.out.println("Find done - Id: " + event.getIdevent());
 		return event;		
 	}	
 

@@ -1,17 +1,16 @@
 package com.onek.controller;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.onek.model.Evenement;
+import com.onek.resource.EvenementResource;
 import com.onek.service.ApplicationService;
 
 @RestController
@@ -34,29 +33,15 @@ public class ApplicationController {
 	}
 	
 	/* event export */
-	@RequestMapping(value = "/events/export", method = RequestMethod.POST)
-	public ResponseEntity<?> export(@RequestBody String ids) {
-		List<Integer> idEvents;
+	@RequestMapping(value = "/events/{idEvent}/{login}/export", method = RequestMethod.GET)
+	public ResponseEntity<?> export(@PathVariable String idEvent, @PathVariable String login) {			
+		Optional<EvenementResource> event = applicationService.export(idEvent, login);
 		
-		/* get filenames */
-		try {
-			idEvents = applicationService.parser(ids);
-		} 
-		catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
+		if (!event.isPresent()) {
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		}	
 		
-		/* create the response body */
-		Evenement event;
-		try {
-			event = applicationService.export(idEvents);
-		}
-		catch(IllegalStateException e) {
-			return new ResponseEntity<String>("TODO", HttpStatus.PARTIAL_CONTENT); // TODO
-		}
-		
-		return new ResponseEntity<Evenement>(event, HttpStatus.OK);
-	}
-	
+		return new ResponseEntity<EvenementResource>(event.get(), HttpStatus.OK);
+	}	
 	
 }

@@ -1,12 +1,18 @@
 package com.onek.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -47,12 +53,10 @@ public class Evenement implements Serializable {
 	private List<Critere> criteres;
 
 	//bi-directional many-to-one association to Evaluation
-	@JsonIgnore
 	@OneToMany(mappedBy="evenement")
 	private List<Evaluation> evaluations;
 
 	//bi-directional many-to-one association to Utilisateur
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="iduser")
 	private Utilisateur utilisateur;

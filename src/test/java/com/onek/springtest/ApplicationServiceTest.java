@@ -1,8 +1,8 @@
 package com.onek.springtest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,25 +15,8 @@ public class ApplicationServiceTest {
 	private ApplicationService applicationService;
 	
 	@Test
-	public void successParsing() {
-		List<Integer> list = applicationService.parser("[1,2]");
-		assertEquals(1, (int) list.get(0));
-		assertEquals(2, (int) list.get(1));
-	}	
-	
-	@Test(expected = IllegalArgumentException.class)	
-	public void failParsingWithBadSyntax() {
-		applicationService.parser("1,2]");
+	public void exportIdEventCheckFormatFailure() {
+		assertEquals(Optional.empty(), applicationService.export("toto", "admin"));
 	}
-	
-	@Test(expected = IllegalArgumentException.class)	
-	public void failParsingWithBadSyntax2() {
-		applicationService.parser("[1,toto]");
-	}
-	
-	@Test(expected = IllegalArgumentException.class) 
-	public void failParsingWithNullValue() {
-		applicationService.parser(null);
-	}	
 
 }
