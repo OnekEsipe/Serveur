@@ -2,6 +2,7 @@
 *~
 /bin
 
+.metadata
 /.classpath
 /.settings
 /.project
