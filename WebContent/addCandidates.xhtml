@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Home Onek</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+
+</h:head>
+
+<h:body>
+	<!-- Insertion du menu -->
+	<h:outputStylesheet library="css" name="candidate.css" />
+	<ui:include src="menu.xhtml" />
+	<br />
+	<br />
+	<div class="ui-g">
+		<h:form>
+			<p:growl id="msgs" showDetail="true" />
+			<h3>Ajouter un nouvel candidat</h3>
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<p:outputLabel for="lastnameCandidat" value="Nom:" />
+				<p:inputText id="lastnameCandidat" name="lastnameCandidat"
+					placeholder="Entrer le nom" size="20" value="#{candidate.lastName}" />
+
+
+				<p:outputLabel for="firstnameCandidat" value="Prénom" />
+				<p:inputText id="firstnameCandidat" name="firstnameCandidat"
+					placeholder="Entrer le prénom" size="20"
+					value="#{candidate.firstName}" />
+
+				<h:commandButton value="Valider" action="#{candidate.click}"
+					icon="ui-icon-check" update="msgs" />
+			</h:panelGrid>
+		</h:form>
+		<p:outputLabel for="candidat"
+			value="Liste des candidats de l'évènement" />
+		<p:selectOneListbox id="candidat" value="#{candidate.candidat}"
+			filter="true" filterMatchMode="contains" scrollHeight="100">
+			<f:selectItems value="#{candidate.candidats}" var="candidat"
+				itemLabel="#{candidat.prenom} #{candidat.nom}"
+				itemValue="#{candidat}" />
+		</p:selectOneListbox>
+		<h:outputText id="errorCreationCandidate" value="#{candidate.logInfo}" />
+	</div>
+</h:body>
+</html>
