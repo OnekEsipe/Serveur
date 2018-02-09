@@ -50,5 +50,20 @@ public class EventAccueilDaoImpl implements EventAccueilDao, Serializable {
 		
 		return utilisateurs;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Utilisateur> listJurysAnnonymesByEvent() {
+		List<Utilisateur> utilisateursAnnonymes = new ArrayList<>();
+
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+
+		utilisateursAnnonymes = (List<Utilisateur>) session.createQuery("from Utilisateur where ").list();
+
+		session.getTransaction().commit();
+		session.close();
+		
+		return utilisateursAnnonymes;
+	}
 
 }

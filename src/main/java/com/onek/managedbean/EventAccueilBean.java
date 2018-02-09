@@ -21,6 +21,9 @@ import com.onek.service.EventAccueilService;
 public class EventAccueilBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Autowired
+	private EventAccueilService eventAccueilservice;
+	
 	private String statut;
 	private Date dateStart;
 	private Date dateEnd;
@@ -28,6 +31,49 @@ public class EventAccueilBean implements Serializable {
 	private Date timeEnd;
 	private String message;
 	private int juryAnonyme;
+	
+	private List<Candidat> filteredcandidats;
+	private Candidat selectedcandidat ;
+	private List<Candidat> candidats;
+	private Candidat candidat;
+	
+	private List<Utilisateur> utilisateurs;
+	private Utilisateur utilisateur;
+	private List<Utilisateur> filteredutilisateurs;
+	private Utilisateur selectedutilisateur;
+	
+	
+	public List<Utilisateur> getFilteredutilisateurs() {
+		return filteredutilisateurs;
+	}
+
+	public void setFilteredutilisateurs(List<Utilisateur> filteredutilisateurs) {
+		this.filteredutilisateurs = filteredutilisateurs;
+	}
+
+	public Utilisateur getSelectedutilisateur() {
+		return selectedutilisateur;
+	}
+
+	public void setSelectedutilisateur(Utilisateur selectedutilisateur) {
+		this.selectedutilisateur = selectedutilisateur;
+	}
+
+	public List<Candidat> getFilteredcandidats() {
+		return filteredcandidats;
+	}
+
+	public void setFilteredcandidats(List<Candidat> filteredcandidats) {
+		this.filteredcandidats = filteredcandidats;
+	}
+
+	public Candidat getSelectedcandidat() {
+		return selectedcandidat;
+	}
+
+	public void setSelectedcandidat(Candidat selectedcandidat) {
+		this.selectedcandidat = selectedcandidat;
+	}
 
 	public int getJuryAnonyme() {
 		return juryAnonyme;
@@ -37,21 +83,15 @@ public class EventAccueilBean implements Serializable {
 		this.juryAnonyme = juryAnonyme;
 	}
 
-	@Autowired
-	private EventAccueilService eventAccueilservice;
-
-	private List<Candidat> candidats;
-	private Candidat candidat;
-
-	private List<Utilisateur> utilisateurs;
-	private Utilisateur utilisateur;
-
+	
+	
+	
 	@PostConstruct
-	public void init() {
-		candidats = eventAccueilservice.listCandidatsByEvent(1);
-		utilisateurs = eventAccueilservice.listJurysByEvent();
-	}
-
+    public void init() {
+      candidats = eventAccueilservice.listCandidatsByEvent(1);
+      utilisateurs = eventAccueilservice.listJurysByEvent();
+    }
+	
 	public List<Utilisateur> getUtilisateurs() {
 		return utilisateurs;
 	}
@@ -131,7 +171,7 @@ public class EventAccueilBean implements Serializable {
 	public void setStatut(String statut) {
 		this.statut = statut;
 	}
-
+	
 	public void addJuryAnonymeButton() {
 		message = "Nombre de jury anonymes à ajouter : " + juryAnonyme;
 	}
@@ -140,19 +180,41 @@ public class EventAccueilBean implements Serializable {
 		// Pour test
 		DateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy");
 		String sDate = dfDate.format(dateStart);
-
+		
 		DateFormat dfTime = new SimpleDateFormat("HH:mm");
 		String sTime = dfTime.format(timeStart);
-
+		
 		message = "Statut: " + statut + " dateStart:" + dateStart + " dateStartFORMATTE:" + sDate + " dateEnd:" + dateEnd + " timeStart:" + timeStart
 				+ " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
 	}
-	public void pageCandidat() {
-
+	public void supprimerCandidat() {
+		// to do
+	}
+	public void supprimerUtilisateur() {
+		// to do
+	}
+	public void buttonGrille() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-	//	nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "addCandidates.xhtml", "addCandidates.xhtml".contains("?") ? "&" : "?"));
-		nh.handleNavigation(fc, null,"addCandidates.xhtml?faces-redirect=true");
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
 	}
-
+	public void buttonAttribution() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+	}
+	public void buttonAddJury() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+	}
+	public void buttonAddCandidat() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+	}
+	public void buttonExport() {
+		//to do
+		//eventAccueilservice.listJurysByEvent().
+	}
 }
