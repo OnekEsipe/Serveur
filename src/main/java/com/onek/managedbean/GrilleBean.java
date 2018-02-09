@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
 
 import org.springframework.stereotype.Component;
+
+import com.onek.model.Critere;
+import com.onek.model.Descripteur;
 
 @Component("grille")
 public class GrilleBean {
@@ -38,65 +42,56 @@ public class GrilleBean {
 	private String texte4;
 	private String texte5;
 
-	class Critere {
-		private final String categorie;
-		private final double coefficient;
-		private final String texte;
-
-		private final List<Descripteur> descripteurs;
-
-		Critere(String categorie, double coefficient, String texte) {
-			this.categorie = categorie;
-			this.coefficient = coefficient;
-			this.texte = texte;
-			this.descripteurs = new ArrayList<>();
-		}
-
-		public void addDescripteur(Descripteur d) {
-			descripteurs.add(d);
-		}
-	}
-
-	class Descripteur {
-		private final char niveau;
-		private final double poids;
-		private final String texte;
-
-		Descripteur(char niveau, double poids, String texte) {
-			this.niveau = niveau;
-			this.poids = poids;
-			this.texte = texte;
-		}
-	}
-
 	public void onClicAdd() {
-		Critere c = new Critere(categorie, coefficient, nom);
+		Critere c = new Critere();
+		c.setCategorie(categorie);
+		c.setCoefficient(coefficient);
+		c.setTexte(nom);
 		Descripteur d;
 		if (poids1 != 0 && texte1 != null) {
-			d = new Descripteur('A', poids1, texte1);
+			d = new Descripteur();
+			d.setNiveau('A');
+			d.setPoids(poids1);
+			d.setTexte(texte1);
+			d.setCritere(c);
 			c.addDescripteur(d);
 		}
 		if (poids2 != 0 && texte2 != null) {
-			d = new Descripteur('B', poids2, texte2);
+			d = new Descripteur();
+			d.setNiveau('B');
+			d.setPoids(poids2);
+			d.setTexte(texte2);
+			d.setCritere(c);
 			c.addDescripteur(d);
 		}
 		if (poids3 != 0 && texte3 != null) {
-			d = new Descripteur('C', poids3, texte3);
+			d = new Descripteur();
+			d.setNiveau('C');
+			d.setPoids(poids3);
+			d.setTexte(texte3);
+			d.setCritere(c);
 			c.addDescripteur(d);
 		}
 		if (poids4 != 0 && texte4 != null) {
-			d = new Descripteur('D', poids4, texte4);
+			d = new Descripteur();
+			d.setNiveau('D');
+			d.setPoids(poids4);
+			d.setTexte(texte4);
+			d.setCritere(c);
 			c.addDescripteur(d);
 		}
 		if (poids5 != 0 && texte5 != null) {
-			d = new Descripteur('E', poids5, texte5);
+			d = new Descripteur();
+			d.setNiveau('E');
+			d.setPoids(poids5);
+			d.setTexte(texte5);
+			d.setCritere(c);
 			c.addDescripteur(d);
 		}
 		criteres.add(c);
-		System.out.println(criteres.size() + " " + c.texte + " " + c.coefficient + " "+c.descripteurs.size());
 		resetValues();
 	}
-	
+
 	private void resetValues() {
 		categorie = "";
 		coefficient = 0;
@@ -113,27 +108,15 @@ public class GrilleBean {
 		texte5 = "";
 	}
 
-	// public void onClicSave() {
-	// for (Critere critere : criteres) {
-	// com.onek.model.Critere c = new com.onek.model.Critere();
-	// c.setCategorie(critere.categorie);
-	// c.setCoefficient(critere.coefficient);
-	// c.setTexte(critere.texte);
-	// for (Descripteur descripteur : critere.descripteurs) {
-	// com.onek.model.Descripteur d = new com.onek.model.Descripteur();
-	// d.setNiveau(descripteur.niveau);
-	// d.setPoids(descripteur.poids);
-	// d.setTexte(descripteur.texte);
-	// d.setCritere(c);
-	// c.addDescripteur(d);
-	// }
-	// }
-	// FacesContext fc = FacesContext.getCurrentInstance();
-	// NavigationHandler nh = fc.getApplication().getNavigationHandler();
-	// nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true",
-	// "accueil.xhtml",
-	// "accueil.xhtml".contains("?") ? "&" : "?"));
-	// }
+	public void onClicSave() {
+		
+		
+		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null,
+				String.format("%s%sfaces-redirect=true", "accueil.xhtml", "accueil.xhtml".contains("?") ? "&" : "?"));
+	}
 
 	public String getNom() {
 		return nom;
@@ -254,5 +237,5 @@ public class GrilleBean {
 	public void setNbDescripteur(int nbDescripteur) {
 		this.nbDescripteur = nbDescripteur;
 	}
-	
+
 }
