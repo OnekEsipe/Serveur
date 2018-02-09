@@ -1,9 +1,10 @@
 package com.onek.managedbean;
 
 import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Objects;
+
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -120,7 +121,12 @@ public class EventBean implements Serializable {
 			return;
 		}
 		addEvent();
-		logInfo ="Votre évènement a été créé avec succès!";
+		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("event",event);
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "grille.xhtml",
+				"grille.xhtml".contains("?") ? "&" : "?"));
+		
 	}
 	
 	private boolean validDate(Date d1, Date d2) {

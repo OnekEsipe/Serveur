@@ -70,14 +70,38 @@
 				</tr>
 			</table>
 			
+			<table style="border:4px" >
+				<thead>D</thead>
+				<tr>
+					<td>Poids</td>
+					<td>Description</td>
+				</tr>
+				<tr>
+					<td><p:inputNumber value="#{grille.poids4}" decimalPlaces="0" /></td>
+					<td><p:inputText value="#{grille.texte4}" /></td>
+				</tr>
+			</table>
+			
+			<table style="border:4px" >
+				<thead>E</thead>
+				<tr>
+					<td>Poids</td>
+					<td>Description</td>
+				</tr>
+				<tr>
+					<td><p:inputNumber value="#{grille.poids5}" decimalPlaces="0" /></td>
+					<td><p:inputText value="#{grille.texte5}" /></td>
+				</tr>
+			</table>
+			
 			<br />
 			<div>
-				<h:commandButton value="Ajouter" action="#{grille.onClicAdd}" />
+				<h:commandButton value="Ajouter" action="#{grille.onClicAdd}" update="displayCriteres" icon="ui-icon-check"/>
 			</div>
 		</div>
 	</h:form>
 	<h:form>
-		<div>
+		<div id="displayCriteres">
 			#{grille.criteres}
 		</div>
 		<div>

@@ -7,22 +7,32 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Critere;
 import com.onek.model.Descripteur;
+import com.onek.model.Evenement;
+import com.onek.service.GrilleService;
 
 @Component("grille")
 public class GrilleBean {
+	
+	@Autowired
+	GrilleService grille;
 
 	private List<Critere> criteres = new ArrayList<>();
 	private List<Integer> numbers = new ArrayList<>();
+	
+	private Evenement event;
 
 	@PostConstruct
 	public void postInit() {
 		for (int i = 0; i < 6; i++) {
 			numbers.add(i);
 		}
+		event = (Evenement) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("event");
+		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().remove("event");
 	}
 
 	private int nbDescripteur;
@@ -44,6 +54,7 @@ public class GrilleBean {
 
 	public void onClicAdd() {
 		Critere c = new Critere();
+		c.setEvenement(event);
 		c.setCategorie(categorie);
 		c.setCoefficient(coefficient);
 		c.setTexte(nom);
@@ -109,8 +120,7 @@ public class GrilleBean {
 	}
 
 	public void onClicSave() {
-		
-		
+		grille.addCriteres(criteres);
 		
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nh = fc.getApplication().getNavigationHandler();
