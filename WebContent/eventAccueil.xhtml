@@ -56,7 +56,7 @@
 				</h:form>
 			</p:panel>
 
-			<!-- ************Tableau des candidat**************** -->
+			<!-- ************Tableau des candidats**************** -->
 			<h:form>
 				<div class="ui-g">
 					<div class="ui-g-12 ui-md-8"></div>
@@ -67,12 +67,12 @@
 						#{eventAccueil.message}
 					</div>
 				</div>
-				<p:dataTable var="candidat" value="#{eventAccueil.candidats}"
+				
+				<p:dataTable  var="candidat" value="#{eventAccueil.candidats}"
 					widgetVar="candidatTable"
 					emptyMessage="aucun candidat trouvé avec ce nom"
 					filteredValue="#{eventAccueil.filteredcandidats}" scrollable="true"
-					scrollHeight="100" 
-					>
+					scrollHeight="100">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
@@ -86,7 +86,7 @@
 						</p:outputPanel>
 					</f:facet>
 					<!-- ********fin*********** -->
-					
+
 					<!-- ********fin*********** -->
 
 					<p:column headerText="Nom" filterBy="#{candidat.nom}"
@@ -102,22 +102,25 @@
 					<p:column style="width:32px;text-align: center">
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
-							update="message">
+							 actionListener="#{eventAccueil.supprimerCandidat}" ajax="true">
 							<p:confirm header="Confirmation"
 								message="vous voulez vraiment supprimer le candidat"
 								icon="ui-icon-trash" />
-						</p:commandButton>
 
+							<f:param name="idcandidat" value="#{candidat.idcandidat}" />
+						</p:commandButton>
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-							<p:commandButton value="Yes" type="button" actionListener="#{eventAccueil.supprimerCandidat(candidat.idcandidat)}"
+							<p:commandButton value="Yes" type="button"
 								styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
-								</p:commandButton>
+
+							</p:commandButton>
 							<p:commandButton value="No" type="button"
 								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 						</p:confirmDialog>
 					</p:column>
 					<!-- ********fin*********** -->
 				</p:dataTable>
+			
 			</h:form>
 		</div>
 		<!-- ************Tableau des Jurys**************** -->
@@ -132,18 +135,17 @@
 						<p:commandButton value="jury" id="withIcon"
 							actionListener="#{eventAccueil.buttonAddJury}"
 							icon="ui-icon-plusthick" />
-						
-							<p:commandButton id="iconOnly" update="growl"
-								actionListener="#{eventAccueil.buttonExport}"
-								icon="ui-icon-circle-arrow-s" title="Icon Only" />
+
+						<p:commandButton id="iconOnly" update="growl"
+							actionListener="#{eventAccueil.buttonExport}"
+							icon="ui-icon-circle-arrow-s" title="Icon Only" />
 					</div>
 				</div>
 				<p:dataTable var="utilisateur" value="#{eventAccueil.utilisateurs}"
 					widgetVar="utilisateurTable"
 					emptyMessage="aucun jury trouvé avec ce nom"
 					filteredValue="#{eventAccueil.filteredutilisateurs}"
-					scrollable="true" scrollHeight="100" 
-					rowKey="#{utilisateur.nom}">
+					scrollable="true" scrollHeight="100" rowKey="#{utilisateur.nom}">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
@@ -157,7 +159,7 @@
 						</p:outputPanel>
 					</f:facet>
 					<!-- ********fin*********** -->
-					
+
 
 					<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
 						filterMatchMode="startsWith" filterStyle="display:none">
@@ -177,6 +179,7 @@
 							<p:confirm header="Confirmation"
 								message="vous voulez vraiment supprimer le jury"
 								icon="ui-icon-trash" />
+								<f:param name="iduser" value="#{utilisateur.iduser}" />
 						</p:commandButton>
 
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -202,7 +205,8 @@
 								min="0" max="100" size="1" />
 						</div>
 						<div class="ui-g-4">
-							<p:commandButton value="Ajouter" ajax="false" actionListener="#{eventAccueil.addJuryAnonymeButton}"/>
+							<p:commandButton value="Ajouter" ajax="false"
+								actionListener="#{eventAccueil.addJuryAnonymeButton}" />
 						</div>
 						<br />
 

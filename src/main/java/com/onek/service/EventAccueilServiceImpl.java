@@ -34,4 +34,7 @@ public class EventAccueilServiceImpl implements EventAccueilService, Serializabl
 	public void supprimerCandidat(int idcandidat) {
 		eventAccueilDao.supprimerCandidat(idcandidat);
 	}
+	public void supprimerUtilisateur(int iduser) {
+		eventAccueilDao.supprimerUtilisateur(iduser);
+	}
 }
