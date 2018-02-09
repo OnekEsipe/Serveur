@@ -50,7 +50,7 @@
 						<p:calendar id="timeEnd" value="#{eventAccueil.timeEnd}"
 							pattern="HH:mm" timeOnly="true" />
 
-						<p:commandButton value="Valider"  ajax="false"
+						<p:commandButton value="Valider" ajax="false"
 							actionListener="#{eventAccueil.eventUpdateButton}" />
 					</h:panelGrid>
 				</h:form>
@@ -62,6 +62,7 @@
 					<div class="ui-g-12 ui-md-8"></div>
 					<div class="ui-g-12 ui-md-4">
 						<p:commandButton value="candidat" id="withIcon"
+							actionListener="#{eventAccueil.buttonAddCandidat}"
 							icon="ui-icon-plusthick" />
 						#{eventAccueil.message}
 					</div>
@@ -131,9 +132,12 @@
 					<div class="ui-g-12 ui-md-6"></div>
 					<div class="ui-g-12 ui-md-6">
 						<p:commandButton value="jury" id="withIcon"
+							actionListener="#{eventAccueil.buttonAddJury}"
 							icon="ui-icon-plusthick" />
-						<p:commandButton id="iconOnly" update="growl"
-							icon="ui-icon-circle-arrow-s" title="Icon Only" />
+						
+							<p:commandButton id="iconOnly" update="growl"
+								actionListener="#{eventAccueil.buttonExport}"
+								icon="ui-icon-circle-arrow-s" title="Icon Only" />
 					</div>
 				</div>
 				<p:dataTable var="utilisateur" value="#{eventAccueil.utilisateurs}"
@@ -203,17 +207,17 @@
 								min="0" max="100" size="1" />
 						</div>
 						<div class="ui-g-4">
-							<p:commandButton value="Ajouter"  ajax="false" />
+							<p:commandButton value="Ajouter" ajax="false" />
 						</div>
 						<br />
 
-						<p:commandButton value="Gérer la grille critériée" 
-							ajax="false" />
+						<p:commandButton value="Gérer la grille critériée"
+							actionListener="#{eventAccueil.buttonGrille}" ajax="false" />
 					</div>
 					<br />
 				</div>
 				<p:commandButton value="Gestion attribution Jury / Candidat"
-					ajax="false" />
+					actionListener="#{eventAccueil.buttonAttribution}" ajax="false" />
 
 
 			</h:form>

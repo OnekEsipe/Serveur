@@ -7,12 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
-import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
 import com.onek.service.EventAccueilService;
 
@@ -20,6 +21,9 @@ import com.onek.service.EventAccueilService;
 public class EventAccueilBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Autowired
+	private EventAccueilService eventAccueilservice;
+	
 	private String statut;
 	private Date dateStart;
 	private Date dateEnd;
@@ -79,8 +83,6 @@ public class EventAccueilBean implements Serializable {
 		this.juryAnonyme = juryAnonyme;
 	}
 
-	@Autowired
-	private EventAccueilService eventAccueilservice;
 	
 	
 	
@@ -190,5 +192,29 @@ public class EventAccueilBean implements Serializable {
 	}
 	public void supprimerUtilisateur() {
 		// to do
+	}
+	public void buttonGrille() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+	}
+	public void buttonAttribution() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+	}
+	public void buttonAddJury() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+	}
+	public void buttonAddCandidat() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+	}
+	public void buttonExport() {
+		//to do
+		//eventAccueilservice.listJurysByEvent().
 	}
 }

@@ -8,4 +8,5 @@ import com.onek.model.Utilisateur;
 public interface EventAccueilDao {
 	public List<Candidat> listCandidatsByEvent(int idevent);
 	public List<Utilisateur> listJurysByEvent();
+	public List<Utilisateur> listJurysAnnonymesByEvent();
 }
