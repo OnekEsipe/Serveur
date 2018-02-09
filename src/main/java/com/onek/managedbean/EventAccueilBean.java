@@ -147,6 +147,12 @@ public class EventAccueilBean implements Serializable {
 		message = "Statut: " + statut + " dateStart:" + dateStart + " dateStartFORMATTE:" + sDate + " dateEnd:" + dateEnd + " timeStart:" + timeStart
 				+ " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
 	}
+	public void pageCandidat() {
 
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+	//	nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "addCandidates.xhtml", "addCandidates.xhtml".contains("?") ? "&" : "?"));
+		nh.handleNavigation(fc, null,"addCandidates.xhtml?faces-redirect=true");
+	}
 
 }
