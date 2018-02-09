@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.onek.model.Candidat;
+import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
 
 @Repository
@@ -37,14 +38,16 @@ public class EventAccueilDaoImpl implements EventAccueilDao, Serializable {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Utilisateur> listJurysByEvent() {
+	public List<Utilisateur> listJurysByEvent(int idevent) {
 		List<Utilisateur> utilisateurs = new ArrayList<>();
-
+		List<Jury> jurys = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		utilisateurs = (List<Utilisateur>) session.createQuery("from Utilisateur").list();
-
+		jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent").setParameter("idevent", idevent).list();
+		for (Jury jury : jurys) {
+			utilisateurs = (List<Utilisateur>) session.createQuery("from Utilisateur where iduser = :iduser").setParameter("iduser", jury.getUtilisateur().getIduser()).list();
+		}
 		session.getTransaction().commit();
 		session.close();
 		
@@ -52,18 +55,34 @@ public class EventAccueilDaoImpl implements EventAccueilDao, Serializable {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Utilisateur> listJurysAnnonymesByEvent() {
+	public List<Utilisateur> listJurysAnnonymesByEvent(int idevent) {
+		List<Utilisateur> utilisateurs = new ArrayList<>();
+		List<Jury> jurys = new ArrayList<>();
 		List<Utilisateur> utilisateursAnnonymes = new ArrayList<>();
-
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		utilisateursAnnonymes = (List<Utilisateur>) session.createQuery("from Utilisateur where ").list();
-
+		jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent").setParameter("idevent", idevent).list();
+		for (Jury jury : jurys) {
+			utilisateurs = (List<Utilisateur>) session.createQuery("from Utilisateur where iduser = :iduser").setParameter("iduser", jury.getUtilisateur().getIduser()).list();
+		}
+		for (Utilisateur utilisateur : utilisateurs) {
+			if(utilisateur.getIsanonym()) {
+				utilisateursAnnonymes.add(utilisateur);
+			}	
+		}
 		session.getTransaction().commit();
 		session.close();
 		
 		return utilisateursAnnonymes;
+	}
+	@Override
+	public void supprimerCandidat(int idcandidat) {
+		
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Candidat candidatSupprime = session.get(Candidat.class, idcandidat);
+		session.delete(candidatSupprime);
 	}
 
 }

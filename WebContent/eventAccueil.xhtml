@@ -71,9 +71,8 @@
 					widgetVar="candidatTable"
 					emptyMessage="aucun candidat trouvé avec ce nom"
 					filteredValue="#{eventAccueil.filteredcandidats}" scrollable="true"
-					scrollHeight="100" selectionMode="single"
-					selection="#{eventAccueil.selectedcandidat}"
-					rowKey="#{candidat.nom}">
+					scrollHeight="100" 
+					>
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
@@ -87,8 +86,7 @@
 						</p:outputPanel>
 					</f:facet>
 					<!-- ********fin*********** -->
-					<!-- des lignes cliquables dans le tableau -->
-					<p:ajax event="rowSelect" listener="#{accueil.onRowSelect}" />
+					
 					<!-- ********fin*********** -->
 
 					<p:column headerText="Nom" filterBy="#{candidat.nom}"
@@ -104,7 +102,6 @@
 					<p:column style="width:32px;text-align: center">
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
-							actionListener="#{eventAccueil.supprimerCandidat}"
 							update="message">
 							<p:confirm header="Confirmation"
 								message="vous voulez vraiment supprimer le candidat"
@@ -112,8 +109,9 @@
 						</p:commandButton>
 
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-							<p:commandButton value="Yes" type="button"
-								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="Yes" type="button" actionListener="#{eventAccueil.supprimerCandidat(candidat.idcandidat)}"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+								</p:commandButton>
 							<p:commandButton value="No" type="button"
 								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 						</p:confirmDialog>
@@ -144,8 +142,7 @@
 					widgetVar="utilisateurTable"
 					emptyMessage="aucun jury trouvé avec ce nom"
 					filteredValue="#{eventAccueil.filteredutilisateurs}"
-					scrollable="true" scrollHeight="100" selectionMode="single"
-					selection="#{eventAccueil.selectedutilisateur}"
+					scrollable="true" scrollHeight="100" 
 					rowKey="#{utilisateur.nom}">
 
 					<!-- barre de recherche -->
@@ -160,9 +157,7 @@
 						</p:outputPanel>
 					</f:facet>
 					<!-- ********fin*********** -->
-					<!-- des lignes cliquables dans le tableau -->
-					<p:ajax event="rowSelect" listener="#{accueil.onRowSelect}" />
-					<!-- ********fin*********** -->
+					
 
 					<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
 						filterMatchMode="startsWith" filterStyle="display:none">
@@ -207,7 +202,7 @@
 								min="0" max="100" size="1" />
 						</div>
 						<div class="ui-g-4">
-							<p:commandButton value="Ajouter" ajax="false" />
+							<p:commandButton value="Ajouter" ajax="false" actionListener="#{eventAccueil.addJuryAnonymeButton}"/>
 						</div>
 						<br />
 
