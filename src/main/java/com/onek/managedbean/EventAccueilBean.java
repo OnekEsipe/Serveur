@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +28,7 @@ public class EventAccueilBean implements Serializable {
 	private Date timeEnd;
 	private String message;
 	private int juryAnonyme;
-	
+
 	public int getJuryAnonyme() {
 		return juryAnonyme;
 	}
@@ -37,19 +39,19 @@ public class EventAccueilBean implements Serializable {
 
 	@Autowired
 	private EventAccueilService eventAccueilservice;
-	
+
 	private List<Candidat> candidats;
 	private Candidat candidat;
-	
+
 	private List<Utilisateur> utilisateurs;
 	private Utilisateur utilisateur;
-	
+
 	@PostConstruct
-    public void init() {
-      candidats = eventAccueilservice.listCandidatsByEvent(1);
-      utilisateurs = eventAccueilservice.listJurysByEvent();
-    }
-	
+	public void init() {
+		candidats = eventAccueilservice.listCandidatsByEvent(1);
+		utilisateurs = eventAccueilservice.listJurysByEvent();
+	}
+
 	public List<Utilisateur> getUtilisateurs() {
 		return utilisateurs;
 	}
@@ -129,7 +131,7 @@ public class EventAccueilBean implements Serializable {
 	public void setStatut(String statut) {
 		this.statut = statut;
 	}
-	
+
 	public void addJuryAnonymeButton() {
 		message = "Nombre de jury anonymes à ajouter : " + juryAnonyme;
 	}
@@ -138,11 +140,13 @@ public class EventAccueilBean implements Serializable {
 		// Pour test
 		DateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy");
 		String sDate = dfDate.format(dateStart);
-		
+
 		DateFormat dfTime = new SimpleDateFormat("HH:mm");
 		String sTime = dfTime.format(timeStart);
-		
+
 		message = "Statut: " + statut + " dateStart:" + dateStart + " dateStartFORMATTE:" + sDate + " dateEnd:" + dateEnd + " timeStart:" + timeStart
 				+ " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
 	}
+
+
 }

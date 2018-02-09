@@ -20,6 +20,8 @@
 	<br />
 	<br />
 	<div class="ui-g">
+			<h:commandButton value="Importer à partir d'un fichier" action="#{candidate.click}"
+					icon="ui-icon-check" />
 		<h:form>
 			<p:growl id="msgs" showDetail="true" />
 			<h3>Ajouter un nouvel candidat</h3>
@@ -39,15 +41,22 @@
 					icon="ui-icon-check" update="msgs" />
 			</h:panelGrid>
 		</h:form>
-		<p:outputLabel for="candidat"
-			value="Liste des candidats de l'évènement" />
-		<p:selectOneListbox id="candidat" value="#{candidate.candidat}"
-			filter="true" filterMatchMode="contains" scrollHeight="100">
-			<f:selectItems value="#{candidate.candidats}" var="candidat"
-				itemLabel="#{candidat.prenom} #{candidat.nom}"
-				itemValue="#{candidat}" />
-		</p:selectOneListbox>
-		<h:outputText id="errorCreationCandidate" value="#{candidate.logInfo}" />
+		<h:form>
+			<p:outputLabel for="candidat"
+				value="Liste des candidats de l'évènement" />
+			<br />
+			<p:selectOneListbox id="candidat" value="#{candidate.candidat}"
+				filter="true" filterMatchMode="contains" scrollHeight="100">
+				<f:selectItems value="#{candidate.candidats}" var="candidat"
+					itemLabel="#{candidat.prenom} #{candidat.nom}"
+					itemValue="#{candidat}" />
+			</p:selectOneListbox>
+		</h:form>
+		<br/>
+		<br/>
+		<div id="errorCreationCandidate">
+			<h:outputText value="#{candidate.logInfo}" />
+		</div>
 	</div>
 </h:body>
 </html>

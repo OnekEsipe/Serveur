@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
+import com.onek.model.Evenement;
 import com.onek.service.CandidateService;
 
 @Component("candidate")
@@ -42,6 +43,16 @@ public class CandidateBean implements Serializable{
     public void init() {
       candidats = candidateService.findCandidatesByEvent(idevent);
     }
+	
+	public void addCandidate() {
+		newCandidat = new Candidat();
+		newCandidat.setPrenom(firstName);
+		newCandidat.setNom(lastName);
+		Evenement event = new Evenement();
+		event.setIdevent(idevent);
+		newCandidat.setEvenement(event);
+		candidateService.addCandidate(newCandidat);
+	}
 	
 	public String getFirstName() {
 		return firstName;
@@ -87,10 +98,6 @@ public class CandidateBean implements Serializable{
 		logInfo = "Ajout ok";
 	}
 	
-	private void addCandidate() {
-		newCandidat = new Candidat();
-		newCandidat.setPrenom(firstName);
-		newCandidat.setNom(lastName);
-	}
+
 	
 }
