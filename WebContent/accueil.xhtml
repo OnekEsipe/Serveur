@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Home Onek</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+
+</h:head>
+
+<h:body>
+	<!-- Insertion du menu -->
+	<h:outputStylesheet library="css" name="accueil.css" />
+	<ui:include src="menu.xhtml" />
+	<br />
+	<br />
+
+	<!-- bouton création d'un événement -->
+	<div class="ui-g">
+		<div class="ui-g-12 ui-md-8"></div>
+		<div class="ui-g-12 ui-md-4">
+			<h:form>
+				<p:growl id="growl" life="4000" />
+
+				<p:commandButton value="Ajouter un événement" id="withIcon"
+					icon="ui-icon-plusthick" actionListener="#{accueil.buttonAction}"
+					styleClass="bigbutton" />
+			</h:form>
+		</div>
+	</div>
+	<!-- ********fin*********** -->
+	<!--  Tableau des événements -->
+	<div class="ui-g">
+		<h:form>
+			<p:dataTable var="event" value="#{accueil.events}"
+				widgetVar="eventTable"
+				emptyMessage="aucun événement trouvé avec ce nom"
+				filteredValue="#{accueil.filteredevents}" scrollable="true"
+				scrollHeight="400" selectionMode="single"
+				selection="#{accueil.selectedevent}" rowKey="#{event.nom}">
+
+				<!-- barre de recherche -->
+				<f:facet name="header">
+					<p:outputPanel>
+						<div>
+							<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+							<p:inputText id="globalFilter"
+								onkeyup="PF('eventTable').filter()" style="width:150px"
+								placeholder="Filtrer titre" />
+						</div>
+					</p:outputPanel>
+				</f:facet>
+				<!-- ********fin*********** -->
+				<!-- des lignes cliquables dans le tableau -->
+				<p:ajax event="rowSelect" listener="#{accueil.onRowSelect}" />
+				<!-- ********fin*********** -->
+
+				<p:column headerText="Titre événement" filterBy="#{event.nom}"
+					filterMatchMode="startsWith" filterStyle="display:none">
+					<h:outputText value="#{event.nom}" />
+				</p:column>
+
+				<p:column headerText="Statut">
+					<h:outputText value="#{event.status}" />
+				</p:column>
+
+				<p:column headerText="Date début">
+					<h:outputText value="#{event.datestart}" />
+				</p:column>
+
+				<p:column headerText="Date fin">
+					<h:outputText value="#{event.datestop}" />
+				</p:column>
+
+
+
+				<!-- ********la colonne supprimer*********** -->
+				<p:column style="width:32px;text-align: center">
+					<p:growl id="message" showDetail="true" />
+					<p:commandButton id="iconOnly" icon="ui-icon-trash"
+						actionListener="#{accueil.supprimerEvent}" update="message">
+						<p:confirm header="Confirmation"
+							message="vous voulez vraiment supprimer l'événement"
+							icon="ui-icon-trash" />
+					</p:commandButton>
+
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:column>
+				<!-- ********fin*********** -->
+			</p:dataTable>
+		</h:form>
+	</div>
+</h:body>
+</html>

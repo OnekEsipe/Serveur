@@ -26,6 +26,7 @@ public class Evenement implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer idevent;
 
 	private String code;
@@ -52,14 +53,14 @@ public class Evenement implements Serializable {
 	@OneToMany(mappedBy="evenement")
 	private List<Critere> criteres;
 
-	//bi-directional many-to-one association to Evaluation
-	@OneToMany(mappedBy="evenement")
-	private List<Evaluation> evaluations;
-
 	//bi-directional many-to-one association to Utilisateur
 	@ManyToOne
 	@JoinColumn(name="iduser")
 	private Utilisateur utilisateur;
+
+	//bi-directional many-to-one association to Jury
+	@OneToMany(mappedBy="evenement")
+	private List<Jury> jurys;
 
 	public Evenement() {
 	}
@@ -172,34 +173,34 @@ public class Evenement implements Serializable {
 		return critere;
 	}
 
-	public List<Evaluation> getEvaluations() {
-		return this.evaluations;
-	}
-
-	public void setEvaluations(List<Evaluation> evaluations) {
-		this.evaluations = evaluations;
-	}
-
-	public Evaluation addEvaluation(Evaluation evaluation) {
-		getEvaluations().add(evaluation);
-		evaluation.setEvenement(this);
-
-		return evaluation;
-	}
-
-	public Evaluation removeEvaluation(Evaluation evaluation) {
-		getEvaluations().remove(evaluation);
-		evaluation.setEvenement(null);
-
-		return evaluation;
-	}
-
 	public Utilisateur getUtilisateur() {
 		return this.utilisateur;
 	}
 
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+
+	public List<Jury> getJurys() {
+		return this.jurys;
+	}
+
+	public void setJurys(List<Jury> jurys) {
+		this.jurys = jurys;
+	}
+
+	public Jury addJury(Jury jury) {
+		getJurys().add(jury);
+		jury.setEvenement(this);
+
+		return jury;
+	}
+
+	public Jury removeJury(Jury jury) {
+		getJurys().remove(jury);
+		jury.setEvenement(null);
+
+		return jury;
 	}
 
 }

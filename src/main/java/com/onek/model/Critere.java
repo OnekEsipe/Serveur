@@ -1,15 +1,9 @@
 package com.onek.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 
 /**
@@ -23,11 +17,12 @@ public class Critere implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer idcritere;
 
 	private String categorie;
 
-	private Integer coefficient;
+	private BigDecimal coefficient;
 
 	private String texte;
 
@@ -63,11 +58,11 @@ public class Critere implements Serializable {
 		this.categorie = categorie;
 	}
 
-	public Integer getCoefficient() {
+	public BigDecimal getCoefficient() {
 		return this.coefficient;
 	}
 
-	public void setCoefficient(Integer coefficient) {
+	public void setCoefficient(BigDecimal coefficient) {
 		this.coefficient = coefficient;
 	}
 
