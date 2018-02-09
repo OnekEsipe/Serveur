@@ -50,7 +50,7 @@
 						<p:calendar id="timeEnd" value="#{eventAccueil.timeEnd}"
 							pattern="HH:mm" timeOnly="true" />
 
-						<p:commandButton value="Valider" id="nonAjax" ajax="false"
+						<p:commandButton value="Valider"  ajax="false"
 							actionListener="#{eventAccueil.eventUpdateButton}" />
 					</h:panelGrid>
 				</h:form>
@@ -126,12 +126,14 @@
 		<div class="ui-g-5">
 
 			<h:form>
+				<p:growl id="growl" life="2000" />
 				<div class="ui-g">
-					<div class="ui-g-12 ui-md-8"></div>
-					<div class="ui-g-12 ui-md-4">
+					<div class="ui-g-12 ui-md-6"></div>
+					<div class="ui-g-12 ui-md-6">
 						<p:commandButton value="jury" id="withIcon"
 							icon="ui-icon-plusthick" />
-						#{eventAccueil.message}
+						<p:commandButton id="iconOnly" update="growl"
+							icon="ui-icon-circle-arrow-s" title="Icon Only" />
 					</div>
 				</div>
 				<p:dataTable var="utilisateur" value="#{eventAccueil.utilisateurs}"
@@ -189,35 +191,33 @@
 				</p:dataTable>
 			</h:form>
 
-			<div class="ui-g-6">
-				<h:form>
-					<p:spacer width="0" height="50" />
-					<h:outputLabel for="juryAnonyme"
-						value="Ajouter des jurys anonymes : " />
-					<p:spacer width="10" />
-					<p:spinner id="juryAnonyme" value="#{eventAccueil.juryAnonyme}"
-						min="0" max="100" size="1" />
-					<p:spacer width="20" />
-					<p:commandButton value="Ajouter" id="nonAjax"
-						 ajax="false" />
-					<p:spacer width="20" />
-					<h:commandLink>
-						<p:graphicImage name="images/csv.png" />
-						<p:dataExporter type="csv" target="jury" fileName="jurysAnonymes"
-							pageOnly="true" />
-					</h:commandLink>
-					<br />
-					<p:spacer width="0" height="300" />
-					<p:commandButton value="Gérer la grille critériée" id="nonAjax"
-						ajax="false" />
 
-					<br />
-					<p:spacer width="0" height="30" />
-					<p:commandButton value="Gestion attribution Jury / Candidat"
-						id="nonAjax" ajax="false" />
+			<h:form>
+				<div class="ui-g-6">
+					<p:growl id="growl" life="2000" />
+					<div class="ui-g">
+						<div class="ui-g-8">
+							<h:outputLabel for="juryAnonyme"
+								value="Ajouter des jurys anonymes : " />
+							<p:spinner id="juryAnonyme" value="#{eventAccueil.juryAnonyme}"
+								min="0" max="100" size="1" />
+						</div>
+						<div class="ui-g-4">
+							<p:commandButton value="Ajouter"  ajax="false" />
+						</div>
+						<br />
 
-				</h:form>
-			</div>
+						<p:commandButton value="Gérer la grille critériée" 
+							ajax="false" />
+					</div>
+					<br />
+				</div>
+				<p:commandButton value="Gestion attribution Jury / Candidat"
+					ajax="false" />
+
+
+			</h:form>
+
 
 
 		</div>
