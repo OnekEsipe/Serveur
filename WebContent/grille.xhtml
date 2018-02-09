@@ -47,9 +47,6 @@
 					<td><p:inputText value="#{grille.texte1}" /></td>
 				</tr>
 			</table>
-			<div>
-				<h:commandButton value="Ajouter" action="#{grille.onClicAdd}" />
-			</div>
 			<table style="border:4px" >
 				<thead>B</thead>
 				<tr>
@@ -61,9 +58,6 @@
 					<td><p:inputText value="#{grille.texte2}" /></td>
 				</tr>
 			</table>
-			<div>
-				<h:commandButton value="Ajouter" action="#{grille.onClicAdd}" />
-			</div>
 			<table style="border:4px" >
 				<thead>C</thead>
 				<tr>
@@ -75,6 +69,8 @@
 					<td><p:inputText value="#{grille.texte3}" /></td>
 				</tr>
 			</table>
+			
+			<br />
 			<div>
 				<h:commandButton value="Ajouter" action="#{grille.onClicAdd}" />
 			</div>
@@ -84,9 +80,9 @@
 		<div>
 			#{grille.criteres}
 		</div>
-		<!-- <div>
+		<div>
 			<h:commandButton value="Enregistrer" action="#{grille.onClicSave}" />
-		</div> -->
+		</div>
 	</h:form>
 </h:body>
 
