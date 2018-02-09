@@ -17,6 +17,7 @@ public class Evaluation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer idevaluation;
 
 	private String commentaire;
@@ -31,15 +32,10 @@ public class Evaluation implements Serializable {
 	@JoinColumn(name="idcandidat")
 	private Candidat candidat;
 
-	//bi-directional many-to-one association to Evenement
+	//bi-directional many-to-one association to Jury
 	@ManyToOne
-	@JoinColumn(name="idevent")
-	private Evenement evenement;
-
-	//bi-directional many-to-one association to Utilisateur
-	@ManyToOne
-	@JoinColumn(name="idjury")
-	private Utilisateur utilisateur;
+	@JoinColumn(name="idjuryeval")
+	private Jury jury;
 
 	//bi-directional many-to-one association to Note
 	@OneToMany(mappedBy="evaluation")
@@ -88,20 +84,12 @@ public class Evaluation implements Serializable {
 		this.candidat = candidat;
 	}
 
-	public Evenement getEvenement() {
-		return this.evenement;
+	public Jury getJury() {
+		return this.jury;
 	}
 
-	public void setEvenement(Evenement evenement) {
-		this.evenement = evenement;
-	}
-
-	public Utilisateur getUtilisateur() {
-		return this.utilisateur;
-	}
-
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
+	public void setJury(Jury jury) {
+		this.jury = jury;
 	}
 
 	public List<Note> getNotes() {
