@@ -16,9 +16,12 @@ public class Utilisateur implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer iduser;
 
 	private String droits;
+
+	private Boolean isanonym;
 
 	private String login;
 
@@ -30,13 +33,13 @@ public class Utilisateur implements Serializable {
 
 	private String prenom;
 
-	//bi-directional many-to-one association to Evaluation
-	@OneToMany(mappedBy="utilisateur")
-	private List<Evaluation> evaluations;
-
 	//bi-directional many-to-one association to Evenement
 	@OneToMany(mappedBy="utilisateur")
 	private List<Evenement> evenements;
+
+	//bi-directional many-to-one association to Jury
+	@OneToMany(mappedBy="utilisateur")
+	private List<Jury> jurys;
 
 	public Utilisateur() {
 	}
@@ -55,6 +58,14 @@ public class Utilisateur implements Serializable {
 
 	public void setDroits(String droits) {
 		this.droits = droits;
+	}
+
+	public Boolean getIsanonym() {
+		return this.isanonym;
+	}
+
+	public void setIsanonym(Boolean isanonym) {
+		this.isanonym = isanonym;
 	}
 
 	public String getLogin() {
@@ -97,28 +108,6 @@ public class Utilisateur implements Serializable {
 		this.prenom = prenom;
 	}
 
-	public List<Evaluation> getEvaluations() {
-		return this.evaluations;
-	}
-
-	public void setEvaluations(List<Evaluation> evaluations) {
-		this.evaluations = evaluations;
-	}
-
-	public Evaluation addEvaluation(Evaluation evaluation) {
-		getEvaluations().add(evaluation);
-		evaluation.setUtilisateur(this);
-
-		return evaluation;
-	}
-
-	public Evaluation removeEvaluation(Evaluation evaluation) {
-		getEvaluations().remove(evaluation);
-		evaluation.setUtilisateur(null);
-
-		return evaluation;
-	}
-
 	public List<Evenement> getEvenements() {
 		return this.evenements;
 	}
@@ -139,6 +128,28 @@ public class Utilisateur implements Serializable {
 		evenement.setUtilisateur(null);
 
 		return evenement;
+	}
+
+	public List<Jury> getJurys() {
+		return this.jurys;
+	}
+
+	public void setJurys(List<Jury> jurys) {
+		this.jurys = jurys;
+	}
+
+	public Jury addJury(Jury jury) {
+		getJurys().add(jury);
+		jury.setUtilisateur(this);
+
+		return jury;
+	}
+
+	public Jury removeJury(Jury jury) {
+		getJurys().remove(jury);
+		jury.setUtilisateur(null);
+
+		return jury;
 	}
 
 }
