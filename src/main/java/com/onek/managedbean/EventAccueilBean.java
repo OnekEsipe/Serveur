@@ -24,6 +24,7 @@ public class EventAccueilBean implements Serializable {
 	@Autowired
 	private EventAccueilService eventAccueilservice;
 	
+	
 	private String statut;
 	private Date dateStart;
 	private Date dateEnd;
@@ -89,7 +90,7 @@ public class EventAccueilBean implements Serializable {
 	@PostConstruct
     public void init() {
       candidats = eventAccueilservice.listCandidatsByEvent(1);
-      utilisateurs = eventAccueilservice.listJurysByEvent();
+      utilisateurs = eventAccueilservice.listJurysByEvent(1);
     }
 	
 	public List<Utilisateur> getUtilisateurs() {
@@ -173,7 +174,7 @@ public class EventAccueilBean implements Serializable {
 	}
 	
 	public void addJuryAnonymeButton() {
-		message = "Nombre de jury anonymes à ajouter : " + juryAnonyme;
+		//to do
 	}
 
 	public void eventUpdateButton() {
@@ -187,8 +188,10 @@ public class EventAccueilBean implements Serializable {
 		message = "Statut: " + statut + " dateStart:" + dateStart + " dateStartFORMATTE:" + sDate + " dateEnd:" + dateEnd + " timeStart:" + timeStart
 				+ " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
 	}
-	public void supprimerCandidat() {
-		// to do
+	
+	public void supprimerCandidat(int idcandidat) {
+
+		eventAccueilservice.supprimerCandidat(idcandidat);
 	}
 	public void supprimerUtilisateur() {
 		// to do
@@ -217,4 +220,5 @@ public class EventAccueilBean implements Serializable {
 		//to do
 		//eventAccueilservice.listJurysByEvent().
 	}
+	
 }
