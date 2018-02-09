@@ -20,8 +20,9 @@
 	<br />
 	<br />
 	<div class="ui-g">
-			<h:commandButton value="Importer à partir d'un fichier" action="#{candidate.click}"
-					icon="ui-icon-check" />
+	<div><h:commandButton value="Importer à partir d'un fichier"	action="#{candidate.click}" icon="ui-icon-check" /> </div>
+
+			
 		<h:form>
 			<p:growl id="msgs" showDetail="true" />
 			<h3>Ajouter un nouvel candidat</h3>
@@ -37,26 +38,76 @@
 					placeholder="Entrer le prénom" size="20"
 					value="#{candidate.firstName}" />
 
-				<h:commandButton value="Valider" action="#{candidate.click}"
-					icon="ui-icon-check" update="msgs" />
+				<p:commandButton value="Valider" action="#{candidate.click}"
+					icon="ui-icon-check" update="tabCandidat" />
 			</h:panelGrid>
+
+			<div>
+				<!-- ************Tableau des candidat**************** -->
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-8"></div>
+					<div class="ui-g-12 ui-md-4"></div>
+				</div>
+				<p:dataTable id="tabCandidat" var="candidat"
+					value="#{candidate.candidats}" widgetVar="candidatTable"
+					emptyMessage="aucun candidat trouvé avec ce nom"
+					filteredValue="#{candidate.filteredcandidats}" scrollable="true"
+					scrollHeight="100">
+
+					<!-- barre de recherche -->
+					<f:facet name="header">
+						<p:outputPanel>
+							<div>
+								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+								<p:inputText id="globalFilter"
+									onkeyup="PF('candidatTable').filter()" style="width:150px"
+									placeholder="nom candidat" />
+							</div>
+						</p:outputPanel>
+					</f:facet>
+					<!-- ********fin*********** -->
+
+					<!-- ********fin*********** -->
+
+					<p:column headerText="Nom" filterBy="#{candidat.nom}"
+						filterMatchMode="startsWith" filterStyle="display:none">
+						<h:outputText value="#{candidat.nom}" />
+					</p:column>
+
+					<p:column headerText="prénom">
+						<h:outputText value="#{candidat.prenom}" />
+					</p:column>
+
+					<!-- ********la colonne supprimer*********** -->
+					<p:column style="width:32px;text-align: center">
+						<p:growl id="message" showDetail="true" />
+						<p:commandButton id="iconOnly" icon="ui-icon-trash"
+							update="message">
+							<p:confirm header="Confirmation"
+								message="vous voulez vraiment supprimer le candidat"
+								icon="ui-icon-trash" />
+						</p:commandButton>
+
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Yes" type="button"
+								actionListener="#{candidate.supprimerCandidat(candidat.idcandidat)}"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+							</p:commandButton>
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</p:confirmDialog>
+					</p:column>
+					<!-- ********fin*********** -->
+				</p:dataTable>
+			</div>
 		</h:form>
-		<h:form>
-			<p:outputLabel for="candidat"
-				value="Liste des candidats de l'évènement" />
-			<br />
-			<p:selectOneListbox id="candidat" value="#{candidate.candidat}"
-				filter="true" filterMatchMode="contains" scrollHeight="100">
-				<f:selectItems value="#{candidate.candidats}" var="candidat"
-					itemLabel="#{candidat.prenom} #{candidat.nom}"
-					itemValue="#{candidat}" />
-			</p:selectOneListbox>
-		</h:form>
-		<br/>
-		<br/>
-		<div id="errorCreationCandidate">
-			<h:outputText value="#{candidate.logInfo}" />
-		</div>
+	</div>
+
+
+	<br />
+	<br />
+	<div id="errorCreationCandidate">
+		<h:outputText value="#{candidate.logInfo}" />
 	</div>
 </h:body>
 </html>

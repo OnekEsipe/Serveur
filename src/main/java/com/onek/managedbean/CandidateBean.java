@@ -19,6 +19,8 @@ public class CandidateBean implements Serializable{
 	@Autowired
 	CandidateService candidateService;
 	
+	private List<Candidat> filteredcandidats;
+	
 	private String firstName;
 	private String lastName;
 	private int idevent = 1; /* pour les tests*/
@@ -88,6 +90,15 @@ public class CandidateBean implements Serializable{
 	public void setCandidat(Candidat candidat) {
 		this.candidat = candidat;
 	}
+	
+	public List<Candidat> getFilteredcandidats() {
+		return filteredcandidats;
+	}
+
+	public void setFilteredcandidats(List<Candidat> filteredcandidats) {
+		this.filteredcandidats = filteredcandidats;
+	}
+
 	public void click() {
 		
 		if(firstName.isEmpty() || lastName.isEmpty()) {

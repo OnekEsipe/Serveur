@@ -214,7 +214,7 @@ public class EventAccueilBean implements Serializable {
 	public void buttonAddCandidat() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "addCandidates.xhtml", "addCandidates.xhtml".contains("?") ? "&" : "?"));
 	}
 	public void buttonExport() {
 		//to do
