@@ -14,12 +14,16 @@
 </h:head>
 
 <h:body>
+	<!-- Insertion du menu -->
+	<h:outputStylesheet library="css" name="accueil.css" />
+	<ui:include src="menu.xhtml" />
+	<br />
+	<br />
 	
 	<h2>Creer un nouvel evenement</h2>
 	<div id="formdiv">
 		<h:form >
 
-			<!-- Inputs of date -->
 			<p:growl id="msgs" showDetail="true" />
 
 			<h:panelGrid columns="2" cellpadding="5">
