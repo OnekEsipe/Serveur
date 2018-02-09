@@ -1,7 +1,7 @@
 package com.onek.resource;
 
 import java.io.Serializable;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Date;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import com.onek.model.Evenement;
 
 public class EvenementResource implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+	private static final SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
 	@JsonProperty("Id")
 	private final Integer idEvent;
@@ -40,9 +40,8 @@ public class EvenementResource implements Serializable {
 	@JsonProperty("Jurys")
 	private List<JuryResource> jurys;
 
-	// TODO complete this when json format evaluation will be defined
 	@JsonProperty("Evaluations")
-	private final List<Evaluation> evaluations = new ArrayList<>();
+	private final List<EvaluationResource> evaluations = new ArrayList<>();
 
 	public EvenementResource(Evenement evenement) {
 		idEvent = evenement.getIdevent();
@@ -54,6 +53,9 @@ public class EvenementResource implements Serializable {
 		for (Critere critere : evenement.getCriteres()) {
 			criteres.add(new CritereResource(critere));
 		}
+		for(Evaluation evaluation : evenement.getEvaluations()) {
+			evaluations.add(new EvaluationResource(evaluation));
+		}		
 	}
 
 	public void setJurys(List<JuryResource> jurys) {
@@ -62,12 +64,12 @@ public class EvenementResource implements Serializable {
 
 	@JsonProperty("Begin")
 	public String getDateStart() {
-		return dateFormat.format(dateStart);
+		return formater.format(dateStart);
 	}
 
 	@JsonProperty("End")
 	public String getDateStop() {
-		return dateFormat.format(dateStop);
+		return formater.format(dateStop);
 	}
 
 }

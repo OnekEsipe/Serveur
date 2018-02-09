@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.service.ApplicationService;
 
@@ -26,10 +28,11 @@ public class ApplicationController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
-	@RequestMapping(value = "/events/{idEvent}/evaluation", method = RequestMethod.POST)
-	public ResponseEntity<String> evaluation(@PathVariable String idEvent/*, @RequestBody Evaluation evaluation*/) {
-		System.out.println(idEvent);
-		return ResponseEntity.status(HttpStatus.OK).build();
+	/* evaluation */
+	@RequestMapping(value = "/evaluation", method = RequestMethod.POST)
+	public ResponseEntity<?> evaluation(@RequestBody EvaluationResource evaluation) {
+		System.out.println(evaluation.getDateLastChange());
+		return new ResponseEntity<EvaluationResource>(evaluation, HttpStatus.OK);
 	}
 	
 	/* event export */
