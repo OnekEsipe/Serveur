@@ -31,8 +31,6 @@ public class GrilleBean {
 		for (int i = 0; i < 6; i++) {
 			numbers.add(i);
 		}
-		event = (Evenement) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("event");
-		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().remove("event");
 	}
 
 	private int nbDescripteur;
@@ -53,54 +51,55 @@ public class GrilleBean {
 	private String texte5;
 
 	public void onClicAdd() {
-		Critere c = new Critere();
-		c.setEvenement(event);
-		c.setCategorie(categorie);
-		c.setCoefficient(coefficient);
-		c.setTexte(nom);
-		Descripteur d;
-		if (poids1 != 0 && texte1 != null) {
-			d = new Descripteur();
-			d.setNiveau('A');
-			d.setPoids(poids1);
-			d.setTexte(texte1);
-			d.setCritere(c);
-			c.addDescripteur(d);
-		}
-		if (poids2 != 0 && texte2 != null) {
-			d = new Descripteur();
-			d.setNiveau('B');
-			d.setPoids(poids2);
-			d.setTexte(texte2);
-			d.setCritere(c);
-			c.addDescripteur(d);
-		}
-		if (poids3 != 0 && texte3 != null) {
-			d = new Descripteur();
-			d.setNiveau('C');
-			d.setPoids(poids3);
-			d.setTexte(texte3);
-			d.setCritere(c);
-			c.addDescripteur(d);
-		}
-		if (poids4 != 0 && texte4 != null) {
-			d = new Descripteur();
-			d.setNiveau('D');
-			d.setPoids(poids4);
-			d.setTexte(texte4);
-			d.setCritere(c);
-			c.addDescripteur(d);
-		}
-		if (poids5 != 0 && texte5 != null) {
-			d = new Descripteur();
-			d.setNiveau('E');
-			d.setPoids(poids5);
-			d.setTexte(texte5);
-			d.setCritere(c);
-			c.addDescripteur(d);
-		}
-		criteres.add(c);
-		resetValues();
+		event = (Evenement) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("event");
+//		Critere c = new Critere();
+//		c.setEvenement(event);
+//		c.setCategorie(categorie);
+//		c.setCoefficient(coefficient);
+//		c.setTexte(nom);
+//		Descripteur d;
+//		if (poids1 != 0 && texte1 != null) {
+//			d = new Descripteur();
+//			d.setNiveau('A');
+//			d.setPoids(poids1);
+//			d.setTexte(texte1);
+//			d.setCritere(c);
+//			c.addDescripteur(d);
+//		}
+//		if (poids2 != 0 && texte2 != null) {
+//			d = new Descripteur();
+//			d.setNiveau('B');
+//			d.setPoids(poids2);
+//			d.setTexte(texte2);
+//			d.setCritere(c);
+//			c.addDescripteur(d);
+//		}
+//		if (poids3 != 0 && texte3 != null) {
+//			d = new Descripteur();
+//			d.setNiveau('C');
+//			d.setPoids(poids3);
+//			d.setTexte(texte3);
+//			d.setCritere(c);
+//			c.addDescripteur(d);
+//		}
+//		if (poids4 != 0 && texte4 != null) {
+//			d = new Descripteur();
+//			d.setNiveau('D');
+//			d.setPoids(poids4);
+//			d.setTexte(texte4);
+//			d.setCritere(c);
+//			c.addDescripteur(d);
+//		}
+//		if (poids5 != 0 && texte5 != null) {
+//			d = new Descripteur();
+//			d.setNiveau('E');
+//			d.setPoids(poids5);
+//			d.setTexte(texte5);
+//			d.setCritere(c);
+//			c.addDescripteur(d);
+//		}
+//		criteres.add(c);
+//		resetValues();
 	}
 
 	private void resetValues() {
@@ -121,7 +120,7 @@ public class GrilleBean {
 
 	public void onClicSave() {
 		grille.addCriteres(criteres);
-		
+		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().remove("event");
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nh = fc.getApplication().getNavigationHandler();
 		nh.handleNavigation(fc, null,

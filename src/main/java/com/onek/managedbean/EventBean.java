@@ -23,8 +23,8 @@ public class EventBean implements Serializable {
 	private Date date2;					//format => dd-MM-yyy
 	private Date hour1;					//format => HH:mm
 	private Date hour2;					//format => HH:mm
-	private boolean isOpened = true;    //Default value
-	private boolean issigned = true;    //Default value
+	private boolean isOpened;    		//Default value
+	private boolean isSigned;    		//Default value
 	private String status="Brouillon";	//Default state
 	private String logInfo;
 	private String debug;
@@ -38,7 +38,7 @@ public class EventBean implements Serializable {
 		event.setDatestart(new Date(date1.getTime()+hour1.getTime()));
 		event.setDatestop(new Date(date2.getTime()+hour2.getTime()));
 		event.setIsopened(isOpened);
-		event.setIssigned(issigned);
+		event.setIssigned(isSigned);
 		event.setStatus(status);
 		evenementService.addEvenement(event);
 	}
@@ -101,12 +101,12 @@ public class EventBean implements Serializable {
 		this.isOpened = isOpened;
 	}
 
-	public boolean isIssigned() {
-		return issigned;
+	public boolean isIsSigned() {
+		return isSigned;
 	}
 
-	public void setIssigned(boolean issigned) {
-		this.issigned = issigned;
+	public void setIsSigned(boolean issigned) {
+		this.isSigned = issigned;
 	}	
 	
 	public void click() {
