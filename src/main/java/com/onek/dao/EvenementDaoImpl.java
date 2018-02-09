@@ -18,8 +18,7 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 
 	@Override
 	public void addEvenement(Evenement event) {
-		System.out.println("DAO called - insert of : " + event.getNom());
-
+		
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.save(event);
