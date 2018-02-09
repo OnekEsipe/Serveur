@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
+import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
 import com.onek.service.EventAccueilService;
 
@@ -27,6 +28,49 @@ public class EventAccueilBean implements Serializable {
 	private String message;
 	private int juryAnonyme;
 	
+	private List<Candidat> filteredcandidats;
+	private Candidat selectedcandidat ;
+	private List<Candidat> candidats;
+	private Candidat candidat;
+	
+	private List<Utilisateur> utilisateurs;
+	private Utilisateur utilisateur;
+	private List<Utilisateur> filteredutilisateurs;
+	private Utilisateur selectedutilisateur;
+	
+	
+	public List<Utilisateur> getFilteredutilisateurs() {
+		return filteredutilisateurs;
+	}
+
+	public void setFilteredutilisateurs(List<Utilisateur> filteredutilisateurs) {
+		this.filteredutilisateurs = filteredutilisateurs;
+	}
+
+	public Utilisateur getSelectedutilisateur() {
+		return selectedutilisateur;
+	}
+
+	public void setSelectedutilisateur(Utilisateur selectedutilisateur) {
+		this.selectedutilisateur = selectedutilisateur;
+	}
+
+	public List<Candidat> getFilteredcandidats() {
+		return filteredcandidats;
+	}
+
+	public void setFilteredcandidats(List<Candidat> filteredcandidats) {
+		this.filteredcandidats = filteredcandidats;
+	}
+
+	public Candidat getSelectedcandidat() {
+		return selectedcandidat;
+	}
+
+	public void setSelectedcandidat(Candidat selectedcandidat) {
+		this.selectedcandidat = selectedcandidat;
+	}
+
 	public int getJuryAnonyme() {
 		return juryAnonyme;
 	}
@@ -38,11 +82,7 @@ public class EventAccueilBean implements Serializable {
 	@Autowired
 	private EventAccueilService eventAccueilservice;
 	
-	private List<Candidat> candidats;
-	private Candidat candidat;
 	
-	private List<Utilisateur> utilisateurs;
-	private Utilisateur utilisateur;
 	
 	@PostConstruct
     public void init() {
@@ -144,5 +184,11 @@ public class EventAccueilBean implements Serializable {
 		
 		message = "Statut: " + statut + " dateStart:" + dateStart + " dateStartFORMATTE:" + sDate + " dateEnd:" + dateEnd + " timeStart:" + timeStart
 				+ " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
+	}
+	public void supprimerCandidat() {
+		// to do
+	}
+	public void supprimerUtilisateur() {
+		// to do
 	}
 }
