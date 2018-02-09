@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Onek team</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+</h:head>
+
+<h:body>
+	<!-- Insertion du menu -->
+
+	<ui:include src="menu.xhtml" />
+	<br />
+	<br />
+
+	<h:form >
+		<p:pickList id="PojoPickList" value="#{attribJury.cities}"
+			var="cities" itemValue="#{cities}" itemLabel="#{cities}"
+			showCheckbox="true" responsive="true" showSourceFilter="true"
+			showTargetFilter="true" filterMatchMode="contains">
+
+			<f:facet name="sourceCaption">Available</f:facet>
+			<f:facet name="targetCaption">Starting</f:facet>
+
+			<p:column style="width:10%">
+				<h:outputText value="#{cities}" />
+			</p:column>
+
+			<p:column style="width:90%;">
+				<h:outputText value="#{cities}" />
+			</p:column>
+		</p:pickList>
+
+		<p:commandButton id="pojoSubmit" value="Submit" style="margin-top:5px" />
+	</h:form>
+</h:body>
+</html>

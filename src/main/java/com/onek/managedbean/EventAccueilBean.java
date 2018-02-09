@@ -89,8 +89,8 @@ public class EventAccueilBean implements Serializable {
 	
 	@PostConstruct
     public void init() {
-      candidats = eventAccueilservice.listCandidatsByEvent(1);
-      utilisateurs = eventAccueilservice.listJurysByEvent(1);
+     // candidats = eventAccueilservice.listCandidatsByEvent(1);
+     // utilisateurs = eventAccueilservice.listJurysByEvent(1);
     }
 	
 	public List<Utilisateur> getUtilisateurs() {
