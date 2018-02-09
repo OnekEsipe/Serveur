@@ -141,22 +141,4 @@ public class Utilisateur implements Serializable {
 		return evenement;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (o == null || !(o instanceof Utilisateur)) {
-			return false;
-		}
-		
-		Utilisateur user = (Utilisateur) o;		
-		return user.login.equals(login);
-	}	
-
 }
