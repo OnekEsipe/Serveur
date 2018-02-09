@@ -2,6 +2,9 @@ package com.onek.managedbean;
 
 import java.io.Serializable;
 
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -52,17 +55,22 @@ public class LoginBean implements Serializable {
 	}
 
 	public void buttonAction() {
-		// to do
-		// il faut vérifier login mdp avec la BD
+		
 		message = "utilisateur ou mot de passe incorrect";
-		if (loginservice.userExist(login)) {
+		// Code commenté en attendant l'implémentation de Utilisateur
+		/*if (loginservice.userExist(login)) {
 			if (motDePasse.equals(loginservice.findUserByLogin(login).getMotdepasse())) {
 				if (loginservice.findUserByLogin(login).getDroits().equals("A")
 						|| loginservice.findUserByLogin(login).getDroits().equals("O")) {
 					message = "connexion réussie";
 				}
 			}
-		}
+		}*/
+
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "accueil.xhtml",
+				"accueil.xhtml".contains("?") ? "&" : "?"));
 
 	}
 

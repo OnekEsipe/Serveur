@@ -18,17 +18,15 @@ public class LoginDaoImpl implements LoginDao, Serializable {
 
 	@Override
 	public Utilisateur findUserByLogin(String login) {
-		Utilisateur user = new Utilisateur();
-
 		Session session = sessionFactory.openSession();
         session.beginTransaction();
-        user = (Utilisateur) session.createQuery("from Utilisateur where login = :login").setParameter("login", login).getSingleResult();
+        Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where login = :login").setParameter("login", login).getSingleResult();
         session.getTransaction().commit();
         session.close();
-        
-		//System.out.println("Find done - firstName: " + user.getFirstName());
+      
 		return user;
 	}
+	
 	@Override
 	public boolean userExist(String login) {
 		Session session = sessionFactory.openSession();
@@ -36,6 +34,7 @@ public class LoginDaoImpl implements LoginDao, Serializable {
         long result = (Long) session.createQuery("SELECT COUNT(e) from Utilisateur e WHERE e.login =:login").setParameter("login", login).getSingleResult();
         session.getTransaction().commit();
         session.close();
+        
         return result==1;
 	}
 

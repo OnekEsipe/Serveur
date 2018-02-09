@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import com.onek.dao.LoginDao;
 import com.onek.model.Utilisateur;
 
-
 @Service
 public class LoginServiceImpl implements LoginService, Serializable{
 	private static final long serialVersionUID = 1L;
+	
 	@Autowired
 	private LoginDao logindao;
 
@@ -19,6 +19,7 @@ public class LoginServiceImpl implements LoginService, Serializable{
 	public Utilisateur findUserByLogin(String login) {
 		return logindao.findUserByLogin(login);
 	}
+	
 	@Override
 	public boolean userExist(String login) {
 		return logindao.userExist(login);
