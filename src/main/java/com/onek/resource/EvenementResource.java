@@ -2,14 +2,13 @@ package com.onek.resource;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.onek.model.Critere;
-import com.onek.model.Evaluation;
 import com.onek.model.Evenement;
 
 public class EvenementResource implements Serializable {
@@ -41,7 +40,7 @@ public class EvenementResource implements Serializable {
 	private List<JuryResource> jurys;
 
 	@JsonProperty("Evaluations")
-	private final List<EvaluationResource> evaluations = new ArrayList<>();
+	private List<EvaluationResource> evaluations;
 
 	public EvenementResource(Evenement evenement) {
 		idEvent = evenement.getIdevent();
@@ -53,13 +52,14 @@ public class EvenementResource implements Serializable {
 		for (Critere critere : evenement.getCriteres()) {
 			criteres.add(new CritereResource(critere));
 		}
-		for(Evaluation evaluation : evenement.getEvaluations()) {
-			evaluations.add(new EvaluationResource(evaluation));
-		}		
 	}
 
 	public void setJurys(List<JuryResource> jurys) {
 		this.jurys = jurys;
+	}
+	
+	public void setEvaluations(List<EvaluationResource> evaluations) {
+		this.evaluations = evaluations;
 	}
 
 	@JsonProperty("Begin")

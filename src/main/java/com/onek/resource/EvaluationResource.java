@@ -44,8 +44,8 @@ public class EvaluationResource implements Serializable {
 	
 	public EvaluationResource(Evaluation evaluation) {
 		idEvaluation = evaluation.getIdevaluation();
-		idJury = evaluation.getUtilisateur().getIduser();
-		idEvent = evaluation.getEvenement().getIdevent();
+		idJury = evaluation.getJury().getUtilisateur().getIduser();
+		idEvent = evaluation.getJury().getEvenement().getIdevent();
 		idCandidate = evaluation.getCandidat().getIdcandidat();
 		comment = evaluation.getCommentaire();	
 		lastUpdatedDate = evaluation.getDatedernieremodif();

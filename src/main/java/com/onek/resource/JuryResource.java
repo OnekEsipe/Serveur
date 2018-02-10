@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.onek.model.Utilisateur;
+import com.onek.model.Jury;
 
 public class JuryResource implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -21,10 +21,10 @@ public class JuryResource implements Serializable {
 	@JsonProperty("Candidates")
 	private List<CandidatResource> candidats;
 	
-	public JuryResource(Utilisateur user) {
-		idJury = user.getIduser();
-		nom = user.getNom();
-		prenom = user.getPrenom();
+	public JuryResource(Jury jury) {
+		idJury = jury.getIdjury();
+		nom = jury.getUtilisateur().getNom();
+		prenom = jury.getUtilisateur().getPrenom();
 	}
 	
 	public void setCandidates(List<CandidatResource> candidats) {

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.onek.model.Critere;
-import com.onek.model.Evaluation;
 import com.onek.model.Evenement;
 
 @Repository
@@ -45,13 +44,7 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
         List<Critere> criteres = event.getCriteres();
         for(Critere c : criteres) {
         	Hibernate.initialize(c.getDescripteurs());
-        }
-        
-        Hibernate.initialize(event.getEvaluations());
-        List<Evaluation> evaluations = event.getEvaluations();
-        for(Evaluation evaluation : evaluations) {
-        	Hibernate.initialize(evaluation.getNotes());
-        }
+        }    
         
         session.getTransaction().commit();
         session.close();

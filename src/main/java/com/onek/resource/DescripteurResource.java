@@ -9,7 +9,7 @@ public class DescripteurResource implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonProperty("Level")
-	private Integer niveau;
+	private String niveau;
 
 	@JsonProperty("Text")
 	private String texte;
@@ -24,7 +24,7 @@ public class DescripteurResource implements Serializable {
 		texte = descripteur.getTexte();
 	}	
 	
-	public Integer getNiveau() {
+	public String getNiveau() {
 		return niveau;
 	}	
 

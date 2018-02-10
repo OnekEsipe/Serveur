@@ -30,8 +30,7 @@ public class ApplicationController {
 	
 	/* evaluation */
 	@RequestMapping(value = "/evaluation", method = RequestMethod.POST)
-	public ResponseEntity<?> evaluation(@RequestBody EvaluationResource evaluation) {
-		System.out.println(evaluation.getDateLastChange());
+	public ResponseEntity<?> evaluation(@RequestBody EvaluationResource evaluation) {		
 		return new ResponseEntity<EvaluationResource>(evaluation, HttpStatus.OK);
 	}
 	
