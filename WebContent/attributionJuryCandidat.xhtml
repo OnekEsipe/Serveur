@@ -21,14 +21,12 @@
 	<div class="ui-g">
 		<div class="ui-g-6">
 
-
-
-			<p:dataTable id="checkboxDT" var="utilisateur"
-				value="#{addjury.utilisateursAll}"
-				selection="#{addjury.selectedutilisateurs}"
+			<p:dataTable id="radioDT" var="utilisateur"
+				value="#{attributionjc.utilisateurs}"
+				selection="#{attributionjc.selectedutilisateurs}"
 				rowKey="#{utilisateur.nom}" style="margin-bottom:0"
-				scrollable="true" scrollHeight="100" widgetVar="utilisateurallTable"
-				filteredValue="#{addjury.filteredutilisateurs}"
+				scrollable="true" scrollHeight="100" widgetVar="utilisateurTable"
+				filteredValue="#{attributionjc.filteredutilisateurs}"
 				emptyMessage="aucun jury trouvé avec ce nom">
 
 				<f:facet name="header">
@@ -36,12 +34,12 @@
 						<div>
 							<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
 							<p:inputText id="globalFilter"
-								onkeyup="PF('utilisateurallTable').filter()" style="width:150px"
+								onkeyup="PF('utilisateurTable').filter()" style="width:150px"
 								placeholder="nom jury" />
 						</div>
 					</p:outputPanel>
 				</f:facet>
-				<p:column selectionMode="multiple"
+				<p:column selectionMode="single"
 					style="width:16px;text-align:center" />
 				<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
 					filterMatchMode="startsWith" filterStyle="display:none">
@@ -53,51 +51,47 @@
 			</p:dataTable>
 
 		</div>
-		<!-- ************Tableau des Jurys**************** -->
+		
 		<div class="ui-g-1"></div>
 		<div class="ui-g-5">
 
-			<h:form>
-
-				<p:dataTable var="utilisateur" value="#{addjury.utilisateurs}"
-					widgetVar="utilisateurTable"
-					
-					 scrollable="true"
-					scrollHeight="100" rowKey="#{utilisateur.nom}">
+			<!-- ************Tableau des candidat**************** -->
+			<h:form>				
+				<p:dataTable id="checkboxDT" var="candidat" value="#{attributionjc.candidats}"
+					widgetVar="candidatTable"
+					selection="#{attributionjc.selectedcandidats}"
+					rowKey="#{candidat.nom}"
+					filteredValue="#{attributionjc.filteredcandidats}"
+					emptyMessage="aucun candidat trouvé avec ce nom"
+					scrollable="true"
+					scrollHeight="100" 
+					>
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
-						Listes des jurys de l'événement
+						<p:outputPanel>
+							<div>
+								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+								<p:inputText id="globalFilter"
+									onkeyup="PF('candidatTable').filter()" style="width:150px"
+									placeholder="nom candidat" />
+							</div>
+						</p:outputPanel>
 					</f:facet>
 					<!-- ********fin*********** -->
-
-
-					<p:column headerText="Nom">
-						<h:outputText value="#{utilisateur.nom}" />
+					
+					<!-- ********fin*********** -->
+					<p:column selectionMode="multiple"
+					style="width:16px;text-align:center" />
+					<p:column headerText="Nom" filterBy="#{candidat.nom}"
+						filterMatchMode="startsWith" filterStyle="display:none">
+						<h:outputText value="#{candidat.nom}" />
 					</p:column>
 
 					<p:column headerText="prénom">
-						<h:outputText value="#{utilisateur.prenom}" />
+						<h:outputText value="#{candidat.prenom}" />
 					</p:column>
 
-					<!-- ********la colonne supprimer*********** -->
-					<p:column style="width:32px;text-align: center">
-						<p:growl id="message" showDetail="true" />
-						<p:commandButton id="iconOnly" icon="ui-icon-trash"
-							update="message">
-							<p:confirm header="Confirmation"
-								message="vous voulez vraiment supprimer le jury"
-								icon="ui-icon-trash" />
-						</p:commandButton>
-
-						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-							<p:commandButton value="Yes" type="button"
-								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-							<p:commandButton value="No" type="button"
-								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-						</p:confirmDialog>
-					</p:column>
-					<!-- ********fin*********** -->
 				</p:dataTable>
 			</h:form>
 			<br />
@@ -106,7 +100,7 @@
 			<div class="ui-g-6">
 			<h:form>
 				<p:commandButton value="Valider"
-					actionListener="#{addjury.buttonActionValider}" ajax="false" />
+					actionListener="#{attributionjc.buttonActionValider}" ajax="false" />
 			</h:form>
 			</div>
 		</div>
