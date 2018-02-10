@@ -2,7 +2,6 @@ package com.onek.managedbean;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -59,8 +58,7 @@ public class GrilleBean {
 	public void onClicAdd() {
 		Navigation navigation = new Navigation();
 		String idEvent = navigation.getURLParameter("id");
-		Evenement event = new Evenement();
-		//INSERER ICI LA RECUPERATION D'UN EVENEMENT PAR SON ID
+		Evenement event = evenement.findById(Integer.parseInt(idEvent));
 		Critere c = new Critere();
 		c.setDescripteurs(new ArrayList<>());
 		c.setEvenement(event);
