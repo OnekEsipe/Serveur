@@ -8,4 +8,5 @@ public interface AddJuryDao {
 	public List<Utilisateur> listJurysByEvent(int idevent);
 	public List<Utilisateur> listJurysAll();
 	public List<Utilisateur> listJurysAnnonymesByEvent(int idevent);
+	public void supprimerUtilisateur(int iduser);
 }

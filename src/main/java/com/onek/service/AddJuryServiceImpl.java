@@ -27,4 +27,7 @@ private static final long serialVersionUID = 1L;
 	public List<Utilisateur> listJurysAll(){
 		return addjuryDao.listJurysAll();
 	}
+	public void supprimerUtilisateur(int iduser) {
+		addjuryDao.supprimerUtilisateur(iduser);
+	}
 }

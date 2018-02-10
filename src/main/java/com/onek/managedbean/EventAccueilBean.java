@@ -196,6 +196,8 @@ public class EventAccueilBean implements Serializable {
 		int idcandidat = Integer.valueOf(params.get("idcandidat"));
         
 		eventAccueilservice.supprimerCandidat(idcandidat);
+		candidats = eventAccueilservice.listCandidatsByEvent(1);
+	      
 	}
 	
 	public void supprimerUtilisateur() {
@@ -204,6 +206,7 @@ public class EventAccueilBean implements Serializable {
 		int iduser = Integer.valueOf(params.get("iduser"));
         
 		eventAccueilservice.supprimerUtilisateur(iduser);
+		utilisateurs = eventAccueilservice.listJurysByEvent(1);
 	}
 	public void buttonGrille() {
 		FacesContext fc = FacesContext.getCurrentInstance();
