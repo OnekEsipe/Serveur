@@ -2,8 +2,10 @@ package com.onek.managedbean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -62,6 +64,14 @@ public class AddJuryBean implements Serializable  {
       utilisateursAll = addjuryservice.listJurysAll();
     }
 
+	public void supprimerUtilisateur() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		int iduser = Integer.valueOf(params.get("iduser"));
+        
+		addjuryservice.supprimerUtilisateur(iduser);
+		utilisateurs = addjuryservice.listJurysByEvent(1);
+	}
 	public void buttonActionValider() {
 		//to do
 	}

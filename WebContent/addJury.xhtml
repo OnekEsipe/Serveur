@@ -84,10 +84,12 @@
 					<p:column style="width:32px;text-align: center">
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
-							update="message">
+							 actionListener="#{addjury.supprimerUtilisateur}" ajax="true"
+							 update ="@(form)">
 							<p:confirm header="Confirmation"
 								message="vous voulez vraiment supprimer le jury"
 								icon="ui-icon-trash" />
+								<f:param name="iduser" value="#{utilisateur.iduser}" />
 						</p:commandButton>
 
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

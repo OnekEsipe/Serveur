@@ -29,7 +29,9 @@ public class AddJuryDaoImpl implements AddJuryDao, Serializable{
 
 		jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent").setParameter("idevent", idevent).list();
 		for (Jury jury : jurys) {
-			utilisateurs = (List<Utilisateur>) session.createQuery("from Utilisateur where iduser = :iduser").setParameter("iduser", jury.getUtilisateur().getIduser()).list();
+			Utilisateur u = (Utilisateur)session.createQuery("from Utilisateur where iduser = :iduser")
+					.setParameter("iduser", jury.getUtilisateur().getIduser()).getSingleResult();
+			utilisateurs.add(u);
 		}
 		session.getTransaction().commit();
 		session.close();
@@ -71,5 +73,15 @@ public class AddJuryDaoImpl implements AddJuryDao, Serializable{
 		session.close();
 		
 		return utilisateurs;
+	}
+	@Override
+	public void supprimerUtilisateur(int iduser) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Utilisateur utilisateurSupprime = session.get(Utilisateur.class, iduser);
+		session.createQuery("delete from Jury where iduser = :iduser")
+				.setParameter("iduser", utilisateurSupprime.getIduser()).executeUpdate();
+		session.getTransaction().commit();
+		session.close();
 	}
 }
