@@ -2,6 +2,7 @@ package com.onek.managedbean;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,19 +15,22 @@ import org.springframework.stereotype.Component;
 import com.onek.model.Critere;
 import com.onek.model.Descripteur;
 import com.onek.model.Evenement;
+import com.onek.service.EvenementService;
 import com.onek.service.GrilleService;
+import com.onek.utils.Navigation;
 
 @Component("grille")
 public class GrilleBean {
 	
 	@Autowired
 	GrilleService grille;
+	
+	@Autowired
+	EvenementService evenement;
 
 	private List<Critere> criteres = new ArrayList<>();
 	private List<Integer> numbers = new ArrayList<>();
-	
-	private Evenement event;
-	private final BigDecimal ref = new BigDecimal(0);
+	private final BigDecimal ref = new BigDecimal(1);
 
 	@PostConstruct
 	public void postInit() {
@@ -53,14 +57,18 @@ public class GrilleBean {
 	private String texte5;
 
 	public void onClicAdd() {
-		event = (Evenement) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("event");
+		Navigation navigation = new Navigation();
+		String idEvent = navigation.getURLParameter("id");
+		Evenement event = new Evenement();
+		//INSERER ICI LA RECUPERATION D'UN EVENEMENT PAR SON ID
 		Critere c = new Critere();
+		c.setDescripteurs(new ArrayList<>());
 		c.setEvenement(event);
 		c.setCategorie(categorie);
 		c.setCoefficient(coefficient);
 		c.setTexte(nom);
 		Descripteur d;
-		if (poids1.compareTo(ref) > 0 && texte1 != null) {
+		if (texte1 != null && !texte1.isEmpty() && poids1 != null && poids1.compareTo(ref) > 0) {
 			d = new Descripteur();
 			d.setNiveau("A");
 			d.setPoids(poids1);
@@ -68,7 +76,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (poids2.compareTo(ref) > 0 && texte2 != null) {
+		if (texte2 != null && !texte2.isEmpty() && poids2 != null && poids2.compareTo(ref) > 0) {
 			d = new Descripteur();
 			d.setNiveau("B");
 			d.setPoids(poids2);
@@ -76,7 +84,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (poids3.compareTo(ref) > 0 && texte3 != null) {
+		if (texte3 != null && !texte3.isEmpty() && poids3 != null && poids3.compareTo(ref) > 0) {
 			d = new Descripteur();
 			d.setNiveau("C");
 			d.setPoids(poids3);
@@ -84,7 +92,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (poids4.compareTo(ref) > 0 && texte4 != null) {
+		if (texte4 != null && !texte4.isEmpty() && poids4 != null && poids4.compareTo(ref) > 0) {
 			d = new Descripteur();
 			d.setNiveau("D");
 			d.setPoids(poids4);
@@ -92,7 +100,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (poids5.compareTo(ref) > 0 && texte5 != null) {
+		if (texte5 != null && !texte5.isEmpty() && poids5 != null && poids5.compareTo(ref) > 0) {
 			d = new Descripteur();
 			d.setNiveau("E");
 			d.setPoids(poids5);

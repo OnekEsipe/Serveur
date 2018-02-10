@@ -3,14 +3,12 @@ package com.onek.managedbean;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.faces.application.NavigationHandler;
-import javax.faces.context.FacesContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Evenement;
 import com.onek.service.EvenementService;
+import com.onek.utils.Navigation;
 
 @Component("event")
 public class EventBean implements Serializable {
@@ -90,18 +88,16 @@ public class EventBean implements Serializable {
 	public void setHour2(Date hour2) {
 		this.hour2 = hour2;
 	}
-	
 
-	
-	public boolean isOpened() {
+	public boolean getIsOpened() {
 		return isOpened;
 	}
 
-	public void setOpened(boolean isOpened) {
+	public void setIsOpened(boolean isOpened) {
 		this.isOpened = isOpened;
 	}
 
-	public boolean isIsSigned() {
+	public boolean getIsSigned() {
 		return isSigned;
 	}
 
@@ -121,11 +117,8 @@ public class EventBean implements Serializable {
 			return;
 		}
 		addEvent();
-		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("event",event);
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "grille.xhtml",
-				"grille.xhtml".contains("?") ? "&" : "?"));
+		Navigation navigation = new Navigation();
+		navigation.redirect("grille.xhtml?id="+event.getIdevent());
 		
 	}
 	

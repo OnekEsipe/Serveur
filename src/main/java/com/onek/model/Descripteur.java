@@ -72,4 +72,9 @@ public class Descripteur implements Serializable {
 		this.critere = critere;
 	}
 
+	@Override
+	public String toString() {
+		return niveau + "\n" + "(Poids = "+poids+"\n ," + "Description = "+texte+")";
+	}
+	
 }

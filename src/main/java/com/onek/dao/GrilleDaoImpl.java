@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.onek.model.Critere;
+import com.onek.model.Descripteur;
 
 @Repository
 public class GrilleDaoImpl implements GrilleDao, Serializable {
@@ -23,6 +24,9 @@ public class GrilleDaoImpl implements GrilleDao, Serializable {
 		session.beginTransaction();
 		for (Critere critere : criteres) {
 			session.save(critere);
+			for (Descripteur descripteur : critere.getDescripteurs()) {
+				session.save(descripteur);
+			}
 		}
 		session.getTransaction().commit();
 		session.close();
