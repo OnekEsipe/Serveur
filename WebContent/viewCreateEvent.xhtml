@@ -20,40 +20,39 @@
 	<br />
 	<br />
 
-	<h2>Creer un nouvel evenement</h2>
 	<div id="formdiv">
 		<h:form>
-
 			<!-- Inputs of date -->
 			<p:growl id="msgs" showDetail="true" />
+			<p:panel header="Créer un nouvel événement">
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel for="nameEvent" value="Nom:" />
+					<p:inputText id="nameEvent" name="nameEvent"
+						placeholder="Entrer le nom" size="20" value="#{event.name}" />
+					<p:outputLabel for="date1" value="Date de début:" />
+					<p:calendar id="date1" value="#{event.date1}" locale="de"
+						navigator="true" pattern="dd-MM-yyyy" placeholder="10-03-2018" />
 
-			<h:panelGrid columns="2" cellpadding="5">
-				<p:outputLabel for="nameEvent" value="Nom:" />
-				<p:inputText id="nameEvent" name="nameEvent"
-					placeholder="Entrer le nom" size="20" value="#{event.name}" />
-				<p:outputLabel for="date1" value="Date de début:" />
-				<p:calendar id="date1" value="#{event.date1}" locale="de"
-					navigator="true" pattern="dd-MM-yyyy" placeholder="10-03-2018" />
+					<p:outputLabel for="date2" value="Date de fin:" />
+					<p:calendar id="date2" value="#{event.date2}"
+						mindate="#{calendarView.date1}" maxdate="31/12/20"
+						pattern="dd-MM-yyyy" placeholder="11-03-2018"
+						action="#{event.dateValid}" />
 
-				<p:outputLabel for="date2" value="Date de fin:" />
-				<p:calendar id="date2" value="#{event.date2}"
-					mindate="#{calendarView.date1}" maxdate="31/12/20"
-					pattern="dd-MM-yyyy" placeholder="11-03-2018"
-					action="#{event.dateValid}" />
+					<p:outputLabel for="time1" value="Heure de début:" />
+					<p:calendar id="time1" value="#{event.hour1}" pattern="HH:mm"
+						timeOnly="true" placeholder="09:00" />
+					<p:outputLabel for="time2" value="Heure de fin:" />
+					<p:calendar id="time2" value="#{event.hour2}" pattern="HH:mm"
+						timeOnly="true" placeholder="12:30" action="#{event.hourValid}" />
 
-				<p:outputLabel for="time1" value="Heure de début:" />
-				<p:calendar id="time1" value="#{event.hour1}" pattern="HH:mm"
-					timeOnly="true" placeholder="09:00" />
-				<p:outputLabel for="time2" value="Heure de fin:" />
-				<p:calendar id="time2" value="#{event.hour2}" pattern="HH:mm"
-					timeOnly="true" placeholder="12:30" action="#{event.hourValid}" />
-					
-				<h:outputText value="Signature : " />
-        			<p:selectBooleanCheckbox value="#{event.isSigned}" />
-        			
-        			<h:outputText value="Ouvert a l'inscription : " />
-        			<p:selectBooleanCheckbox value="#{event.isOpened}" />
-			</h:panelGrid>
+					<h:outputText value="Signature : " />
+					<p:selectBooleanCheckbox value="#{event.isSigned}" />
+
+					<h:outputText value="Ouvert a l'inscription : " />
+					<p:selectBooleanCheckbox value="#{event.isOpened}" />
+				</h:panelGrid>
+			</p:panel>
 			<h:commandButton value="Suivant" update="msgs"
 				action="#{event.click}" icon="ui-icon-check" />
 			<!-- action="eventPage2" -->
@@ -61,6 +60,5 @@
 		<h:outputText id="errorCreationEvent" value="#{event.logInfo}" />
 		<!-- <h2 id="debug">#{event.debug}</h2> -->
 	</div>
-
 </h:body>
 </html>
