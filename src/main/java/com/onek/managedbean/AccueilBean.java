@@ -99,11 +99,11 @@ public class AccueilBean implements Serializable {
 	public void onRowSelect(SelectEvent event) {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "index.xhtml", "index.xhtml".contains("?") ? "&" : "?"));
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "eventAccueil.xhtml", "eventAccueil.xhtml".contains("?") ? "&" : "?"));
 	}
 	public void buttonAction() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "index.xhtml", "index.xhtml".contains("?") ? "&" : "?"));
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
     }
 }

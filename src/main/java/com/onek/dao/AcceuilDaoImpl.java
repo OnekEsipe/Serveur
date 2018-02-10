@@ -17,8 +17,6 @@ public class AcceuilDaoImpl implements AccueilDao, Serializable {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-
-	
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -29,9 +27,7 @@ public class AcceuilDaoImpl implements AccueilDao, Serializable {
 		session.beginTransaction();
 
 		events = (List<Evenement>) session.createQuery("from Evenement order by nom").list();
-	
-	
-
+		
 		session.getTransaction().commit();
 		session.close();
 		return events;

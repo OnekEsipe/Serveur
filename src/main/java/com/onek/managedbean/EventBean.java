@@ -32,6 +32,7 @@ public class EventBean implements Serializable {
 	
 	public void addEvent() {
 		event = new Evenement();
+		//event.setIdevent(2);
 		event.setNom(name);
 		event.setDatestart(new Date(date1.getTime()+hour1.getTime()));
 		event.setDatestop(new Date(date2.getTime()+hour2.getTime()));
