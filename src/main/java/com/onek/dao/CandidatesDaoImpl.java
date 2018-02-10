@@ -45,5 +45,16 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 
 
 	}
+	@Override
+	public void supprimerCandidat(int idcandidat) {
+
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Candidat candidatSupprime = session.get(Candidat.class, idcandidat);
+		session.createQuery("delete from Candidat where idcandidat = :idcandidat")
+				.setParameter("idcandidat", candidatSupprime.getIdcandidat()).executeUpdate();
+		session.getTransaction().commit();
+		session.close();
+	}
 	
 }

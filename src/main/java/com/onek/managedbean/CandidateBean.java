@@ -2,8 +2,10 @@ package com.onek.managedbean;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -109,6 +111,14 @@ public class CandidateBean implements Serializable{
 		logInfo = "Ajout ok";
 	}
 	
-
+	public void supprimerCandidat() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		int idcandidat = Integer.valueOf(params.get("idcandidat"));
+        
+		candidateService.supprimerCandidat(idcandidat);
+		candidats = candidateService.findCandidatesByEvent(idevent);
+	      
+	}
 	
 }
