@@ -204,12 +204,12 @@ public class EventAccueilBean implements Serializable {
 	public void buttonAttribution() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "attributionJuryCandidat.xhtml", "attributionJuryCandidat.xhtml".contains("?") ? "&" : "?"));
 	}
 	public void buttonAddJury() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "addJury.xhtml", "addJury.xhtml".contains("?") ? "&" : "?"));
 	}
 	public void buttonAddCandidat() {
 		FacesContext fc = FacesContext.getCurrentInstance();
