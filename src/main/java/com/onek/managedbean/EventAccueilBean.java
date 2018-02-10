@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.NavigationHandler;
@@ -189,12 +190,20 @@ public class EventAccueilBean implements Serializable {
 				+ " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
 	}
 	
-	public void supprimerCandidat(int idcandidat) {
-
+	public void supprimerCandidat() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		int idcandidat = Integer.valueOf(params.get("idcandidat"));
+        
 		eventAccueilservice.supprimerCandidat(idcandidat);
 	}
+	
 	public void supprimerUtilisateur() {
-		// to do
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		int iduser = Integer.valueOf(params.get("iduser"));
+        
+		eventAccueilservice.supprimerUtilisateur(iduser);
 	}
 	public void buttonGrille() {
 		FacesContext fc = FacesContext.getCurrentInstance();

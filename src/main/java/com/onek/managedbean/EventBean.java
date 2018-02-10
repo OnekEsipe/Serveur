@@ -1,9 +1,7 @@
 package com.onek.managedbean;
 
 import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
