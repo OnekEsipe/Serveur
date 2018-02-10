@@ -53,8 +53,9 @@
 					<p:selectBooleanCheckbox value="#{event.isOpened}" />
 				</h:panelGrid>
 			</p:panel>
-			<h:commandButton value="Suivant" update="msgs"
-				action="#{event.click}" icon="ui-icon-check" />
+			<br />
+			<p:commandButton value="Suivant" update="msgs"
+				action="#{event.click}" icon="ui-icon-check" ajax="false"/>
 			<!-- action="eventPage2" -->
 		</h:form>
 		<h:outputText id="errorCreationEvent" value="#{event.logInfo}" />
