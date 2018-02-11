@@ -14,9 +14,9 @@ public class ApplicationServiceTest {
 	@Autowired
 	private ApplicationService applicationService;
 	
-	@Test
-	public void exportIdEventCheckFormatFailure() {
-		assertEquals(Optional.empty(), applicationService.export("toto", "admin"));
-	}
+//	@Test
+//	public void exportIdEventCheckFormatFailure() {
+//		assertEquals(Optional.empty(), applicationService.export("toto", "admin"));
+//	}
 
 }

@@ -2,6 +2,8 @@ package com.onek.modeltest;
 
 import static org.junit.Assert.*;
 
+import java.math.BigDecimal;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -42,7 +44,7 @@ public class CritereTest {
 	public void coefficientTest() {
 		Critere critere = Mockito.mock(Critere.class);		 
 		 
-		Mockito.when(critere.getCoefficient()).thenReturn(1);
+		Mockito.when(critere.getCoefficient()).thenReturn(new BigDecimal(1));
 
 		assertEquals(1, critere.getCoefficient().intValue());
 	}
