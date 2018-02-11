@@ -4,14 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Utilisateur;
 import com.onek.service.AddJuryService;
+import com.onek.utils.Navigation;
 
 @Component("addjury")
 public class AddJuryBean implements Serializable  {
@@ -19,6 +20,8 @@ public class AddJuryBean implements Serializable  {
 
 	@Autowired
 	private AddJuryService addjuryservice;
+	
+	private int idEvent;
 	
 	private List<Utilisateur> utilisateurs;
 	private Utilisateur utilisateur;
@@ -58,11 +61,24 @@ public class AddJuryBean implements Serializable  {
 	public void setUtilisateursAll(List<Utilisateur> utilisateursAll) {
 		this.utilisateursAll = utilisateursAll;
 	}
-	@PostConstruct
-    public void init() {
-      utilisateurs = addjuryservice.listJurysByEvent(1);
-      utilisateursAll = addjuryservice.listJurysAll();
-    }
+	
+	public int getIdEvent() {
+		return idEvent;
+	}
+
+	public void setIdEvent(int id) {
+		this.idEvent = id;
+	}
+	
+	public void before(ComponentSystemEvent e) {
+		if (!FacesContext.getCurrentInstance().isPostback()) {
+			Navigation navigation = new Navigation();
+			String idEventString = navigation.getURLParameter("id");
+			setIdEvent(Integer.parseInt(idEventString));
+			utilisateurs = addjuryservice.listJurysByEvent(idEvent);
+		    utilisateursAll = addjuryservice.listJurysAll();
+		}
+	}
 
 	public void supprimerUtilisateur() {
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -75,4 +91,5 @@ public class AddJuryBean implements Serializable  {
 	public void buttonActionValider() {
 		//to do
 	}
+	
 }

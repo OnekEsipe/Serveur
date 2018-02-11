@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
@@ -15,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
+import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
+import com.onek.service.EvenementService;
 import com.onek.service.EventAccueilService;
 import com.onek.utils.Navigation;
 
@@ -26,9 +27,13 @@ public class EventAccueilBean implements Serializable {
 	@Autowired
 	private EventAccueilService eventAccueilservice;
 	
+	@Autowired
+	EvenementService evenement;
+	
 	private final Navigation navigation = new Navigation();
 
 	private int idEvent;
+	private Evenement event;
 
 	private String statut;
 	private Date dateStart;
@@ -88,21 +93,17 @@ public class EventAccueilBean implements Serializable {
 		this.juryAnonyme = juryAnonyme;
 	}
 
-	@PostConstruct
-	public void init() {
-		candidats = eventAccueilservice.listCandidatsByEvent(1);
-		utilisateurs = eventAccueilservice.listJurysByEvent(1);
-	}
-
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			Navigation navigation = new Navigation();
 			String idEventString = navigation.getURLParameter("id");
 			setIdEvent(Integer.parseInt(idEventString));
-			candidats.clear();
-			utilisateurs.clear();
+			this.event = evenement.findById(idEvent);
 			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
+			this.statut = event.getStatus();
+			this.dateStart = event.getDatestart();
+			this.dateEnd = event.getDatestop();
 		}
 	}
 
@@ -234,15 +235,15 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	public void buttonAttribution() {
-		navigation.redirect("attributionJuryCandidat.xhtml");
+		navigation.redirect("attributionJuryCandidat.xhtml?id="+idEvent);
 	}
 
 	public void buttonAddJury() {
-		navigation.redirect("addJury.xhtml");
+		navigation.redirect("addJury.xhtml?id="+idEvent);
 	}
 
 	public void buttonAddCandidat() {
-		navigation.redirect("addCandidates.xhtml");
+		navigation.redirect("addCandidates.xhtml?id="+idEvent);
 	}
 
 	public void buttonExport() {
