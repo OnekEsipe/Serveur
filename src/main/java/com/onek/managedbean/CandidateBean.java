@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import com.onek.model.Candidat;
 import com.onek.model.Evenement;
 import com.onek.service.CandidateService;
+import com.onek.service.EvenementService;
+import com.onek.utils.Navigation;
 
 @Component("candidate")
 public class CandidateBean implements Serializable{
@@ -21,12 +23,16 @@ public class CandidateBean implements Serializable{
 	@Autowired
 	CandidateService candidateService;
 	
+	@Autowired
+	EvenementService evenement;
+	
 	private List<Candidat> filteredcandidats;
 	
 	private String firstName;
 	private String lastName;
-	private int idevent = 1; /* pour les tests*/
 	
+	private int idEvent;
+	private Evenement event;
 
 	private List<Candidat> candidats;
 	private Candidat candidat;
@@ -34,6 +40,15 @@ public class CandidateBean implements Serializable{
 	private Candidat newCandidat;
 	private String logInfo;
 	
+	public void before(ComponentSystemEvent e) {
+		if (!FacesContext.getCurrentInstance().isPostback()) {
+			Navigation navigation = new Navigation();
+			String idEventString = navigation.getURLParameter("id");
+			setIdEvent(Integer.parseInt(idEventString));
+			this.event = evenement.findById(idEvent);
+			candidats = candidateService.findCandidatesByEvent(idEvent);
+		}
+	}
 	
 	public String getLogInfo() {
 		return logInfo;
@@ -42,18 +57,11 @@ public class CandidateBean implements Serializable{
 	public void setLogInfo(String logInfo) {
 		this.logInfo = logInfo;
 	}
-
-	@PostConstruct
-    public void init() {
-      candidats = candidateService.findCandidatesByEvent(idevent);
-    }
 	
 	public void addCandidate() {
 		newCandidat = new Candidat();
 		newCandidat.setPrenom(firstName);
 		newCandidat.setNom(lastName);
-		Evenement event = new Evenement();
-		event.setIdevent(idevent);
 		newCandidat.setEvenement(event);
 		candidateService.addCandidate(newCandidat);
 	}
@@ -70,11 +78,11 @@ public class CandidateBean implements Serializable{
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public int getIdevent() {
-		return idevent;
+	public int getIdEvent() {
+		return idEvent;
 	}
-	public void setIdevent(int idevent) {
-		this.idevent = idevent;
+	public void setIdEvent(int idevent) {
+		this.idEvent = idevent;
 	}
 	
 	public List<Candidat> getCandidats() {
@@ -117,7 +125,7 @@ public class CandidateBean implements Serializable{
 		int idcandidat = Integer.valueOf(params.get("idcandidat"));
         
 		candidateService.supprimerCandidat(idcandidat);
-		candidats = candidateService.findCandidatesByEvent(idevent);
+		candidats = candidateService.findCandidatesByEvent(idEvent);
 	      
 	}
 	

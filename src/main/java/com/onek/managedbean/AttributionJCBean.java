@@ -3,9 +3,9 @@ package com.onek.managedbean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.onek.model.Candidat;
 import com.onek.model.Utilisateur;
 import com.onek.service.AttributionJCService;
+import com.onek.utils.Navigation;
 
 @Component("attributionjc")
 public class AttributionJCBean implements Serializable{
@@ -22,6 +23,7 @@ public class AttributionJCBean implements Serializable{
 	@Autowired
 	private AttributionJCService attributionjcservice;
 	
+	private int idEvent;
 	
 	private List<Candidat> filteredcandidats;
 	private Candidat selectedcandidats ;
@@ -33,6 +35,15 @@ public class AttributionJCBean implements Serializable{
 	private List<Utilisateur> filteredutilisateurs;
 	private Utilisateur selectedutilisateurs;
 	
+	public void before(ComponentSystemEvent e) {
+		if (!FacesContext.getCurrentInstance().isPostback()) {
+			Navigation navigation = new Navigation();
+			String idEventString = navigation.getURLParameter("id");
+			setIdEvent(Integer.parseInt(idEventString));
+			candidats = attributionjcservice.listCandidatsByEvent(idEvent);
+		    utilisateurs = attributionjcservice.listJurysByEvent(idEvent);
+		}
+	}
 	
 	public List<Candidat> getFilteredcandidats() {
 		return filteredcandidats;
@@ -83,11 +94,14 @@ public class AttributionJCBean implements Serializable{
 		this.selectedutilisateurs = selectedutilisateur;
 	}
 	
-	@PostConstruct
-    public void init() {
-      candidats = attributionjcservice.listCandidatsByEvent(1);
-      utilisateurs = attributionjcservice.listJurysByEvent(1);
-    }
+	public int getIdEvent() {
+		return idEvent;
+	}
+
+	public void setIdEvent(int idEvent) {
+		this.idEvent = idEvent;
+	}
+
 	public void buttonActionValider() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nh = fc.getApplication().getNavigationHandler();
