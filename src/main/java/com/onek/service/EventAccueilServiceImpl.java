@@ -23,7 +23,18 @@ public class EventAccueilServiceImpl implements EventAccueilService, Serializabl
 	}
 
 	@Override
-	public List<Utilisateur> listJurysByEvent() {
-		return eventAccueilDao.listJurysByEvent();
+	public List<Utilisateur> listJurysByEvent(int idevent) {
+		return eventAccueilDao.listJurysByEvent(idevent);
+	}
+	@Override
+	public List<Utilisateur> listJurysAnnonymesByEvent(int idevent) {
+		return eventAccueilDao.listJurysAnnonymesByEvent(idevent);
+	}
+	@Override
+	public void supprimerCandidat(int idcandidat) {
+		eventAccueilDao.supprimerCandidat(idcandidat);
+	}
+	public void supprimerUtilisateur(int iduser) {
+		eventAccueilDao.supprimerUtilisateur(iduser);
 	}
 }

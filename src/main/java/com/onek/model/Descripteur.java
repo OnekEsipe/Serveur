@@ -2,6 +2,7 @@ package com.onek.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 
 /**
@@ -14,11 +15,12 @@ public class Descripteur implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer iddescripteur;
 
-	private Integer niveau;
+	private String niveau;
 
-	private Integer poids;
+	private BigDecimal poids;
 
 	private String texte;
 
@@ -38,19 +40,19 @@ public class Descripteur implements Serializable {
 		this.iddescripteur = iddescripteur;
 	}
 
-	public Integer getNiveau() {
+	public String getNiveau() {
 		return this.niveau;
 	}
 
-	public void setNiveau(Integer niveau) {
+	public void setNiveau(String niveau) {
 		this.niveau = niveau;
 	}
 
-	public Integer getPoids() {
+	public BigDecimal getPoids() {
 		return this.poids;
 	}
 
-	public void setPoids(Integer poids) {
+	public void setPoids(BigDecimal poids) {
 		this.poids = poids;
 	}
 
@@ -70,4 +72,9 @@ public class Descripteur implements Serializable {
 		this.critere = critere;
 	}
 
+	@Override
+	public String toString() {
+		return niveau + "\n" + "(Poids = "+poids+"\n ," + "Description = "+texte+")";
+	}
+	
 }

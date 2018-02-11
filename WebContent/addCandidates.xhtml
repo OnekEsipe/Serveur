@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Home Onek</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+
+</h:head>
+
+<h:body>
+	<!-- Insertion du menu -->
+	<h:outputStylesheet library="css" name="candidate.css" />
+	<ui:include src="menu.xhtml" />
+	<br />
+	<br />
+	<div class="ui-g">
+	<div><h:form><p:commandButton value="Importer à partir d'un fichier"	action="#{candidate.click}" icon="ui-icon-check" ajax="false"/></h:form> </div>
+
+			
+		<h:form>
+			<p:growl id="msgs" showDetail="true" />
+			<h3>Ajouter un nouvel candidat</h3>
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<p:outputLabel for="lastnameCandidat" value="Nom:" />
+				<p:inputText id="lastnameCandidat" name="lastnameCandidat"
+					placeholder="Entrer le nom" size="20" value="#{candidate.lastName}" />
+
+
+				<p:outputLabel for="firstnameCandidat" value="Prénom" />
+				<p:inputText id="firstnameCandidat" name="firstnameCandidat"
+					placeholder="Entrer le prénom" size="20"
+					value="#{candidate.firstName}" />
+
+				<p:commandButton value="Valider" action="#{candidate.click}"
+					icon="ui-icon-check" update="tabCandidat" />
+			</h:panelGrid>
+
+			<div>
+				<!-- ************Tableau des candidat**************** -->
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-8"></div>
+					<div class="ui-g-12 ui-md-4"></div>
+				</div>
+				<p:dataTable id="tabCandidat" var="candidat"
+					value="#{candidate.candidats}" widgetVar="candidatTable"
+					emptyMessage="aucun candidat trouvé avec ce nom"
+					filteredValue="#{candidate.filteredcandidats}" scrollable="true"
+					scrollHeight="100">
+
+					<!-- barre de recherche -->
+					<f:facet name="header">
+						<p:outputPanel>
+							<div>
+								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+								<p:inputText id="globalFilter"
+									onkeyup="PF('candidatTable').filter()" style="width:150px"
+									placeholder="nom candidat" />
+							</div>
+						</p:outputPanel>
+					</f:facet>
+					<!-- ********fin*********** -->
+
+					<!-- ********fin*********** -->
+
+					<p:column headerText="Nom" filterBy="#{candidat.nom}"
+						filterMatchMode="startsWith" filterStyle="display:none">
+						<h:outputText value="#{candidat.nom}" />
+					</p:column>
+
+					<p:column headerText="prénom">
+						<h:outputText value="#{candidat.prenom}" />
+					</p:column>
+
+					<!-- ********la colonne supprimer*********** -->
+					<p:column style="width:32px;text-align: center">
+						<p:growl id="message" showDetail="true" />
+						<p:commandButton id="iconOnly" icon="ui-icon-trash"
+							 actionListener="#{candidate.supprimerCandidat}" ajax="true"
+							 update ="@(form)">
+							<p:confirm header="Confirmation"
+								message="vous voulez vraiment supprimer le candidat"
+								icon="ui-icon-trash" />
+
+							<f:param name="idcandidat" value="#{candidat.idcandidat}" />
+						</p:commandButton>
+
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Yes" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+							</p:commandButton>
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</p:confirmDialog>
+					</p:column>
+					<!-- ********fin*********** -->
+				</p:dataTable>
+			</div>
+		</h:form>
+	</div>
+
+
+	<br />
+	<br />
+	<div id="errorCreationCandidate">
+		<h:outputText value="#{candidate.logInfo}" />
+	</div>
+</h:body>
+</html>
