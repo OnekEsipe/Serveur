@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,14 +21,18 @@ import com.onek.utils.Navigation;
 
 @Component("grille")
 public class GrilleBean {
-	
+
 	@Autowired
 	GrilleService grille;
-	
+
 	@Autowired
 	EvenementService evenement;
 
+	private int idEvent;
+	private Evenement event;
+
 	private List<Critere> criteres = new ArrayList<>();
+	private List<Critere> newCriteres = new ArrayList<>();
 	private List<Integer> numbers = new ArrayList<>();
 	private final BigDecimal ref = new BigDecimal(1);
 
@@ -35,6 +40,20 @@ public class GrilleBean {
 	public void postInit() {
 		for (int i = 0; i < 6; i++) {
 			numbers.add(i);
+		}
+	}
+
+	public void before(ComponentSystemEvent e) {
+		if (!FacesContext.getCurrentInstance().isPostback()) {
+			criteres.clear();
+			newCriteres.clear();
+			Navigation navigation = new Navigation();
+			String idEventString = navigation.getURLParameter("id");
+			setIdEvent(Integer.parseInt(idEventString));
+			this.event = evenement.findById(idEvent);
+			for (Critere critere : event.getCriteres()) {
+				criteres.add(critere);
+			}
 		}
 	}
 
@@ -56,9 +75,6 @@ public class GrilleBean {
 	private String texte5;
 
 	public void onClicAdd() {
-		Navigation navigation = new Navigation();
-		String idEvent = navigation.getURLParameter("id");
-		Evenement event = evenement.findById(Integer.parseInt(idEvent));
 		Critere c = new Critere();
 		c.setDescripteurs(new ArrayList<>());
 		c.setEvenement(event);
@@ -107,6 +123,7 @@ public class GrilleBean {
 			c.addDescripteur(d);
 		}
 		criteres.add(c);
+		newCriteres.add(c);
 		resetValues();
 	}
 
@@ -127,7 +144,7 @@ public class GrilleBean {
 	}
 
 	public void onClicSave() {
-		grille.addCriteres(criteres);
+		grille.addCriteres(newCriteres);
 		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().remove("event");
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nh = fc.getApplication().getNavigationHandler();
@@ -243,6 +260,10 @@ public class GrilleBean {
 		return criteres;
 	}
 
+	public List<Critere> getNewCriteres() {
+		return newCriteres;
+	}
+
 	public int getNbDescripteur() {
 		return nbDescripteur;
 	}
@@ -253,6 +274,14 @@ public class GrilleBean {
 
 	public void setNbDescripteur(int nbDescripteur) {
 		this.nbDescripteur = nbDescripteur;
+	}
+
+	public int getIdEvent() {
+		return idEvent;
+	}
+
+	public void setIdEvent(int id) {
+		this.idEvent = id;
 	}
 
 }

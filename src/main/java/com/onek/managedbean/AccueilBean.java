@@ -5,15 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.NavigationHandler;
-import javax.faces.context.FacesContext;
-
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Evenement;
 import com.onek.service.AccueilService;
+import com.onek.utils.Navigation;
 
 @Component("accueil")
 public class AccueilBean implements Serializable {
@@ -21,6 +19,8 @@ public class AccueilBean implements Serializable {
 
 	@Autowired
 	private AccueilService accueilservice;
+	
+	private final Navigation navigation = new Navigation();
 
 	private List<Evenement> events;
 	private List<Evenement> filteredevents;
@@ -97,13 +97,10 @@ public class AccueilBean implements Serializable {
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "eventAccueil.xhtml", "eventAccueil.xhtml".contains("?") ? "&" : "?"));
+		navigation.redirect("eventAccueil.xhtml?id="+selectedevent.getIdevent());
 	}
+	
 	public void buttonAction() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+		navigation.redirect("viewCreateEvent.xhtml");
     }
 }
