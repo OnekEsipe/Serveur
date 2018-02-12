@@ -19,6 +19,9 @@ public class NoteResource implements Serializable {
 	@JsonProperty("Id")
 	private Integer idNote;
 	
+	@JsonProperty("IdCriteria")
+	private Integer idCriteria;
+	
 	@JsonProperty("Text")
 	private String text;
 	
@@ -44,6 +47,7 @@ public class NoteResource implements Serializable {
 	
 	public NoteResource(Note note) {
 		idNote = note.getIdnote();
+		idCriteria = note.getCritere().getIdcritere();
 		text = note.getCritere().getTexte();
 		category = note.getCritere().getCategorie();
 		comment = note.getCommentaire();
@@ -60,23 +64,13 @@ public class NoteResource implements Serializable {
 	}
 	
 	@JsonIgnore
-	public String getComment() {
-		return comment;
-	}
-	
-	@JsonIgnore
-	public Integer getLevel() {
-		return level;
+	public Integer getIdCriteria() {
+		return idCriteria;
 	}
 	
 	@JsonProperty("Date")
 	public String getDateString() {
 		return formater.format(date);
-	}
-	
-	@JsonIgnore
-	public Date getDate() {
-		return date;
 	}
 	
 	public void setDate(String dateString) {
@@ -85,5 +79,19 @@ public class NoteResource implements Serializable {
 		} catch (ParseException e) {
 			date = new Date();
 		}
+	}
+	
+	@JsonIgnore
+	public void setIdNote(Integer idNote) {
+		this.idNote = idNote;
+	}
+	
+	@JsonIgnore
+	public Note createNote() {
+		Note note = new Note();
+		note.setNiveau(level);
+		note.setCommentaire(comment);
+		note.setDate(date);
+		return note;
 	}
 }

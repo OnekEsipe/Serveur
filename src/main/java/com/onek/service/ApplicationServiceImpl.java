@@ -12,10 +12,14 @@ import javax.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.onek.dao.EvaluationDao;
 import com.onek.dao.EvenementDao;
+import com.onek.dao.GrilleDao;
 import com.onek.dao.JuryDao;
 import com.onek.dao.LoginDao;
+import com.onek.dao.NoteDao;
 import com.onek.model.Candidat;
+import com.onek.model.Critere;
 import com.onek.model.Evaluation;
 import com.onek.model.Jury;
 import com.onek.model.Note;
@@ -37,6 +41,15 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	
 	@Autowired
 	private JuryDao juryDao;
+	
+	@Autowired
+	private GrilleDao critereDao;
+	
+	@Autowired
+	private EvaluationDao evaluationDao;
+	
+	@Autowired
+	private NoteDao noteDao;
 
 	@Override
 	public Optional<EvenementResource> export(String idEvent, String login) {
@@ -121,30 +134,31 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	}
 
 	@Override
-	public void importEvaluation(EvaluationResource evaluationResource) {
-		Note note = new Note();
+	public EvaluationResource importEvaluation(EvaluationResource evaluationResource) {
 		List<NoteResource> noteResources = evaluationResource.getNotes();
 		for(NoteResource noteResource : noteResources) {
-			Integer idNote = noteResource.getIdNote();
+			Integer idNote = noteResource.getIdNote();								
+			Integer idEvaluation = evaluationResource.getIdEvaluation();
+			
+			Note note =	noteResource.createNote();	
+			
+			Evaluation evaluation = evaluationDao.findById(idEvaluation);
+			Critere critere = critereDao.findById(noteResource.getIdCriteria());
+			note.setEvaluation(evaluation);
+			note.setCritere(critere);					
 			
 			// note create by application
 			if (idNote == 0) {
-				note.setNiveau(noteResource.getLevel());
-				note.setCommentaire(noteResource.getComment());
-				note.setDate(noteResource.getDate());
-				
+				note = noteDao.addNote(note);	
+				noteResource.setIdNote(note.getIdnote());
 			}
-			
-			note.setIdnote(noteResource.getIdNote());
-			note.setNiveau(noteResource.getLevel());
-			note.setCommentaire(noteResource.getComment());
-			note.setDate(noteResource.getDate());
-			//note.setEvaluation(evaluation);
-			
-			//noteResource.get()
-			
-			//note.setCritere(noteResource.g);
+			// update
+			else {
+				note.setIdnote(noteResource.getIdNote());
+				noteDao.update(note);
+			}			
 		}
+		return evaluationResource;
 	}
 
 }

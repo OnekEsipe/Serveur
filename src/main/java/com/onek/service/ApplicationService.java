@@ -8,6 +8,6 @@ import com.onek.resource.EvenementResource;
 public interface ApplicationService {
 	
 	public Optional<EvenementResource> export(String idEvent, String login);	
-	public void importEvaluation(EvaluationResource evaluationResource);
+	public EvaluationResource importEvaluation(EvaluationResource evaluationResource);
 
 }
