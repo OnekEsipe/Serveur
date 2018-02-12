@@ -23,12 +23,17 @@
 	<br />
 	<br />
 	<div class="ui-g">
-	<div><h:form><p:commandButton value="Importer à partir d'un fichier"	action="#{candidate.click}" icon="ui-icon-check" ajax="false"/></h:form> </div>
-
-			
+		<div>
+			<h:form enctype="multipart/form-data">
+				<p:growl id="messages" showDetail="true" />
+				<p:fileUpload value="#{candidate.file}" mode="simple" skinSimple="true" /> Format : 2 colonnes (nom;prenom)<br/>
+				<p:commandButton value="Envoyer" ajax="false" actionListener="#{candidate.importFile}" icon="ui-icon-check"/><br/>
+				<h3 id="importLog">#{candidate.importLog}</h3>
+			</h:form>
+		</div>
 		<h:form>
 			<p:growl id="msgs" showDetail="true" />
-			<h3>Ajouter un nouvel candidat</h3>
+			<h3>Ajouter un nouveau candidat</h3>
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="lastnameCandidat" value="Nom:" />
@@ -42,7 +47,7 @@
 					value="#{candidate.firstName}" />
 
 				<p:commandButton value="Valider" action="#{candidate.click}"
-					icon="ui-icon-check" update="tabCandidat" />
+					icon="ui-icon-check" update="tabCandidat" ajax="false"/>
 			</h:panelGrid>
 
 			<div>

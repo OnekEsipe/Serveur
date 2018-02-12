@@ -60,7 +60,7 @@ public class LoginBean implements Serializable {
 		// Code commenté en attendant l'implémentation de Utilisateur
 		if (loginservice.userExist(login)) {
 			if (motDePasse.equals(loginservice.findUserByLogin(login).getMotdepasse())) {
-				if (loginservice.findUserByLogin(login).getDroits().equals("A")
+				if (loginservice.findUserByLogin(login).getDroits().equals("R")
 						|| loginservice.findUserByLogin(login).getDroits().equals("O")) {
 					FacesContext fc = FacesContext.getCurrentInstance();
 					NavigationHandler nh = fc.getApplication().getNavigationHandler();

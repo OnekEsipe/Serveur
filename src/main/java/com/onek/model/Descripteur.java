@@ -15,7 +15,7 @@ public class Descripteur implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer iddescripteur;
 
 	private String niveau;
@@ -71,10 +71,10 @@ public class Descripteur implements Serializable {
 	public void setCritere(Critere critere) {
 		this.critere = critere;
 	}
-
+	
 	@Override
 	public String toString() {
 		return niveau + "\n" + "(Poids = "+poids+"\n ," + "Description = "+texte+")";
 	}
-	
+
 }

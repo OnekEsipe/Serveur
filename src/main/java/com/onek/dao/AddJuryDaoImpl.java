@@ -52,7 +52,7 @@ public class AddJuryDaoImpl implements AddJuryDao, Serializable{
 			utilisateurs = (List<Utilisateur>) session.createQuery("from Utilisateur where iduser = :iduser").setParameter("iduser", jury.getUtilisateur().getIduser()).list();
 		}
 		for (Utilisateur utilisateur : utilisateurs) {
-			if(utilisateur.getIsanonym()) {
+			if((utilisateur.getDroits().equals("A")) && (utilisateur.getIsdeleted() == false)) {
 				utilisateursAnnonymes.add(utilisateur);
 			}	
 		}

@@ -45,6 +45,19 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 
 
 	}
+
+
+	@Override
+	public void addCandidates(List<Candidat> candidates) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		candidates.forEach(candidat -> session.save(candidat));
+		session.getTransaction().commit();
+		session.close();
+		System.out.println("Add All done");
+		
+	}
+		
 	@Override
 	public void supprimerCandidat(int idcandidat) {
 
@@ -55,6 +68,7 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 				.setParameter("idcandidat", candidatSupprime.getIdcandidat()).executeUpdate();
 		session.getTransaction().commit();
 		session.close();
+
 	}
 	
 }
