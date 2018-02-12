@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onek.dao.AddJuryDao;
+import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
 
 @Service
@@ -27,7 +28,13 @@ private static final long serialVersionUID = 1L;
 	public List<Utilisateur> listJurysAll(){
 		return addjuryDao.listJurysAll();
 	}
+	@Override
 	public void supprimerUtilisateur(int iduser) {
 		addjuryDao.supprimerUtilisateur(iduser);
 	}
+	@Override
+	public void addJuryToEvent(Jury jury) {
+		addjuryDao.addJuryToEvent(jury);
+	}
+	
 }
