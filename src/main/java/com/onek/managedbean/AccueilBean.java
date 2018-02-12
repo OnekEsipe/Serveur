@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,10 +19,9 @@ public class AccueilBean implements Serializable {
 
 	@Autowired
 	private AccueilService accueilservice;
-
-	@Autowired
-	Navigation navigation;
 	
+	private final Navigation navigation = new Navigation();
+
 	private List<Evenement> events;
 	private List<Evenement> filteredevents;
 	private Evenement selectedevent;
@@ -30,8 +30,9 @@ public class AccueilBean implements Serializable {
 	private String status;
 	private Date datestart;
 	private Date datestop;
-	
-	public void refresh() {
+
+	@PostConstruct
+	public void init() {
 		events = accueilservice.listEvents();
 	}
 
@@ -96,9 +97,9 @@ public class AccueilBean implements Serializable {
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		navigation.redirect("eventAccueil.xhtml");
+		navigation.redirect("eventAccueil.xhtml?id="+selectedevent.getIdevent());
 	}
-
+	
 	public void buttonAction() {
 		navigation.redirect("viewCreateEvent.xhtml");
     }

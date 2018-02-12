@@ -16,7 +16,6 @@ public class EventBean implements Serializable {
 	
 	@Autowired
 	private EvenementService evenementService;
-	
 	private String name;
 	private Date date1;					//format => dd-MM-yyy
 	private Date date2;					//format => dd-MM-yyy

@@ -141,8 +141,8 @@
 							icon="ui-icon-plusthick" />
 
 						<p:commandButton id="iconOnly" update="growl"
-							action="#{eventAccueil.buttonExport}"
-							icon="ui-icon-circle-arrow-s" ajax="false" />
+							actionListener="#{eventAccueil.buttonExport}"
+							icon="ui-icon-circle-arrow-s" title="Icon Only" />
 					</div>
 				</div>
 				<p:dataTable var="utilisateur" value="#{eventAccueil.utilisateurs}"
