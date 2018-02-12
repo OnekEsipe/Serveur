@@ -8,5 +8,5 @@ public interface CandidateService {
 	public List<Candidat> findCandidatesByEvent(int idEvent);
 	public void addCandidate(Candidat candidat);
 	public void addCandidates(List<Candidat> candidates);
-
+	public void supprimerCandidat(int idcandidat);
 }

@@ -12,7 +12,10 @@
 	</link>
 
 </h:head>
-
+<f:metadata>
+	<f:viewParam name="event" value="#{candidate.idEvent}" />
+	<f:event type="preRenderView" listener="#{candidate.before}" />
+</f:metadata>
 <h:body>
 	<!-- Insertion du menu -->
 	<h:outputStylesheet library="css" name="candidate.css" />
@@ -28,8 +31,6 @@
 				<h3 id="importLog">#{candidate.importLog}</h3>
 			</h:form>
 		</div>
-
-
 		<h:form>
 			<p:growl id="msgs" showDetail="true" />
 			<h3>Ajouter un nouvel candidat</h3>
@@ -89,15 +90,17 @@
 					<p:column style="width:32px;text-align: center">
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
-							update="message">
+							 actionListener="#{candidate.supprimerCandidat}" ajax="true"
+							 update ="@(form)">
 							<p:confirm header="Confirmation"
 								message="vous voulez vraiment supprimer le candidat"
 								icon="ui-icon-trash" />
+
+							<f:param name="idcandidat" value="#{candidat.idcandidat}" />
 						</p:commandButton>
 
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 							<p:commandButton value="Yes" type="button"
-								actionListener="#{candidate.supprimerCandidat(candidat.idcandidat)}"
 								styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
 							</p:commandButton>
 							<p:commandButton value="No" type="button"

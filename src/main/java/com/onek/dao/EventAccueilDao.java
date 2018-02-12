@@ -10,4 +10,5 @@ public interface EventAccueilDao {
 	public List<Utilisateur> listJurysByEvent(int idevent);
 	public List<Utilisateur> listJurysAnnonymesByEvent(int idevent);
 	public void supprimerCandidat(int idcandidat);
+	public void supprimerUtilisateur(int iduser);
 }

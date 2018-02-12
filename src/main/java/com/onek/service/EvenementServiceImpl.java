@@ -19,4 +19,14 @@ public class EvenementServiceImpl implements EvenementService, Serializable{
 	public void addEvenement(Evenement event) {
 		eventDao.addEvenement(event);		
 	}
+
+	@Override
+	public boolean isValid(Evenement event) {
+		return true; // TODO
+	}
+
+	@Override
+	public Evenement findById(int id) {
+		return eventDao.findById(id);
+	}
 }

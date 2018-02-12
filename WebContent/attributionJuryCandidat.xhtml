@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Onek team</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+</h:head>
+<f:metadata>
+	<f:viewParam name="event" value="#{attributionjc.idEvent}" />
+	<f:event type="preRenderView" listener="#{attributionjc.before}" />
+</f:metadata>
+<h:body>
+	<!-- Insertion du menu -->
+
+	<ui:include src="menu.xhtml" />
+	<br />
+	<br />
+
+	<div class="ui-g">
+		<div class="ui-g-6">
+
+			<p:dataTable id="radioDT" var="utilisateur"
+				value="#{attributionjc.utilisateurs}"
+				selection="#{attributionjc.selectedutilisateurs}"
+				rowKey="#{utilisateur.nom}" style="margin-bottom:0"
+				scrollable="true" scrollHeight="100" widgetVar="utilisateurTable"
+				filteredValue="#{attributionjc.filteredutilisateurs}"
+				emptyMessage="aucun jury trouvé avec ce nom">
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<div>
+							<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+							<p:inputText id="globalFilter"
+								onkeyup="PF('utilisateurTable').filter()" style="width:150px"
+								placeholder="nom jury" />
+						</div>
+					</p:outputPanel>
+				</f:facet>
+				<p:column selectionMode="single"
+					style="width:16px;text-align:center" />
+				<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
+					filterMatchMode="startsWith" filterStyle="display:none">
+					<h:outputText value="#{utilisateur.nom}" />
+				</p:column>
+				<p:column headerText="prénom">
+					<h:outputText value="#{utilisateur.prenom}" />
+				</p:column>
+			</p:dataTable>
+
+		</div>
+		
+		<div class="ui-g-1"></div>
+		<div class="ui-g-5">
+
+			<!-- ************Tableau des candidat**************** -->
+			<h:form>				
+				<p:dataTable id="checkboxDT" var="candidat" value="#{attributionjc.candidats}"
+					widgetVar="candidatTable"
+					selection="#{attributionjc.selectedcandidats}"
+					rowKey="#{candidat.nom}"
+					filteredValue="#{attributionjc.filteredcandidats}"
+					emptyMessage="aucun candidat trouvé avec ce nom"
+					scrollable="true"
+					scrollHeight="100" 
+					>
+
+					<!-- barre de recherche -->
+					<f:facet name="header">
+						<p:outputPanel>
+							<div>
+								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+								<p:inputText id="globalFilter"
+									onkeyup="PF('candidatTable').filter()" style="width:150px"
+									placeholder="nom candidat" />
+							</div>
+						</p:outputPanel>
+					</f:facet>
+					<!-- ********fin*********** -->
+					
+					<!-- ********fin*********** -->
+					<p:column selectionMode="multiple"
+					style="width:16px;text-align:center" />
+					<p:column headerText="Nom" filterBy="#{candidat.nom}"
+						filterMatchMode="startsWith" filterStyle="display:none">
+						<h:outputText value="#{candidat.nom}" />
+					</p:column>
+
+					<p:column headerText="prénom">
+						<h:outputText value="#{candidat.prenom}" />
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+			<br />
+			<br />
+			<div class="ui-g-6"></div>
+			<div class="ui-g-6">
+			<h:form>
+				<p:commandButton value="Valider"
+					actionListener="#{attributionjc.buttonActionValider}" ajax="false" />
+			</h:form>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

@@ -28,6 +28,8 @@ public class Evenement implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date datestop;
 
+	private Boolean isdeleted;
+
 	private Boolean isopened;
 
 	private Boolean issigned;
@@ -86,6 +88,14 @@ public class Evenement implements Serializable {
 
 	public void setDatestop(Date datestop) {
 		this.datestop = datestop;
+	}
+
+	public Boolean getIsdeleted() {
+		return this.isdeleted;
+	}
+
+	public void setIsdeleted(Boolean isdeleted) {
+		this.isdeleted = isdeleted;
 	}
 
 	public Boolean getIsopened() {

@@ -1,15 +1,14 @@
 package com.onek.managedbean;
 
 import java.io.Serializable;
-
 import java.util.Date;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Evenement;
 import com.onek.service.EvenementService;
+import com.onek.utils.Navigation;
 
 @Component("event")
 public class EventBean implements Serializable {
@@ -22,8 +21,8 @@ public class EventBean implements Serializable {
 	private Date date2;					//format => dd-MM-yyy
 	private Date hour1;					//format => HH:mm
 	private Date hour2;					//format => HH:mm
-	private boolean isOpened = true;    //Default value
-	private boolean issigned = true;    //Default value
+	private boolean isOpened;    		//Default value
+	private boolean isSigned;    		//Default value
 	private String status="Brouillon";	//Default state
 	private String logInfo;
 	private String debug;
@@ -38,7 +37,7 @@ public class EventBean implements Serializable {
 		event.setDatestart(new Date(date1.getTime()+hour1.getTime()));
 		event.setDatestop(new Date(date2.getTime()+hour2.getTime()));
 		event.setIsopened(isOpened);
-		event.setIssigned(issigned);
+		event.setIssigned(isSigned);
 		event.setStatus(status);
 		evenementService.addEvenement(event);
 	}
@@ -90,23 +89,21 @@ public class EventBean implements Serializable {
 	public void setHour2(Date hour2) {
 		this.hour2 = hour2;
 	}
-	
 
-	
-	public boolean isOpened() {
+	public boolean getIsOpened() {
 		return isOpened;
 	}
 
-	public void setOpened(boolean isOpened) {
+	public void setIsOpened(boolean isOpened) {
 		this.isOpened = isOpened;
 	}
 
-	public boolean isIssigned() {
-		return issigned;
+	public boolean getIsSigned() {
+		return isSigned;
 	}
 
-	public void setIssigned(boolean issigned) {
-		this.issigned = issigned;
+	public void setIsSigned(boolean issigned) {
+		this.isSigned = issigned;
 	}	
 	
 	public void click() {
@@ -121,7 +118,9 @@ public class EventBean implements Serializable {
 			return;
 		}
 		addEvent();
-		logInfo ="Votre évènement a été créé avec succès!";
+		Navigation navigation = new Navigation();
+		navigation.redirect("grille.xhtml?id="+event.getIdevent());
+		
 	}
 	
 	private boolean validDate(Date d1, Date d2) {

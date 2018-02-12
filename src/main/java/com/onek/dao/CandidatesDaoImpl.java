@@ -46,6 +46,7 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 
 	}
 
+
 	@Override
 	public void addCandidates(List<Candidat> candidates) {
 		Session session = sessionFactory.openSession();
@@ -55,6 +56,17 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 		session.close();
 		System.out.println("Add All done");
 		
+	@Override
+	public void supprimerCandidat(int idcandidat) {
+
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Candidat candidatSupprime = session.get(Candidat.class, idcandidat);
+		session.createQuery("delete from Candidat where idcandidat = :idcandidat")
+				.setParameter("idcandidat", candidatSupprime.getIdcandidat()).executeUpdate();
+		session.getTransaction().commit();
+		session.close();
+
 	}
 	
 }

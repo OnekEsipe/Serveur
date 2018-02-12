@@ -26,6 +26,10 @@ public class CandidateServiceImpl implements CandidateService, Serializable{
 		candidatedao.addCandidate(candidat);
 		
 	}
+	@Override
+	public void supprimerCandidat(int idcandidat) {
+		candidatedao.supprimerCandidat(idcandidat);
+	}
 
 	@Override
 	public void addCandidates(List<Candidat> candidates) {

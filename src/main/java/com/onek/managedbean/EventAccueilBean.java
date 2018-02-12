@@ -5,17 +5,20 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
+import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
+import com.onek.service.EvenementService;
 import com.onek.service.EventAccueilService;
+import com.onek.utils.Navigation;
 
 @Component("eventAccueil")
 public class EventAccueilBean implements Serializable {
@@ -24,7 +27,14 @@ public class EventAccueilBean implements Serializable {
 	@Autowired
 	private EventAccueilService eventAccueilservice;
 	
+	@Autowired
+	EvenementService evenement;
 	
+	private final Navigation navigation = new Navigation();
+
+	private int idEvent;
+	private Evenement event;
+
 	private String statut;
 	private Date dateStart;
 	private Date dateEnd;
@@ -32,18 +42,17 @@ public class EventAccueilBean implements Serializable {
 	private Date timeEnd;
 	private String message;
 	private int juryAnonyme;
-	
+
 	private List<Candidat> filteredcandidats;
-	private Candidat selectedcandidat ;
+	private Candidat selectedcandidat;
 	private List<Candidat> candidats;
 	private Candidat candidat;
-	
+
 	private List<Utilisateur> utilisateurs;
 	private Utilisateur utilisateur;
 	private List<Utilisateur> filteredutilisateurs;
 	private Utilisateur selectedutilisateur;
-	
-	
+
 	public List<Utilisateur> getFilteredutilisateurs() {
 		return filteredutilisateurs;
 	}
@@ -84,15 +93,20 @@ public class EventAccueilBean implements Serializable {
 		this.juryAnonyme = juryAnonyme;
 	}
 
-	
-	
-	
-	@PostConstruct
-    public void init() {
-      candidats = eventAccueilservice.listCandidatsByEvent(1);
-      utilisateurs = eventAccueilservice.listJurysByEvent(1);
-    }
-	
+	public void before(ComponentSystemEvent e) {
+		if (!FacesContext.getCurrentInstance().isPostback()) {
+			Navigation navigation = new Navigation();
+			String idEventString = navigation.getURLParameter("id");
+			setIdEvent(Integer.parseInt(idEventString));
+			this.event = evenement.findById(idEvent);
+			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
+			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
+			this.statut = event.getStatus();
+			this.dateStart = event.getDatestart();
+			this.dateEnd = event.getDatestop();
+		}
+	}
+
 	public List<Utilisateur> getUtilisateurs() {
 		return utilisateurs;
 	}
@@ -123,7 +137,7 @@ public class EventAccueilBean implements Serializable {
 
 	public void setCandidat(Candidat candidat) {
 		this.candidat = candidat;
-	}	
+	}
 
 	public String getMessage() {
 		return message;
@@ -172,53 +186,69 @@ public class EventAccueilBean implements Serializable {
 	public void setStatut(String statut) {
 		this.statut = statut;
 	}
-	
+
+	public int getIdEvent() {
+		return idEvent;
+	}
+
+	public void setIdEvent(int idEvent) {
+		this.idEvent = idEvent;
+	}
+
 	public void addJuryAnonymeButton() {
-		//to do
+		// to do
 	}
 
 	public void eventUpdateButton() {
 		// Pour test
 		DateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy");
 		String sDate = dfDate.format(dateStart);
-		
+
 		DateFormat dfTime = new SimpleDateFormat("HH:mm");
 		String sTime = dfTime.format(timeStart);
-		
-		message = "Statut: " + statut + " dateStart:" + dateStart + " dateStartFORMATTE:" + sDate + " dateEnd:" + dateEnd + " timeStart:" + timeStart
-				+ " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
+
+		message = "Statut: " + statut + " dateStart:" + dateStart + " dateStartFORMATTE:" + sDate + " dateEnd:"
+				+ dateEnd + " timeStart:" + timeStart + " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
 	}
-	
-	public void supprimerCandidat(int idcandidat) {
+
+	public void supprimerCandidat() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		int idcandidat = Integer.valueOf(params.get("idcandidat"));
 
 		eventAccueilservice.supprimerCandidat(idcandidat);
+		candidats = eventAccueilservice.listCandidatsByEvent(1);
+
 	}
+
 	public void supprimerUtilisateur() {
-		// to do
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		int iduser = Integer.valueOf(params.get("iduser"));
+
+		eventAccueilservice.supprimerUtilisateur(iduser);
+		utilisateurs = eventAccueilservice.listJurysByEvent(1);
 	}
+
 	public void buttonGrille() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+		navigation.redirect("grille.xhtml?id="+idEvent);
 	}
+
 	public void buttonAttribution() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+		navigation.redirect("attributionJuryCandidat.xhtml?id="+idEvent);
 	}
+
 	public void buttonAddJury() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+		navigation.redirect("addJury.xhtml?id="+idEvent);
 	}
+
 	public void buttonAddCandidat() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "addCandidates.xhtml", "addCandidates.xhtml".contains("?") ? "&" : "?"));
+		navigation.redirect("addCandidates.xhtml?id="+idEvent);
 	}
+
 	public void buttonExport() {
-		//to do
-		//eventAccueilservice.listJurysByEvent().
+		// to do
+		// eventAccueilservice.listJurysByEvent().
 	}
-	
+
 }
