@@ -39,16 +39,16 @@ public class UtilisateurTest {
 	}
 
 	@Test
-	public void isanonymeTest() {
+	public void isdeletedTest() {
 		Utilisateur utilisateur = Mockito.mock(Utilisateur.class);
-		Mockito.when(utilisateur.getIsanonym()).thenCallRealMethod();
+		Mockito.when(utilisateur.getIsdeleted()).thenCallRealMethod();
 
-		assertEquals(null, utilisateur.getIsanonym());
+		assertEquals(null, utilisateur.getIsdeleted());
 
-		Mockito.doCallRealMethod().when(utilisateur).setIsanonym(Mockito.anyBoolean());
+		Mockito.doCallRealMethod().when(utilisateur).setIsdeleted(Mockito.anyBoolean());
 
-		utilisateur.setIsanonym(true);
-		assertEquals(true , utilisateur.getIsanonym());
+		utilisateur.setIsdeleted(true);
+		assertEquals(true , utilisateur.getIsdeleted());
 	}
 	
 	@Test

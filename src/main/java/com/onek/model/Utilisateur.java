@@ -21,7 +21,7 @@ public class Utilisateur implements Serializable {
 
 	private String droits;
 
-	private Boolean isanonym;
+	private Boolean isdeleted;
 
 	private String login;
 
@@ -60,12 +60,12 @@ public class Utilisateur implements Serializable {
 		this.droits = droits;
 	}
 
-	public Boolean getIsanonym() {
-		return this.isanonym;
+	public Boolean getIsdeleted() {
+		return this.isdeleted;
 	}
 
-	public void setIsanonym(Boolean isanonym) {
-		this.isanonym = isanonym;
+	public void setIsdeleted(Boolean isdeleted) {
+		this.isdeleted = isdeleted;
 	}
 
 	public String getLogin() {

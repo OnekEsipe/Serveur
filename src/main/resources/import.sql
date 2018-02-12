@@ -1,10 +1,10 @@
-INSERT INTO utilisateurs(iduser, isanonym, droits, login, mail, motdepasse, nom, prenom) VALUES (1, false, 'R', 'admin', 'admin@gmail.com', 'hash', 'Bob', 'L Eponge');
+INSERT INTO utilisateurs(iduser, droits, login, mail, motdepasse, nom, prenom, isdeleted) VALUES (1, 'R', 'admin', 'admin@gmail.com', 'hash', 'Bob', 'L Eponge', false);
 
-INSERT INTO utilisateurs(iduser, isanonym, droits, login, mail, motdepasse, nom, prenom) VALUES (2, false, 'J', 'rdrocourt', 'rodolphe@gmail.com', 'hash', 'Rodolphe', 'Drocourt');
+INSERT INTO utilisateurs(iduser, droits, login, mail, motdepasse, nom, prenom, isdeleted) VALUES (2, 'J', 'rdrocourt', 'rodolphe@gmail.com', 'hash', 'Rodolphe', 'Drocourt', false);
 	
-INSERT INTO utilisateurs(iduser, isanonym, droits, login, mail, motdepasse, nom, prenom) VALUES (3, false, 'O', 'jplancqu', 'julien.plancqueel@hotmail.fr', 'julien', 'Julien', 'Plancqueel');
+INSERT INTO utilisateurs(iduser, droits, login, mail, motdepasse, nom, prenom, isdeleted) VALUES (3, 'O', 'jplancqu', 'julien.plancqueel@hotmail.fr', 'julien', 'Julien', 'Plancqueel', false);
 
-INSERT INTO evenements(idevent, datestart, datestop, isopened, issigned, nom, status, iduser, code) VALUES (1, '2018-02-07', '2018-02-08', true, true, 'nom1', 'brouillon', 1, 'code');
+INSERT INTO evenements(idevent, datestart, datestop, isopened, issigned, nom, status, iduser, code, isdeleted) VALUES (1, '2018-02-07', '2018-02-08', true, true, 'nom1', 'brouillon', 1, 'code', false);
 
 INSERT INTO criteres(idcritere, categorie, coefficient, texte, idevent) VALUES (1, 'cat1', 2, 'je suis un critere', 1);
 
