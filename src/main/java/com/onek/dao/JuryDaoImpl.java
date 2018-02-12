@@ -42,7 +42,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 
 		@SuppressWarnings("unchecked")
 		List<Jury> jurys = (List<Jury>) session.createQuery(
-				"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND (u.login = :login OR u.isanonym IS TRUE)")
+				"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND (u.login = :login OR u.droits = 'A') AND u.isdeleted IS FALSE")
 				.setParameter("idEvent", idEvent).setParameter("login", login).list();
 
 		for (Jury jury : jurys) {
