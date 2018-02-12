@@ -125,16 +125,5 @@ public class Critere implements Serializable {
 
 		return note;
 	}
-	
-	public String printDescripteurs() {
-		StringBuilder sb = new StringBuilder();
-		for (Descripteur descripteur : descripteurs) {
-			sb.append(descripteur.toString()).append("\n").append(" ");
-		}
-		if (sb.length() > 0) {
-			sb.setLength(sb.length() - 1);
-		}
-		return sb.toString();
-	}
 
 }
