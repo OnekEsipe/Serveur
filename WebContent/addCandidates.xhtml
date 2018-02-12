@@ -20,9 +20,16 @@
 	<br />
 	<br />
 	<div class="ui-g">
-	<div><h:commandButton value="Importer à partir d'un fichier"	action="#{candidate.click}" icon="ui-icon-check" /> </div>
+		<div>
+			<h:form enctype="multipart/form-data">
+				<p:growl id="messages" showDetail="true" />
+				<p:fileUpload value="#{candidate.file}" mode="simple" skinSimple="true" /> Format : 2 colonnes (nom;prenom)<br/>
+				<p:commandButton value="Envoyer" ajax="false" actionListener="#{candidate.importFile}" icon="ui-icon-check"/><br/>
+				<h3 id="importLog">#{candidate.importLog}</h3>
+			</h:form>
+		</div>
 
-			
+
 		<h:form>
 			<p:growl id="msgs" showDetail="true" />
 			<h3>Ajouter un nouvel candidat</h3>

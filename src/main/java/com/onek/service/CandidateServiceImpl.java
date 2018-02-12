@@ -27,4 +27,9 @@ public class CandidateServiceImpl implements CandidateService, Serializable{
 		
 	}
 
+	@Override
+	public void addCandidates(List<Candidat> candidates) {
+		candidatedao.addCandidates(candidates);	
+	}
+
 }
