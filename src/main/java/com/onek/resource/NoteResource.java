@@ -1,15 +1,20 @@
 package com.onek.resource;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.onek.model.Descripteur;
 import com.onek.model.Note;
 
 public class NoteResource implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private static final SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	
 	@JsonProperty("Id")
 	private Integer idNote;
@@ -29,6 +34,9 @@ public class NoteResource implements Serializable {
 	@JsonProperty("SelectedDescriptorIndex")
 	private Integer level;
 	
+	@JsonIgnore
+	private Date date;
+	
 	/* empty constructor */
 	public NoteResource() {
 		
@@ -43,6 +51,39 @@ public class NoteResource implements Serializable {
 			descriptors.add(new DescripteurResource(descripteur));
 		}
 		level = note.getNiveau();
+		date = note.getDate();
 	}
-
+	
+	@JsonIgnore
+	public Integer getIdNote() {
+		return idNote;
+	}
+	
+	@JsonIgnore
+	public String getComment() {
+		return comment;
+	}
+	
+	@JsonIgnore
+	public Integer getLevel() {
+		return level;
+	}
+	
+	@JsonProperty("Date")
+	public String getDateString() {
+		return formater.format(date);
+	}
+	
+	@JsonIgnore
+	public Date getDate() {
+		return date;
+	}
+	
+	public void setDate(String dateString) {
+		try {
+			date = formater.parse(dateString);
+		} catch (ParseException e) {
+			date = new Date();
+		}
+	}
 }

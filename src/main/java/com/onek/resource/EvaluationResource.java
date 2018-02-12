@@ -72,4 +72,9 @@ public class EvaluationResource implements Serializable {
 		return formater.format(lastUpdatedDate);
 	}
 	
+	@JsonIgnore
+	public List<NoteResource> getNotes() {
+		return notes;
+	}
+	
 }

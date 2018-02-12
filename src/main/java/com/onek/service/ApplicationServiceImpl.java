@@ -18,10 +18,12 @@ import com.onek.dao.LoginDao;
 import com.onek.model.Candidat;
 import com.onek.model.Evaluation;
 import com.onek.model.Jury;
+import com.onek.model.Note;
 import com.onek.resource.CandidatResource;
 import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.JuryResource;
+import com.onek.resource.NoteResource;
 
 @Service
 public class ApplicationServiceImpl implements ApplicationService, Serializable {
@@ -116,6 +118,33 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			}						
 		}		
 		return evaluations;
+	}
+
+	@Override
+	public void importEvaluation(EvaluationResource evaluationResource) {
+		Note note = new Note();
+		List<NoteResource> noteResources = evaluationResource.getNotes();
+		for(NoteResource noteResource : noteResources) {
+			Integer idNote = noteResource.getIdNote();
+			
+			// note create by application
+			if (idNote == 0) {
+				note.setNiveau(noteResource.getLevel());
+				note.setCommentaire(noteResource.getComment());
+				note.setDate(noteResource.getDate());
+				
+			}
+			
+			note.setIdnote(noteResource.getIdNote());
+			note.setNiveau(noteResource.getLevel());
+			note.setCommentaire(noteResource.getComment());
+			note.setDate(noteResource.getDate());
+			//note.setEvaluation(evaluation);
+			
+			//noteResource.get()
+			
+			//note.setCritere(noteResource.g);
+		}
 	}
 
 }
