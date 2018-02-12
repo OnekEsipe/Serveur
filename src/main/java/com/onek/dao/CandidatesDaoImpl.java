@@ -56,6 +56,8 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 		session.close();
 		System.out.println("Add All done");
 		
+	}
+		
 	@Override
 	public void supprimerCandidat(int idcandidat) {
 

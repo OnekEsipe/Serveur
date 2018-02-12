@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Map;
+
+import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
+
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,7 +40,6 @@ public class CandidateBean implements Serializable{
 
 	private  List<Candidat> candidats;
 	private Candidat candidat;
-	private Evenement event;
 	//Gestion import
 	private final List<Candidat> importedCandidates = new ArrayList<>();
 
