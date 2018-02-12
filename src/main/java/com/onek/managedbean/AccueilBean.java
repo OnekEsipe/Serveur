@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,9 +29,8 @@ public class AccueilBean implements Serializable {
 	private String status;
 	private Date datestart;
 	private Date datestop;
-
-	@PostConstruct
-	public void init() {
+	
+	public void refresh() {
 		events = accueilservice.listEvents();
 	}
 
