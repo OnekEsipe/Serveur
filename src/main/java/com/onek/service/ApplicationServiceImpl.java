@@ -140,8 +140,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			Integer idNote = noteResource.getIdNote();								
 			Integer idEvaluation = evaluationResource.getIdEvaluation();
 			
-			Note note =	noteResource.createNote();	
-			
+			Note note =	noteResource.createNote();				
 			Evaluation evaluation = evaluationDao.findById(idEvaluation);
 			Critere critere = critereDao.findById(noteResource.getIdCriteria());
 			note.setEvaluation(evaluation);

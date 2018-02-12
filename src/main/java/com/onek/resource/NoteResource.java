@@ -73,6 +73,7 @@ public class NoteResource implements Serializable {
 		return formater.format(date);
 	}
 	
+	@JsonProperty("Date")
 	public void setDate(String dateString) {
 		try {
 			date = formater.parse(dateString);
