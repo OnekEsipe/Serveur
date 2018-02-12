@@ -71,5 +71,10 @@ public class Descripteur implements Serializable {
 	public void setCritere(Critere critere) {
 		this.critere = critere;
 	}
+	
+	@Override
+	public String toString() {
+		return niveau + "\n" + "(Poids = "+poids+"\n ," + "Description = "+texte+")";
+	}
 
 }
