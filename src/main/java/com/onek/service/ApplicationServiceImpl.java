@@ -52,10 +52,10 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		}
 		
 		// check if jury is assigned
-		int idJury = loginDao.findUserByLogin(login).getIduser();
-		if (!juryDao.juryIsAssigned(idJury, id)) {
+		int idUser = loginDao.findUserByLogin(login).getIduser();	
+		if (!juryDao.juryIsAssigned(idUser, id)) {
 			return Optional.empty();
-		}
+		} 				
 
 		try {			
 			EvenementResource eventResource = new EvenementResource(eventDao.findById(id));
