@@ -1,12 +1,14 @@
 package com.onek.managedbean;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Map;
-
-import javax.faces.context.FacesContext;
-import javax.faces.event.ComponentSystemEvent;
-
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,27 +21,32 @@ import com.onek.utils.Navigation;
 @Component("candidate")
 public class CandidateBean implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
+
 	@Autowired
 	CandidateService candidateService;
-	
 	@Autowired
 	EvenementService evenement;
 	
 	private List<Candidat> filteredcandidats;
-	
+
 	private String firstName;
 	private String lastName;
 	
 	private int idEvent;
 	private Evenement event;
 
-	private List<Candidat> candidats;
+	private  List<Candidat> candidats;
 	private Candidat candidat;
+	private Evenement event;
+	//Gestion import
+	private final List<Candidat> importedCandidates = new ArrayList<>();
+
+	private UploadedFile file;
 
 	private Candidat newCandidat;
 	private String logInfo;
-	
+	private String importLog;
+
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			Navigation navigation = new Navigation();
@@ -57,7 +64,7 @@ public class CandidateBean implements Serializable{
 	public void setLogInfo(String logInfo) {
 		this.logInfo = logInfo;
 	}
-	
+
 	public void addCandidate() {
 		newCandidat = new Candidat();
 		newCandidat.setPrenom(firstName);
@@ -65,7 +72,11 @@ public class CandidateBean implements Serializable{
 		newCandidat.setEvenement(event);
 		candidateService.addCandidate(newCandidat);
 	}
-	
+	//Ajout de candidats via un import de fichier
+	public void addCandidates(List<Candidat> candidates) {
+		candidateService.addCandidates(candidates);
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -84,7 +95,7 @@ public class CandidateBean implements Serializable{
 	public void setIdEvent(int idevent) {
 		this.idEvent = idevent;
 	}
-	
+
 	public List<Candidat> getCandidats() {
 		return candidats;
 	}
@@ -100,7 +111,7 @@ public class CandidateBean implements Serializable{
 	public void setCandidat(Candidat candidat) {
 		this.candidat = candidat;
 	}
-	
+
 	public List<Candidat> getFilteredcandidats() {
 		return filteredcandidats;
 	}
@@ -109,14 +120,61 @@ public class CandidateBean implements Serializable{
 		this.filteredcandidats = filteredcandidats;
 	}
 
+	public UploadedFile getFile() {
+		return file;
+	}
+
+
+	public List<Candidat> getImportedCandidates() {
+		return importedCandidates;
+	}
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
+
+
+	public String getImportLog() {
+		return importLog;
+	}
+
+	public void setImportLog(String importLog) {
+		this.importLog = importLog;
+	}
+
 	public void click() {
-		
+
 		if(firstName.isEmpty() || lastName.isEmpty()) {
 			logInfo = "Merci de remplir tous les champs du formulaire";
 			return;
 		}
 		addCandidate();
 		logInfo = "Ajout ok";
+	}
+  
+	public void importFile()  {
+
+		if(file.getFileName().isEmpty()) {
+			importLog = "Merci d'importer votre fichier de candidat";
+		}else {
+			importLog = "Votre fichier a bien été envoyé";
+			try (BufferedReader reader =  new BufferedReader(new FileReader(file.getFileName()))){
+				String line;
+				while((line = reader.readLine()) != null) {
+					String [] values = line.split(",|;|:", 2);
+					
+					// Création de l'objet candidat
+					
+					Candidat candidat = new Candidat();
+					candidat.setNom(values[0]);
+					candidat.setPrenom(values[1]);
+					candidat.setEvenement(event);
+					importedCandidates.add(candidat);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			addCandidates(importedCandidates);
+		}
 	}
 	
 	public void supprimerCandidat() {
@@ -125,8 +183,7 @@ public class CandidateBean implements Serializable{
 		int idcandidat = Integer.valueOf(params.get("idcandidat"));
         
 		candidateService.supprimerCandidat(idcandidat);
-		candidats = candidateService.findCandidatesByEvent(idEvent);
-	      
+		candidats = candidateService.findCandidatesByEvent(idEvent);   
 	}
-	
+
 }
