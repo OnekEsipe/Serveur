@@ -11,13 +11,16 @@
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
 </h:head>
-
+<f:metadata>
+	<f:viewParam name="event" value="#{grille.idEvent}" />
+	<f:event type="preRenderView" listener="#{grille.before}" />
+</f:metadata>
 <h:body>
 	<!-- Insertion du menu -->
-	<h:outputStylesheet library="css" name="accueil.css" />
 	<ui:include src="menu.xhtml" />
 	<br />
 	<br />
+	
 	<h:form>
 		<div title="addCritère">
 			<p:outputPanel>

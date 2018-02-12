@@ -12,7 +12,10 @@
 	</link>
 	<h:outputStylesheet library="css" name="accueilEvent.css" />
 </h:head>
-
+<f:metadata>
+	<f:viewParam name="event" value="#{eventAccueil.idEvent}" />
+	<f:event type="preRenderView" listener="#{eventAccueil.before}" />
+</f:metadata>
 <h:body>
 	<!-- Insertion du menu -->
 
@@ -67,8 +70,8 @@
 						#{eventAccueil.message}
 					</div>
 				</div>
-				
-				<p:dataTable  var="candidat" value="#{eventAccueil.candidats}"
+
+				<p:dataTable var="candidat" value="#{eventAccueil.candidats}"
 					widgetVar="candidatTable"
 					emptyMessage="aucun candidat trouvé avec ce nom"
 					filteredValue="#{eventAccueil.filteredcandidats}" scrollable="true"
@@ -102,8 +105,8 @@
 					<p:column style="width:32px;text-align: center">
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
-							 actionListener="#{eventAccueil.supprimerCandidat}" ajax="true"
-							 update ="@(form)">
+							actionListener="#{eventAccueil.supprimerCandidat}" ajax="true"
+							update="@(form)">
 							<p:confirm header="Confirmation"
 								message="vous voulez vraiment supprimer le candidat"
 								icon="ui-icon-trash" />
@@ -121,7 +124,7 @@
 					</p:column>
 					<!-- ********fin*********** -->
 				</p:dataTable>
-			
+
 			</h:form>
 		</div>
 		<!-- ************Tableau des Jurys**************** -->
@@ -176,11 +179,11 @@
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
 							actionListener="#{eventAccueil.supprimerUtilisateur}"
-							update ="@(form)">
+							update="@(form)">
 							<p:confirm header="Confirmation"
 								message="vous voulez vraiment supprimer le jury"
 								icon="ui-icon-trash" />
-								<f:param name="iduser" value="#{utilisateur.iduser}" />
+							<f:param name="iduser" value="#{utilisateur.iduser}" />
 						</p:commandButton>
 
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
