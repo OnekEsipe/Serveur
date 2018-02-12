@@ -45,7 +45,6 @@ public class CandidateBean implements Serializable{
 
 	private UploadedFile file;
 
-	private Candidat newCandidat;
 	private String logInfo;
 	private String importLog;
 
@@ -67,13 +66,6 @@ public class CandidateBean implements Serializable{
 		this.logInfo = logInfo;
 	}
 
-	public void addCandidate() {
-		newCandidat = new Candidat();
-		newCandidat.setPrenom(firstName);
-		newCandidat.setNom(lastName);
-		newCandidat.setEvenement(event);
-		candidateService.addCandidate(newCandidat);
-	}
 	//Ajout de candidats via un import de fichier
 	public void addCandidates(List<Candidat> candidates) {
 		candidateService.addCandidates(candidates);
@@ -144,13 +136,18 @@ public class CandidateBean implements Serializable{
 	}
 
 	public void click() {
-
 		if(firstName.isEmpty() || lastName.isEmpty()) {
 			logInfo = "Merci de remplir tous les champs du formulaire";
 			return;
 		}
-		addCandidate();
-		logInfo = "Ajout ok";
+		Candidat newCandidat = new Candidat();
+		newCandidat.setPrenom(firstName);
+		newCandidat.setNom(lastName);
+		newCandidat.setEvenement(event);
+		candidateService.addCandidate(newCandidat);
+		candidats.add(newCandidat);
+		firstName = "";
+		lastName = "";
 	}
   
 	public void importFile()  {
@@ -183,7 +180,6 @@ public class CandidateBean implements Serializable{
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 		int idcandidat = Integer.valueOf(params.get("idcandidat"));
-        
 		candidateService.supprimerCandidat(idcandidat);
 		candidats = candidateService.findCandidatesByEvent(idEvent);   
 	}

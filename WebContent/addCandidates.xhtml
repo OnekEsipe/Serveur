@@ -33,7 +33,7 @@
 		</div>
 		<h:form>
 			<p:growl id="msgs" showDetail="true" />
-			<h3>Ajouter un nouvel candidat</h3>
+			<h3>Ajouter un nouveau candidat</h3>
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="lastnameCandidat" value="Nom:" />
@@ -47,7 +47,7 @@
 					value="#{candidate.firstName}" />
 
 				<p:commandButton value="Valider" action="#{candidate.click}"
-					icon="ui-icon-check" update="tabCandidat" />
+					icon="ui-icon-check" update="tabCandidat" ajax="false"/>
 			</h:panelGrid>
 
 			<div>
