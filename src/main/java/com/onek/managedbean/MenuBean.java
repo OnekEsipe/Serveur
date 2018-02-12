@@ -25,7 +25,7 @@ public class MenuBean {
 	}
 	
 	public void account() {
-		
+		redirect("account.xhtml");
 	}
 	
 	public void help() {

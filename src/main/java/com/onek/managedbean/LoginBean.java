@@ -55,14 +55,12 @@ public class LoginBean implements Serializable {
 	}
 
 	public void buttonAction() {
-		
-		
-		// Code commenté en attendant l'implémentation de Utilisateur
 		if (loginservice.userExist(login)) {
 			if (motDePasse.equals(loginservice.findUserByLogin(login).getMotdepasse())) {
 				if (loginservice.findUserByLogin(login).getDroits().equals("R")
 						|| loginservice.findUserByLogin(login).getDroits().equals("O")) {
 					FacesContext fc = FacesContext.getCurrentInstance();
+					fc.getExternalContext().getSessionMap().put("user", login);
 					NavigationHandler nh = fc.getApplication().getNavigationHandler();
 					nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "accueil.xhtml",
 							"accueil.xhtml".contains("?") ? "&" : "?"));
@@ -75,9 +73,6 @@ public class LoginBean implements Serializable {
 		}else {
 			message = "utilisateur ou mot de passe incorrect";
 		}
-
-		
-
 	}
 
 }
