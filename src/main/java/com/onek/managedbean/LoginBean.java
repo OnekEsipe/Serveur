@@ -2,13 +2,11 @@ package com.onek.managedbean;
 
 import java.io.Serializable;
 
-import javax.faces.application.NavigationHandler;
-import javax.faces.context.FacesContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.service.LoginService;
+import com.onek.utils.Navigation;
 
 @Component("login")
 public class LoginBean implements Serializable {
@@ -16,6 +14,9 @@ public class LoginBean implements Serializable {
 
 	@Autowired
 	private LoginService loginservice;
+
+	@Autowired
+	Navigation navigation;
 
 	private String login;
 	private String motDePasse;
@@ -55,28 +56,22 @@ public class LoginBean implements Serializable {
 	}
 
 	public void buttonAction() {
-		
-		
+
 		// Code commenté en attendant l'implémentation de Utilisateur
 		if (loginservice.userExist(login)) {
 			if (motDePasse.equals(loginservice.findUserByLogin(login).getMotdepasse())) {
 				if (loginservice.findUserByLogin(login).getDroits().equals("A")
 						|| loginservice.findUserByLogin(login).getDroits().equals("O")) {
-					FacesContext fc = FacesContext.getCurrentInstance();
-					NavigationHandler nh = fc.getApplication().getNavigationHandler();
-					nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "accueil.xhtml",
-							"accueil.xhtml".contains("?") ? "&" : "?"));
-				}else {
+					navigation.redirect("accueil.xhtml");
+				} else {
 					message = "utilisateur ou mot de passe incorrect";
 				}
-			}else {
+			} else {
 				message = "utilisateur ou mot de passe incorrect";
 			}
-		}else {
+		} else {
 			message = "utilisateur ou mot de passe incorrect";
 		}
-
-		
 
 	}
 

@@ -7,16 +7,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
-import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
-import com.onek.service.EvenementService;
 import com.onek.service.EventAccueilService;
 import com.onek.utils.Navigation;
 
@@ -28,13 +26,8 @@ public class EventAccueilBean implements Serializable {
 	private EventAccueilService eventAccueilservice;
 	
 	@Autowired
-	EvenementService evenement;
+	Navigation navigation;
 	
-	private final Navigation navigation = new Navigation();
-
-	private int idEvent;
-	private Evenement event;
-
 	private String statut;
 	private Date dateStart;
 	private Date dateEnd;
@@ -42,17 +35,18 @@ public class EventAccueilBean implements Serializable {
 	private Date timeEnd;
 	private String message;
 	private int juryAnonyme;
-
+	
 	private List<Candidat> filteredcandidats;
-	private Candidat selectedcandidat;
+	private Candidat selectedcandidat ;
 	private List<Candidat> candidats;
 	private Candidat candidat;
-
+	
 	private List<Utilisateur> utilisateurs;
 	private Utilisateur utilisateur;
 	private List<Utilisateur> filteredutilisateurs;
 	private Utilisateur selectedutilisateur;
-
+	
+	
 	public List<Utilisateur> getFilteredutilisateurs() {
 		return filteredutilisateurs;
 	}
@@ -93,20 +87,12 @@ public class EventAccueilBean implements Serializable {
 		this.juryAnonyme = juryAnonyme;
 	}
 
-	public void before(ComponentSystemEvent e) {
-		if (!FacesContext.getCurrentInstance().isPostback()) {
-			Navigation navigation = new Navigation();
-			String idEventString = navigation.getURLParameter("id");
-			setIdEvent(Integer.parseInt(idEventString));
-			this.event = evenement.findById(idEvent);
-			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
-			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
-			this.statut = event.getStatus();
-			this.dateStart = event.getDatestart();
-			this.dateEnd = event.getDatestop();
-		}
-	}
-
+	@PostConstruct
+    public void init() {
+      candidats = eventAccueilservice.listCandidatsByEvent(1);
+      utilisateurs = eventAccueilservice.listJurysByEvent(1);
+    }
+	
 	public List<Utilisateur> getUtilisateurs() {
 		return utilisateurs;
 	}
@@ -137,7 +123,7 @@ public class EventAccueilBean implements Serializable {
 
 	public void setCandidat(Candidat candidat) {
 		this.candidat = candidat;
-	}
+	}	
 
 	public String getMessage() {
 		return message;
@@ -186,69 +172,60 @@ public class EventAccueilBean implements Serializable {
 	public void setStatut(String statut) {
 		this.statut = statut;
 	}
-
-	public int getIdEvent() {
-		return idEvent;
-	}
-
-	public void setIdEvent(int idEvent) {
-		this.idEvent = idEvent;
-	}
-
+	
 	public void addJuryAnonymeButton() {
-		// to do
+		//to do
 	}
 
 	public void eventUpdateButton() {
 		// Pour test
 		DateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy");
 		String sDate = dfDate.format(dateStart);
-
+		
 		DateFormat dfTime = new SimpleDateFormat("HH:mm");
 		String sTime = dfTime.format(timeStart);
-
-		message = "Statut: " + statut + " dateStart:" + dateStart + " dateStartFORMATTE:" + sDate + " dateEnd:"
-				+ dateEnd + " timeStart:" + timeStart + " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
+		
+		message = "Statut: " + statut + " dateStart:" + dateStart + " dateStartFORMATTE:" + sDate + " dateEnd:" + dateEnd + " timeStart:" + timeStart
+				+ " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
 	}
-
+	
 	public void supprimerCandidat() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 		int idcandidat = Integer.valueOf(params.get("idcandidat"));
-
+        
 		eventAccueilservice.supprimerCandidat(idcandidat);
 		candidats = eventAccueilservice.listCandidatsByEvent(1);
-
+	      
 	}
-
+	
 	public void supprimerUtilisateur() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 		int iduser = Integer.valueOf(params.get("iduser"));
-
+        
 		eventAccueilservice.supprimerUtilisateur(iduser);
 		utilisateurs = eventAccueilservice.listJurysByEvent(1);
 	}
-
 	public void buttonGrille() {
-		navigation.redirect("grille.xhtml?id="+idEvent);
+		navigation.redirect("viewCreateEvent.xhtml");
 	}
-
+	
 	public void buttonAttribution() {
-		navigation.redirect("attributionJuryCandidat.xhtml?id="+idEvent);
+		navigation.redirect("attributionJuryCandidat.xhtml");
 	}
-
+	
 	public void buttonAddJury() {
-		navigation.redirect("addJury.xhtml?id="+idEvent);
+		navigation.redirect("addJury.xhtml");
 	}
-
+	
 	public void buttonAddCandidat() {
-		navigation.redirect("addCandidates.xhtml?id="+idEvent);
+		navigation.redirect("addCandidates.xhtml");
 	}
-
+	
 	public void buttonExport() {
-		// to do
-		// eventAccueilservice.listJurysByEvent().
+		//to do
+		//eventAccueilservice.listJurysByEvent().
 	}
-
+	
 }
