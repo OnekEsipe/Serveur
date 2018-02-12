@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.onek.model.Candidat;
 import com.onek.model.Utilisateur;
 import com.onek.service.EventAccueilService;
+import com.onek.utils.Navigation;
 
 @Component("eventAccueil")
 public class EventAccueilBean implements Serializable {
@@ -25,6 +25,8 @@ public class EventAccueilBean implements Serializable {
 	@Autowired
 	private EventAccueilService eventAccueilservice;
 	
+	@Autowired
+	Navigation navigation;
 	
 	private String statut;
 	private Date dateStart;
@@ -85,9 +87,6 @@ public class EventAccueilBean implements Serializable {
 		this.juryAnonyme = juryAnonyme;
 	}
 
-	
-	
-	
 	@PostConstruct
     public void init() {
       candidats = eventAccueilservice.listCandidatsByEvent(1);
@@ -209,25 +208,21 @@ public class EventAccueilBean implements Serializable {
 		utilisateurs = eventAccueilservice.listJurysByEvent(1);
 	}
 	public void buttonGrille() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "viewCreateEvent.xhtml", "viewCreateEvent.xhtml".contains("?") ? "&" : "?"));
+		navigation.redirect("viewCreateEvent.xhtml");
 	}
+	
 	public void buttonAttribution() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "attributionJuryCandidat.xhtml", "attributionJuryCandidat.xhtml".contains("?") ? "&" : "?"));
+		navigation.redirect("attributionJuryCandidat.xhtml");
 	}
+	
 	public void buttonAddJury() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "addJury.xhtml", "addJury.xhtml".contains("?") ? "&" : "?"));
+		navigation.redirect("addJury.xhtml");
 	}
+	
 	public void buttonAddCandidat() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "addCandidates.xhtml", "addCandidates.xhtml".contains("?") ? "&" : "?"));
+		navigation.redirect("addCandidates.xhtml");
 	}
+	
 	public void buttonExport() {
 		//to do
 		//eventAccueilservice.listJurysByEvent().

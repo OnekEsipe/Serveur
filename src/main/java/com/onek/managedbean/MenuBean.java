@@ -1,23 +1,18 @@
 package com.onek.managedbean;
 
-import javax.faces.application.NavigationHandler;
-import javax.faces.context.FacesContext;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.onek.utils.Navigation;
 
 @Component("principalMenu")
 public class MenuBean {
 	
-
-	public void redirect(String page) {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", page,
-				page.contains("?") ? "&" : "?"));
-	}
+	@Autowired
+	Navigation navigation;
 	
 	public void event() {
-		redirect("accueil.xhtml");
+		navigation.redirect("accueil.xhtml");
 	}
 	
 	public void user() {
@@ -33,7 +28,7 @@ public class MenuBean {
 	}
 	
 	public void exit() {
-		redirect("index.xhtml");
+		navigation.redirect("index.xhtml");
 	}
 	
 }

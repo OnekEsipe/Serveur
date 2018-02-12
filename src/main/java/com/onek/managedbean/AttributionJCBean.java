@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.NavigationHandler;
-import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.onek.model.Candidat;
 import com.onek.model.Utilisateur;
 import com.onek.service.AttributionJCService;
+import com.onek.utils.Navigation;
 
 @Component("attributionjc")
 public class AttributionJCBean implements Serializable{
@@ -22,6 +21,8 @@ public class AttributionJCBean implements Serializable{
 	@Autowired
 	private AttributionJCService attributionjcservice;
 	
+	@Autowired
+	Navigation navigation;	
 	
 	private List<Candidat> filteredcandidats;
 	private Candidat selectedcandidats ;
@@ -89,8 +90,6 @@ public class AttributionJCBean implements Serializable{
       utilisateurs = attributionjcservice.listJurysByEvent(1);
     }
 	public void buttonActionValider() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "eventAccueil.xhtml", "eventAccueil.xhtml".contains("?") ? "&" : "?"));
+		navigation.redirect("eventAccueil.xhtml");
 	}
 }

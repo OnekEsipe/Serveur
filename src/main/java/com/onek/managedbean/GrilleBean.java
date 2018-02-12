@@ -26,6 +26,9 @@ public class GrilleBean {
 	
 	@Autowired
 	EvenementService evenement;
+	
+	@Autowired
+	Navigation navigation;
 
 	private List<Critere> criteres = new ArrayList<>();
 	private List<Integer> numbers = new ArrayList<>();
@@ -129,10 +132,7 @@ public class GrilleBean {
 	public void onClicSave() {
 		grille.addCriteres(criteres);
 		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().remove("event");
-		FacesContext fc = FacesContext.getCurrentInstance();
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null,
-				String.format("%s%sfaces-redirect=true", "accueil.xhtml", "accueil.xhtml".contains("?") ? "&" : "?"));
+		navigation.redirect("accueil.xhtml");
 	}
 
 	public String getNom() {
