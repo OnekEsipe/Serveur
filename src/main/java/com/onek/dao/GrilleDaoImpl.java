@@ -14,7 +14,7 @@ import com.onek.model.Descripteur;
 @Repository
 public class GrilleDaoImpl implements GrilleDao, Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -30,6 +30,17 @@ public class GrilleDaoImpl implements GrilleDao, Serializable {
 		}
 		session.getTransaction().commit();
 		session.close();
-	}	
+	}
+
+	@Override
+	public Critere findById(Integer id) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Critere critere = (Critere) session.createQuery("FROM Critere WHERE idcritere = :id").setParameter("id", id)
+				.getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return critere;
+	}
 
 }
