@@ -69,6 +69,9 @@ public class UserServiceImpl implements UserService, Serializable {
 
 	@Override
 	public void addUser(Utilisateur user) {
+		if (loginDao.userExist(user.getLogin())) {
+			throw new IllegalStateException();
+		}
 		userDao.addUser(user);
 	}
 
