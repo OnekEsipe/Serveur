@@ -30,19 +30,19 @@
 			<p:panel header="Modifier mon mot de passe">
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:outputLabel for="motdepasseactuel" value="Mot de passe actuel:" />
-					<p:inputText id="motdepasseactuel" name="motdepasseactuel"
+					<p:password id="motdepasseactuel" name="motdepasseactuel"
 						placeholder="Entrez votre mot de passe actuel" size="30"
 						value="#{userInfo.lastPassword}" />
 
 					<p:outputLabel for="nouveaumotdepasse"
 						value="Nouveau mot de passe:" />
-					<p:inputText id="nouveaumotdepasse" name="nouveaumotdepasse"
+					<p:password id="nouveaumotdepasse" name="nouveaumotdepasse"
 						placeholder="Entrez votre nouveau mot de passe" size="30"
 						value="#{userInfo.newPassword}" />
 
 					<p:outputLabel for="confirmermotdepasse"
 						value="Nouveau mot de passe:" />
-					<p:inputText id="confirmermotdepasse" name="confirmermotdepasse"
+					<p:password id="confirmermotdepasse" name="confirmermotdepasse"
 						placeholder="Confirmez votre nouveau mot de passe" size="30"
 						value="#{userInfo.confirmNewPassword}" />
 					<br />
@@ -52,6 +52,7 @@
 				</h:panelGrid>
 			</p:panel>
 		</h:form>
+		
 
 		<!-- Modification addresse e-mail  -->
 		<h:form>
