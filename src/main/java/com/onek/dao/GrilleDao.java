@@ -6,6 +6,5 @@ import com.onek.model.Critere;
 
 public interface GrilleDao {
 
-	void addCriteres(List<Critere> criteres);
-
+	void addCriteres(List<Critere> criteres);	
 }

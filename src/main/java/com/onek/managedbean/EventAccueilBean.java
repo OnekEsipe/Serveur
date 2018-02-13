@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,9 @@ import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
 import com.onek.service.EvenementService;
 import com.onek.service.EventAccueilService;
+import com.onek.service.UserService;
 import com.onek.utils.Navigation;
+import com.onek.utils.PasswordGenerator;
 
 @Component("eventAccueil")
 public class EventAccueilBean implements Serializable {
@@ -30,6 +33,10 @@ public class EventAccueilBean implements Serializable {
 
 	@Autowired
 	EvenementService evenement;
+	
+	@Autowired
+	private UserService userService;
+
 
 	private final Navigation navigation = new Navigation();
 	
@@ -53,6 +60,8 @@ public class EventAccueilBean implements Serializable {
 	private Utilisateur utilisateur;
 	private List<Utilisateur> filteredutilisateurs;
 	private Utilisateur selectedutilisateur;
+	
+	private PasswordGenerator passwordGenerator;
 
 	public List<Utilisateur> getFilteredutilisateurs() {
 		return filteredutilisateurs;
@@ -203,7 +212,34 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	public void addJuryAnonymeButton() {
-		// to do
+		passwordGenerator = new PasswordGenerator();
+		List<Utilisateur> anonymousJurys = new ArrayList<>();
+		Utilisateur anonymousJury;
+		if (juryAnonyme > 0) {
+			for (int i = 0; i < juryAnonyme; i++) {
+				anonymousJury = new Utilisateur();
+				anonymousJury.setDroits("A");
+				anonymousJury.setIsdeleted(false);
+				if (i < 10) {
+					anonymousJury.setLogin("Jury00" + i + "_" + idEvent);
+					anonymousJury.setNom("Jury00" + i + "_" + idEvent);
+				}
+				if ((i >= 10) && (i < 100)) {
+					anonymousJury.setLogin("Jury0" + i + "_" + idEvent);
+					anonymousJury.setNom("Jury0" + i + "_" + idEvent);
+				}
+				if ((i >= 100) && (i < 1000)) {
+					anonymousJury.setLogin("Jury" + i + "_" + idEvent);
+					anonymousJury.setNom("Jury" + i + "_" + idEvent);
+				}
+				anonymousJury.setMotdepasse(passwordGenerator.generatePassword(8));
+				anonymousJury.setMail("");
+				anonymousJury.setPrenom("");
+				anonymousJurys.add(anonymousJury);
+			}	
+			userService.addJurysAnonymes(anonymousJurys, event);	
+			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
+		}
 	}
 
 	public void eventUpdateButton() {

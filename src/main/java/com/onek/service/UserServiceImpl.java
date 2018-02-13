@@ -3,19 +3,21 @@ package com.onek.service;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onek.dao.LoginDao;
 import com.onek.dao.UserDao;
+import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
 import com.onek.utils.EncodePassword;
 
 @Service
-public class UserServiceImpl implements UserService, Serializable{
+public class UserServiceImpl implements UserService, Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Autowired
 	private UserDao userDao;
 	
@@ -49,6 +51,10 @@ public class UserServiceImpl implements UserService, Serializable{
 			throw new IllegalStateException();			
 		}
 		return user.getMotdepasse().equals(hash);
+  }
+  
+	public void addJurysAnonymes(List<Utilisateur> utilisateurs, Evenement event) {
+		userDao.addJurysAnonymes(utilisateurs, event);
 	}
 
 }
