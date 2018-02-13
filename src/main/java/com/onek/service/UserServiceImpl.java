@@ -1,6 +1,7 @@
 package com.onek.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,11 @@ public class UserServiceImpl implements UserService, Serializable{
 	public void updateUserInfos(Utilisateur user) {
 		userDao.updateUserInfos(user);
 		
+	}
+
+	@Override
+	public List<Utilisateur> getAllUsers() {
+		return userDao.getAllUsers();
 	}
 
 }

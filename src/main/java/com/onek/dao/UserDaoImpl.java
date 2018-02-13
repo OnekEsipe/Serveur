@@ -1,6 +1,8 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,6 +36,18 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.close();
 
 		return user;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Utilisateur> getAllUsers() {
+		List<Utilisateur> users = new ArrayList<>();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		users = (List<Utilisateur>) session.createQuery("from Utilisateur").list();
+		session.getTransaction().commit();
+		session.close();
+		return users;
 	}
 
 }
