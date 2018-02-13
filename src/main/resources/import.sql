@@ -16,7 +16,7 @@
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Axel', 'Attila', 'aa', 'aa@gmail.com', 'O', 'aa', false);
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Beatrice', 'Boule', 'bb', 'bb@gmail.com', 'O', 'bb', false);
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Charles', 'Chaplin', 'cc', 'cc@gmail.com', 'R', 'cc', false);
-INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Damien', 'Duper', 'dd', 'dd@gmail.com', 'J', 'dd', false);
+INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Damien', 'Duper', 'dd', 'dd@gmail.com', 'J', '388ad1c312a488ee9e12998fe097f2258fa8d5ee', false);
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Etienne', 'Edouard', 'ee', 'ee@gmail.com', 'J', 'ee', false);
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Fabienne', 'Fabre', 'ff', 'ff@gmail.com', 'J', 'ff', false);
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Gerard', 'Gabin', 'gg', 'gg@gmail.com', 'J', 'gg', true);
