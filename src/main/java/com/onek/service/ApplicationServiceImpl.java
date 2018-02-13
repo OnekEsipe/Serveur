@@ -1,6 +1,8 @@
 package com.onek.service;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import com.onek.dao.GrilleDao;
 import com.onek.dao.JuryDao;
 import com.onek.dao.LoginDao;
 import com.onek.dao.NoteDao;
+import com.onek.dao.UserDao;
 import com.onek.model.Candidat;
 import com.onek.model.Critere;
 import com.onek.model.Evaluation;
@@ -28,10 +31,12 @@ import com.onek.model.Note;
 import com.onek.model.Utilisateur;
 import com.onek.resource.AccountResource;
 import com.onek.resource.CandidatResource;
+import com.onek.resource.CreateJuryResource;
 import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.JuryResource;
 import com.onek.resource.NoteResource;
+import com.onek.utils.EncodePassword;
 import com.onek.utils.StatutEvenement;
 
 
@@ -56,6 +61,9 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	
 	@Autowired
 	private NoteDao noteDao;
+	
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public Optional<EvenementResource> export(String idEvent, String login) {
@@ -202,6 +210,19 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			}			
 		}
 		return evaluationResource;
+	}
+
+	@Override
+	public void createJury(CreateJuryResource createJuryResource) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		Utilisateur user = new Utilisateur();
+		user.setPrenom(createJuryResource.getFirstname());
+		user.setNom(createJuryResource.getLastname());
+		user.setMail(createJuryResource.getMail());
+		user.setLogin(createJuryResource.getLogin());
+		user.setMotdepasse(EncodePassword.sha1(createJuryResource.getPassword()));
+		user.setDroits("J");
+		user.setIsdeleted(false);
+		userService.addUser(user);
 	}
 
 }
