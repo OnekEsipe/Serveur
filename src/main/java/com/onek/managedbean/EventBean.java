@@ -39,6 +39,7 @@ public class EventBean implements Serializable {
 		event.setIsopened(isOpened);
 		event.setIssigned(isSigned);
 		event.setStatus(status);
+		event.setIsdeleted(false);
 		evenementService.addEvenement(event);
 	}
 	

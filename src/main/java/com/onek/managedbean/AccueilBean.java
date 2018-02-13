@@ -3,6 +3,9 @@ package com.onek.managedbean;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ public class AccueilBean implements Serializable {
 	private final Navigation navigation = new Navigation();
 
 	private List<Evenement> events;
+	private Evenement evenement;
 	private List<Evenement> filteredevents;
 	private Evenement selectedevent;
 
@@ -29,7 +33,25 @@ public class AccueilBean implements Serializable {
 	private String status;
 	private Date datestart;
 	private Date datestop;
+	private int idevent;
 	
+	
+	public int getIdevent() {
+		return idevent;
+	}
+
+	public void setIdevent(int idevent) {
+		this.idevent = idevent;
+	}
+
+	public Evenement getEvent() {
+		return evenement;
+	}
+
+	public void setEvent(Evenement event) {
+		this.evenement = event;
+	}
+
 	public void refresh() {
 		events = accueilservice.listEvents();
 	}
@@ -91,7 +113,13 @@ public class AccueilBean implements Serializable {
 	}
 
 	public void supprimerEvent() {
-		// to do
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		idevent = Integer.valueOf(params.get("idevent"));
+		System.out.println(idevent);
+		accueilservice.supprimerEvent(idevent);
+		events = accueilservice.listEvents();
+		
 	}
 
 	public void onRowSelect(SelectEvent event) {

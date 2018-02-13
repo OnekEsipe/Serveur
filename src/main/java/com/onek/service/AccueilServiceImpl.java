@@ -18,4 +18,8 @@ public class AccueilServiceImpl implements AccueilService, Serializable{
 	public List<Evenement> listEvents(){
 		return accueildao.listEvents();
 	}
+	@Override
+	public void supprimerEvent(int idevent) {
+		accueildao.supprimerEvent(idevent);
+	}
 }
