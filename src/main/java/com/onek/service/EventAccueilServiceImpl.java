@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.onek.dao.EventAccueilDao;
 import com.onek.model.Candidat;
+import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
 
 @Service
@@ -36,5 +37,9 @@ public class EventAccueilServiceImpl implements EventAccueilService, Serializabl
 	}
 	public void supprimerUtilisateur(int iduser) {
 		eventAccueilDao.supprimerUtilisateur(iduser);
+	}
+	@Override
+	public void editEvenement(Evenement event) {
+		eventAccueilDao.editEvenement(event);
 	}
 }
