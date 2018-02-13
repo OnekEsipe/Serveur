@@ -8,6 +8,8 @@ import com.onek.model.Utilisateur;
 public interface UserService {
 
 	public void updateUserInfos(Utilisateur user);
+	public boolean userExistAndCorrectPassword(String login, String password);
 	public void addJurysAnonymes(List<Utilisateur> utilisateurs, Evenement event);
 	public Utilisateur getUserByLogin(String login);
+
 }

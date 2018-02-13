@@ -28,14 +28,12 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.close();
 	}
 	
-	@Override
 	public Utilisateur getUserByLogin(String login) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where login = :login").setParameter("login", login).getSingleResult();
 		session.getTransaction().commit();
 		session.close();
-
 		return user;
 	}
 
