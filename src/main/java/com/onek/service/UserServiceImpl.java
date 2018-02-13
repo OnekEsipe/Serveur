@@ -20,16 +20,11 @@ public class UserServiceImpl implements UserService, Serializable {
 	@Override
 	public void updateUserInfos(Utilisateur user) {
 		userDao.updateUserInfos(user);
+	}
 
 	@Override
 	public Utilisateur getUserByLogin(String login) {
 		return userDao.getUserByLogin(login);
-	}
-
-	@Override
-	public void updateUserInfos(Utilisateur user) {
-		userDao.updateUserInfos(user);
-		
 	}
 
 	@Override
