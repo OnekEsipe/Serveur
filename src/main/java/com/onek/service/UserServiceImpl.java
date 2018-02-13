@@ -14,20 +14,17 @@ public class UserServiceImpl implements UserService, Serializable{
 	
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Override
-	public boolean validPassword(int idUser, String password) {
-		return userDao.validPassword(idUser, password);
+	public Utilisateur getUserByLogin(String login) {
+		
+		return userDao.getUserByLogin(login);
 	}
 
 	@Override
 	public void updateUserInfos(Utilisateur user) {
-		userDao.updateUserInfos(user);	
-	}
-
-	@Override
-	public Utilisateur userById(int iduser) {
-		return userDao.userById(iduser);
+		userDao.updateUserInfos(user);
+		
 	}
 
 }
