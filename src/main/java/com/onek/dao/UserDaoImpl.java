@@ -54,6 +54,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 	public void deleteUser(int idUser) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
+		
 		Utilisateur utilisateur = (Utilisateur) session.createQuery("from utilisateur where iduser = :iduser").setParameter("iduser", idUser).getSingleResult();
 		utilisateur.setIsdeleted(true);
 		session.update(utilisateur);
@@ -74,6 +75,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 	@Override
 	public List<Utilisateur> getAllUsersExceptDeleted() {
 		boolean isdeleted = false;
+		
 		List<Utilisateur> users = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();

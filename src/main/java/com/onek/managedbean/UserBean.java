@@ -19,8 +19,8 @@ public class UserBean {
 	@Autowired
 	UserService userService;
 	
-	private Utilisateur user;
-	
+	private Utilisateur utilisateur;
+	private int iduser;
 	private String lastName;
 	private String firstName;
 	private String login;
@@ -41,12 +41,20 @@ public class UserBean {
 		}
 	}
 
-	public Utilisateur getUser() {
-		return user;
+	public int getIduser() {
+		return iduser;
 	}
 
-	public void setUser(Utilisateur user) {
-		this.user = user;
+	public void setIduser(int iduser) {
+		this.iduser = iduser;
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUstilisateur(Utilisateur user) {
+		this.utilisateur = user;
 	}
 
 	public List<Utilisateur> getUsers() {
@@ -141,20 +149,25 @@ public class UserBean {
 		newUser.setLogin(login);
 		// TODO AJOUTER HASH PASSWORD
 		newUser.setMotdepasse(password);
-		if (isAdmin) {
-			newUser.setDroits("A");
-		} else {
-			newUser.setDroits("O");
-		}
+//		if (isAdmin) {
+//			newUser.setDroits("A");
+//		} else {
+//			newUser.setDroits("O");
+//		}
+		newUser.setDroits("O");
+		newUser.setIsdeleted(false);
 		userService.addUser(newUser);
 		users.add(newUser);
 	}
 	
 	public void deleteUser() {
+		System.out.println("hello");
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
-		int id = Integer.valueOf(params.get("iduser"));
-		userService.deleteUser(id);
+		System.out.println("hello");
+		iduser = Integer.valueOf(params.get("iduser"));
+		System.out.println(iduser);
+		userService.deleteUser(iduser);
 		users = userService.getAllUsersExceptDeleted();
 	}
 
