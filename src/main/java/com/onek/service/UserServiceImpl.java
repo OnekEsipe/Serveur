@@ -34,13 +34,18 @@ public class UserServiceImpl implements UserService, Serializable{
 	}
 
 	@Override
-	public void deleteUser(Utilisateur user) {
+	public void deleteUser(int user) {
 		userDao.deleteUser(user);
 	}
 
 	@Override
 	public void addUser(Utilisateur user) {
 		userDao.addUser(user);
+	}
+
+	@Override
+	public List<Utilisateur> getAllUsersExceptDeleted() {
+		return userDao.getAllUsersExceptDeleted();
 	}
 
 }
