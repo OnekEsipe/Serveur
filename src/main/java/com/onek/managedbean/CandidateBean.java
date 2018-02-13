@@ -50,9 +50,7 @@ public class CandidateBean implements Serializable{
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
-			Navigation navigation = new Navigation();
-			String idEventString = navigation.getURLParameter("id");
-			setIdEvent(Integer.parseInt(idEventString));
+			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			candidats = candidateService.findCandidatesByEvent(idEvent);
 		}

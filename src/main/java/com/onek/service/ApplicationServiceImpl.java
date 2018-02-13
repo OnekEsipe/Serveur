@@ -2,6 +2,7 @@ package com.onek.service;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -31,6 +32,7 @@ import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.JuryResource;
 import com.onek.resource.NoteResource;
+import com.onek.utils.StatutEvenement;
 
 
 @Service
@@ -77,7 +79,19 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		} 				
 
 		try {			
-			EvenementResource eventResource = new EvenementResource(eventDao.findById(id));
+			Evenement event = eventDao.findById(id);
+			
+			// check if evenement is opened
+			if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
+				return Optional.empty();
+			}
+			
+			// check if end date of event > date today // TODO uncomment
+			//if ((event.getDatestop().getTime() < new Date().getTime())) {
+			//	return Optional.empty();
+			//}
+			
+			EvenementResource eventResource = new EvenementResource(event);
 			List<Jury> jurys = juryDao.findJuryAndAnonymousByIdEvent(id, login);
 			List<EvaluationResource> evaluations = createEvaluationList(jurys);		
 			
