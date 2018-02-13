@@ -1,9 +1,9 @@
 package com.onek.utils;
 
 public enum StatutEvenement {
-	BROUILLON("B"),
-	OUVERT("O"),
-	FERME("F");
+	BROUILLON("Brouillon"),
+	OUVERT("Ouvert"),
+	FERME("Fermé");
 	
 	private String name = "";
 	
