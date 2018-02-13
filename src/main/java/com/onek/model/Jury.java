@@ -82,4 +82,21 @@ public class Jury implements Serializable {
 		this.utilisateur = utilisateur;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idjury == null) ? 0 : idjury.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || !(o instanceof Jury)) {
+			return false;
+		}
+		Jury jury = (Jury) o;
+		return idjury == jury.idjury;
+	}	
+
 }
