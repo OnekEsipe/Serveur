@@ -95,9 +95,7 @@ public class EventAccueilBean implements Serializable {
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
-			Navigation navigation = new Navigation();
-			String idEventString = navigation.getURLParameter("id");
-			setIdEvent(Integer.parseInt(idEventString));
+			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
@@ -231,19 +229,19 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	public void buttonGrille() {
-		navigation.redirect("grille.xhtml?id="+idEvent);
+		navigation.redirect("grille.xhtml");
 	}
 
 	public void buttonAttribution() {
-		navigation.redirect("attributionJuryCandidat.xhtml?id="+idEvent);
+		navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
 	public void buttonAddJury() {
-		navigation.redirect("addJury.xhtml?id="+idEvent);
+		navigation.redirect("addJury.xhtml");
 	}
 
 	public void buttonAddCandidat() {
-		navigation.redirect("addCandidates.xhtml?id="+idEvent);
+		navigation.redirect("addCandidates.xhtml");
 	}
 
 	public void buttonExport() {

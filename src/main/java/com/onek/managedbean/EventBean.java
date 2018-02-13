@@ -3,6 +3,8 @@ package com.onek.managedbean;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.faces.context.FacesContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +34,6 @@ public class EventBean implements Serializable {
 	
 	public void addEvent() {
 		event = new Evenement();
-		//event.setIdevent(2);
 		event.setNom(name);
 		event.setDatestart(new Date(date1.getTime()+hour1.getTime()));
 		event.setDatestop(new Date(date2.getTime()+hour2.getTime()));
@@ -118,8 +119,9 @@ public class EventBean implements Serializable {
 			return;
 		}
 		addEvent();
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", event.getIdevent());
 		Navigation navigation = new Navigation();
-		navigation.redirect("grille.xhtml?id="+event.getIdevent());
+		navigation.redirect("grille.xhtml");
 		
 	}
 	
