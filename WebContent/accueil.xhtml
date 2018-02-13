@@ -85,7 +85,8 @@
 				<p:column style="width:32px;text-align: center">
 					<p:growl id="message" showDetail="true" />
 					<p:commandButton id="iconOnly" icon="ui-icon-trash"
-						actionListener="#{accueil.supprimerEvent}" update="message">
+						actionListener="#{accueil.supprimerEvent}" update="@(form)">
+						<f:param name="idevent" value="#{evenement.idevent}" />
 						<p:confirm header="Confirmation"
 							message="vous voulez vraiment supprimer l'événement"
 							icon="ui-icon-trash" />

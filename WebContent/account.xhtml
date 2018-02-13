@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Home Onek</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+	<h:outputStylesheet library="css" name="user.css" />
+</h:head>
+<f:metadata>
+	<f:event type="preRenderView" listener="#{userInfo.before}" />
+</f:metadata>
+<h:body>
+	<!-- Insertion du menu -->
+	<h:outputStylesheet library="css" name="accueil.css" />
+	<ui:include src="menu.xhtml" />
+	<br />
+	<br />
+
+	<div class="ui-g">
+		<!-- Modification du mot de passe -->
+		<h:form>
+
+			<p:growl id="msgs" showDetail="true" />
+			<p:panel header="Modifier mon mot de passe">
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel for="motdepasseactuel" value="Mot de passe actuel:" />
+					<p:password id="motdepasseactuel" name="motdepasseactuel"
+						placeholder="Entrez votre mot de passe actuel" size="30"
+						value="#{userInfo.lastPassword}" />
+
+					<p:outputLabel for="nouveaumotdepasse"
+						value="Nouveau mot de passe:" />
+					<p:password id="nouveaumotdepasse" name="nouveaumotdepasse"
+						placeholder="Entrez votre nouveau mot de passe" size="30"
+						value="#{userInfo.newPassword}" />
+
+					<p:outputLabel for="confirmermotdepasse"
+						value="Nouveau mot de passe:" />
+					<p:password id="confirmermotdepasse" name="confirmermotdepasse"
+						placeholder="Confirmez votre nouveau mot de passe" size="30"
+						value="#{userInfo.confirmNewPassword}" />
+					<br />
+					<p:commandButton value="Valider" action="#{userInfo.modify}"
+						icon="ui-icon-check" update="msgs" ajax="false" />
+					<h4>#{userInfo.logPassword}</h4>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+		
+
+		<!-- Modification addresse e-mail  -->
+		<h:form>
+			<br />
+
+			<br />
+			<p:growl id="msgs2" showDetail="true" />
+			<p:panel header="Modifier mon adresse mail">
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel value="Adresse mail actuelle :" />
+					<h:outputText value="#{userInfo.lastEmail}"></h:outputText>
+					<p:outputLabel for="nouveauemail" value="Nouveau e-mail:" />
+					<p:inputText id="nouveauemail" name="nouveauemail"
+						placeholder="Entrez votre nouveau e-mail" size="30"
+						value="#{userInfo.newEmail}" />
+					<br />
+					<p:commandButton value="Valider" action="#{userInfo.modify}"
+						icon="ui-icon-check" update="msgs2" ajax="false" />
+					<h4>#{userInfo.logEmail}</h4>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</div>
+</h:body>
+</html>

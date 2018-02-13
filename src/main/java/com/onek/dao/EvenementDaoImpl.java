@@ -51,5 +51,16 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
         System.out.println("Find done - Id: " + event.getIdevent());
 		return event;		
 	}	
+	
+	@Override
+	public List<Evenement> findByIdUser(int idUser) {
+		Session session = sessionFactory.openSession();		
+        session.beginTransaction();
+        @SuppressWarnings("unchecked")
+		List<Evenement> events = (List<Evenement>) session.createQuery("FROM Evenement WHERE iduser = :iduser").setParameter("iduser", idUser).list();
+        session.getTransaction().commit();
+        session.close();
+        return events;		
+	}
 
 }

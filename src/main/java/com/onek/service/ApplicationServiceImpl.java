@@ -21,13 +21,17 @@ import com.onek.dao.NoteDao;
 import com.onek.model.Candidat;
 import com.onek.model.Critere;
 import com.onek.model.Evaluation;
+import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Note;
+import com.onek.model.Utilisateur;
+import com.onek.resource.AccountResource;
 import com.onek.resource.CandidatResource;
 import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.JuryResource;
 import com.onek.resource.NoteResource;
+
 
 @Service
 public class ApplicationServiceImpl implements ApplicationService, Serializable {
@@ -67,10 +71,10 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		}
 		
 		// check if jury is assigned
-		int idJury = loginDao.findUserByLogin(login).getIduser();
-		if (!juryDao.juryIsAssigned(idJury, id)) {
+		int idUser = loginDao.findUserByLogin(login).getIduser();	
+		if (!juryDao.juryIsAssigned(idUser, id)) {
 			return Optional.empty();
-		}
+		} 				
 
 		try {			
 			EvenementResource eventResource = new EvenementResource(eventDao.findById(id));
@@ -131,6 +135,26 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			}						
 		}		
 		return evaluations;
+	}
+	
+	/* account */
+	@Override
+	public List<AccountResource> account(String login) {
+		Utilisateur user = loginDao.findUserByLogin(login);
+		List<Evenement> events = eventDao.findByIdUser(user.getIduser());
+		List<AccountResource> accounts = new ArrayList<>();
+		List<Integer> idEvents = new ArrayList<>();		
+		for(Evenement event : events) {
+			List<Jury> anonymous = juryDao.findAnonymousByIdEvent(event.getIdevent());
+			for(Jury anonym : anonymous) {
+				List<Integer> idEventsAnonym = new ArrayList<>();
+				idEventsAnonym.add(event.getIdevent());
+				accounts.add(new AccountResource(anonym.getUtilisateur(), idEventsAnonym));				
+			}			
+			idEvents.add(event.getIdevent());
+		}		
+		accounts.add(new AccountResource(user, idEvents));	
+		return accounts;
 	}
 
 	@Override
