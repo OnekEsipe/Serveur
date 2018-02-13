@@ -142,6 +142,12 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			
 			Note note =	noteResource.createNote();				
 			Evaluation evaluation = evaluationDao.findById(idEvaluation);
+			
+			// check last update date
+			if (evaluationResource.getDateLastChange().getTime() < evaluation.getDatedernieremodif().getTime()) {
+				return evaluationResource;
+			}		
+			
 			Critere critere = critereDao.findById(noteResource.getIdCriteria());
 			note.setEvaluation(evaluation);
 			note.setCritere(critere);					

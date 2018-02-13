@@ -68,8 +68,13 @@ public class EvaluationResource implements Serializable {
 	}
 	
 	@JsonProperty("LastUpdatedDate")
-	public String getDateLastChange() {
+	public String getDateLastChangeString() {
 		return formater.format(lastUpdatedDate);
+	}
+	
+	@JsonIgnore
+	public Date getDateLastChange() {
+		return lastUpdatedDate;
 	}
 	
 	@JsonIgnore
