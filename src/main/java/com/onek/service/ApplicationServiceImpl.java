@@ -12,20 +12,26 @@ import javax.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.onek.dao.EvaluationDao;
 import com.onek.dao.EvenementDao;
+import com.onek.dao.GrilleDao;
 import com.onek.dao.JuryDao;
 import com.onek.dao.LoginDao;
+import com.onek.dao.NoteDao;
 import com.onek.model.Candidat;
+import com.onek.model.Critere;
 import com.onek.model.Evaluation;
 import com.onek.model.Evenement;
 import com.onek.model.Jury;
+import com.onek.model.Note;
 import com.onek.model.Utilisateur;
 import com.onek.resource.AccountResource;
 import com.onek.resource.CandidatResource;
 import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.JuryResource;
-import com.onek.resource.LoginResource;
+import com.onek.resource.NoteResource;
+
 
 @Service
 public class ApplicationServiceImpl implements ApplicationService, Serializable {
@@ -39,6 +45,15 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	
 	@Autowired
 	private JuryDao juryDao;
+	
+	@Autowired
+	private GrilleDao critereDao;
+	
+	@Autowired
+	private EvaluationDao evaluationDao;
+	
+	@Autowired
+	private NoteDao noteDao;
 
 	@Override
 	public Optional<EvenementResource> export(String idEvent, String login) {
@@ -140,6 +155,39 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		}		
 		accounts.add(new AccountResource(user, idEvents));	
 		return accounts;
+	}
+
+	@Override
+	public EvaluationResource importEvaluation(EvaluationResource evaluationResource) {
+		List<NoteResource> noteResources = evaluationResource.getNotes();
+		for(NoteResource noteResource : noteResources) {
+			Integer idNote = noteResource.getIdNote();								
+			Integer idEvaluation = evaluationResource.getIdEvaluation();
+			
+			Note note =	noteResource.createNote();				
+			Evaluation evaluation = evaluationDao.findById(idEvaluation);
+			
+			// check last update date
+			if (evaluationResource.getDateLastChange().getTime() < evaluation.getDatedernieremodif().getTime()) {
+				return evaluationResource;
+			}		
+			
+			Critere critere = critereDao.findById(noteResource.getIdCriteria());
+			note.setEvaluation(evaluation);
+			note.setCritere(critere);					
+			
+			// note create by application
+			if (idNote == 0) {
+				note = noteDao.addNote(note);	
+				noteResource.setIdNote(note.getIdnote());
+			}
+			// update
+			else {
+				note.setIdnote(noteResource.getIdNote());
+				noteDao.update(note);
+			}			
+		}
+		return evaluationResource;
 	}
 
 }

@@ -13,6 +13,7 @@ import com.onek.utils.Navigation;
 @Component("event")
 public class EventBean implements Serializable {
 	private static final long serialVersionUID = 1L;	
+	private static final int ecartHour = 3_600_000; //en milliseconde
 	
 	@Autowired
 	private EvenementService evenementService;
@@ -21,8 +22,8 @@ public class EventBean implements Serializable {
 	private Date date2;					//format => dd-MM-yyy
 	private Date hour1;					//format => HH:mm
 	private Date hour2;					//format => HH:mm
-	private boolean isOpened;    		//Default value
-	private boolean isSigned;    		//Default value
+	private boolean isOpened = false;   //Default value
+	private boolean isSigned = false;	//Default value
 	private String status="Brouillon";	//Default state
 	private String logInfo;
 	private String debug;
@@ -34,8 +35,8 @@ public class EventBean implements Serializable {
 		event = new Evenement();
 		//event.setIdevent(2);
 		event.setNom(name);
-		event.setDatestart(new Date(date1.getTime()+hour1.getTime()));
-		event.setDatestop(new Date(date2.getTime()+hour2.getTime()));
+		event.setDatestart(new Date(date1.getTime()+hour1.getTime() + ecartHour));
+		event.setDatestop(new Date(date2.getTime()+hour2.getTime() + +ecartHour));
 		event.setIsopened(isOpened);
 		event.setIssigned(isSigned);
 		event.setStatus(status);

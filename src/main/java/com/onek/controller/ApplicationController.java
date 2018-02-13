@@ -53,6 +53,7 @@ public class ApplicationController {
 	/* import evaluation */
 	@RequestMapping(value = "/evaluation", method = RequestMethod.POST)
 	public ResponseEntity<?> evaluation(@RequestBody EvaluationResource evaluation) {		
+		evaluation = applicationService.importEvaluation(evaluation);		
 		return new ResponseEntity<EvaluationResource>(evaluation, HttpStatus.OK);
 	}
 	
