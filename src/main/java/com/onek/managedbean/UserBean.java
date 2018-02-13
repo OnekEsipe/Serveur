@@ -37,7 +37,7 @@ public class UserBean {
 	
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
-			users = userService.getAllUsers();
+			users = userService.getAllUsersExceptDeleted();
 		}
 	}
 
@@ -153,6 +153,9 @@ public class UserBean {
 	public void deleteUser() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		int id = Integer.valueOf(params.get("iduser"));
+		userService.deleteUser(id);
+		users = userService.getAllUsersExceptDeleted();
 	}
 
 }
