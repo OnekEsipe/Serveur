@@ -3,6 +3,7 @@ package com.onek.dao;
 import java.util.List;
 
 import com.onek.model.Candidat;
+import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
 
 public interface EventAccueilDao {
@@ -11,4 +12,5 @@ public interface EventAccueilDao {
 	public List<Utilisateur> listJurysAnnonymesByEvent(int idevent);
 	public void supprimerCandidat(int idcandidat);
 	public void supprimerUtilisateur(int iduser);
+	public void editEvenement(Evenement event);
 }

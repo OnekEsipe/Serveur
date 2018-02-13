@@ -2,6 +2,7 @@ package com.onek.managedbean;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -26,12 +27,12 @@ public class EventAccueilBean implements Serializable {
 
 	@Autowired
 	private EventAccueilService eventAccueilservice;
-	
+
 	@Autowired
 	EvenementService evenement;
-	
-	private final Navigation navigation = new Navigation();
 
+	private final Navigation navigation = new Navigation();
+	
 	private int idEvent;
 	private Evenement event;
 
@@ -93,7 +94,7 @@ public class EventAccueilBean implements Serializable {
 		this.juryAnonyme = juryAnonyme;
 	}
 
-	public void before(ComponentSystemEvent e) {
+	public void before(ComponentSystemEvent e) throws ParseException {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			Navigation navigation = new Navigation();
 			String idEventString = navigation.getURLParameter("id");
@@ -104,6 +105,12 @@ public class EventAccueilBean implements Serializable {
 			this.statut = event.getStatus();
 			this.dateStart = event.getDatestart();
 			this.dateEnd = event.getDatestop();
+
+			DateFormat dfTime = new SimpleDateFormat("HH:mm");
+			String sTimeStart = dfTime.format(event.getDatestart().getTime());
+			String sTimeEnd = dfTime.format(event.getDatestop().getTime());
+			timeStart = dfTime.parse(sTimeStart);
+			timeEnd = dfTime.parse(sTimeEnd);
 		}
 	}
 
@@ -200,15 +207,22 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	public void eventUpdateButton() {
+		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
+		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
+		event.setStatus(statut);
+		eventAccueilservice.editEvenement(event);
 		// Pour test
-		DateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy");
-		String sDate = dfDate.format(dateStart);
-
-		DateFormat dfTime = new SimpleDateFormat("HH:mm");
-		String sTime = dfTime.format(timeStart);
-
-		message = "Statut: " + statut + " dateStart:" + dateStart + " dateStartFORMATTE:" + sDate + " dateEnd:"
-				+ dateEnd + " timeStart:" + timeStart + " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
+		/*
+		 * DateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy"); String sDate =
+		 * dfDate.format(dateStart);
+		 * 
+		 * DateFormat dfTime = new SimpleDateFormat("HH:mm"); String sTime =
+		 * dfTime.format(timeStart);
+		 * 
+		 * message = "Statut: " + statut + " dateStart:" + dateStart +
+		 * " dateStartFORMATTE:" + sDate + " dateEnd:" + dateEnd + " timeStart:" +
+		 * timeStart + " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
+		 */
 	}
 
 	public void supprimerCandidat() {
@@ -231,19 +245,19 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	public void buttonGrille() {
-		navigation.redirect("grille.xhtml?id="+idEvent);
+		navigation.redirect("grille.xhtml?id=" + idEvent);
 	}
 
 	public void buttonAttribution() {
-		navigation.redirect("attributionJuryCandidat.xhtml?id="+idEvent);
+		navigation.redirect("attributionJuryCandidat.xhtml?id=" + idEvent);
 	}
 
 	public void buttonAddJury() {
-		navigation.redirect("addJury.xhtml?id="+idEvent);
+		navigation.redirect("addJury.xhtml?id=" + idEvent);
 	}
 
 	public void buttonAddCandidat() {
-		navigation.redirect("addCandidates.xhtml?id="+idEvent);
+		navigation.redirect("addCandidates.xhtml?id=" + idEvent);
 	}
 
 	public void buttonExport() {
