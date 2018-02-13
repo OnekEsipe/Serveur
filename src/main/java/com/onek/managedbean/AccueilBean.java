@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -95,7 +97,8 @@ public class AccueilBean implements Serializable {
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		navigation.redirect("eventAccueil.xhtml?id="+selectedevent.getIdevent());
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", selectedevent.getIdevent());
+		navigation.redirect("eventAccueil.xhtml");
 	}
 	
 	public void buttonAction() {
