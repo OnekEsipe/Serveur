@@ -75,7 +75,7 @@
 					widgetVar="candidatTable"
 					emptyMessage="aucun candidat trouvé avec ce nom"
 					filteredValue="#{eventAccueil.filteredcandidats}" scrollable="true"
-					scrollHeight="100">
+					scrollHeight="200">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
@@ -149,7 +149,7 @@
 					widgetVar="utilisateurTable"
 					emptyMessage="aucun jury trouvé avec ce nom"
 					filteredValue="#{eventAccueil.filteredutilisateurs}"
-					scrollable="true" scrollHeight="100" rowKey="#{utilisateur.nom}">
+					scrollable="true" scrollHeight="300" rowKey="#{utilisateur.nom}">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
@@ -199,7 +199,7 @@
 
 
 			<h:form>
-				<div class="ui-g-6">
+				<div class="ui-g-12">
 					<p:growl id="growl" life="2000" />
 					<div class="ui-g">
 						<div class="ui-g-8">
@@ -210,9 +210,9 @@
 						</div>
 						<div class="ui-g-4">
 							<p:commandButton value="Ajouter" ajax="false"
-								actionListener="#{eventAccueil.addJuryAnonymeButton}" />
+								actionListener="#{eventAccueil.addJuryAnonymeButton}" update="@(form)"/>
 						</div>
-						<br />
+						<br /><br /><br /><br /><br /><br /><br /><br />
 
 						<p:commandButton value="Gérer la grille critériée"
 							actionListener="#{eventAccueil.buttonGrille}" ajax="false" />
@@ -221,12 +221,7 @@
 				</div>
 				<p:commandButton value="Gestion attribution Jury / Candidat"
 					actionListener="#{eventAccueil.buttonAttribution}" ajax="false" />
-
-
 			</h:form>
-
-
-
 		</div>
 	</div>
 </h:body>

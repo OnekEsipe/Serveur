@@ -3,6 +3,7 @@ package com.onek.managedbean;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
 import com.onek.service.EvenementService;
 import com.onek.service.EventAccueilService;
+import com.onek.service.UserService;
 import com.onek.utils.Navigation;
 import com.onek.utils.PasswordGenerator;
 
@@ -27,6 +29,9 @@ public class EventAccueilBean implements Serializable {
 
 	@Autowired
 	private EventAccueilService eventAccueilservice;
+	
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	EvenementService evenement;
@@ -71,6 +76,7 @@ public class EventAccueilBean implements Serializable {
 
 	public void addJuryAnonymeButton() {
 		passwordGenerator = new PasswordGenerator();
+		List<Utilisateur> anonymousJurys = new ArrayList<>();
 		Utilisateur anonymousJury;
 		if (juryAnonyme > 0) {
 			for (int i = 0; i < juryAnonyme; i++) {
@@ -79,20 +85,23 @@ public class EventAccueilBean implements Serializable {
 				anonymousJury.setIsdeleted(false);
 				if (i < 10) {
 					anonymousJury.setLogin("Jury00" + i + "_" + idEvent);
+					anonymousJury.setNom("Jury00" + i + "_" + idEvent);
 				}
 				if ((i >= 10) && (i < 100)) {
 					anonymousJury.setLogin("Jury0" + i + "_" + idEvent);
+					anonymousJury.setNom("Jury0" + i + "_" + idEvent);
 				}
 				if ((i >= 100) && (i < 1000)) {
 					anonymousJury.setLogin("Jury" + i + "_" + idEvent);
+					anonymousJury.setNom("Jury" + i + "_" + idEvent);
 				}
 				anonymousJury.setMotdepasse(passwordGenerator.generatePassword(8));
 				anonymousJury.setMail("");
-				anonymousJury.setNom("");
 				anonymousJury.setPrenom("");
-				// save juryAnonyme
-				System.out.println("login: " + anonymousJury.getLogin());
-			}			
+				anonymousJurys.add(anonymousJury);
+			}	
+			userService.addJurysAnonymes(anonymousJurys, event);	
+			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
 		}
 	}
 
