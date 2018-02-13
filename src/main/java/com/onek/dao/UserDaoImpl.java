@@ -65,4 +65,22 @@ public class UserDaoImpl implements UserDao, Serializable {
 		return users;
 	}
 
+	@Override
+	public void deleteUser(Utilisateur user) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(user);
+		session.getTransaction().commit();
+		session.close();
+	}
+
+	@Override
+	public void addUser(Utilisateur user) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.save(user);
+		session.getTransaction().commit();
+		session.close();
+	}
+
 }
