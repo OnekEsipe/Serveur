@@ -10,5 +10,6 @@ public interface UserDao {
 	public void updateUserInfos(Utilisateur user);
 	void addJurysAnonymes(List<Utilisateur> utilisateurs, Evenement event);
 	public Utilisateur getUserByLogin(String login);
+	public List<Utilisateur> getAllUsers();
 
 }

@@ -12,4 +12,5 @@ public interface UserService {
 	public void addJurysAnonymes(List<Utilisateur> utilisateurs, Evenement event);
 	public Utilisateur getUserByLogin(String login);
 
+	public List<Utilisateur> getAllUsers();
 }

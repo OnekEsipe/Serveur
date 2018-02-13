@@ -57,4 +57,9 @@ public class UserServiceImpl implements UserService, Serializable {
 		userDao.addJurysAnonymes(utilisateurs, event);
 	}
 
+	@Override
+	public List<Utilisateur> getAllUsers() {
+		return userDao.getAllUsers();
+	}
+
 }
