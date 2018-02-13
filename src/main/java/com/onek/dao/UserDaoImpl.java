@@ -1,12 +1,15 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.onek.model.Evenement;
+import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
 
 @Repository
@@ -34,6 +37,21 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.close();
 
 		return user;
+	}
+
+	@Override
+	public void addJurysAnonymes(List<Utilisateur> utilisateurs, Evenement event) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		for (Utilisateur utilisateur : utilisateurs) {
+			session.save(utilisateur);
+			Jury jury = new Jury();
+			jury.setEvenement(event);
+			jury.setUtilisateur(utilisateur);
+			session.save(jury);
+		}
+		session.getTransaction().commit();
+		session.close();
 	}
 
 }
