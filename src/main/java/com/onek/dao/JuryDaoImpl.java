@@ -64,5 +64,21 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 
 		return jurys;
 	}
+	
+	@Override
+	public List<Jury> findAnonymousByIdEvent(int idEvent) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		@SuppressWarnings("unchecked")
+		List<Jury> jurys = (List<Jury>) session.createQuery(
+				"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND u.droits = 'A' AND u.isdeleted IS FALSE")
+				.setParameter("idEvent", idEvent).list();
+		for (Jury jury : jurys) {
+			Hibernate.initialize(jury.getUtilisateur());
+		}
+		session.getTransaction().commit();
+		session.close();
+		return jurys;
+	}
 
 }

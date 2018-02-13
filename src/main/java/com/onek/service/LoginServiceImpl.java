@@ -1,12 +1,15 @@
 package com.onek.service;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onek.dao.LoginDao;
 import com.onek.model.Utilisateur;
+import com.onek.utils.EncodePassword;
 
 @Service
 public class LoginServiceImpl implements LoginService, Serializable{
@@ -24,4 +27,5 @@ public class LoginServiceImpl implements LoginService, Serializable{
 	public boolean userExist(String login) {
 		return logindao.userExist(login);
 	}
+
 }
