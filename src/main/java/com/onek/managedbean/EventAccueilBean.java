@@ -247,18 +247,7 @@ public class EventAccueilBean implements Serializable {
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
 		event.setStatus(statut);
 		eventAccueilservice.editEvenement(event);
-		// Pour test
-		/*
-		 * DateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy"); String sDate =
-		 * dfDate.format(dateStart);
-		 * 
-		 * DateFormat dfTime = new SimpleDateFormat("HH:mm"); String sTime =
-		 * dfTime.format(timeStart);
-		 * 
-		 * message = "Statut: " + statut + " dateStart:" + dateStart +
-		 * " dateStartFORMATTE:" + sDate + " dateEnd:" + dateEnd + " timeStart:" +
-		 * timeStart + " timeStartFORMATTEE:" + sTime + " timeEnd:" + timeEnd;
-		 */
+		
 	}
 
 	public void supprimerCandidat() {

@@ -25,12 +25,25 @@ public class AcceuilDaoImpl implements AccueilDao, Serializable {
 		
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-
-		events = (List<Evenement>) session.createQuery("from Evenement order by nom").list();
-		
+		boolean isdeleted = false;
+		events = (List<Evenement>) session.createQuery("from Evenement where isdeleted = :isdeleted").setParameter("isdeleted", isdeleted).list();
+		//events = (List<Evenement>) session.createQuery("from Evenement order by nom").list();
 		session.getTransaction().commit();
 		session.close();
 		return events;
+	}
+	@Override
+	public void supprimerEvent(int idevent) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Evenement event = (Evenement) session.createQuery("from Evenement where idevent = :idevent").setParameter("idevent", idevent).getSingleResult();
+		System.out.println(event.getIdevent());
+		event.setIsdeleted(true);
+		System.out.println(event.getNom());
+		System.out.println(event.getIsdeleted());
+		session.update(event);
+		session.getTransaction().commit();
+		session.close();
 	}
 
 }

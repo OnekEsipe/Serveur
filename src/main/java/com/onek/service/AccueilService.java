@@ -6,4 +6,5 @@ import com.onek.model.Evenement;
 
 public interface AccueilService {
 	public List<Evenement> listEvents();
+	public void supprimerEvent(int idevent);
 }
