@@ -69,6 +69,7 @@ public class AddJuryDaoImpl implements AddJuryDao, Serializable{
 		session.beginTransaction();
 
 		utilisateurs = (List<Utilisateur>) session.createQuery("from Utilisateur").list();
+		
 		session.getTransaction().commit();
 		session.close();
 		
@@ -83,5 +84,15 @@ public class AddJuryDaoImpl implements AddJuryDao, Serializable{
 				.setParameter("iduser", utilisateurSupprime.getIduser()).executeUpdate();
 		session.getTransaction().commit();
 		session.close();
+	}
+	public void addJuryToEvent(Jury jury) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.save(jury);
+		session.getTransaction().commit();
+		session.close();
+
+		System.out.println("Add done");
+		
 	}
 }

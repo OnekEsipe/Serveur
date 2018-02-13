@@ -22,12 +22,12 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public boolean juryIsAssigned(int idJury, int idEvent) {
+	public boolean juryIsAssigned(int idUser, int idEvent) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		long result = (Long) session.createQuery("SELECT COUNT(j) FROM Jury j WHERE (idjury = :idj AND idevent = :ide)")
-				.setParameter("idj", idJury).setParameter("ide", idEvent).getSingleResult();
+		long result = (Long) session.createQuery("SELECT COUNT(j) FROM Jury j WHERE (iduser = :idu AND idevent = :ide)")
+				.setParameter("idu", idUser).setParameter("ide", idEvent).getSingleResult();
 
 		session.getTransaction().commit();
 		session.close();
@@ -49,14 +49,14 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 			Hibernate.initialize(jury.getUtilisateur());
 			Hibernate.initialize(jury.getEvaluations());
 			List<Evaluation> evaluations = jury.getEvaluations();
-            for(Evaluation evaluation : evaluations) {
-            	Hibernate.initialize(evaluation.getNotes());
-            	List<Note> notes = evaluation.getNotes();
-            	for(Note note : notes) {
-            		Critere critere = note.getCritere();
-            		Hibernate.initialize(critere.getDescripteurs());
-            	}
-            }
+			for (Evaluation evaluation : evaluations) {
+				Hibernate.initialize(evaluation.getNotes());
+				List<Note> notes = evaluation.getNotes();
+				for (Note note : notes) {
+					Critere critere = note.getCritere();
+					Hibernate.initialize(critere.getDescripteurs());
+				}
+			}
 		}
 
 		session.getTransaction().commit();
