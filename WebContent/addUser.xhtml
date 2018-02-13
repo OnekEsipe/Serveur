@@ -56,73 +56,16 @@
 					<p:password id="confirmationpassword" name="confirmationpassword"
 						placeholder="Confirmez le mot de passe" size="30"
 						value="#{user.confirmationPassword}" required="true" />
-
-					<p:commandButton value="Valider" action="#{user.click}"
-						icon="ui-icon-check" update="tabUsers" ajax="false" />
-
-					<br/>
-					<div id="errorCreationUser">
-						<h:outputText value="#{user.logInfo}" />
-					</div>
 				</h:panelGrid>
-			</p:panel>
-			<div>
-				<!-- ************Tableau des Utilisateurs existants**************** -->
-				<div class="ui-g">
-					<div class="ui-g-12 ui-md-8"></div>
-					<div class="ui-g-12 ui-md-4"></div>
+				<p:commandButton value="Valider" action="#{user.onClickAdd}"
+					icon="ui-icon-check" update="tabUsers" ajax="false" />
+
+				<br />
+				<div id="errorCreationUser">
+					<h:outputText value="#{user.logInfo}" />
 				</div>
-				<p:dataTable id="tabUsers" var="utilisateur" value="#{user.users}"
-					widgetVar="userTable"
-					emptyMessage="aucun utilisateur trouvé avec ce nom"
-					filteredValue="#{user.filteredusers}" scrollable="true"
-					scrollHeight="100">
 
-					<!-- barre de recherche -->
-					<f:facet name="header">
-						<p:outputPanel>
-							<div>
-								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
-								<p:inputText id="globalFilter"
-									onkeyup="PF('userTable').filter()" style="width:150px"
-									placeholder="nom utilisateur" />
-							</div>
-						</p:outputPanel>
-					</f:facet>
-					<!-- ********fin*********** -->
-
-					<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
-						filterMatchMode="startsWith" filterStyle="display:none">
-						<h:outputText value="#{utilisateur.nom}" />
-					</p:column>
-
-					<p:column headerText="prénom">
-						<h:outputText value="#{utilisateur.prenom}" />
-					</p:column>
-
-					<!-- ********la colonne supprimer*********** -->
-					<p:column style="width:32px;text-align: center">
-						<p:growl id="message" showDetail="true" />
-						<p:commandButton id="iconOnly" icon="ui-icon-trash"
-							actionListener="#{user.deleteUser}" ajax="true" update="@(form)">
-							<f:param name="user" value="#{user.user}" />
-							<p:confirm header="Confirmation"
-								message="vous voulez vraiment supprimer l'utilisateur"
-								icon="ui-icon-trash" />
-							<f:param name="iduser" value="#{utilisateur.iduser}" />
-						</p:commandButton>
-
-						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-							<p:commandButton value="Yes" type="button"
-								styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
-							</p:commandButton>
-							<p:commandButton value="No" type="button"
-								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-						</p:confirmDialog>
-					</p:column>
-					<!-- ********fin*********** -->
-				</p:dataTable>
-			</div>
+			</p:panel>
 		</h:form>
 	</div>
 </h:body>
