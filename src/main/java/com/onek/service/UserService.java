@@ -1,7 +1,6 @@
 package com.onek.service;
 
 import java.util.List;
-
 import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
 

@@ -76,5 +76,4 @@ public class UserServiceImpl implements UserService, Serializable {
 	public List<Utilisateur> getAllUsersExceptDeleted() {
 		return userDao.getAllUsersExceptDeleted();
 	}
-
 }
