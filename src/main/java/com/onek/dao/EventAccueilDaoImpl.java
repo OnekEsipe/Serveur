@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.onek.model.Candidat;
+import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
 
@@ -106,6 +107,16 @@ public class EventAccueilDaoImpl implements EventAccueilDao, Serializable {
 				.setParameter("iduser", utilisateurSupprime.getIduser()).executeUpdate();
 		session.getTransaction().commit();
 		session.close();
+	}
+	@Override
+	public void editEvenement(Evenement event) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(event);
+		session.getTransaction().commit();
+		session.close();
+
+		System.out.println("Modification done");	
 	}
 
 }

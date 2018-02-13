@@ -37,6 +37,7 @@ public class EventAccueilBean implements Serializable {
 	@Autowired
 	private UserService userService;
 
+
 	private final Navigation navigation = new Navigation();
 	
 	private int idEvent;
@@ -245,7 +246,7 @@ public class EventAccueilBean implements Serializable {
 		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
 		event.setStatus(statut);
-		//eventAccueilservice.editEvenement(event);
+		eventAccueilservice.editEvenement(event);
 		// Pour test
 		/*
 		 * DateFormat dfDate = new SimpleDateFormat("dd/MM/yyyy"); String sDate =

@@ -27,28 +27,15 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.getTransaction().commit();
 		session.close();
 	}
-
+	
 	@Override
-	public boolean validPassword(int iduser, String password) {
+	public Utilisateur getUserByLogin(String login) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		long result = (Long) session
-				.createQuery(
-						"SELECT COUNT(e) from Utilisateur e WHERE (e.iduser =:iduser AND e.motdepasse =:motdepasse")
-				.setParameter("iduser", iduser).setParameter("motdepasse", password).getSingleResult();
+		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where login = :login").setParameter("login", login).getSingleResult();
 		session.getTransaction().commit();
 		session.close();
-		return result == 1;
-	}
 
-	@Override
-	public Utilisateur userById(int iduser) {
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where iduser = :iduser")
-				.setParameter("iduser", iduser).getSingleResult();
-		session.getTransaction().commit();
-		session.close();
 		return user;
 	}
 
