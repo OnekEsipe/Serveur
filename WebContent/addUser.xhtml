@@ -28,28 +28,35 @@
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:outputLabel for="lastnameUser" value="Nom :" />
 					<p:inputText id="lastnameUser" name="lastnameUser"
-						placeholder="Entrer le nom" size="20" value="#{user.lastName}" required="true"/>
+						placeholder="Entrer le nom" size="20" value="#{user.lastName}"
+						required="true" />
 					<p:outputLabel for="firstnameUser" value="Prénom (Optionnel) :" />
 					<p:inputText id="firstnameUser" name="firstnameUser"
 						placeholder="Entrer le prénom" size="20" value="#{user.firstName}" />
 					<p:outputLabel for="mailUser" value="Mail :" />
 					<p:inputText id="mailUser" name="mailUser"
-						placeholder="Entrer l'adresse mail" size="20" value="#{user.mail}" required="true"/>
+						placeholder="Entrer l'adresse mail" size="20" value="#{user.mail}"
+						required="true" />
 					<p:outputLabel for="loginUser" value="Login :" />
 					<p:inputText id="loginUser" name="loginUser"
-						placeholder="Entrer le login" size="20" value="#{user.login}" required="true"/>
+						placeholder="Entrer le login" size="20" value="#{user.login}"
+						required="true" />
 					<p:outputLabel for="password" value="Mot de passe :" />
 					<p:password id="password" name="password"
 						placeholder="Entrez le mot de passe" size="30"
-						value="#{user.password}" required="true"/>
-					<p:outputLabel for="confirmationpassword"
-						value="Confirmation :" />
+						value="#{user.password}" required="true" />
+					<p:outputLabel for="confirmationpassword" value="Confirmation :" />
 					<p:password id="confirmationpassword" name="confirmationpassword"
 						placeholder="Confirmez le mot de passe" size="30"
-						value="#{user.confirmationPassword}" required="true"/>
+						value="#{user.confirmationPassword}" required="true" />
 
 					<p:commandButton value="Valider" action="#{user.click}"
 						icon="ui-icon-check" update="tabUsers" ajax="false" />
+
+					<br/>
+					<div id="errorCreationUser">
+						<h:outputText value="#{user.logInfo}" />
+					</div>
 				</h:panelGrid>
 			</p:panel>
 			<div>
@@ -91,6 +98,7 @@
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
 							actionListener="#{user.deleteUser}" ajax="true" update="@(form)">
+							<f:param name="user" value="#{user.user}" />
 							<p:confirm header="Confirmation"
 								message="vous voulez vraiment supprimer l'utilisateur"
 								icon="ui-icon-trash" />

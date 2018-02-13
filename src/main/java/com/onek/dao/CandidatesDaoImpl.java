@@ -60,7 +60,6 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 		
 	@Override
 	public void supprimerCandidat(int idcandidat) {
-
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Candidat candidatSupprime = session.get(Candidat.class, idcandidat);
@@ -68,7 +67,6 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 				.setParameter("idcandidat", candidatSupprime.getIdcandidat()).executeUpdate();
 		session.getTransaction().commit();
 		session.close();
-
 	}
 	
 }

@@ -33,6 +33,8 @@ public class UserBean {
 	
 	private List<Utilisateur> filteredusers = new ArrayList<>();
 	
+	private String logInfo;
+	
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			users = userService.getAllUsers();
@@ -120,18 +122,32 @@ public class UserBean {
 		this.filteredusers = filteredusers;
 	}
 
+	public String getLogInfo() {
+		return logInfo;
+	}
+
+	public void setLogInfo(String logInfo) {
+		this.logInfo = logInfo;
+	}
+
 	public void onClickAdd() {
+		if (!password.equals(confirmationPassword)) {
+			logInfo = "Les mots de passe ne correspondent pas !";
+		}
 		Utilisateur newUser = new Utilisateur();
 		newUser.setNom(lastName);
 		newUser.setPrenom(firstName);
 		newUser.setMail(mail);
 		newUser.setLogin(login);
+		// TODO AJOUTER HASH PASSWORD
 		newUser.setMotdepasse(password);
 		if (isAdmin) {
 			newUser.setDroits("A");
 		} else {
 			newUser.setDroits("O");
 		}
+		userService.addUser(newUser);
+		users.add(newUser);
 	}
 	
 	public void deleteUser() {
