@@ -196,11 +196,8 @@
 					<!-- ********fin*********** -->
 				</p:dataTable>
 			</h:form>
-
-
 			<h:form>
 				<div class="ui-g-12">
-					<p:growl id="growl" life="2000" />
 					<div class="ui-g">
 						<div class="ui-g-8">
 							<h:outputLabel for="juryAnonyme"
@@ -210,17 +207,19 @@
 						</div>
 						<div class="ui-g-4">
 							<p:commandButton value="Ajouter" ajax="false"
-								actionListener="#{eventAccueil.addJuryAnonymeButton}" update="@(form)"/>
+								actionListener="#{eventAccueil.addJuryAnonymeButton}"
+								update="@(form) tabJurysAnos" />
 						</div>
-						<br /><br /><br /><br /><br /><br /><br /><br />
+						<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
 
 						<p:commandButton value="Gérer la grille critériée"
 							actionListener="#{eventAccueil.buttonGrille}" ajax="false" />
 					</div>
 					<br />
-				</div>
-				<p:commandButton value="Gestion attribution Jury / Candidat"
+					<p:commandButton value="Gestion attribution Jury / Candidat"
 					actionListener="#{eventAccueil.buttonAttribution}" ajax="false" />
+				</div>
+				
 			</h:form>
 		</div>
 	</div>
