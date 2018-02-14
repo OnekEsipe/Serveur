@@ -22,10 +22,10 @@ public class Evenement implements Serializable {
 
 	private String code;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date datestart;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date datestop;
 
 	private Boolean isdeleted;
