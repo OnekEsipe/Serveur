@@ -1,6 +1,8 @@
 package com.onek.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,11 +32,12 @@ public class AttributionJCBean implements Serializable {
 	private List<Utilisateur> utilisateursJurys;
 	private List<Candidat> candidatsJurys;
 
-	private Map<String, String> jurys = new LinkedHashMap<>();
-	private Map<String, String> candidats = new LinkedHashMap<>();
+	private Map<String, Utilisateur> jurys = new LinkedHashMap<>();
+	private Map<String, Candidat> candidats = new LinkedHashMap<>();
 	private Map<String, Map<String, Boolean>> attribJC = new LinkedHashMap<>();
 	
-	private Map<String, String> attributionFinal = new LinkedHashMap<>();
+	private Map<String, ArrayList<String>> attributionFinal = new LinkedHashMap<>();
+	
 	private String message="";
 
 	public void before(ComponentSystemEvent e) {
@@ -49,16 +52,32 @@ public class AttributionJCBean implements Serializable {
 
 			// Remplissage des maps
 			for (Utilisateur utilisateur : utilisateursJurys) {
-				jurys.put(utilisateur.getNom() + " " + utilisateur.getPrenom(), utilisateur.getNom() + " " + utilisateur.getPrenom());
+				jurys.put(utilisateur.getNom() + " " + utilisateur.getPrenom(), utilisateur);
 			}
 			for (Candidat candidat : candidatsJurys) {
-				candidats.put(candidat.getNom() + " " + candidat.getPrenom(), candidat.getNom() + " " + candidat.getPrenom());
+				candidats.put(candidat.getNom() + " " + candidat.getPrenom(), candidat);
 			}
 
 			for (String jury : jurys.keySet()) {
 				attribJC.put(jury, new LinkedHashMap<String, Boolean>());
 			}
 		}
+	}
+
+	public Map<String, Candidat> getCandidats() {
+		return candidats;
+	}
+
+	public void setCandidats(Map<String, Candidat> candidats) {
+		this.candidats = candidats;
+	}
+
+	public Map<String, Utilisateur> getJurys() {
+		return jurys;
+	}
+
+	public void setJurys(Map<String, Utilisateur> jurys) {
+		this.jurys = jurys;
 	}
 
 	public String getMessage() {
@@ -70,6 +89,15 @@ public class AttributionJCBean implements Serializable {
 		this.message = message;
 	}
 
+
+	public Map<String, ArrayList<String>> getAttributionFinal() {
+		return attributionFinal;
+	}
+
+
+	public void setAttributionFinal(Map<String, ArrayList<String>> attributionFinal) {
+		this.attributionFinal = attributionFinal;
+	}
 
 	public int getIdEvent() {
 		return idEvent;
@@ -100,26 +128,6 @@ public class AttributionJCBean implements Serializable {
 	}
 
 
-	public Map<String, String> getJurys() {
-		return jurys;
-	}
-
-
-	public void setJurys(Map<String, String> jurys) {
-		this.jurys = jurys;
-	}
-
-
-	public Map<String, String> getCandidats() {
-		return candidats;
-	}
-
-
-	public void setCandidats(Map<String, String> candidats) {
-		this.candidats = candidats;
-	}
-
-
 	public Map<String, Map<String, Boolean>> getAttribJC() {
 		return attribJC;
 	}
@@ -130,22 +138,30 @@ public class AttributionJCBean implements Serializable {
 	}
 
 
-	public void buttonActionValider() {
+	public void previsualitionButton() {
+		ArrayList<String> selectedCandidates;
+		
+		// Recuperation de la map pour boucle
 		for (Entry<String, Map<String, Boolean>> entry : attribJC.entrySet()) {
 			String jury = entry.getKey();
 			Map<String, Boolean> candidats = entry.getValue();
+			selectedCandidates = new ArrayList<>();
 			
+			// Ajout dans attributionFinal si checkbox selectionnee
 			for (Entry<String, Boolean> entry2 : candidats.entrySet()) {
-			    System.out.println(jury + ": " + entry2.getKey() +" : "+entry2.getValue());
 			    if(entry2.getValue() == true) {
-			    	 attributionFinal.put(jury, entry2.getKey());
+			    	selectedCandidates.add(entry2.getKey());
 			    }
+			    attributionFinal.put(jury, selectedCandidates);
 			}
 		}
-		System.out.println("------------------------TEST PRINT--------------------------");
-		for (Entry<String, String> entry3 : attributionFinal.entrySet()) {
-		    System.out.println("jury: " + entry3.getKey() + " ||| liste de candidats: " + entry3.getValue());
+		System.out.println("--------------------PRINT ATTRIBUTIONS--------------------------");
+		for (Entry<String, ArrayList<String>> entry3 : attributionFinal.entrySet()) {	
+		    System.out.println("jury: " + entry3.getKey() + " ||| liste de candidats: " + entry3.getValue().toString());
+		    message = message + "jury: " + entry3.getKey() + " ||| liste de candidats: " + entry3.getValue().toString() + "\n";
 		}
+		
+		
 		
 		// FacesContext fc = FacesContext.getCurrentInstance();
 		// NavigationHandler nh = fc.getApplication().getNavigationHandler();
