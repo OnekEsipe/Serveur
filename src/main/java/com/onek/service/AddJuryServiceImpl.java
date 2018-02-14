@@ -20,14 +20,15 @@ private static final long serialVersionUID = 1L;
 	
 	@Autowired
 	private JuryDao juryDao;
-	
+
 	@Override
 	public List<Utilisateur> listJurysByEvent(int idevent) {
 		return addjuryDao.listJurysByEvent(idevent);
 	}
 	@Override
-	public List<Utilisateur> listJurysAnnonymesByEvent(int idevent) {
-		return addjuryDao.listJurysAnnonymesByEvent(idevent);
+	public List<Jury> listJurysAnnonymesByEvent(int idevent) {
+	//	return addjuryDao.listJurysAnnonymesByEvent(idevent);
+		return juryDao.findAnonymousByIdEvent(idevent);
 	}
 	@Override
 	public List<Utilisateur> listJurysAll(){

@@ -130,7 +130,26 @@
 		<div class="ui-g-1"></div>
 		<div class="ui-g-5">
 
+
 			<h:form>
+					<!-- Debut liste jurys anonymes -->
+				<p:dataTable id="tabJurysAnos" var="utilisateursAno" style="display:none;"
+					value="#{eventAccueil.utilisateursAnos}"
+					widgetVar="utilisateurTable2" scrollable="true" scrollHeight="300"
+					rowKey="#{utilisateursAno.nom}">
+
+					<!-- ********fin*********** -->
+					<p:column headerText="Nom">
+						<h:outputText value="#{utilisateursAno.nom}" />
+					</p:column>
+
+					<p:column headerText="Mot de passe">
+						<h:outputText value="#{utilisateursAno.motdepasse}" />
+					</p:column>
+				</p:dataTable>
+				
+				<!-- Fin liste jurys anonymes -->
+
 				<p:growl id="growl" life="2000" />
 				<div class="ui-g">
 					<div class="ui-g-12 ui-md-6"></div>
@@ -138,10 +157,12 @@
 						<p:commandButton value="jury" id="withIcon"
 							actionListener="#{eventAccueil.buttonAddJury}"
 							icon="ui-icon-plusthick" />
+						<h:commandLink>
+							<p:graphicImage name="/image/csv.png" width="20" />
+							<p:dataExporter type="csv" target="tabJurysAnos"
+								fileName="liste_jurys" pageOnly="true" />
+						</h:commandLink>
 
-						<p:commandButton id="iconOnly" update="growl"
-							actionListener="#{eventAccueil.buttonExport}"
-							icon="ui-icon-circle-arrow-s" title="Icon Only" />
 					</div>
 				</div>
 				<p:dataTable var="utilisateur" value="#{eventAccueil.utilisateurs}"
@@ -176,7 +197,7 @@
 					<!-- ********la colonne supprimer*********** -->
 					<p:column style="width:32px;text-align: center">
 						<p:growl id="message" showDetail="true" />
-						<p:commandButton id="iconOnly" icon="ui-icon-trash"
+						<p:commandButton id="iconOnly2" icon="ui-icon-trash"
 							actionListener="#{eventAccueil.supprimerUtilisateur}"
 							update="@(form)">
 							<p:confirm header="Confirmation"
@@ -209,9 +230,10 @@
 						</div>
 						<div class="ui-g-4">
 							<p:commandButton value="Ajouter" ajax="false"
-								actionListener="#{eventAccueil.addJuryAnonymeButton}" update="@(form)"/>
+								actionListener="#{eventAccueil.addJuryAnonymeButton}"
+								update="@(form) tabJurysAnos" />
 						</div>
-						<br /><br /><br /><br /><br /><br /><br /><br />
+						<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
 
 						<p:commandButton value="Gérer la grille critériée"
 							actionListener="#{eventAccueil.buttonGrille}" ajax="false" />
