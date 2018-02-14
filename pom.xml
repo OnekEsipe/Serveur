@@ -10,7 +10,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
-  		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 	</properties>
 	<repositories>
 		<repository>
@@ -92,26 +92,31 @@
 		</dependency>
 		<!-- Mockito -->
 		<dependency>
-    		<groupId>org.mockito</groupId>
-    		<artifactId>mockito-all</artifactId>
-    		<version>1.9.5</version>
-    		<scope>test</scope>
-		</dependency>	
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- To convert object to json -->
 		<dependency>
-   			<groupId>com.fasterxml.jackson.core</groupId>
-	    	<artifactId>jackson-core</artifactId>
-	    	<version>2.9.4</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.4</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		    <version>2.9.4</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
 			<artifactId>all-themes</artifactId>
 			<version>1.0.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.17</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -145,20 +150,20 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+				<version>3.7.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
 			</plugin>
 			<plugin>
-            	<groupId>org.apache.maven.plugins</groupId>
-            	<artifactId>maven-war-plugin</artifactId>
-            	<version>2.6</version>
-            	<configuration>
-            		<warSourceDirectory>WebContent</warSourceDirectory>
-            	</configuration>
-       		</plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<warSourceDirectory>WebContent</warSourceDirectory>
+				</configuration>
+			</plugin>
 		</plugins>
 		<finalName>serveur</finalName>
 	</build>
