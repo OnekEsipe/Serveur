@@ -21,7 +21,7 @@ public class AccueilBean implements Serializable {
 
 	@Autowired
 	private AccueilService accueilservice;
-	
+
 	private final Navigation navigation = new Navigation();
 
 	private List<Evenement> events;
@@ -34,8 +34,7 @@ public class AccueilBean implements Serializable {
 	private Date datestart;
 	private Date datestop;
 	private int idevent;
-	
-	
+
 	public int getIdevent() {
 		return idevent;
 	}
@@ -54,6 +53,15 @@ public class AccueilBean implements Serializable {
 
 	public void refresh() {
 		events = accueilservice.listEvents();
+		for (Evenement evenement : events) {
+
+			if (evenement.getStatus().equals("Ouvert") && (evenement.getDatestart().compareTo(new Date()) < 0)) {
+				evenement.setStatus("Démarré");
+			}
+			if (evenement.getStatus().equals("Démarré") && (evenement.getDatestop().compareTo(new Date()) < 0)) {
+				evenement.setStatus("Stoppé");
+			}
+		}
 	}
 
 	public List<Evenement> getEvents() {
@@ -114,20 +122,21 @@ public class AccueilBean implements Serializable {
 
 	public void supprimerEvent() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		idevent = Integer.valueOf(params.get("idevent"));
 		System.out.println(idevent);
 		accueilservice.supprimerEvent(idevent);
 		events = accueilservice.listEvents();
-		
+
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", selectedevent.getIdevent());
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent",
+				selectedevent.getIdevent());
 		navigation.redirect("eventAccueil.xhtml");
 	}
-	
+
 	public void buttonAction() {
 		navigation.redirect("viewCreateEvent.xhtml");
-    }
+	}
 }

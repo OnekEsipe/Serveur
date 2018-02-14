@@ -276,7 +276,14 @@ public class EventAccueilBean implements Serializable {
 	public void eventUpdateButton() {
 		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
-		event.setStatus(statut);
+		if(event.getStatus().equals("Brouillon")) {
+			event.setStatus(statut);
+		}
+		else {
+			if(event.getStatus().equals("Ouvert")&& statut.equals("Fermé")) {
+				event.setStatus(statut);
+			}
+		}
 		eventAccueilservice.editEvenement(event);
 		
 	}
