@@ -109,6 +109,14 @@ public class EventAccueilBean implements Serializable {
 		this.juryAnonyme = juryAnonyme;
 	}
 
+	public Evenement getEvent() {
+		return event;
+	}
+
+	public void setEvent(Evenement event) {
+		this.event = event;
+	}
+
 	public void before(ComponentSystemEvent e) throws ParseException {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
