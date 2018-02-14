@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.onek.model.Evenement;
 import com.onek.service.EvenementService;
 import com.onek.utils.Navigation;
+import com.onek.utils.PasswordGenerator;
 
 @Component("event")
 public class EventBean implements Serializable {
@@ -37,7 +38,7 @@ public class EventBean implements Serializable {
 		event = new Evenement();
 		event.setNom(name);
 		event.setDatestart(new Date(date1.getTime()+hour1.getTime() + ecartHour));
-		event.setDatestop(new Date(date2.getTime()+hour2.getTime() + +ecartHour));
+		event.setDatestop(new Date(date2.getTime()+hour2.getTime() + ecartHour));
 		event.setIsopened(isOpened);
 		event.setIssigned(isSigned);
 		event.setStatus(status);
@@ -121,12 +122,22 @@ public class EventBean implements Serializable {
 			return;
 		}
 		addEvent();
+		addEvenementCode();
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", event.getIdevent());
 		Navigation navigation = new Navigation();
 		navigation.redirect("grille.xhtml");
 		
 	}
 	
+	private void addEvenementCode() {
+		PasswordGenerator pass = new PasswordGenerator();
+		Integer id = event.getIdevent();
+		int length = (int) (Math.log10(id) + 1);
+		String codeEvent = id+pass.generateCode(10-length);
+		event.setCode(codeEvent);
+		evenementService.editEvenement(event);
+	}
+
 	private boolean validDate(Date d1, Date d2) {
 		return d2.getTime() >= d1.getTime();
 	}

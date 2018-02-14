@@ -62,5 +62,14 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
         session.close();
         return events;		
 	}
+	
+	@Override
+	public void editEvenement(Evenement event) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(event);
+		session.getTransaction().commit();
+		session.close();
+	}
 
 }

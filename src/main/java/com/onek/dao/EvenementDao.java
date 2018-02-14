@@ -9,4 +9,5 @@ public interface EvenementDao {
 	public void addEvenement(Evenement event);
 	public Evenement findById(int id);
 	public List<Evenement> findByIdUser(int idUser);
+	public void editEvenement(Evenement event);
 }

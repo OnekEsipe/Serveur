@@ -108,6 +108,7 @@ public class EventAccueilDaoImpl implements EventAccueilDao, Serializable {
 		session.getTransaction().commit();
 		session.close();
 	}
+	
 	@Override
 	public void editEvenement(Evenement event) {
 		Session session = sessionFactory.openSession();
@@ -115,8 +116,6 @@ public class EventAccueilDaoImpl implements EventAccueilDao, Serializable {
 		session.update(event);
 		session.getTransaction().commit();
 		session.close();
-
-		System.out.println("Modification done");	
 	}
 
 }
