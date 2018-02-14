@@ -64,6 +64,7 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 	}
 	
 	@Override
+
 	public Evenement findByCode(String code) {
 		Session session = sessionFactory.openSession();		
         session.beginTransaction();
@@ -72,5 +73,16 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
         session.close();
         return event;
 	}
+	
+	@Override
+	public void editEvenement(Evenement event) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(event);
+		session.getTransaction().commit();
+		session.close();
+	}
+	
+	
 
 }

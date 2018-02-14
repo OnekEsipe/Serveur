@@ -24,4 +24,9 @@ public class PasswordGenerator {
 		String password = initGeneratePassword(length, ALPHA_CAPS + ALPHA + NUMERIC);
 		return password;
 	}
+	
+	public String generateCode(int length) {
+		String password = initGeneratePassword(length, NUMERIC);
+		return password;
+	}
 }
