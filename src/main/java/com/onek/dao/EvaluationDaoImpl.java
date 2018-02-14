@@ -1,6 +1,7 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -36,6 +37,20 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		session.update(evaluation);
 		session.getTransaction().commit();
 		session.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Evaluation> findByIdCandidate(Integer idCandidat) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		List<Evaluation> evaluations = (List<Evaluation>) session.createQuery("FROM Evaluation WHERE idevaluation = :id").setParameter("id", idCandidat).list();
+		for (Evaluation evaluation : evaluations) {
+			Hibernate.initialize(evaluation.getNotes());
+		}
+		session.getTransaction().commit();
+		session.close();
+		return evaluations;
 	}
 
 }
