@@ -83,6 +83,4 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 		session.close();
 	}
 	
-	
-
 }
