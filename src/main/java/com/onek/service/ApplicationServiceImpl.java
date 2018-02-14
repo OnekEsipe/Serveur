@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,6 @@ import com.onek.dao.GrilleDao;
 import com.onek.dao.JuryDao;
 import com.onek.dao.LoginDao;
 import com.onek.dao.NoteDao;
-import com.onek.dao.UserDao;
 import com.onek.model.Candidat;
 import com.onek.model.Critere;
 import com.onek.model.Evaluation;
@@ -78,35 +78,28 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		} catch (NumberFormatException nfe) {
 			return Optional.empty();
 		}
-
 		// check if login exist
 		if (!loginDao.userExist(login)) {
 			return Optional.empty();
-		}
-		
+		}		
 		// check if jury is assigned
 		int idUser = loginDao.findUserByLogin(login).getIduser();	
 		if (!juryDao.juryIsAssigned(idUser, id)) {
 			return Optional.empty();
-		} 				
-
+		}
 		try {			
-			Evenement event = eventDao.findById(id);
-			
+			Evenement event = eventDao.findById(id);			
 			// check if evenement is opened
 			if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
 				return Optional.empty();
-			}
-			
+			}			
 			// check if end date of event > date today // TODO uncomment
 			//if ((event.getDatestop().getTime() < new Date().getTime())) {
 			//	return Optional.empty();
-			//}
-			
+			//}			
 			EvenementResource eventResource = new EvenementResource(event);
 			List<Jury> jurys = juryDao.findJuryAndAnonymousByIdEvent(id, login);
-			List<EvaluationResource> evaluations = createEvaluationList(jurys);		
-			
+			List<EvaluationResource> evaluations = createEvaluationList(jurys);				
 			eventResource.setEvaluations(evaluations);			
 			eventResource.setJurys(associatedJurysCandidates(jurys));
 			return Optional.of(eventResource);
@@ -118,40 +111,33 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	/* associated jurys and candidates for an event */
 	private List<JuryResource> associatedJurysCandidates(List<Jury> jurys) {
 		HashMap<Jury, List<Candidat>> map = new HashMap<>();
-		List<JuryResource> jurysResource = new ArrayList<>();	
-		
+		List<JuryResource> jurysResource = new ArrayList<>();			
 		for(Jury jury : jurys) {			
 			if (!map.containsKey(jury)) {
 				map.put(jury, new ArrayList<>());
-			}
-			
+			}			
 			List<Evaluation> evaluations = jury.getEvaluations();
 			for (Evaluation evaluation : evaluations) {
 				List<Candidat> candidates = map.get(jury);
 				candidates.add(evaluation.getCandidat());
 				map.put(jury, candidates);
 			}			
-		}	
-
+		}
 		// create jury list with map
 		for (Entry<Jury, List<Candidat>> mapEntry : map.entrySet()) {
-			JuryResource jury = new JuryResource(mapEntry.getKey());
-			
+			JuryResource jury = new JuryResource(mapEntry.getKey());			
 			List<Candidat> candidats = mapEntry.getValue();
-			List<CandidatResource> candidatRessource = new ArrayList<>();		
-			
+			List<CandidatResource> candidatRessource = new ArrayList<>();			
 			for(Candidat candidat : candidats) {
 				candidatRessource.add(new CandidatResource(candidat));
 			}			
-			jury.setCandidates(candidatRessource);		
-			
+			jury.setCandidates(candidatRessource);			
 			jurysResource.add(jury);
 		}
-
 		return jurysResource;
 	}
 	
-	/* create evaluation list */
+	/* create evaluation resource list */
 	private List<EvaluationResource> createEvaluationList(List<Jury> jurys) {
 		List<EvaluationResource> evaluations = new ArrayList<>();		
 		for(Jury jury : jurys) {
@@ -167,20 +153,26 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	@Override
 	public List<AccountResource> account(String login) {
 		Utilisateur user = loginDao.findUserByLogin(login);
-		List<Evenement> events = eventDao.findByIdUser(user.getIduser());
+		List<Jury> jurys = juryDao.findByUser(user);
 		List<AccountResource> accounts = new ArrayList<>();
+		// search idEvents for the login
 		List<Integer> idEvents = new ArrayList<>();		
-		for(Evenement event : events) {
-			List<Jury> anonymous = juryDao.findAnonymousByIdEvent(event.getIdevent());
+		for(Jury jury : jurys) {
+			idEvents.add(jury.getEvenement().getIdevent());
+		}	
+		Collections.sort(idEvents);
+		accounts.add(new AccountResource(user, idEvents));
+		// search anonymous for all events affected at login
+		for(Jury jury : jurys) {
+			Integer idEvent = jury.getEvenement().getIdevent();
+			List<Jury> anonymous = juryDao.findAnonymousByIdEvent(idEvent);
 			for(Jury anonym : anonymous) {
 				List<Integer> idEventsAnonym = new ArrayList<>();
-				idEventsAnonym.add(event.getIdevent());
+				idEventsAnonym.add(idEvent);
 				accounts.add(new AccountResource(anonym.getUtilisateur(), idEventsAnonym));				
 			}			
-			idEvents.add(event.getIdevent());
-		}		
-		accounts.add(new AccountResource(user, idEvents));	
-		return accounts;
+		}
+		return accounts;		
 	}
 
 	@Override
@@ -188,20 +180,16 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		List<NoteResource> noteResources = evaluationResource.getNotes();
 		for(NoteResource noteResource : noteResources) {
 			Integer idNote = noteResource.getIdNote();								
-			Integer idEvaluation = evaluationResource.getIdEvaluation();
-			
+			Integer idEvaluation = evaluationResource.getIdEvaluation();			
 			Note note =	noteResource.createNote();				
-			Evaluation evaluation = evaluationDao.findById(idEvaluation);
-			
+			Evaluation evaluation = evaluationDao.findById(idEvaluation);			
 			// check last update date
 			if (evaluationResource.getDateLastChange().getTime() < evaluation.getDatedernieremodif().getTime()) {
 				return evaluationResource;
-			}		
-			
+			}					
 			Critere critere = critereDao.findById(noteResource.getIdCriteria());
 			note.setEvaluation(evaluation);
-			note.setCritere(critere);					
-			
+			note.setCritere(critere);			
 			// note create by application
 			if (idNote == 0) {
 				note = noteDao.addNote(note);	
