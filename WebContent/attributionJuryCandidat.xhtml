@@ -30,7 +30,7 @@
 						<th>Jurys/Candidats</th>
 						<ui:repeat value="#{attributionjc.candidats.values().toArray()}"
 							var="candidat">
-							<th>#{candidat}</th>
+							<th>#{candidat.nom} #{candidat.prenom}</th>
 						</ui:repeat>
 					</tr>
 				</thead>
@@ -38,7 +38,7 @@
 					<ui:repeat value="#{attributionjc.jurys.entrySet().toArray()}"
 						var="jury">
 						<tr>
-							<td>#{jury.value}</td>
+							<td>#{jury.value.nom} #{jury.value.prenom}</td>
 							<ui:repeat value="#{attributionjc.candidats.keySet().toArray()}"
 								var="candidat">
 								<td align="center"><p:selectBooleanCheckbox
@@ -51,7 +51,9 @@
 			<br />
 			<br />
 			<p:commandButton value="Prévisualisation des attributions"
-				actionListener="#{attributionjc.buttonActionValider}" ajax="false" />
+				actionListener="#{attributionjc.previsualitionButton}" ajax="false" />
+				
+			#{attributionjc.message}
 		</h:form>
 	</div>
 </h:body>
