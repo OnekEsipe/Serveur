@@ -116,7 +116,6 @@ public class AccueilBean implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 		idevent = Integer.valueOf(params.get("idevent"));
-		System.out.println(idevent);
 		accueilservice.supprimerEvent(idevent);
 		events = accueilservice.listEvents();
 		
