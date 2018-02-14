@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import com.onek.model.Candidat;
 import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
+import com.onek.service.AddJuryService;
 import com.onek.service.EvenementService;
 import com.onek.service.EventAccueilService;
 import com.onek.service.UserService;
@@ -36,6 +37,9 @@ public class EventAccueilBean implements Serializable {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private AddJuryService addJuryService;
 
 
 	private final Navigation navigation = new Navigation();
@@ -213,8 +217,9 @@ public class EventAccueilBean implements Serializable {
 		passwordGenerator = new PasswordGenerator();
 		List<Utilisateur> anonymousJurys = new ArrayList<>();
 		Utilisateur anonymousJury;
+		int increment = addJuryService.findAnonymousByIdEvent(idEvent).size();
 		if (juryAnonyme > 0) {
-			for (int i = 0; i < juryAnonyme; i++) {
+			for (int i = 0 + increment; i < juryAnonyme + increment; i++) {
 				anonymousJury = new Utilisateur();
 				anonymousJury.setDroits("A");
 				anonymousJury.setIsdeleted(false);
