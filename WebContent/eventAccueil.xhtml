@@ -28,7 +28,11 @@
 				style="margin-bottom:20px">
 				<h:form>
 					<h:panelGrid columns="2" cellpadding="10">
-						<p:outputLabel for="statut" value="Statut" />
+						<p:outputLabel value="Nom événement : " />
+						<h:outputText value="#{eventAccueil.event.getNom()}"></h:outputText>
+						<p:outputLabel value="Code événement : " />
+						<h:outputText value="#{eventAccueil.event.getCode()}"></h:outputText>
+						<p:outputLabel for="statut" value="Statut : " />
 						<p:selectOneMenu id="statut" value="#{eventAccueil.statut}"
 							style="width:125px">
 							<f:selectItem itemLabel="Brouillon" itemValue="Brouillon" />
@@ -38,17 +42,17 @@
 							<f:selectItem itemLabel="Fermé" itemValue="Fermé" />
 						</p:selectOneMenu>
 
-						<p:outputLabel for="dateStart" value="Date début" />
+						<p:outputLabel for="dateStart" value="Date début : " />
 						<p:calendar id="dateStart" value="#{eventAccueil.dateStart}" />
 
-						<p:outputLabel for="dateEnd" value="Date fin" />
+						<p:outputLabel for="dateEnd" value="Date fin : " />
 						<p:calendar id="dateEnd" value="#{eventAccueil.dateEnd}" />
 
-						<p:outputLabel for="timeStart" value="Heure début" />
+						<p:outputLabel for="timeStart" value="Heure début : " />
 						<p:calendar id="timeStart" value="#{eventAccueil.timeStart}"
 							pattern="HH:mm" timeOnly="true" />
 
-						<p:outputLabel for="timeEnd" value="Heure fin" />
+						<p:outputLabel for="timeEnd" value="Heure fin : " />
 						<p:calendar id="timeEnd" value="#{eventAccueil.timeEnd}"
 							pattern="HH:mm" timeOnly="true" />
 
@@ -158,7 +162,7 @@
 							actionListener="#{eventAccueil.buttonAddJury}"
 							icon="ui-icon-plusthick" />
 						<h:commandLink>
-							<p:graphicImage name="/image/csv.png" width="20" />
+							<p:graphicImage name="/image/csv.png" width="30" />
 							<p:dataExporter type="csv" target="tabJurysAnos"
 								fileName="liste_jurys" pageOnly="true" />
 						</h:commandLink>
