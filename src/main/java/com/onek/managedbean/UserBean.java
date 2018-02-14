@@ -28,7 +28,9 @@ public class UserBean {
 	private String confirmationPassword;
 	private String mail;
 	private Boolean isAdmin;
-
+	private String option;
+	
+	
 	private List<Utilisateur> users = new ArrayList<>();
 
 	private List<Utilisateur> filteredusers = new ArrayList<>();
@@ -40,6 +42,14 @@ public class UserBean {
 
 		users = userService.getAllUsersExceptDeleted();
 
+	}
+	
+	public String isOption() {
+		return option;
+	}
+
+	public void setOption(String option) {
+		this.option = option;
 	}
 
 	public List<Utilisateur> getSelectedusers() {
@@ -151,7 +161,7 @@ public class UserBean {
 	}
 
 	public void onClickAdd() {
-		System.out.println("hello");
+		
 		if (!password.equals(confirmationPassword)) {
 			logInfo = "Les mots de passe ne correspondent pas !";
 		}
@@ -162,12 +172,11 @@ public class UserBean {
 		newUser.setLogin(login);
 		// TODO AJOUTER HASH PASSWORD
 		newUser.setMotdepasse(password);
-		// if (isAdmin) {
-		// newUser.setDroits("A");
-		// } else {
-		// newUser.setDroits("O");
-		// }
-		newUser.setDroits("O");
+		if(isAdmin) {
+			newUser.setDroits("R");
+		}else {
+			newUser.setDroits("O");
+		}
 		newUser.setIsdeleted(false);
 		userService.addUser(newUser);
 		users.add(newUser);
