@@ -12,13 +12,19 @@
 	</link>
 
 </h:head>
+<f:metadata>
+	<f:event type="preRenderView" listener="#{accueil.before}" />
+	<f:event listener="#{accueil.refresh}" type="preRenderView" />
+</f:metadata>
 
-<f:event listener="#{accueil.refresh}" type="preRenderView" />
 
 <h:body>
 	<!-- Insertion du menu -->
 	<h:outputStylesheet library="css" name="accueil.css" />
-	<ui:include src="menu.xhtml" />
+	<div id="menu">
+		<ui:include src="#{accueil.typeMenu}" />
+	</div>
+
 	<br />
 	<br />
 
@@ -79,6 +85,9 @@
 					<h:outputText value="#{evenement.datestop}" />
 				</p:column>
 
+				<p:column headerText="Termine" id="etatevent" rendered="#{accueil.visible}">
+					<h:outputText value="#{evenement.isdeleted}" />
+				</p:column>
 
 
 				<!-- ********la colonne supprimer*********** -->
