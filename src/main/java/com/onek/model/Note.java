@@ -21,7 +21,7 @@ public class Note implements Serializable {
 
 	private String commentaire;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
 	private Integer niveau;
