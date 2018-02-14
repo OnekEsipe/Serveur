@@ -4,7 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 <h:head>
 	<title>Onek team</title>
 	<link rel="stylesheet"
@@ -14,12 +14,22 @@
 
 <h:body>
 	<h:form>
-		<p:tabMenu>
-			<p:menuitem value="Mes événements" actionListener="#{principalMenu.event}"/>
-			<p:menuitem value="Créer utilisateur" actionListener="#{principalMenu.user}"/>
-			<p:menuitem value="Mon compte" actionListener="#{principalMenu.account}"/>
-			<p:menuitem value="Aide" actionListener="#{principalMenu.help}"/>
-			<p:menuitem value="Déconnexion" actionListener="#{principalMenu.exit}"/>
+		<p:tabMenu activeIndex="#{param.i}">
+			<p:menuitem value="Mes événements" outcome="accueil.xhtml">
+				<f:param name="i" value="0" />
+			</p:menuitem>
+			<p:menuitem value="Créer utilisateur" outcome="addUser.xhtml">
+				<f:param name="i" value="1" />
+			</p:menuitem>
+			<p:menuitem value="Mon compte" outcome="account.xhtml">
+				<f:param name="i" value="2" />
+			</p:menuitem>
+			<p:menuitem value="Aide" >
+				<f:param name="i" value="3" />
+			</p:menuitem>
+			<p:menuitem value="Déconnexion" outcome="index.xhtml">
+				<f:param name="i" value="4" />
+			</p:menuitem>
 		</p:tabMenu>
 	</h:form>
 </h:body>

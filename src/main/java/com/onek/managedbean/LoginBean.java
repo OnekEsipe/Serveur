@@ -55,24 +55,15 @@ public class LoginBean implements Serializable {
 	}
 
 	public void buttonAction() {
-		if (loginservice.userExist(login)) {
-			if (motDePasse.equals(loginservice.findUserByLogin(login).getMotdepasse())) {
-				if (loginservice.findUserByLogin(login).getDroits().equals("R")
-						|| loginservice.findUserByLogin(login).getDroits().equals("O")) {
-					FacesContext fc = FacesContext.getCurrentInstance();
-					fc.getExternalContext().getSessionMap().put("user", login);
-					NavigationHandler nh = fc.getApplication().getNavigationHandler();
-					nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "accueil.xhtml",
-							"accueil.xhtml".contains("?") ? "&" : "?"));
-				}else {
-					message = "utilisateur ou mot de passe incorrect";
-				}
-			}else {
-				message = "utilisateur ou mot de passe incorrect";
-			}
-		}else {
-			message = "utilisateur ou mot de passe incorrect";
-		}
+		if (!loginservice.authentification(login, motDePasse)) {
+			message = "Utilisateur ou mot de passe incorrect.";
+			return;
+		}		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		fc.getExternalContext().getSessionMap().put("user", login);
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "accueil.xhtml",
+				"accueil.xhtml".contains("?") ? "&" : "?"));		
 	}
 
 }

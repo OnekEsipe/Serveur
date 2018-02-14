@@ -13,6 +13,7 @@ import com.onek.model.Critere;
 import com.onek.model.Evaluation;
 import com.onek.model.Jury;
 import com.onek.model.Note;
+import com.onek.model.Utilisateur;
 
 @Repository
 public class JuryDaoImpl implements JuryDao, Serializable {
@@ -25,26 +26,21 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	public boolean juryIsAssigned(int idUser, int idEvent) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-
 		long result = (Long) session.createQuery("SELECT COUNT(j) FROM Jury j WHERE (iduser = :idu AND idevent = :ide)")
 				.setParameter("idu", idUser).setParameter("ide", idEvent).getSingleResult();
-
 		session.getTransaction().commit();
 		session.close();
-
 		return result > 0;
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<Jury> findJuryAndAnonymousByIdEvent(int idEvent, String login) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-
-		@SuppressWarnings("unchecked")
 		List<Jury> jurys = (List<Jury>) session.createQuery(
 				"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND (u.login = :login OR u.droits = 'A') AND u.isdeleted IS FALSE")
 				.setParameter("idEvent", idEvent).setParameter("login", login).list();
-
 		for (Jury jury : jurys) {
 			Hibernate.initialize(jury.getUtilisateur());
 			Hibernate.initialize(jury.getEvaluations());
@@ -58,18 +54,16 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 				}
 			}
 		}
-
 		session.getTransaction().commit();
 		session.close();
-
 		return jurys;
 	}
 	
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<Jury> findAnonymousByIdEvent(int idEvent) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		@SuppressWarnings("unchecked")
 		List<Jury> jurys = (List<Jury>) session.createQuery(
 				"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND u.droits = 'A' AND u.isdeleted IS FALSE")
 				.setParameter("idEvent", idEvent).list();
@@ -78,6 +72,20 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		}
 		session.getTransaction().commit();
 		session.close();
+		return jurys;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Jury> findByUser(Utilisateur user) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		List<Jury> jurys = (List<Jury>) session.createQuery("SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE j.utilisateur = :user AND u.isdeleted IS FALSE").setParameter("user", user).list();
+		for(Jury jury : jurys) {
+			Hibernate.initialize(jury.getEvenement());
+		}
+		session.getTransaction().commit();
+		session.close();	
 		return jurys;
 	}
 
