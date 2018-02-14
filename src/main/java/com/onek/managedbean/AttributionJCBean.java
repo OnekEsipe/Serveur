@@ -45,8 +45,8 @@ public class AttributionJCBean implements Serializable {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 
-			// Initialisation-update de la liste des candidats, des jurys et de
-			// l'attribution deja realisee
+			// Initialisation-update de la liste des candidats, des jurys et de l'attribution deja realisee
+
 			candidatsJurys = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateursJurys = eventAccueilservice.listJurysByEvent(idEvent);
 
