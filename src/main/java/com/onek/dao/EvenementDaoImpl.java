@@ -62,5 +62,15 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
         session.close();
         return events;		
 	}
+	
+	@Override
+	public Evenement findByCode(String code) {
+		Session session = sessionFactory.openSession();		
+        session.beginTransaction();
+        Evenement event = (Evenement) session.createQuery("FROM Evenement WHERE code = :code").setParameter("code", code).getSingleResult();
+        session.getTransaction().commit();
+        session.close();
+        return event;
+	}
 
 }

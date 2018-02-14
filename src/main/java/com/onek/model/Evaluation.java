@@ -22,7 +22,7 @@ public class Evaluation implements Serializable {
 
 	private String commentaire;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date datedernieremodif;
 
 	private byte[] signature;

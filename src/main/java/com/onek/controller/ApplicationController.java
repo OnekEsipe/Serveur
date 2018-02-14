@@ -1,5 +1,7 @@
 package com.onek.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.onek.resource.AccountResource;
+import com.onek.resource.CodeEvenementResource;
+import com.onek.resource.CreateJuryResource;
 import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.LoginResource;
@@ -24,14 +28,21 @@ import com.onek.service.UserService;
 public class ApplicationController {
 	
 	@Autowired
-	ApplicationService applicationService;
+	private ApplicationService applicationService;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
-	/* Create a new jury */
+	/* Create a new jury from app */
 	@RequestMapping(value = "/createjury", method = RequestMethod.POST)
-	public ResponseEntity<String> createJury(/*@RequestBody Utilisateur user*/) {
+	public ResponseEntity<String> createJury(@RequestBody CreateJuryResource createJuryResource) {
+		try {			
+			applicationService.createJury(createJuryResource);		
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {			
+			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch(IllegalStateException e) {
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
+		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
@@ -65,5 +76,14 @@ public class ApplicationController {
 			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}			
 		return new ResponseEntity<EvenementResource>(event.get(), HttpStatus.OK);
-	}		
+	}	
+	
+	/* code event */
+	@RequestMapping(value = "/events/code", method = RequestMethod.POST)
+	public ResponseEntity<?> codeEvent(@RequestBody CodeEvenementResource eventCode) {
+		if (!applicationService.subscribe(eventCode)) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		}
+		return  ResponseEntity.status(HttpStatus.OK).build();
+	}
 }

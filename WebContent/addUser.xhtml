@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Home Onek</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+
+</h:head>
+<f:metadata>
+	<f:event type="preRenderView" listener="#{user.before}" />
+</f:metadata>
+<h:body>
+	<!-- Insertion du menu -->
+	<h:outputStylesheet library="css" name="user.css" />
+	<ui:include src="menu.xhtml" />
+	<br />
+	<br />
+	<div class="ui-g">
+		<h:form>
+			<p:growl id="msgs" showDetail="true" />
+			<p:panel header="Ajouter un Utilisateur">
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel for="lastnameUser" value="Nom :" />
+					<p:inputText id="lastnameUser" name="lastnameUser"
+						placeholder="Entrer le nom" size="20" value="#{user.lastName}"
+						required="true" />
+					<p:outputLabel for="firstnameUser" value="Prénom (Optionnel) :" />
+					<p:inputText id="firstnameUser" name="firstnameUser"
+						placeholder="Entrer le prénom" size="20" value="#{user.firstName}" />
+					<p:outputLabel for="mailUser" value="Mail :" />
+					<p:inputText id="mailUser" name="mailUser"
+						placeholder="Entrer l'adresse mail" size="20" value="#{user.mail}"
+						required="true" />
+					<p:outputLabel for="loginUser" value="Login :" />
+					<p:inputText id="loginUser" name="loginUser"
+						placeholder="Entrer le login" size="20" value="#{user.login}"
+						required="true" />
+					<p:outputLabel for="password" value="Mot de passe :" />
+					<p:password id="password" name="password"
+						placeholder="Entrez le mot de passe" size="30"
+						value="#{user.password}" required="true" />
+					<p:outputLabel for="confirmationpassword" value="Confirmation :" />
+					<p:password id="confirmationpassword" name="confirmationpassword"
+						placeholder="Confirmez le mot de passe" size="30"
+						value="#{user.confirmationPassword}" required="true" />
+					<br />
+					<div class="ui-g-6">
+						<div class="ui-g-2"></div>
+						<div class="ui-g-4">
+							<p:selectOneButton value="#{user.isAdmin}" required="true">
+								<f:selectItem itemLabel="Administrateur" itemValue="#{true}" />
+								<f:selectItem itemLabel="organisateur" itemValue="#{false}" />
+							</p:selectOneButton>
+						</div>
+					</div>
+
+				</h:panelGrid>
+				<p:commandButton value="Valider" action="#{user.onClickAdd}"
+					icon="ui-icon-check" ajax="false" />
+
+				<br />
+				<div id="errorCreationUser">
+					<h:outputText value="#{user.logInfo}" />
+				</div>
+
+			</p:panel>
+		</h:form>
+
+	</div>
+	<div class="ui-g">
+		<h:form>
+			<p:dataTable var="utilisateur" value="#{user.users}"
+				widgetVar="utilisateurTable" scrollable="true" scrollHeight="400"
+				rowKey="#{utilisateur.nom}">
+
+				<!-- barre de recherche -->
+				<f:facet name="header">
+					Liste des utilisateurs
+				</f:facet>
+				<!-- ********fin*********** -->
+
+
+				<p:column headerText="nom">
+					<h:outputText value="#{utilisateur.nom}" />
+				</p:column>
+
+				<p:column headerText="prénom">
+					<h:outputText value="#{utilisateur.prenom}" />
+				</p:column>
+
+				<p:column headerText="login">
+					<h:outputText value="#{utilisateur.login}" />
+				</p:column>
+
+
+				<!-- ********la colonne supprimer*********** -->
+				<p:column style="width:32px;text-align: center">
+					<p:growl id="message" showDetail="true" />
+					<p:commandButton id="iconOnly" icon="ui-icon-trash"
+						actionListener="#{user.deleteUser}" ajax="true" update="@(form)">
+						<p:confirm header="Confirmation"
+							message="vous voulez vraiment supprimer l'utilisateur"
+							icon="ui-icon-trash" />
+						<f:param name="iduser" value="#{utilisateur.iduser}" />
+					</p:commandButton>
+
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:column>
+				<!-- ********fin*********** -->
+			</p:dataTable>
+		</h:form>
+	</div>
+</h:body>
+</html>

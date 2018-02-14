@@ -57,4 +57,26 @@ public class UserServiceImpl implements UserService, Serializable {
 		userDao.addJurysAnonymes(utilisateurs, event);
 	}
 
+	@Override
+	public List<Utilisateur> getAllUsers() {
+		return userDao.getAllUsers();
+	}
+
+	@Override
+	public void deleteUser(int idUser) {
+		userDao.deleteUser(idUser);
+	}
+
+	@Override
+	public void addUser(Utilisateur user) {
+		if (loginDao.userExist(user.getLogin())) {
+			throw new IllegalStateException();
+		}
+		userDao.addUser(user);
+	}
+
+	@Override
+	public List<Utilisateur> getAllUsersExceptDeleted() {
+		return userDao.getAllUsersExceptDeleted();
+	}
 }

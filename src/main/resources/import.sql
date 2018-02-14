@@ -36,22 +36,22 @@ INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdelete
 -- Data for Name: evenements; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 1', '2017-02-15', '2017-02-16', 'O', 'Code1', false, true, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 2', '2017-02-16', '2017-02-17', 'O', 'Code2', false, true, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 3', '2017-02-17', '2017-02-18', 'O', 'Code3', false, true, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 4', '2017-02-17', '2017-02-18', 'O', 'Code4', false, true, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 5', '2017-02-17', '2017-02-18', 'O', 'Code 5', true, false, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 6', '2017-02-20', '2017-02-22', 'O', 'Code 6', true, false, 1, true);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 7', '2017-02-20', '2017-02-22', 'O', 'Code 7', false, false, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 8', '2017-02-20', '2017-02-22', 'O', 'Code 8', false, false, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 9', '2017-02-20', '2017-02-22', 'O', 'Code 9', false, false, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 10', '2017-02-20', '2017-02-22', 'O', 'Code 10', false, false, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 11', '2017-02-20', '2017-02-22', 'O', 'Code 11', false, false, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 12', '2017-02-20', '2017-02-22', 'O', 'Code 12', false, false, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 13', '2017-02-20', '2017-02-22', 'O', 'Code 13', false, false, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 14', '2017-02-20', '2017-02-22', 'O', 'Code 14', false, false, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 15', '2017-02-20', '2017-02-22', 'O', 'Code 15', false, false, 2, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 16', '2017-02-20', '2017-02-22', 'O', 'Code 16', false, false, 2, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 1', '2017-02-15', '2017-02-16', 'Ouvert', 'Code1', false, true, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 2', '2017-02-16', '2017-02-17', 'Ouvert', 'Code2', false, true, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 3', '2017-02-17', '2017-02-18', 'Ouvert', 'Code3', false, true, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 4', '2017-02-17', '2017-02-18', 'Ouvert', 'Code4', false, true, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 5', '2017-02-17', '2017-02-18', 'Ouvert', 'Code 5', true, false, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 6', '2017-02-20', '2017-02-22', 'Ouvert', 'Code 6', true, false, 1, true);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 7', '2017-02-20', '2017-02-22', 'Ouvert', 'Code 7', false, false, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 8', '2017-02-20', '2017-02-22', 'Ouvert', 'Code 8', false, false, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 9', '2017-02-20', '2017-02-22', 'Ouvert', 'Code 9', false, false, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 10', '2017-02-20', '2017-02-22', 'Ouvert', 'Code 10', false, false, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 11', '2017-02-20', '2017-02-22', 'Ouvert', 'Code 11', false, false, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 12', '2017-02-20', '2017-02-22', 'Ouvert', 'Code 12', false, false, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 13', '2017-02-20', '2017-02-22', 'Ouvert', 'Code 13', false, false, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 14', '2017-02-20', '2017-02-22', 'Ouvert', 'Code 14', false, false, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 15', '2017-02-20', '2017-02-22', 'Ouvert', 'Code 15', false, false, 2, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 16', '2017-02-20', '2017-02-22', 'Ouvert', 'Code 16', false, false, 2, false);
 
 --
 -- TOC entry 2883 (class 0 OID 17372)
@@ -71,12 +71,12 @@ INSERT INTO jurys (iduser, idevent) VALUES (5, 3);
 INSERT INTO jurys (iduser, idevent) VALUES (5, 4);
 INSERT INTO jurys (iduser, idevent) VALUES (5, 5);
 INSERT INTO jurys (iduser, idevent) VALUES (5, 6);
-INSERT INTO jurys (iduser, idevent) VALUES (6, 1);
-INSERT INTO jurys (iduser, idevent) VALUES (6, 2);
-INSERT INTO jurys (iduser, idevent) VALUES (6, 3);
 INSERT INTO jurys (iduser, idevent) VALUES (6, 4);
 INSERT INTO jurys (iduser, idevent) VALUES (6, 5);
 INSERT INTO jurys (iduser, idevent) VALUES (6, 6);
+INSERT INTO jurys (iduser, idevent) VALUES (6, 1);
+INSERT INTO jurys (iduser, idevent) VALUES (6, 2);
+INSERT INTO jurys (iduser, idevent) VALUES (6, 3);
 INSERT INTO jurys (iduser, idevent) VALUES (4, 7);
 INSERT INTO jurys (iduser, idevent) VALUES (4, 8);
 INSERT INTO jurys (iduser, idevent) VALUES (4, 9);

@@ -11,4 +11,5 @@ public interface AddJuryService {
 	public List<Utilisateur> listJurysAll();
 	public void supprimerUtilisateur(int iduser);
 	public void addJuryToEvent(Jury jury);
+	public List<Jury> findAnonymousByIdEvent(int idEvent);
 }

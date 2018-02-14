@@ -20,6 +20,7 @@ private static final long serialVersionUID = 1L;
 	
 	@Autowired
 	private JuryDao juryDao;
+
 	@Override
 	public List<Utilisateur> listJurysByEvent(int idevent) {
 		return addjuryDao.listJurysByEvent(idevent);
@@ -39,7 +40,15 @@ private static final long serialVersionUID = 1L;
 	}
 	@Override
 	public void addJuryToEvent(Jury jury) {
+		// don't add jury if assigned
+		if (juryDao.juryIsAssigned(jury.getUtilisateur().getIduser(), jury.getEvenement().getIdevent())) {
+			return;
+		}
 		addjuryDao.addJuryToEvent(jury);
+	}
+	@Override
+	public List<Jury> findAnonymousByIdEvent(int idEvent) {
+		return juryDao.findAnonymousByIdEvent(idEvent);
 	}
 	
 }

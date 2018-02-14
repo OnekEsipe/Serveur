@@ -1,7 +1,10 @@
 package com.onek.service;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -18,6 +21,7 @@ import com.onek.dao.GrilleDao;
 import com.onek.dao.JuryDao;
 import com.onek.dao.LoginDao;
 import com.onek.dao.NoteDao;
+import com.onek.dao.UserDao;
 import com.onek.model.Candidat;
 import com.onek.model.Critere;
 import com.onek.model.Evaluation;
@@ -27,10 +31,14 @@ import com.onek.model.Note;
 import com.onek.model.Utilisateur;
 import com.onek.resource.AccountResource;
 import com.onek.resource.CandidatResource;
+import com.onek.resource.CodeEvenementResource;
+import com.onek.resource.CreateJuryResource;
 import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.JuryResource;
 import com.onek.resource.NoteResource;
+import com.onek.utils.EncodePassword;
+import com.onek.utils.StatutEvenement;
 
 
 @Service
@@ -54,6 +62,12 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	
 	@Autowired
 	private NoteDao noteDao;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private AddJuryService addJuryService;
 
 	@Override
 	public Optional<EvenementResource> export(String idEvent, String login) {
@@ -77,7 +91,19 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		} 				
 
 		try {			
-			EvenementResource eventResource = new EvenementResource(eventDao.findById(id));
+			Evenement event = eventDao.findById(id);
+			
+			// check if evenement is opened
+			if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
+				return Optional.empty();
+			}
+			
+			// check if end date of event > date today // TODO uncomment
+			//if ((event.getDatestop().getTime() < new Date().getTime())) {
+			//	return Optional.empty();
+			//}
+			
+			EvenementResource eventResource = new EvenementResource(event);
 			List<Jury> jurys = juryDao.findJuryAndAnonymousByIdEvent(id, login);
 			List<EvaluationResource> evaluations = createEvaluationList(jurys);		
 			
@@ -188,6 +214,38 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			}			
 		}
 		return evaluationResource;
+	}
+
+	@Override
+	public void createJury(CreateJuryResource createJuryResource) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		Utilisateur user = new Utilisateur();
+		user.setPrenom(createJuryResource.getFirstname());
+		user.setNom(createJuryResource.getLastname());
+		user.setMail(createJuryResource.getMail());
+		user.setLogin(createJuryResource.getLogin());
+		user.setMotdepasse(EncodePassword.sha1(createJuryResource.getPassword()));
+		user.setDroits("J");
+		user.setIsdeleted(false);
+		userService.addUser(user);
+	}
+	
+	@Override
+	public boolean subscribe(CodeEvenementResource eventCode) {
+		if (!loginDao.userExist(eventCode.getLogin())) {
+			return false;
+		}
+		Utilisateur user = loginDao.findUserByLogin(eventCode.getLogin());
+		Evenement event;
+		try {
+			event = eventDao.findByCode(eventCode.getEventCode());
+		} catch (NoResultException rse) {
+			return false;
+		}
+		Jury jury = new Jury();
+		jury.setUtilisateur(user);
+		jury.setEvenement(event);		
+		addJuryService.addJuryToEvent(jury);
+		return true;
 	}
 
 }

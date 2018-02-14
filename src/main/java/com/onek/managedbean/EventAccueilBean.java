@@ -42,7 +42,6 @@ public class EventAccueilBean implements Serializable {
 	@Autowired
 	private AddJuryService juryServices;
 
-
 	private final Navigation navigation = new Navigation();
 	
 	private int idEvent;
@@ -112,9 +111,7 @@ public class EventAccueilBean implements Serializable {
 
 	public void before(ComponentSystemEvent e) throws ParseException {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
-			Navigation navigation = new Navigation();
-			String idEventString = navigation.getURLParameter("id");
-			setIdEvent(Integer.parseInt(idEventString));
+			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
@@ -235,8 +232,9 @@ public class EventAccueilBean implements Serializable {
 		passwordGenerator = new PasswordGenerator();
 		List<Utilisateur> anonymousJurys = new ArrayList<>();
 		Utilisateur anonymousJury;
+		int increment = juryService.findAnonymousByIdEvent(idEvent).size();
 		if (juryAnonyme > 0) {
-			for (int i = 0; i < juryAnonyme; i++) {
+			for (int i = 0 + increment; i < juryAnonyme + increment; i++) {
 				anonymousJury = new Utilisateur();
 				anonymousJury.setDroits("A");
 				anonymousJury.setIsdeleted(false);
@@ -295,19 +293,19 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	public void buttonGrille() {
-		navigation.redirect("grille.xhtml?id=" + idEvent);
+		navigation.redirect("grille.xhtml");
 	}
 
 	public void buttonAttribution() {
-		navigation.redirect("attributionJuryCandidat.xhtml?id=" + idEvent);
+		navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
 	public void buttonAddJury() {
-		navigation.redirect("addJury.xhtml?id=" + idEvent);
+		navigation.redirect("addJury.xhtml");
 	}
 
 	public void buttonAddCandidat() {
-		navigation.redirect("addCandidates.xhtml?id=" + idEvent);
+		navigation.redirect("addCandidates.xhtml");
 	}
 
 

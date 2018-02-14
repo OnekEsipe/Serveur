@@ -123,7 +123,8 @@ public class AccueilBean implements Serializable {
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		navigation.redirect("eventAccueil.xhtml?id="+selectedevent.getIdevent());
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", selectedevent.getIdevent());
+		navigation.redirect("eventAccueil.xhtml");
 	}
 	
 	public void buttonAction() {
