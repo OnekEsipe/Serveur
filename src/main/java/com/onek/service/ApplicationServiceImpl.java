@@ -31,6 +31,7 @@ import com.onek.model.Note;
 import com.onek.model.Utilisateur;
 import com.onek.resource.AccountResource;
 import com.onek.resource.CandidatResource;
+import com.onek.resource.CodeEvenementResource;
 import com.onek.resource.CreateJuryResource;
 import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
@@ -64,6 +65,9 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private AddJuryService addJuryService;
 
 	@Override
 	public Optional<EvenementResource> export(String idEvent, String login) {
@@ -223,6 +227,25 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		user.setDroits("J");
 		user.setIsdeleted(false);
 		userService.addUser(user);
+	}
+	
+	@Override
+	public boolean subscribe(CodeEvenementResource eventCode) {
+		if (!loginDao.userExist(eventCode.getLogin())) {
+			return false;
+		}
+		Utilisateur user = loginDao.findUserByLogin(eventCode.getLogin());
+		Evenement event;
+		try {
+			event = eventDao.findByCode(eventCode.getEventCode());
+		} catch (NoResultException rse) {
+			return false;
+		}
+		Jury jury = new Jury();
+		jury.setUtilisateur(user);
+		jury.setEvenement(event);		
+		addJuryService.addJuryToEvent(jury);
+		return true;
 	}
 
 }

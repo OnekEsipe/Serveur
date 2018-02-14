@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.onek.resource.AccountResource;
+import com.onek.resource.CodeEvenementResource;
 import com.onek.resource.CreateJuryResource;
 import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
@@ -75,5 +76,14 @@ public class ApplicationController {
 			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}			
 		return new ResponseEntity<EvenementResource>(event.get(), HttpStatus.OK);
-	}		
+	}	
+	
+	/* code event */
+	@RequestMapping(value = "/events/code", method = RequestMethod.POST)
+	public ResponseEntity<?> codeEvent(@RequestBody CodeEvenementResource eventCode) {
+		if (!applicationService.subscribe(eventCode)) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		}
+		return  ResponseEntity.status(HttpStatus.OK).build();
+	}
 }

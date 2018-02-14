@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import com.onek.resource.EvaluationResource;
 import com.onek.resource.AccountResource;
+import com.onek.resource.CodeEvenementResource;
 import com.onek.resource.CreateJuryResource;
 import com.onek.resource.EvenementResource;
 
@@ -16,5 +17,6 @@ public interface ApplicationService {
 	public EvaluationResource importEvaluation(EvaluationResource evaluationResource);
 	public List<AccountResource> account(String login);
 	public void createJury(CreateJuryResource createJuryResource) throws NoSuchAlgorithmException, UnsupportedEncodingException;
+	public boolean subscribe(CodeEvenementResource eventCode);
 	
 }

@@ -39,6 +39,10 @@ private static final long serialVersionUID = 1L;
 	}
 	@Override
 	public void addJuryToEvent(Jury jury) {
+		// don't add jury if assigned
+		if (juryDao.juryIsAssigned(jury.getUtilisateur().getIduser(), jury.getEvenement().getIdevent())) {
+			return;
+		}
 		addjuryDao.addJuryToEvent(jury);
 	}
 	@Override
