@@ -51,7 +51,7 @@
 						value="#{user.confirmationPassword}" required="true" />
 				</h:panelGrid>
 				<p:commandButton value="Valider" action="#{user.onClickAdd}"
-					icon="ui-icon-check" update="tabUsers" ajax="false" />
+					icon="ui-icon-check" ajax="false" />
 
 				<br />
 				<div id="errorCreationUser">
@@ -60,50 +60,44 @@
 
 			</p:panel>
 		</h:form>
-		<!--  Tableau des utilisateurs -->
-		<div class="ui-g">
-			<h:form>
-				<p:dataTable var="utilisateur" value="#{user.users}"
-					widgetVar="tabUsers"
-					emptyMessage="aucun événement trouvé avec ce nom"
-					filteredValue="#{user.filteredusers}" scrollable="true"
-					scrollHeight="400" selectionMode="single"
-					rowKey="#{utilisateur.nom}">
 
-					<!-- barre de recherche -->
-					<f:facet name="header">
-						<p:outputPanel>
-							<div>
-								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
-								<p:inputText id="globalFilter"
-									onkeyup="PF('tabUsers').filter()" style="width:150px"
-									placeholder="Filtrer nom" />
-							</div>
-						</p:outputPanel>
-					</f:facet>
+	</div>
+	<div class="ui-g">
+		<h:form>
+			<p:dataTable var="utilisateur" value="#{user.users}"
+				widgetVar="utilisateurTable" scrollable="true" scrollHeight="400"
+				rowKey="#{utilisateur.nom}">
 
-					<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
-						filterMatchMode="startsWith" filterStyle="display:none">
-						<h:outputText value="#{utilisateur.nom}" />
-					</p:column>
+				<!-- barre de recherche -->
+				<f:facet name="header">
+					Liste des utilisateurs
+				</f:facet>
+				<!-- ********fin*********** -->
 
-					<p:column headerText="Prénom">
-						<h:outputText value="#{utilisateur.prenom}" />
-					</p:column>
 
-					<p:column headerText="Login">
-						<h:outputText value="#{evenement.login}" />
-					</p:column>
+				<p:column headerText="nom">
+					<h:outputText value="#{utilisateur.nom}" />
+				</p:column>
 
-					<!-- ********la colonne supprimer*********** -->
-					<p:column style="width:32px;text-align: center">
+				<p:column headerText="prénom">
+					<h:outputText value="#{utilisateur.prenom}" />
+				</p:column>
+
+				<p:column headerText="login">
+					<h:outputText value="#{utilisateur.login}" />
+				</p:column>
+
+
+				<!-- ********la colonne supprimer*********** -->
+				<p:column style="width:32px;text-align: center">
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
-							actionListener="#{user.deleteUser()}" update="@(form)">
-							<f:param name="iduser" value="#{utilisateur.iduser}" />
+							actionListener="#{user.deleteUser}" ajax="true"
+							update="@(form)">
 							<p:confirm header="Confirmation"
 								message="vous voulez vraiment supprimer l'utilisateur"
 								icon="ui-icon-trash" />
+							<f:param name="iduser" value="#{utilisateur.iduser}" />
 						</p:commandButton>
 
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -113,10 +107,9 @@
 								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 						</p:confirmDialog>
 					</p:column>
-					<!-- ********fin*********** -->
-				</p:dataTable>
-			</h:form>
-		</div>
+				<!-- ********fin*********** -->
+			</p:dataTable>
+		</h:form>
 	</div>
 </h:body>
 </html>

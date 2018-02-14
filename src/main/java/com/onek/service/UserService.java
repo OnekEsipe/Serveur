@@ -13,6 +13,6 @@ public interface UserService {
 
 	public List<Utilisateur> getAllUsers();
 	public List<Utilisateur> getAllUsersExceptDeleted();
-	public void deleteUser(int id);
+	public void deleteUser(int idUser);
 	public void addUser(Utilisateur user);
 }

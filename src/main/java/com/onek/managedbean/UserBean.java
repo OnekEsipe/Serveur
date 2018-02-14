@@ -15,10 +15,10 @@ import com.onek.service.UserService;
 
 @Component("user")
 public class UserBean {
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	private Utilisateur utilisateur;
 	private int iduser;
 	private String lastName;
@@ -28,17 +28,26 @@ public class UserBean {
 	private String confirmationPassword;
 	private String mail;
 	private Boolean isAdmin;
-	
+
 	private List<Utilisateur> users = new ArrayList<>();
-	
+
 	private List<Utilisateur> filteredusers = new ArrayList<>();
-	
+	private List<Utilisateur> selectedusers = new ArrayList<>();
+
 	private String logInfo;
-	
+
 	public void before(ComponentSystemEvent e) {
-		if (!FacesContext.getCurrentInstance().isPostback()) {
-			users = userService.getAllUsersExceptDeleted();
-		}
+
+		users = userService.getAllUsersExceptDeleted();
+
+	}
+
+	public List<Utilisateur> getSelectedusers() {
+		return selectedusers;
+	}
+
+	public void setSelectedusers(List<Utilisateur> selectedusers) {
+		this.selectedusers = selectedusers;
 	}
 
 	public int getIduser() {
@@ -112,7 +121,7 @@ public class UserBean {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-	
+
 	public Boolean getIsAdmin() {
 		return isAdmin;
 	}
@@ -120,7 +129,6 @@ public class UserBean {
 	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-	
 
 	public List<Utilisateur> getFilteredusers() {
 		return filteredusers;
@@ -138,7 +146,12 @@ public class UserBean {
 		this.logInfo = logInfo;
 	}
 
+	public void click() {
+		System.out.println("lol");
+	}
+
 	public void onClickAdd() {
+		System.out.println("hello");
 		if (!password.equals(confirmationPassword)) {
 			logInfo = "Les mots de passe ne correspondent pas !";
 		}
@@ -149,26 +162,25 @@ public class UserBean {
 		newUser.setLogin(login);
 		// TODO AJOUTER HASH PASSWORD
 		newUser.setMotdepasse(password);
-//		if (isAdmin) {
-//			newUser.setDroits("A");
-//		} else {
-//			newUser.setDroits("O");
-//		}
+		// if (isAdmin) {
+		// newUser.setDroits("A");
+		// } else {
+		// newUser.setDroits("O");
+		// }
 		newUser.setDroits("O");
 		newUser.setIsdeleted(false);
 		userService.addUser(newUser);
 		users.add(newUser);
 	}
-	
+
 	public void deleteUser() {
-		System.out.println("hello");
+
 		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
-		System.out.println("hello");
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		iduser = Integer.valueOf(params.get("iduser"));
-		System.out.println(iduser);
 		userService.deleteUser(iduser);
 		users = userService.getAllUsersExceptDeleted();
+
 	}
 
 }

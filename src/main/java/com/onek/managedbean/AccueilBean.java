@@ -7,12 +7,6 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 
-import javax.faces.context.FacesContext;
-
-import javax.faces.context.FacesContext;
-
-import javax.faces.context.FacesContext;
-
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
