@@ -29,11 +29,12 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.getTransaction().commit();
 		session.close();
 	}
-	
+
 	public Utilisateur getUserByLogin(String login) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where login = :login").setParameter("login", login).getSingleResult();
+		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where login = :login")
+				.setParameter("login", login).getSingleResult();
 		session.getTransaction().commit();
 		session.close();
 		return user;
@@ -70,8 +71,8 @@ public class UserDaoImpl implements UserDao, Serializable {
 	public void deleteUser(int idUser) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		
-		Utilisateur utilisateur = (Utilisateur) session.createQuery("from utilisateur where iduser = :iduser").setParameter("iduser", idUser).getSingleResult();
+		Utilisateur utilisateur = (Utilisateur) session.createQuery("from Utilisateur where iduser = :iduser")
+				.setParameter("iduser", idUser).getSingleResult();
 		utilisateur.setIsdeleted(true);
 		session.update(utilisateur);
 		session.getTransaction().commit();
@@ -91,11 +92,12 @@ public class UserDaoImpl implements UserDao, Serializable {
 	@Override
 	public List<Utilisateur> getAllUsersExceptDeleted() {
 		boolean isdeleted = false;
-		
+
 		List<Utilisateur> users = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		users = (List<Utilisateur>) session.createQuery("from Utilisateur where isdeleted = :isdeleted").setParameter("isdeleted", isdeleted).list();
+		users = (List<Utilisateur>) session.createQuery("from Utilisateur where isdeleted = :isdeleted")
+				.setParameter("isdeleted", isdeleted).list();
 		session.getTransaction().commit();
 		session.close();
 		return users;
