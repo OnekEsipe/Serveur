@@ -17,7 +17,9 @@ import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
 import com.onek.model.Evenement;
+import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
+import com.onek.service.AddJuryService;
 import com.onek.service.EvenementService;
 import com.onek.service.EventAccueilService;
 import com.onek.service.UserService;
@@ -36,6 +38,9 @@ public class EventAccueilBean implements Serializable {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private AddJuryService juryServices;
 
 
 	private final Navigation navigation = new Navigation();
@@ -57,6 +62,8 @@ public class EventAccueilBean implements Serializable {
 	private Candidat candidat;
 
 	private List<Utilisateur> utilisateurs;
+	private List<Utilisateur> utilisateursAnos;
+	
 	private Utilisateur utilisateur;
 	private List<Utilisateur> filteredutilisateurs;
 	private Utilisateur selectedutilisateur;
@@ -111,6 +118,11 @@ public class EventAccueilBean implements Serializable {
 			this.event = evenement.findById(idEvent);
 			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
+			
+			utilisateursAnos = new ArrayList<>();
+			List<Jury> jurys = juryServices.listJurysAnnonymesByEvent(idEvent);
+			jurys.forEach(jury -> utilisateursAnos.add(jury.getUtilisateur()));
+			
 			this.statut = event.getStatus();
 			this.dateStart = event.getDatestart();
 			this.dateEnd = event.getDatestop();
@@ -210,6 +222,14 @@ public class EventAccueilBean implements Serializable {
 	public void setIdEvent(int idEvent) {
 		this.idEvent = idEvent;
 	}
+	
+	public List<Utilisateur> getUtilisateursAnos() {
+		return utilisateursAnos;
+	}
+
+	public void setUtilisateursAnos(List<Utilisateur> utilisateursAnos) {
+		this.utilisateursAnos = utilisateursAnos;
+	}
 
 	public void addJuryAnonymeButton() {
 		passwordGenerator = new PasswordGenerator();
@@ -239,6 +259,11 @@ public class EventAccueilBean implements Serializable {
 			}	
 			userService.addJurysAnonymes(anonymousJurys, event);	
 			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
+			
+			//On met à jour la liste des jurys anonymes
+			anonymousJurys.forEach(jury -> utilisateursAnos.add(jury));
+			utilisateursAnos.forEach(juryAno -> System.out.println(juryAno.getNom()) );
+
 		}
 	}
 
@@ -285,9 +310,5 @@ public class EventAccueilBean implements Serializable {
 		navigation.redirect("addCandidates.xhtml?id=" + idEvent);
 	}
 
-	public void buttonExport() {
-		// to do
-		// eventAccueilservice.listJurysByEvent().
-	}
 
 }
