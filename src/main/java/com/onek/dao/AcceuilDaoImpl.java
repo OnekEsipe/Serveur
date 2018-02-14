@@ -25,9 +25,9 @@ public class AcceuilDaoImpl implements AccueilDao, Serializable {
 		
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		boolean isdeleted = false;
-		events = (List<Evenement>) session.createQuery("from Evenement where isdeleted = :isdeleted").setParameter("isdeleted", isdeleted).list();
-		//events = (List<Evenement>) session.createQuery("from Evenement order by nom").list();
+	//	boolean isdeleted = false;
+	//	events = (List<Evenement>) session.createQuery("from Evenement where isdeleted = :isdeleted").setParameter("isdeleted", isdeleted).list();
+		events = (List<Evenement>) session.createQuery("from Evenement").list();
 		session.getTransaction().commit();
 		session.close();
 		return events;
@@ -44,6 +44,18 @@ public class AcceuilDaoImpl implements AccueilDao, Serializable {
 		session.update(event);
 		session.getTransaction().commit();
 		session.close();
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Evenement> myListEvents(int iduser) {
+		List<Evenement> events = new ArrayList<>();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		boolean isdeleted = false;
+		events = (List<Evenement>) session.createQuery("from Evenement where (isdeleted = :isdeleted and iduser = :iduser)").setParameter("isdeleted", isdeleted).setParameter("iduser", iduser).list();
+		session.getTransaction().commit();
+		session.close();
+		return events;
 	}
 
 }

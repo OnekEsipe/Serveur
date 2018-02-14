@@ -32,19 +32,19 @@
 					<p:outputLabel for="motdepasseactuel" value="Mot de passe actuel:" />
 					<p:password id="motdepasseactuel" name="motdepasseactuel"
 						placeholder="Entrez votre mot de passe actuel" size="30"
-						value="#{userInfo.lastPassword}" />
+						value="#{userInfo.lastPassword}" required="true" />
 
 					<p:outputLabel for="nouveaumotdepasse"
 						value="Nouveau mot de passe:" />
 					<p:password id="nouveaumotdepasse" name="nouveaumotdepasse"
 						placeholder="Entrez votre nouveau mot de passe" size="30"
-						value="#{userInfo.newPassword}" />
+						value="#{userInfo.newPassword}" required="true"/>
 
 					<p:outputLabel for="confirmermotdepasse"
 						value="Nouveau mot de passe:" />
 					<p:password id="confirmermotdepasse" name="confirmermotdepasse"
 						placeholder="Confirmez votre nouveau mot de passe" size="30"
-						value="#{userInfo.confirmNewPassword}" />
+						value="#{userInfo.confirmNewPassword}" required="true"/>
 					<br />
 					<p:commandButton value="Valider" action="#{userInfo.modify}"
 						icon="ui-icon-check" update="msgs" ajax="false" />
