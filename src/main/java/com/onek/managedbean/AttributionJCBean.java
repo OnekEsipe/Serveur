@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
+import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
 import com.onek.service.EventAccueilService;
+import com.onek.service.JuryService;
 
 @Component("attributionjc")
 public class AttributionJCBean implements Serializable {
@@ -25,6 +27,9 @@ public class AttributionJCBean implements Serializable {
 
 	@Autowired
 	private EventAccueilService eventAccueilservice;
+	
+	@Autowired
+	private JuryService juryservice;
 
 	private int idEvent;
 
@@ -57,6 +62,23 @@ public class AttributionJCBean implements Serializable {
 			for (Candidat candidat : candidatsJurys) {
 				candidats.put(candidat.getNom() + " " + candidat.getPrenom(), candidat);
 			}
+			
+			/// Recuperation des attributions jury-candidat actuel de l'evenement
+			List<Jury> test2 = juryservice.findJuryByIdevent(idEvent);
+			for(Jury jury : test2) {
+				System.out.println(jury.getUtilisateur().getNom());
+			}
+			
+			HashMap<Jury, List<Candidat>> associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(test2, idEvent);
+			for (Entry<Jury, List<Candidat>> entry8 : associatedJurysCandidates.entrySet()) {
+				List<Candidat> testt = entry8.getValue();
+				System.out.print(entry8.getKey().getUtilisateur().getNom() + ": ");
+				for(Candidat candidatt : testt) {
+					System.out.print(candidatt.getNom() + " ");
+				}
+				System.out.println("");
+			}
+			// FIN TEST
 
 			LinkedHashMap<String, Boolean> test = new LinkedHashMap<String, Boolean>();
 			test.put("Hugo Fourcade", true);
