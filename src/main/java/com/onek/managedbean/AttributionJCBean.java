@@ -194,4 +194,7 @@ public class AttributionJCBean implements Serializable {
 		// nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true",
 		// "eventAccueil.xhtml", "eventAccueil.xhtml".contains("?") ? "&" : "?"));
 	}
+	public void attributionAutomatique() {
+		
+	}
 }

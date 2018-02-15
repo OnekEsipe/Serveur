@@ -22,7 +22,19 @@
 	<br />
 	<br />
 
-	<div>
+
+	<div class="ui-g">
+		<div class="ui-g-12 ui-md-8"></div>
+		<div class="ui-g-12 ui-md-4">
+			<h:form>
+				<p:growl id="growl" life="4000" />
+				<p:commandButton value="Atribuer automatiquement" id="withIcon"
+					icon="ui-icon-refresh"
+					actionListener="#{attributionjc.attributionAutomatique}" />
+			</h:form>
+		</div>
+	</div>
+	<div class="ui-g">
 		<h:form>
 			<table>
 				<thead>
