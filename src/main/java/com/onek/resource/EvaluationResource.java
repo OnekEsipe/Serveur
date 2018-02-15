@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.onek.model.Evaluation;
 import com.onek.model.Note;
 
@@ -59,6 +61,7 @@ public class EvaluationResource implements Serializable {
 		return idEvaluation;
 	}
 	
+	@JsonSetter("LastUpdatedDate")
 	public void setDateLastChange(String date) {
 		try {
 			lastUpdatedDate = formater.parse(date);
@@ -67,7 +70,7 @@ public class EvaluationResource implements Serializable {
 		}
 	}
 	
-	@JsonProperty("LastUpdatedDate")
+	@JsonGetter("LastUpdatedDate")
 	public String getDateLastChangeString() {
 		return formater.format(lastUpdatedDate);
 	}
@@ -80,6 +83,16 @@ public class EvaluationResource implements Serializable {
 	@JsonIgnore
 	public List<NoteResource> getNotes() {
 		return notes;
+	}
+	
+	@JsonIgnore
+	public String getComment() {
+		return comment;
+	}
+	
+	@JsonIgnore
+	public Integer getIdEvent() {
+		return idEvent;
 	}
 	
 }
