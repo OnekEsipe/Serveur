@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Evenement;
+import com.onek.model.Utilisateur;
 import com.onek.service.EvenementService;
+import com.onek.service.LoginService;
 import com.onek.utils.Navigation;
 import com.onek.utils.PasswordGenerator;
 
@@ -20,6 +22,10 @@ public class EventBean implements Serializable {
 	
 	@Autowired
 	private EvenementService evenementService;
+	
+	@Autowired
+	private LoginService loginService;
+	
 	private String name;
 	private Date date1;					//format => dd-MM-yyy
 	private Date date2;					//format => dd-MM-yyy
@@ -35,6 +41,9 @@ public class EventBean implements Serializable {
 	private Evenement event;
 	
 	public void addEvent() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		String login = (String) fc.getExternalContext().getSessionMap().get("user");
+		Utilisateur utilisateur = loginService.findUserByLogin(login);
 		event = new Evenement();
 		event.setNom(name);
 		event.setDatestart(new Date(date1.getTime()+hour1.getTime() + ecartHour));
@@ -42,10 +51,11 @@ public class EventBean implements Serializable {
 		event.setIsopened(isOpened);
 		event.setIssigned(isSigned);
 		event.setStatus(status);
+		event.setUtilisateur(utilisateur);
 		event.setIsdeleted(false);
 		evenementService.addEvenement(event);
 	}
-	
+
 	public String getLogInfo() {
 		return logInfo;
 	}
