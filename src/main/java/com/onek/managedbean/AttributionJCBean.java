@@ -27,7 +27,7 @@ public class AttributionJCBean implements Serializable {
 
 	@Autowired
 	private EventAccueilService eventAccueilservice;
-	
+
 	@Autowired
 	private JuryService juryservice;
 
@@ -36,101 +36,59 @@ public class AttributionJCBean implements Serializable {
 	private List<Utilisateur> utilisateursJurys;
 	private List<Candidat> candidatsJurys;
 
-	private Map<String, Utilisateur> jurys = new LinkedHashMap<>();
-	private Map<String, Candidat> candidats = new LinkedHashMap<>();
-	private Map<String, Map<String, Boolean>> attribJC = new LinkedHashMap<>();
+	private Map<String, Utilisateur> jurys;
+	private Map<String, Candidat> candidats;
+	private HashMap<Jury, List<Candidat>> associatedJurysCandidates;
+	private Map<String, ArrayList<String>> attributionFinal;
 
-	private Map<String, ArrayList<String>> attributionFinal = new LinkedHashMap<>();
+	private Map<String, Map<String, Boolean>> attribJC;
 
-	private String message = "";
-
-	private boolean booleanFlag = true;
+	private ArrayList<String> message;
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 
-			// Initialisation-update de la liste des candidats, des jurys et de l'attribution deja realisee
+			jurys = new LinkedHashMap<>();
+			candidats = new LinkedHashMap<>();
+			attribJC = new LinkedHashMap<>();
+			attributionFinal = new LinkedHashMap<>();
 
+			// Initialisation-update de la liste des candidats, utilisateurs, jurys et de
+			// l'attribution deja realisee
 			candidatsJurys = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateursJurys = eventAccueilservice.listJurysByEvent(idEvent);
+			List<Jury> juryList = juryservice.findJuryByIdevent(idEvent);
+			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 
-			// Remplissage des maps
+			// Remplissage des maps pour l'affichage des noms des jurys/candidats dans le
+			// jsf
 			for (Utilisateur utilisateur : utilisateursJurys) {
 				jurys.put(utilisateur.getNom() + " " + utilisateur.getPrenom(), utilisateur);
 			}
 			for (Candidat candidat : candidatsJurys) {
 				candidats.put(candidat.getNom() + " " + candidat.getPrenom(), candidat);
 			}
-			
-			/// Recuperation des attributions jury-candidat actuel de l'evenement
-			List<Jury> test2 = juryservice.findJuryByIdevent(idEvent);
-			for(Jury jury : test2) {
-				System.out.println(jury.getUtilisateur().getNom());
-			}
-			
-			HashMap<Jury, List<Candidat>> associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(test2, idEvent);
+
+			System.out.println("------------Print associations déja existantes--------------------");
 			for (Entry<Jury, List<Candidat>> entry8 : associatedJurysCandidates.entrySet()) {
 				List<Candidat> testt = entry8.getValue();
 				System.out.print(entry8.getKey().getUtilisateur().getNom() + ": ");
-				for(Candidat candidatt : testt) {
+				for (Candidat candidatt : testt) {
 					System.out.print(candidatt.getNom() + " ");
 				}
 				System.out.println("");
 			}
-			// FIN TEST
 
-			LinkedHashMap<String, Boolean> test = new LinkedHashMap<String, Boolean>();
-			test.put("Hugo Fourcade", true);
-
-			for (String jury : jurys.keySet()) {
-				if (jury.equals("Damien Duper")) {
-					attribJC.put(jury, test);
-				} else {
-					attribJC.put(jury, new LinkedHashMap<String, Boolean>());
+			for (Entry<Jury, List<Candidat>> entryAssociation : associatedJurysCandidates.entrySet()) {
+				List<Candidat> candidatesList = entryAssociation.getValue();
+				LinkedHashMap<String, Boolean> candidatesPreChecked = new LinkedHashMap<String, Boolean>();
+				for (Candidat candidatAttributed : candidatesList) {
+					candidatesPreChecked.put(candidatAttributed.getNom() + " " + candidatAttributed.getPrenom(), true);
 				}
+				attribJC.put(entryAssociation.getKey().getUtilisateur().getNom() + " " + entryAssociation.getKey().getUtilisateur().getPrenom(), candidatesPreChecked);
 			}
 		}
-	}
-
-	public boolean isBooleanFlag() {
-		return booleanFlag;
-	}
-
-	public void setBooleanFlag(boolean booleanFlag) {
-		this.booleanFlag = booleanFlag;
-	}
-
-	public Map<String, Candidat> getCandidats() {
-		return candidats;
-	}
-
-	public void setCandidats(Map<String, Candidat> candidats) {
-		this.candidats = candidats;
-	}
-
-	public Map<String, Utilisateur> getJurys() {
-		return jurys;
-	}
-
-	public void setJurys(Map<String, Utilisateur> jurys) {
-		this.jurys = jurys;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public Map<String, ArrayList<String>> getAttributionFinal() {
-		return attributionFinal;
-	}
-
-	public void setAttributionFinal(Map<String, ArrayList<String>> attributionFinal) {
-		this.attributionFinal = attributionFinal;
 	}
 
 	public int getIdEvent() {
@@ -157,6 +115,22 @@ public class AttributionJCBean implements Serializable {
 		this.candidatsJurys = candidatsJurys;
 	}
 
+	public Map<String, Utilisateur> getJurys() {
+		return jurys;
+	}
+
+	public void setJurys(Map<String, Utilisateur> jurys) {
+		this.jurys = jurys;
+	}
+
+	public Map<String, Candidat> getCandidats() {
+		return candidats;
+	}
+
+	public void setCandidats(Map<String, Candidat> candidats) {
+		this.candidats = candidats;
+	}
+
 	public Map<String, Map<String, Boolean>> getAttribJC() {
 		return attribJC;
 	}
@@ -165,16 +139,30 @@ public class AttributionJCBean implements Serializable {
 		this.attribJC = attribJC;
 	}
 
-	public void previsualitionButton() {
+	public Map<String, ArrayList<String>> getAttributionFinal() {
+		return attributionFinal;
+	}
+
+	public void setAttributionFinal(Map<String, ArrayList<String>> attributionFinal) {
+		this.attributionFinal = attributionFinal;
+	}
+
+	public ArrayList<String> getMessage() {
+		return message;
+	}
+
+	public void setMessage(ArrayList<String> message) {
+		this.message = message;
+	}
+
+	public void previsualisationButton() {
 		ArrayList<String> selectedCandidates;
 
-		// Recuperation de la map pour boucle
+		// Remplissage map en fonction checkbox selectionnees
 		for (Entry<String, Map<String, Boolean>> entry : attribJC.entrySet()) {
 			String jury = entry.getKey();
 			Map<String, Boolean> candidats = entry.getValue();
 			selectedCandidates = new ArrayList<>();
-
-			// Ajout dans attributionFinal si checkbox selectionnee
 			for (Entry<String, Boolean> entry2 : candidats.entrySet()) {
 				if (entry2.getValue() == true) {
 					selectedCandidates.add(entry2.getKey());
@@ -182,16 +170,63 @@ public class AttributionJCBean implements Serializable {
 				attributionFinal.put(jury, selectedCandidates);
 			}
 		}
-		System.out.println("--------------------PRINT ATTRIBUTIONS--------------------------");
-		for (Entry<String, ArrayList<String>> entry3 : attributionFinal.entrySet()) {
-			System.out.println("jury: " + entry3.getKey() + " ||| liste de candidats: " + entry3.getValue().toString());
-			message = message + "jury: " + entry3.getKey() + " ||| liste de candidats: " + entry3.getValue().toString()
-					+ "\n";
+
+		// Formatage de l'affichage
+		message = new ArrayList<>();
+		for (Entry<String, ArrayList<String>> attrib : attributionFinal.entrySet()) {
+			ArrayList<String> candidats = attrib.getValue();
+			StringBuilder sb = new StringBuilder();
+			for (String candidat : candidats) {
+				sb.append(candidat).append(", ");
+			}
+			sb.setLength(Math.max(sb.length() - 2, 0));
+			message.add("Jury " + attrib.getKey() + " : " + sb.toString());
+		}
+	}
+
+	public void validationButton() {
+		ArrayList<String> selectedCandidates;
+
+		// Remplissage map en fonction checkbox selectionnees
+		for (Entry<String, Map<String, Boolean>> entry : attribJC.entrySet()) {
+			String jury = entry.getKey();
+			Map<String, Boolean> candidats = entry.getValue();
+			selectedCandidates = new ArrayList<>();
+			for (Entry<String, Boolean> entry2 : candidats.entrySet()) {
+				if (entry2.getValue() == true) {
+					selectedCandidates.add(entry2.getKey());
+				}
+				attributionFinal.put(jury, selectedCandidates);
+			}
 		}
 
-		// FacesContext fc = FacesContext.getCurrentInstance();
-		// NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		// nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true",
-		// "eventAccueil.xhtml", "eventAccueil.xhtml".contains("?") ? "&" : "?"));
+		for (Entry<Jury, List<Candidat>> entry : associatedJurysCandidates.entrySet()) {
+			Jury jury = entry.getKey();
+			List<Candidat> candidatesBegin = entry.getValue();
+			ArrayList<String> candidatesEnd = attributionFinal.get(jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom());
+
+			// Creation d'un arrayList STRING à partir de candidatesBegin pour faciliter les comparaisons
+			ArrayList<String> candidatesStringBegin = new ArrayList<>();
+
+			for (Candidat candidatBegin : candidatesBegin) {
+				candidatesStringBegin.add(candidatBegin.getNom() + " " + candidatBegin.getPrenom());
+			}
+
+			for (String candidatStringBegin : candidatesStringBegin) {
+				if (candidatesEnd.contains(candidatStringBegin)) {
+					System.out.println(candidatStringBegin + " trouvé dans les 2 listes -> Attibution identique avant/aprés : pas d'action a faire sur l'evaluation");
+				} else if (!(candidatesEnd.contains(candidatStringBegin))) {
+					System.out.println(candidatStringBegin + " pas dans candidatEnd -> suppression de l'evaluation candidatBegin");
+				}
+			}
+
+			for (String candidatEnd : candidatesEnd) {
+				if (!(candidatesStringBegin.contains(candidatEnd))) {
+					System.out.println(candidatEnd + " pas dans candidatBegin -> creation evaluation candidatEnd");
+				}
+			}
+
+		}
+
 	}
 }

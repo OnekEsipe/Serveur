@@ -50,10 +50,24 @@
 			</table>
 			<br />
 			<br />
-			<p:commandButton value="Prévisualisation des attributions"
-				actionListener="#{attributionjc.previsualitionButton}" ajax="false" />
-				
-			#{attributionjc.message}
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<p:commandButton value="Prévisualisation des attributions"
+						actionListener="#{attributionjc.previsualisationButton}"
+						update="@(form)" />
+				</div>
+				<div class="ui-g-12">
+					<p:commandButton value="Valider l'attribution"
+						actionListener="#{attributionjc.validationButton}" />
+				</div>
+			</div>
+			<br />
+			<p:dataList value="#{attributionjc.message}" var="message">
+				<f:facet name="header">
+            		Attributions réalisées
+        		</f:facet>
+        			#{message}
+			</p:dataList>
 		</h:form>
 	</div>
 </h:body>
