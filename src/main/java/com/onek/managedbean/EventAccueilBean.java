@@ -1,25 +1,41 @@
 package com.onek.managedbean;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellAddress;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
+import com.onek.model.Critere;
+import com.onek.model.Descripteur;
+import com.onek.model.Evaluation;
 import com.onek.model.Evenement;
 import com.onek.model.Jury;
+import com.onek.model.Note;
 import com.onek.model.Utilisateur;
 import com.onek.service.AddJuryService;
+import com.onek.service.EvaluationService;
 import com.onek.service.EvenementService;
 import com.onek.service.EventAccueilService;
 import com.onek.service.UserService;
@@ -35,15 +51,18 @@ public class EventAccueilBean implements Serializable {
 
 	@Autowired
 	EvenementService evenement;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private AddJuryService juryServices;
 
+	@Autowired
+	EvaluationService evaluation;
+
 	private final Navigation navigation = new Navigation();
-	
+
 	private int idEvent;
 	private Evenement event;
 
@@ -62,11 +81,11 @@ public class EventAccueilBean implements Serializable {
 
 	private List<Utilisateur> utilisateurs;
 	private List<Utilisateur> utilisateursAnos;
-	
+
 	private Utilisateur utilisateur;
 	private List<Utilisateur> filteredutilisateurs;
 	private Utilisateur selectedutilisateur;
-	
+
 	private PasswordGenerator passwordGenerator;
 
 	public List<Utilisateur> getFilteredutilisateurs() {
@@ -123,11 +142,11 @@ public class EventAccueilBean implements Serializable {
 			this.event = evenement.findById(idEvent);
 			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
-			
+
 			utilisateursAnos = new ArrayList<>();
 			List<Jury> jurys = juryServices.listJurysAnnonymesByEvent(idEvent);
 			jurys.forEach(jury -> utilisateursAnos.add(jury.getUtilisateur()));
-			
+
 			this.statut = event.getStatus();
 			this.dateStart = event.getDatestart();
 			this.dateEnd = event.getDatestop();
@@ -227,7 +246,7 @@ public class EventAccueilBean implements Serializable {
 	public void setIdEvent(int idEvent) {
 		this.idEvent = idEvent;
 	}
-	
+
 	public List<Utilisateur> getUtilisateursAnos() {
 		return utilisateursAnos;
 	}
@@ -262,13 +281,13 @@ public class EventAccueilBean implements Serializable {
 				anonymousJury.setMail("");
 				anonymousJury.setPrenom("");
 				anonymousJurys.add(anonymousJury);
-			}	
-			userService.addJurysAnonymes(anonymousJurys, event);	
+			}
+			userService.addJurysAnonymes(anonymousJurys, event);
 			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
-			
-			//On met à jour la liste des jurys anonymes
+
+			// On met à jour la liste des jurys anonymes
 			anonymousJurys.forEach(jury -> utilisateursAnos.add(jury));
-			utilisateursAnos.forEach(juryAno -> System.out.println(juryAno.getNom()) );
+			utilisateursAnos.forEach(juryAno -> System.out.println(juryAno.getNom()));
 
 		}
 	}
@@ -278,7 +297,7 @@ public class EventAccueilBean implements Serializable {
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
 		event.setStatus(statut);
 		eventAccueilservice.editEvenement(event);
-		
+
 	}
 
 	public void supprimerCandidat() {
@@ -316,5 +335,156 @@ public class EventAccueilBean implements Serializable {
 		navigation.redirect("addCandidates.xhtml");
 	}
 
+	public void buttonResult() {
+		buildXlsx();
+	}
+	
+	// PARTIE EXPORT DE L'EVENEMENT
+
+	Map<String, Map<String, CellAddress>> mapAddress = new HashMap<>();
+	Map<Integer, String> niveaux = new HashMap<>();
+	
+	private void init() {
+		niveaux.put(0, "A");
+		niveaux.put(1, "B");
+		niveaux.put(2, "C");
+		niveaux.put(3, "D");
+		niveaux.put(4, "E");
+		niveaux.put(5, "F");
+	}
+
+	public void buildXlsx() {
+		init();
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		List<Critere> criteres = event.getCriteres();
+		List<Candidat> candidats = event.getCandidats();
+		fillParameterPage(workbook, criteres);
+		fillCandidatesPages(workbook, criteres, candidats);
+		fillResultsPage(workbook, criteres, candidats);
+		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+		    ExternalContext externalContext = facesContext.getExternalContext();
+		    externalContext.setResponseContentType("application/vnd.ms-excel");
+		    externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"Export_"+event.getNom()+".xlsx\"");
+		    workbook.write(externalContext.getResponseOutputStream());
+		    facesContext.responseComplete();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void fillResultsPage(XSSFWorkbook workbook, List<Critere> criteres, List<Candidat> candidats) {
+		int rowNum = 0;
+		int colNum = 0;
+		XSSFSheet sheet = workbook.createSheet("Résultats globaux");
+		Row row = sheet.createRow(rowNum++);
+		Cell cell = row.createCell(colNum++);
+		cell.setCellValue("Candidats");
+		for (Critere critere : criteres) {
+			cell = row.createCell(colNum++);
+			cell.setCellValue(critere.getTexte());
+		}
+		for (Candidat candidat : candidats) {
+			colNum = 0;
+			row = sheet.createRow(rowNum++);
+			cell = row.createCell(colNum++);
+			cell.setCellValue(candidat.getNom() + " " + candidat.getPrenom());
+			for (Critere critere : criteres) {
+				cell = row.createCell(colNum++);
+				cell.setCellValue(""); // ICI MAP.GET(CANDIDAT).GET(TOTALCRITERE)
+			}
+			cell = row.createCell(colNum++);
+			cell.setCellValue(""); // ICI MAP.GET(CANDIDAT).GET(TOTAL)
+		}
+	}
+
+	private void fillParameterPage(XSSFWorkbook workbook, List<Critere> criteres) {
+		int colNum = 0;
+		XSSFSheet sheet = workbook.createSheet("Parametres");
+		for (Critere critere : criteres) {
+			mapAddress.put(critere.getTexte(), new HashMap<>());
+			int rowNum = 0;
+			Row row = sheet.createRow(rowNum);
+			Cell cell = row.createCell(colNum);
+			cell.setCellValue(critere.getTexte());
+			System.out.println(cell.getStringCellValue() +" --> "+ cell.getAddress());
+			rowNum++;
+			row = sheet.createRow(rowNum);
+			cell = row.createCell(colNum);
+			cell.setCellValue("Coefficient : ");
+			System.out.println(cell.getStringCellValue() +" --> "+ cell.getAddress().formatAsString());
+			colNum++;
+			row = sheet.createRow(rowNum);
+			cell = row.createCell(colNum);
+			cell.setCellValue(critere.getCoefficient().doubleValue());
+			System.out.println(cell.getNumericCellValue() +" --> "+ cell.getAddress().formatAsString());
+			mapAddress.get(critere.getTexte()).put("coef", cell.getAddress());
+			colNum--;
+			rowNum++;
+			row = sheet.createRow(rowNum);
+			cell = row.createCell(colNum);
+			cell.setCellValue("Descripteur");
+			System.out.println(cell.getStringCellValue() +" --> "+ cell.getAddress().formatAsString());
+			colNum++;
+			row = sheet.createRow(rowNum);
+			cell = row.createCell(colNum);
+			cell.setCellValue("Poids");
+			System.out.println(cell.getStringCellValue() +" --> "+ cell.getAddress().formatAsString());
+			for (Descripteur descripteur : critere.getDescripteurs()) {
+				rowNum++;
+				colNum--;
+				row = sheet.createRow(rowNum);
+				cell = row.createCell(colNum);
+				cell.setCellValue(descripteur.getNiveau());
+				System.out.println(cell.getStringCellValue() +" --> "+ cell.getAddress().formatAsString());
+				colNum++;
+				row = sheet.createRow(rowNum);
+				cell = row.createCell(colNum);
+				cell.setCellValue(descripteur.getPoids().doubleValue());
+				System.out.println(cell.getNumericCellValue() +" --> "+ cell.getAddress().formatAsString());
+				mapAddress.get(critere.getTexte()).put(descripteur.getNiveau(), cell.getAddress());
+			}
+			colNum += 2;
+		}
+	}
+
+	private void fillCandidatesPages(XSSFWorkbook workbook, List<Critere> criteres, List<Candidat> candidats) {
+		int nbcriteres = 0;
+		int nbrows = 0;
+		for (Candidat candidat : candidats) {
+			int rowNum = 0;
+			int colNum = 0;
+			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
+			XSSFSheet sheet = workbook.createSheet(candidat.getNom() + " " + candidat.getPrenom());
+			Row row = sheet.createRow(rowNum++);
+			Cell cell = row.createCell(colNum++);
+			cell.setCellValue(candidat.getNom() + " " + candidat.getPrenom());
+			for (Critere critere : criteres) {
+				nbcriteres++;
+				cell = row.createCell(colNum++);
+				cell.setCellValue("Note " + critere.getTexte());
+				cell = row.createCell(colNum++);
+				cell.setCellValue("Commentaire " + critere.getTexte());
+			}
+			for (Evaluation eval : evaluations) {
+				nbrows++;
+				row = sheet.createRow(rowNum++);
+				colNum = 0;
+				cell = row.createCell(colNum++);
+				cell.setCellValue(
+						eval.getJury().getUtilisateur().getNom() + " " + eval.getJury().getUtilisateur().getPrenom());
+				for (Note note : eval.getNotes()) {
+					cell = row.createCell(colNum++);
+					cell.setCellValue(niveaux.get(note.getNiveau()));
+					cell = row.createCell(colNum++);
+					cell.setCellValue(note.getCommentaire());
+				}
+				cell = row.createCell(colNum++);
+				cell.setCellValue("FORMULE"); // INSERT HERE FORMULA NOTE JURY POUR LE CANDIDAT
+			}
+		}
+	}
 
 }
