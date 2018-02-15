@@ -159,11 +159,19 @@ public class EventAccueilBean implements Serializable {
 
 			this.statut = event.getStatus();
 			if (statut.equals("Brouillon")) {
-				visibleB="true";
+
+				setVisibleB("true");
+				setVisibleO("false");
+				setVisibleF("false");
 			} else if (statut.equals("Ouvert")) {
-				visibleO="true";
+				setVisibleB("false");
+				setVisibleO("true");
+				setVisibleF("false");
 			} else {
-				visibleF="true";
+				setVisibleB("false");
+				setVisibleO("false");
+				setVisibleF("true");
+
 			}
 			System.out.println();
 			this.dateStart = event.getDatestart();
