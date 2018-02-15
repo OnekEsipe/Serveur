@@ -17,7 +17,6 @@ public class CandidateServiceImpl implements CandidateService, Serializable{
 	
 	@Override
 	public List<Candidat> findCandidatesByEvent(int idEvent) {
-		
 		return candidatedao.findCandidatesByEvent(idEvent);
 	}
 

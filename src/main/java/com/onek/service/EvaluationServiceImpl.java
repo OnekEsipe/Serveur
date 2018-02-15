@@ -11,7 +11,6 @@ import com.onek.model.Evaluation;
 
 @Service
 public class EvaluationServiceImpl implements EvaluationService, Serializable {
-
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
