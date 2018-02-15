@@ -399,7 +399,6 @@ public class EventAccueilBean implements Serializable {
 	}
 	
 	// PARTIE EXPORT DE L'EVENEMENT
-
 	Map<String, Map<String, CellAddress>> mapAddress = new HashMap<>();
 	Map<Integer, String> niveaux = new HashMap<>();
 	

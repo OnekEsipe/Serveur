@@ -9,4 +9,5 @@ public interface EvaluationDao {
 	void update(Evaluation evaluation);
 	List<Evaluation> findByIdCandidate(Integer idCandidat);
 
+
 }
