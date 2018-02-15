@@ -214,8 +214,8 @@ public class AttributionJCBean implements Serializable {
 					System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom() + " trouvé dans les 2 listes -> Attibution identique avant/aprés : pas d'action a faire sur l'evaluation");
 				} else if (!(candidatesEnd.contains(candidatBegin.getNom() + " " + candidatBegin.getPrenom()))) {
 					System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom() + " pas dans candidatEnd -> suppression de l'evaluation candidatBegin");
-					System.out.println("ID jury a suppr de pour l'eval: " + jury.getIdjury() + "idCandid: " + candidatBegin.getIdcandidat());
 					evaluationService.deleteEvaluation(jury.getIdjury(), candidatBegin.getIdcandidat());
+					// Mettre le boolean de attribJC à false
 					
 				}
 			}
@@ -229,6 +229,9 @@ public class AttributionJCBean implements Serializable {
 			for (String candidatEnd : candidatesEnd) {
 				if (!(candidatesStringBegin.contains(candidatEnd))) {
 					System.out.println(candidatEnd + " pas dans candidatBegin -> creation evaluation candidatEnd");
+					String[] splitNameCandidatEnd = candidatEnd.split(" ");
+					evaluationService.saveEvaluation(splitNameCandidatEnd[0], splitNameCandidatEnd[1], idEvent, jury);
+					// Mettre le boolean de attribJC à true
 				}
 			}
 		}
