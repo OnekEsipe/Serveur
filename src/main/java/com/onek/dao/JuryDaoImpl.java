@@ -1,7 +1,10 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -9,11 +12,14 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.onek.model.Candidat;
 import com.onek.model.Critere;
 import com.onek.model.Evaluation;
 import com.onek.model.Jury;
 import com.onek.model.Note;
 import com.onek.model.Utilisateur;
+import com.onek.resource.CandidatResource;
+import com.onek.resource.JuryResource;
 
 @Repository
 public class JuryDaoImpl implements JuryDao, Serializable {
@@ -87,6 +93,40 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		session.getTransaction().commit();
 		session.close();	
 		return jurys;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Jury> findJuryByIdevent(int idevent) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		List<Jury> jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent").setParameter("idevent", idevent) .list();
+		for (Jury jury : jurys) {
+			Hibernate.initialize(jury.getEvaluations());
+		}
+		session.getTransaction().commit();
+		session.close();	
+		return jurys;
+	}
+	
+	/* associated jurys and candidates for an event */
+	@Override
+	public HashMap<Jury, List<Candidat>> associatedJurysCandidatesByEvent(List<Jury> jurys, int idevent) {
+		HashMap<Jury, List<Candidat>> map = new HashMap<>();		
+		for(Jury jury : jurys) {			
+			if (!map.containsKey(jury)) {
+				map.put(jury, new ArrayList<>());
+			}			
+			List<Evaluation> evaluations = jury.getEvaluations();
+			for (Evaluation evaluation : evaluations) {
+				List<Candidat> candidates = map.get(jury);
+				if(evaluation.getCandidat().getEvenement().getIdevent() == idevent) {
+					candidates.add(evaluation.getCandidat());
+				}
+				map.put(jury, candidates);
+			}			
+		}
+		return map;
 	}
 
 }
