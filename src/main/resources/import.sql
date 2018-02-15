@@ -160,6 +160,8 @@ INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, 
 INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 17, 14);
 INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 16, 14);
 INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 18, 14);
+INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 2, 3);
+INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 1, 3);
 
 --
 -- TOC entry 2889 (class 0 OID 17427)

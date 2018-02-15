@@ -38,4 +38,13 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		session.close();
 	}
 
+	@Override
+	public void deleteEvaluation(int idJury, int idCandidat) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Evaluation evaluationToDelete = (Evaluation) session.createQuery("FROM Evaluation WHERE idjuryeval = :idJury AND idcandidat = :idCandidat").setParameter("idJury", idJury).setParameter("idCandidat", idCandidat).getSingleResult();
+		session.delete(evaluationToDelete);
+		session.getTransaction().commit();
+		session.close();
+	}
 }
