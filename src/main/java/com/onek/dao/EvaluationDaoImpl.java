@@ -2,6 +2,7 @@ package com.onek.dao;
 
 import java.io.Serializable;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		session.beginTransaction();
 		Evaluation evaluation = (Evaluation) session.createQuery("FROM Evaluation WHERE idevaluation = :id")
 				.setParameter("id", id).getSingleResult();
+		Hibernate.initialize(evaluation.getNotes());
 		session.getTransaction().commit();
 		session.close();
 		return evaluation;

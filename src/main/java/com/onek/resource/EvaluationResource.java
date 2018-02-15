@@ -82,4 +82,9 @@ public class EvaluationResource implements Serializable {
 		return notes;
 	}
 	
+	@JsonIgnore
+	public String getComment() {
+		return comment;
+	}
+	
 }

@@ -20,6 +20,7 @@ import com.onek.resource.CreateJuryResource;
 import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.LoginResource;
+import com.onek.resource.NoteResource;
 import com.onek.service.ApplicationService;
 import com.onek.service.UserService;
 
@@ -63,7 +64,12 @@ public class ApplicationController {
 	
 	/* import evaluation */
 	@RequestMapping(value = "/evaluation", method = RequestMethod.POST)
-	public ResponseEntity<?> evaluation(@RequestBody EvaluationResource evaluation) {		
+	public ResponseEntity<?> evaluation(@RequestBody EvaluationResource evaluation) {
+		for(NoteResource noteResource : evaluation.getNotes()) {
+			if (noteResource.getSelectedLevel().isEmpty()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			}
+		}		
 		evaluation = applicationService.importEvaluation(evaluation);		
 		return new ResponseEntity<EvaluationResource>(evaluation, HttpStatus.OK);
 	}

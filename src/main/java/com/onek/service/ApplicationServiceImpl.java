@@ -177,7 +177,80 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 
 	@Override
 	public EvaluationResource importEvaluation(EvaluationResource evaluationResource) {
+		Evaluation evaluation = evaluationDao.findById(evaluationResource.getIdEvaluation());
+		Evenement event = eventDao.findById(evaluation.getIdevaluation());
+		// check if event if opened
+		if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
+			return null;
+		}		
+		// check last update date for evaluation
+		if (evaluationResource.getDateLastChange().getTime() < evaluation.getDatedernieremodif().getTime()) {
+			return null;
+		}
+		if (evaluationResource.getDateLastChange().getTime() > evaluation.getDatedernieremodif().getTime() && 
+				evaluationResource.getDateLastChange().getTime() < event.getDatestop().getTime()) {
+			
+		}	
+		evaluation.setCommentaire(evaluationResource.getComment());
+		//evaluation.setSignature(evaluationResource.getSignature());
 		List<NoteResource> noteResources = evaluationResource.getNotes();
+		List<Note> notesAAjouter = new ArrayList<>();
+		List<Note> notesBDD = evaluation.getNotes();
+		// change type mark
+		for(NoteResource noteResource : noteResources)
+		{
+			Note note = noteResource.createNote();
+			note.setEvaluation(evaluation);
+			note.setCritere(critereDao.findById(noteResource.getIdCriteria()));
+			notesAAjouter.add(noteResource.createNote());			
+		}
+		// add or update mark
+		for(Note newNote : notesAAjouter) {
+			boolean noteIsNotFound = true;			
+			for(Note noteBDD : notesBDD) {
+				// update
+				if (noteBDD.getCritere().getIdcritere() == newNote.getCritere().getIdcritere()) {
+					noteDao.update(newNote);
+					noteIsNotFound = false;
+					break;
+				}				
+			}	
+			if (noteIsNotFound) {
+				noteDao.addNote(newNote);
+			}
+		}
+		
+		return evaluationResource;
+		
+		/*for(Note note : evaluation.getNotes()) {
+			boolean noteIsNotFound = false;
+			for(NoteResource noteResource : noteResources) {
+				// search mark if exist
+				if (note.getCritere().getIdcritere() == noteResource.getIdCriteria()) {
+					note = noteResource.createNote();
+					noteDao.update(note);
+					break;
+				}
+			}
+			// add mark
+			if (noteIsNotFound) {
+				note = 
+				noteDao.addNote(note);
+			}
+		}*/
+		
+		/*for(NoteResource noteResource : noteResources) {
+			for(Note note : evaluation.getNotes()) {
+				
+			}
+			
+			Critere critere = critereDao.findById(noteResource.getIdCriteria());
+			
+		}
+		
+		evaluation.setNotes(notes);*/
+		
+		/*List<NoteResource> noteResources = evaluationResource.getNotes();
 		for(NoteResource noteResource : noteResources) {
 			Integer idNote = noteResource.getIdNote();								
 			Integer idEvaluation = evaluationResource.getIdEvaluation();			
@@ -201,7 +274,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 				noteDao.update(note);
 			}			
 		}
-		return evaluationResource;
+		return evaluationResource;*/
 	}
 
 	@Override
