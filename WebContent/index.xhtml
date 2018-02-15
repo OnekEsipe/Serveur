@@ -21,14 +21,14 @@
 		<h:panelGrid columns="2" cellpadding="5" class="panelGrid">
 			<div class="ui-inputgroup">
 				<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-				<p:inputText placeholder="login" value="#{login.login}" />
+				<p:inputText placeholder="login" value="#{login.login}" required="true"/>
 			</div>
 
 
 			<div class="ui-inputgroup">
 				<div class="ui-inputgroup">
 					<span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
-					<p:password value="#{login.motDePasse}" placeholder="mot de passe" />
+					<p:password value="#{login.motDePasse}" placeholder="mot de passe" required="true"/>
 				</div>
 			</div>
 		</h:panelGrid>

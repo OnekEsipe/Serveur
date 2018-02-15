@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.application.ViewHandler;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
@@ -35,15 +37,15 @@ public class EventAccueilBean implements Serializable {
 
 	@Autowired
 	EvenementService evenement;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private AddJuryService juryServices;
 
 	private final Navigation navigation = new Navigation();
-	
+
 	private int idEvent;
 	private Evenement event;
 
@@ -54,6 +56,9 @@ public class EventAccueilBean implements Serializable {
 	private Date timeEnd;
 	private String message;
 	private int juryAnonyme;
+	private String visibleB = "false";
+	private String visibleO = "false";
+	private String visibleF = "false";
 
 	private List<Candidat> filteredcandidats;
 	private Candidat selectedcandidat;
@@ -62,12 +67,36 @@ public class EventAccueilBean implements Serializable {
 
 	private List<Utilisateur> utilisateurs;
 	private List<Utilisateur> utilisateursAnos;
-	
+
 	private Utilisateur utilisateur;
 	private List<Utilisateur> filteredutilisateurs;
 	private Utilisateur selectedutilisateur;
-	
+
 	private PasswordGenerator passwordGenerator;
+
+	public String getVisibleF() {
+		return visibleF;
+	}
+
+	public void setVisibleF(String visibleF) {
+		this.visibleF = visibleF;
+	}
+
+	public String getVisibleB() {
+		return visibleB;
+	}
+
+	public void setVisibleB(String visibleB) {
+		this.visibleB = visibleB;
+	}
+
+	public String getVisibleO() {
+		return visibleO;
+	}
+
+	public void setVisibleO(String visibleO) {
+		this.visibleO = visibleO;
+	}
 
 	public List<Utilisateur> getFilteredutilisateurs() {
 		return filteredutilisateurs;
@@ -123,12 +152,20 @@ public class EventAccueilBean implements Serializable {
 			this.event = evenement.findById(idEvent);
 			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
-			
+
 			utilisateursAnos = new ArrayList<>();
 			List<Jury> jurys = juryServices.listJurysAnnonymesByEvent(idEvent);
 			jurys.forEach(jury -> utilisateursAnos.add(jury.getUtilisateur()));
-			
+
 			this.statut = event.getStatus();
+			if (statut.equals("Brouillon")) {
+				visibleB="true";
+			} else if (statut.equals("Ouvert")) {
+				visibleO="true";
+			} else {
+				visibleF="true";
+			}
+			System.out.println();
 			this.dateStart = event.getDatestart();
 			this.dateEnd = event.getDatestop();
 
@@ -137,6 +174,12 @@ public class EventAccueilBean implements Serializable {
 			String sTimeEnd = dfTime.format(event.getDatestop().getTime());
 			timeStart = dfTime.parse(sTimeStart);
 			timeEnd = dfTime.parse(sTimeEnd);
+			FacesContext context = FacesContext.getCurrentInstance();
+			String viewId = context.getViewRoot().getViewId();
+			ViewHandler handler = context.getApplication().getViewHandler();
+			UIViewRoot root = handler.createView(context, viewId);
+			root.setViewId(viewId);
+			context.setViewRoot(root);
 		}
 	}
 
@@ -227,7 +270,7 @@ public class EventAccueilBean implements Serializable {
 	public void setIdEvent(int idEvent) {
 		this.idEvent = idEvent;
 	}
-	
+
 	public List<Utilisateur> getUtilisateursAnos() {
 		return utilisateursAnos;
 	}
@@ -262,13 +305,13 @@ public class EventAccueilBean implements Serializable {
 				anonymousJury.setMail("");
 				anonymousJury.setPrenom("");
 				anonymousJurys.add(anonymousJury);
-			}	
-			userService.addJurysAnonymes(anonymousJurys, event);	
+			}
+			userService.addJurysAnonymes(anonymousJurys, event);
 			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
-			
-			//On met à jour la liste des jurys anonymes
+
+			// On met à jour la liste des jurys anonymes
 			anonymousJurys.forEach(jury -> utilisateursAnos.add(jury));
-			utilisateursAnos.forEach(juryAno -> System.out.println(juryAno.getNom()) );
+			utilisateursAnos.forEach(juryAno -> System.out.println(juryAno.getNom()));
 
 		}
 	}
@@ -276,9 +319,15 @@ public class EventAccueilBean implements Serializable {
 	public void eventUpdateButton() {
 		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
-		event.setStatus(statut);
+		if (event.getStatus().equals("Brouillon")) {
+			event.setStatus(statut);
+		} else {
+			if (event.getStatus().equals("Ouvert") && statut.equals("Fermé")) {
+				event.setStatus(statut);
+			}
+		}
 		eventAccueilservice.editEvenement(event);
-		
+
 	}
 
 	public void supprimerCandidat() {
@@ -315,6 +364,5 @@ public class EventAccueilBean implements Serializable {
 	public void buttonAddCandidat() {
 		navigation.redirect("addCandidates.xhtml");
 	}
-
 
 }

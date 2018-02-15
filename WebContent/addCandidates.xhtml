@@ -18,15 +18,21 @@
 <h:body>
 	<!-- Insertion du menu -->
 	<h:outputStylesheet library="css" name="candidate.css" />
-	<ui:include src="menu.xhtml" />
+	<ui:include src="#{accueil.typeMenu}" />
 	<br />
 	<br />
 	<div class="ui-g">
 		<div>
 			<h:form enctype="multipart/form-data">
 				<p:growl id="messages" showDetail="true" />
-				<p:fileUpload value="#{candidate.file}" mode="simple" skinSimple="true" /> Format : 2 colonnes (nom;prenom)<br/>
-				<p:commandButton value="Envoyer" ajax="false" actionListener="#{candidate.importFile}" icon="ui-icon-check"/><br/>
+				<p:fileUpload id="upload" value="#{candidate.file}" mode="simple"
+					skinSimple="true" />
+				<p:tooltip for="upload" value="Format : 2 colonnes (nom;prenom)"
+					position="top" />
+				<br />
+				<p:commandButton value="Envoyer" ajax="false"
+					actionListener="#{candidate.importFile}" icon="ui-icon-check" />
+				<br />
 				<h3 id="importLog">#{candidate.importLog}</h3>
 			</h:form>
 		</div>
@@ -37,16 +43,17 @@
 
 				<p:outputLabel for="lastnameCandidat" value="Nom:" />
 				<p:inputText id="lastnameCandidat" name="lastnameCandidat"
-					placeholder="Entrer le nom" size="20" value="#{candidate.lastName}" />
+					placeholder="Entrer le nom" size="20" value="#{candidate.lastName}"
+					required="true" />
 
 
 				<p:outputLabel for="firstnameCandidat" value="Prénom" />
 				<p:inputText id="firstnameCandidat" name="firstnameCandidat"
 					placeholder="Entrer le prénom" size="20"
-					value="#{candidate.firstName}" />
+					value="#{candidate.firstName}" required="true" />
 
 				<p:commandButton value="Valider" action="#{candidate.click}"
-					icon="ui-icon-check" update="tabCandidat" ajax="false"/>
+					icon="ui-icon-check" update="tabCandidat" ajax="false" />
 			</h:panelGrid>
 
 			<div>
@@ -89,8 +96,8 @@
 					<p:column style="width:32px;text-align: center">
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
-							 actionListener="#{candidate.supprimerCandidat}" ajax="true"
-							 update ="@(form)">
+							actionListener="#{candidate.supprimerCandidat}" ajax="true"
+							update="@(form)">
 							<p:confirm header="Confirmation"
 								message="vous voulez vraiment supprimer le candidat"
 								icon="ui-icon-trash" />
