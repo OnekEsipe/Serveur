@@ -18,7 +18,7 @@
 <h:body>
 	<!-- Insertion du menu -->
 	<h:outputStylesheet library="css" name="accueil.css" />
-	<ui:include src="menu.xhtml" />
+	<ui:include src="#{accueil.typeMenu}" />
 	<br />
 	<br />
 
@@ -67,7 +67,7 @@
 					<p:outputLabel for="nouveauemail" value="Nouveau e-mail:" />
 					<p:inputText id="nouveauemail" name="nouveauemail"
 						placeholder="Entrez votre nouveau e-mail" size="30"
-						value="#{userInfo.newEmail}" />
+						value="#{userInfo.newEmail}" required="true"/>
 					<br />
 					<p:commandButton value="Valider" action="#{userInfo.modify}"
 						icon="ui-icon-check" update="msgs2" ajax="false" />
