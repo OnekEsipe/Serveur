@@ -27,7 +27,7 @@ public class AttributionJCBean implements Serializable {
 
 	@Autowired
 	private EventAccueilService eventAccueilservice;
-	
+
 	@Autowired
 	private JuryService juryservice;
 
@@ -45,12 +45,15 @@ public class AttributionJCBean implements Serializable {
 	private String message = "";
 
 	private boolean booleanFlag = true;
+	private int randomX;
+	private int methode;
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 
-			// Initialisation-update de la liste des candidats, des jurys et de l'attribution deja realisee
+			// Initialisation-update de la liste des candidats, des jurys et de
+			// l'attribution deja realisee
 
 			candidatsJurys = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateursJurys = eventAccueilservice.listJurysByEvent(idEvent);
@@ -62,18 +65,19 @@ public class AttributionJCBean implements Serializable {
 			for (Candidat candidat : candidatsJurys) {
 				candidats.put(candidat.getNom() + " " + candidat.getPrenom(), candidat);
 			}
-			
+
 			/// Recuperation des attributions jury-candidat actuel de l'evenement
 			List<Jury> test2 = juryservice.findJuryByIdevent(idEvent);
-			for(Jury jury : test2) {
+			for (Jury jury : test2) {
 				System.out.println(jury.getUtilisateur().getNom());
 			}
-			
-			HashMap<Jury, List<Candidat>> associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(test2, idEvent);
+
+			HashMap<Jury, List<Candidat>> associatedJurysCandidates = juryservice
+					.associatedJurysCandidatesByEvent(test2, idEvent);
 			for (Entry<Jury, List<Candidat>> entry8 : associatedJurysCandidates.entrySet()) {
 				List<Candidat> testt = entry8.getValue();
 				System.out.print(entry8.getKey().getUtilisateur().getNom() + ": ");
-				for(Candidat candidatt : testt) {
+				for (Candidat candidatt : testt) {
 					System.out.print(candidatt.getNom() + " ");
 				}
 				System.out.println("");
@@ -91,6 +95,22 @@ public class AttributionJCBean implements Serializable {
 				}
 			}
 		}
+	}
+
+	public int getMethode() {
+		return methode;
+	}
+
+	public void setMethode(int methode) {
+		this.methode = methode;
+	}
+
+	public int getRandomX() {
+		return randomX;
+	}
+
+	public void setRandomX(int randomX) {
+		this.randomX = randomX;
 	}
 
 	public boolean isBooleanFlag() {
@@ -194,7 +214,9 @@ public class AttributionJCBean implements Serializable {
 		// nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true",
 		// "eventAccueil.xhtml", "eventAccueil.xhtml".contains("?") ? "&" : "?"));
 	}
+
 	public void attributionAutomatique() {
-		
+		System.out.println(methode);
+		System.out.println(randomX);
 	}
 }
