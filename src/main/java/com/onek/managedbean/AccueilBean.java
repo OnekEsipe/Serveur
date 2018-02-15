@@ -54,7 +54,6 @@ public class AccueilBean implements Serializable {
 	public void refresh() {
 		events = accueilservice.listEvents();
 		for (Evenement evenement : events) {
-
 			if (evenement.getStatus().equals("Ouvert") && (evenement.getDatestart().compareTo(new Date()) < 0)) {
 				evenement.setStatus("Démarré");
 			}
