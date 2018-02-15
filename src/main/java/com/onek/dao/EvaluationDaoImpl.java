@@ -28,5 +28,14 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		session.close();
 		return evaluation;
 	}
+	
+	@Override
+	public void update(Evaluation evaluation) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(evaluation);
+		session.getTransaction().commit();
+		session.close();
+	}
 
 }

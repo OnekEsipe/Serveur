@@ -40,9 +40,9 @@ public class ApplicationController {
 		try {			
 			applicationService.createJury(createJuryResource);		
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {			
-			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		} catch(IllegalStateException e) {
-			return new ResponseEntity<String>(HttpStatus.CONFLICT);
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
@@ -66,12 +66,14 @@ public class ApplicationController {
 	@RequestMapping(value = "/evaluation", method = RequestMethod.POST)
 	public ResponseEntity<?> evaluation(@RequestBody EvaluationResource evaluation) {
 		for(NoteResource noteResource : evaluation.getNotes()) {
-			if (noteResource.getSelectedLevel().isEmpty()) {
+			if (noteResource.getSelectedLevel().length() != 1) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 			}
-		}		
-		evaluation = applicationService.importEvaluation(evaluation);		
-		return new ResponseEntity<EvaluationResource>(evaluation, HttpStatus.OK);
+		}
+		if (!applicationService.importEvaluation(evaluation)) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();	
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	/* event export */
@@ -79,7 +81,7 @@ public class ApplicationController {
 	public ResponseEntity<?> export(@PathVariable String idEvent, @PathVariable String login) {			
 		Optional<EvenementResource> event = applicationService.export(idEvent, login);		
 		if (!event.isPresent()) {
-			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}			
 		return new ResponseEntity<EvenementResource>(event.get(), HttpStatus.OK);
 	}	

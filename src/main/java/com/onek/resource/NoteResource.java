@@ -61,12 +61,12 @@ public class NoteResource implements Serializable {
 		return idCriteria;
 	}
 	
-	@JsonProperty("Date")
+	@JsonGetter("LastModification")
 	public String getDateString() {
 		return formater.format(date);
 	}
 	
-	@JsonProperty("Date")
+	@JsonSetter("LastModification")
 	public void setDate(String dateString) {
 		try {
 			date = formater.parse(dateString);
