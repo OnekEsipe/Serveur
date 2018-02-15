@@ -1,7 +1,7 @@
 package com.onek.managedbean;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -20,11 +20,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellAddress;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder.BorderSide;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -460,6 +462,7 @@ public class EventAccueilBean implements Serializable {
 	private void fillParameterPage(XSSFWorkbook workbook, List<Critere> criteres) {
 		int colNum = 0;
 		XSSFSheet sheet = workbook.createSheet("Parametres");
+		XSSFCellStyle cellStyle = workbook.createCellStyle();
 		for (Critere critere : criteres) {
 			mapAddress.put(critere.getTexte(), new HashMap<>());
 			int rowNum = 0;
@@ -539,7 +542,7 @@ public class EventAccueilBean implements Serializable {
 					cell.setCellValue(note.getCommentaire());
 				}
 				cell = row.createCell(colNum++);
-				cell.setCellValue("FORMULE"); // INSERT HERE FORMULA NOTE JURY POUR LE CANDIDAT
+				cell.setCellValue(""); // INSERT HERE FORMULA NOTE JURY POUR LE CANDIDAT
 			}
 		}
 	}
