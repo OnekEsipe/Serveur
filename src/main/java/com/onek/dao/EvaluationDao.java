@@ -6,4 +6,6 @@ public interface EvaluationDao {
 
 	Evaluation findById(Integer id);
 
+	void deleteEvaluation(int idJury, int idCandidat);
+
 }

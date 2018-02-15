@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import com.onek.model.Candidat;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
+import com.onek.service.EvaluationService;
 import com.onek.service.EventAccueilService;
 import com.onek.service.JuryService;
 
@@ -30,6 +31,9 @@ public class AttributionJCBean implements Serializable {
 
 	@Autowired
 	private JuryService juryservice;
+	
+	@Autowired
+	private EvaluationService evaluationService;
 
 	private int idEvent;
 
@@ -205,28 +209,28 @@ public class AttributionJCBean implements Serializable {
 			List<Candidat> candidatesBegin = entry.getValue();
 			ArrayList<String> candidatesEnd = attributionFinal.get(jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom());
 
-			// Creation d'un arrayList STRING à partir de candidatesBegin pour faciliter les comparaisons
-			ArrayList<String> candidatesStringBegin = new ArrayList<>();
-
 			for (Candidat candidatBegin : candidatesBegin) {
-				candidatesStringBegin.add(candidatBegin.getNom() + " " + candidatBegin.getPrenom());
-			}
-
-			for (String candidatStringBegin : candidatesStringBegin) {
-				if (candidatesEnd.contains(candidatStringBegin)) {
-					System.out.println(candidatStringBegin + " trouvé dans les 2 listes -> Attibution identique avant/aprés : pas d'action a faire sur l'evaluation");
-				} else if (!(candidatesEnd.contains(candidatStringBegin))) {
-					System.out.println(candidatStringBegin + " pas dans candidatEnd -> suppression de l'evaluation candidatBegin");
+				if (candidatesEnd.contains(candidatBegin.getNom() + " " + candidatBegin.getPrenom())) {
+					System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom() + " trouvé dans les 2 listes -> Attibution identique avant/aprés : pas d'action a faire sur l'evaluation");
+				} else if (!(candidatesEnd.contains(candidatBegin.getNom() + " " + candidatBegin.getPrenom()))) {
+					System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom() + " pas dans candidatEnd -> suppression de l'evaluation candidatBegin");
+					System.out.println("ID jury a suppr de pour l'eval: " + jury.getIdjury() + "idCandid: " + candidatBegin.getIdcandidat());
+					evaluationService.deleteEvaluation(jury.getIdjury(), candidatBegin.getIdcandidat());
+					
 				}
 			}
 
+			// Creation d'un arrayList STRING à partir de candidatesBegin pour pouvoir comparer begin et end
+			ArrayList<String> candidatesStringBegin = new ArrayList<>();
+			for (Candidat candidatBegin : candidatesBegin) {
+				candidatesStringBegin.add(candidatBegin.getNom() + " " + candidatBegin.getPrenom());
+			}
+			
 			for (String candidatEnd : candidatesEnd) {
 				if (!(candidatesStringBegin.contains(candidatEnd))) {
 					System.out.println(candidatEnd + " pas dans candidatBegin -> creation evaluation candidatEnd");
 				}
 			}
-
 		}
-
 	}
 }
