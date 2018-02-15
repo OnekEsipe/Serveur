@@ -1,18 +1,25 @@
 package com.onek.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.application.ViewHandler;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Evenement;
+import com.onek.model.Utilisateur;
 import com.onek.service.AccueilService;
+import com.onek.service.UserService;
+import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Navigation;
 
 @Component("accueil")
@@ -21,6 +28,9 @@ public class AccueilBean implements Serializable {
 
 	@Autowired
 	private AccueilService accueilservice;
+	
+	@Autowired
+	private UserService userService;
 
 	private final Navigation navigation = new Navigation();
 
@@ -29,12 +39,47 @@ public class AccueilBean implements Serializable {
 	private List<Evenement> filteredevents;
 	private Evenement selectedevent;
 
+	private Utilisateur user;
+	private String login;
+	
+	private String visible;
+
 	private String nom;
 	private String status;
 	private Date datestart;
 	private Date datestop;
 	private int idevent;
-
+	private String typeMenu;
+	
+	public void before(ComponentSystemEvent e) {
+		visible = "false";
+		if (!FacesContext.getCurrentInstance().isPostback()) {
+		 login =  (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+			user = userService.getUserByLogin(login);
+			if(user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
+				typeMenu = "menu.xhtml";
+				setVisible("true");
+			}else {
+				typeMenu = "menuorg.xhtml";
+			}
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			String viewId = context.getViewRoot().getViewId();
+			 ViewHandler handler = context.getApplication().getViewHandler();
+			UIViewRoot root = handler.createView(context, viewId);
+			root.setViewId(viewId);
+			context.setViewRoot(root);
+			System.out.println("----------------------------------\n"+visible);
+			/*
+			try {
+				fc.redirect(fc.getRequestContextPath()+"/accueil.xhtml");
+			} catch (IOException e1) {
+				return;
+			}*/
+		}
+		
+	}
+  
 	public int getIdevent() {
 		return idevent;
 	}
@@ -60,6 +105,14 @@ public class AccueilBean implements Serializable {
 			if (evenement.getStatus().equals("Démarré") && (evenement.getDatestop().compareTo(new Date()) < 0)) {
 				evenement.setStatus("Stoppé");
 			}
+		}
+		
+		if(user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
+			events = accueilservice.listEvents();
+		}else if(user.getDroits().equals(DroitsUtilisateur.ORGANISATEUR.toString())) {
+			events = accueilservice.myListEvents(user.getIduser());
+		}else {
+			events = new ArrayList<>();
 		}
 	}
 
@@ -119,14 +172,38 @@ public class AccueilBean implements Serializable {
 		this.selectedevent = selectedevent;
 	}
 
+	public Utilisateur getUser() {
+		return user;
+	}
+
+	public void setUser(Utilisateur user) {
+		this.user = user;
+	}
+
+	public String getTypeMenu() {
+		return typeMenu;
+	}
+
+	public void setTypeMenu(String typeMenu) {
+		this.typeMenu = typeMenu;
+	}
+	
+
+	public String getVisible() {
+		return visible;
+	}
+
+	public void setVisible(String visible) {
+		this.visible = visible;
+	}
+
 	public void supprimerEvent() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		idevent = Integer.valueOf(params.get("idevent"));
-		System.out.println(idevent);
 		accueilservice.supprimerEvent(idevent);
 		events = accueilservice.listEvents();
-
+		refresh();
 	}
 
 	public void onRowSelect(SelectEvent event) {
