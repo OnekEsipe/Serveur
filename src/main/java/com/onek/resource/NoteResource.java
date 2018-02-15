@@ -34,6 +34,9 @@ public class NoteResource implements Serializable {
 	private List<DescripteurResource> descriptors = new ArrayList<>();
 	
 	@JsonIgnore
+	private DescripteurResource selectedDescriptor;
+	
+	@JsonIgnore
 	private Integer level;
 	
 	@JsonIgnore
@@ -49,11 +52,15 @@ public class NoteResource implements Serializable {
 		text = note.getCritere().getTexte();
 		category = note.getCritere().getCategorie();
 		comment = note.getCommentaire();
-		for(Descripteur descripteur : note.getCritere().getDescripteurs()) {
-			descriptors.add(new DescripteurResource(descripteur));
-		}
 		level = note.getNiveau();
 		date = note.getDate();
+		for(Descripteur descripteur : note.getCritere().getDescripteurs()) {
+			DescripteurResource descripteurResource = new DescripteurResource(descripteur);
+			descriptors.add(descripteurResource);
+			if (descripteur.getNiveau().equals(String.valueOf((char) (level + 65)))) {
+				selectedDescriptor = descripteurResource;
+			}
+		}				
 	}
 	
 	@JsonIgnore
@@ -94,5 +101,10 @@ public class NoteResource implements Serializable {
 	public String getSelectedLevel() {
 		char levelChar = (char) (level + 65);
 		return String.valueOf(levelChar);
+	}
+	
+	@JsonGetter("SelectedDescriptor")
+	public DescripteurResource getSelectedDescriptor() {
+		return selectedDescriptor;
 	}
 }
