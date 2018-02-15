@@ -13,5 +13,6 @@ public interface UserDao {
 	public List<Utilisateur> getAllUsersExceptDeleted();
 	public void deleteUser(int idUser) ;
 	public void addUser(Utilisateur user);
+	public boolean mailExist(String mail);
 
 }

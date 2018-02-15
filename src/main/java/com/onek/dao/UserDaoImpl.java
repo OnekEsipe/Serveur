@@ -102,5 +102,16 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.close();
 		return users;
 	}
+	
+	@Override
+	public boolean mailExist(String mail) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		long result = (Long) session.createQuery("SELECT COUNT(e) from Utilisateur e WHERE e.mail = :mail")
+				.setParameter("mail", mail).getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return result == 1;		
+	}
 
 }

@@ -118,6 +118,12 @@
 			<artifactId>poi</artifactId>
 			<version>3.17</version>
 		</dependency>
+		<!-- Mail -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context</artifactId>
+		    <version>4.3.14.RELEASE</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

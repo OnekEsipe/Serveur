@@ -20,7 +20,9 @@ import com.onek.resource.CreateJuryResource;
 import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.LoginResource;
+import com.onek.resource.PasswordResetResource;
 import com.onek.service.ApplicationService;
+import com.onek.service.PasswordService;
 import com.onek.service.UserService;
 
 @RestController
@@ -32,6 +34,9 @@ public class ApplicationController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PasswordService passwordService;
 
 	/* Create a new jury from app */
 	@RequestMapping(value = "/createjury", method = RequestMethod.POST)
@@ -84,6 +89,19 @@ public class ApplicationController {
 		if (!applicationService.subscribe(eventCode)) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
-		return  ResponseEntity.status(HttpStatus.OK).build();
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+	
+	/* password forget */
+	@RequestMapping(value = "/password/reset", method = RequestMethod.POST)
+	public ResponseEntity<?> passwordReset(@RequestBody PasswordResetResource passwordReset) {
+		String mail = passwordReset.getMail();
+		if (mail == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}		
+		if (!passwordService.reset(mail)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 }
