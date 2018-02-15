@@ -1,6 +1,5 @@
 package com.onek.managedbean;
 
-import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
@@ -10,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,14 +19,16 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder.BorderSide;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -397,11 +399,11 @@ public class EventAccueilBean implements Serializable {
 	public void buttonResult() {
 		buildXlsx();
 	}
-	
+
 	// PARTIE EXPORT DE L'EVENEMENT
-	Map<String, Map<String, CellAddress>> mapAddress = new HashMap<>();
+	Map<String, Map<String, CellAddress>> mapParam = new HashMap<>();
 	Map<Integer, String> niveaux = new HashMap<>();
-	
+
 	private void init() {
 		niveaux.put(0, "A");
 		niveaux.put(1, "B");
@@ -419,13 +421,16 @@ public class EventAccueilBean implements Serializable {
 		fillParameterPage(workbook, criteres);
 		fillCandidatesPages(workbook, criteres, candidats);
 		fillResultsPage(workbook, criteres, candidats);
+		autoSizeColumns(workbook);
+		XSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
 		try {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-		    ExternalContext externalContext = facesContext.getExternalContext();
-		    externalContext.setResponseContentType("application/vnd.ms-excel");
-		    externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"Export_"+event.getNom()+".xlsx\"");
-		    workbook.write(externalContext.getResponseOutputStream());
-		    facesContext.responseComplete();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			externalContext.setResponseContentType("application/vnd.ms-excel");
+			externalContext.setResponseHeader("Content-Disposition",
+					"attachment; filename=\"Export_" + event.getNom() + ".xlsx\"");
+			workbook.write(externalContext.getResponseOutputStream());
+			facesContext.responseComplete();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -451,6 +456,7 @@ public class EventAccueilBean implements Serializable {
 			cell.setCellValue(candidat.getNom() + " " + candidat.getPrenom());
 			for (Critere critere : criteres) {
 				cell = row.createCell(colNum++);
+				// cell.setCellFormula("='"+candidat.getNom()+" "+candidat.getPrenom()+"'!");
 				cell.setCellValue(""); // ICI MAP.GET(CANDIDAT).GET(TOTALCRITERE)
 			}
 			cell = row.createCell(colNum++);
@@ -460,52 +466,67 @@ public class EventAccueilBean implements Serializable {
 
 	private void fillParameterPage(XSSFWorkbook workbook, List<Critere> criteres) {
 		int colNum = 0;
+		int rowNum = 0;
 		XSSFSheet sheet = workbook.createSheet("Parametres");
-		XSSFCellStyle cellStyle = workbook.createCellStyle();
+		XSSFCellStyle style = workbook.createCellStyle();
+		style.setBorderLeft(BorderStyle.THIN);
+		style.setBorderRight(BorderStyle.THIN);
+		style.setBorderBottom(BorderStyle.THIN);
+		style.setBorderTop(BorderStyle.THIN);
+		XSSFCellStyle style2 = workbook.createCellStyle();
+		style2.setBorderLeft(BorderStyle.THIN);
+		style2.setBorderRight(BorderStyle.THIN);
+		style2.setBorderBottom(BorderStyle.THIN);
+		style2.setBorderTop(BorderStyle.THIN);
+		style2.setAlignment(HorizontalAlignment.CENTER);
 		for (Critere critere : criteres) {
-			mapAddress.put(critere.getTexte(), new HashMap<>());
-			int rowNum = 0;
+			mapParam.put(critere.getTexte(), new HashMap<>());
 			Row row = sheet.createRow(rowNum);
 			Cell cell = row.createCell(colNum);
 			cell.setCellValue(critere.getTexte());
-			System.out.println(cell.getStringCellValue() +" --> "+ cell.getAddress());
+			cell.setCellStyle(style2);
+			System.out.println(cell.getStringCellValue() + " --> " + cell.getAddress());
 			rowNum++;
 			row = sheet.createRow(rowNum);
 			cell = row.createCell(colNum);
 			cell.setCellValue("Coefficient : ");
-			System.out.println(cell.getStringCellValue() +" --> "+ cell.getAddress().formatAsString());
+			cell.setCellStyle(style);
+			System.out.println(cell.getStringCellValue() + " --> " + cell.getAddress().formatAsString());
 			colNum++;
-			row = sheet.createRow(rowNum);
 			cell = row.createCell(colNum);
 			cell.setCellValue(critere.getCoefficient().doubleValue());
-			System.out.println(cell.getNumericCellValue() +" --> "+ cell.getAddress().formatAsString());
-			mapAddress.get(critere.getTexte()).put("coef", cell.getAddress());
+			cell.setCellStyle(style);
+			System.out.println(cell.getNumericCellValue() + " --> " + cell.getAddress().formatAsString());
+			mapParam.get(critere.getTexte()).put("coef", cell.getAddress());
 			colNum--;
 			rowNum++;
 			row = sheet.createRow(rowNum);
 			cell = row.createCell(colNum);
 			cell.setCellValue("Descripteur");
-			System.out.println(cell.getStringCellValue() +" --> "+ cell.getAddress().formatAsString());
+			cell.setCellStyle(style2);
+			System.out.println(cell.getStringCellValue() + " --> " + cell.getAddress().formatAsString());
 			colNum++;
-			row = sheet.createRow(rowNum);
 			cell = row.createCell(colNum);
 			cell.setCellValue("Poids");
-			System.out.println(cell.getStringCellValue() +" --> "+ cell.getAddress().formatAsString());
+			cell.setCellStyle(style2);
+			System.out.println(cell.getStringCellValue() + " --> " + cell.getAddress().formatAsString());
 			for (Descripteur descripteur : critere.getDescripteurs()) {
 				rowNum++;
 				colNum--;
 				row = sheet.createRow(rowNum);
 				cell = row.createCell(colNum);
 				cell.setCellValue(descripteur.getNiveau());
-				System.out.println(cell.getStringCellValue() +" --> "+ cell.getAddress().formatAsString());
+				cell.setCellStyle(style);
+				System.out.println(cell.getStringCellValue() + " --> " + cell.getAddress().formatAsString());
 				colNum++;
-				row = sheet.createRow(rowNum);
 				cell = row.createCell(colNum);
 				cell.setCellValue(descripteur.getPoids().doubleValue());
-				System.out.println(cell.getNumericCellValue() +" --> "+ cell.getAddress().formatAsString());
-				mapAddress.get(critere.getTexte()).put(descripteur.getNiveau(), cell.getAddress());
+				cell.setCellStyle(style);
+				System.out.println(cell.getNumericCellValue() + " --> " + cell.getAddress().formatAsString());
+				mapParam.get(critere.getTexte()).put(descripteur.getNiveau(), cell.getAddress());
 			}
-			colNum += 2;
+			rowNum += 2;
+			colNum = 0;
 		}
 	}
 
@@ -515,11 +536,12 @@ public class EventAccueilBean implements Serializable {
 		for (Candidat candidat : candidats) {
 			int rowNum = 0;
 			int colNum = 0;
+			Map<String, List<String>> mapResultsByCritere = new HashMap<>();
 			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
 			XSSFSheet sheet = workbook.createSheet(candidat.getNom() + " " + candidat.getPrenom());
 			Row row = sheet.createRow(rowNum++);
 			Cell cell = row.createCell(colNum++);
-			cell.setCellValue(candidat.getNom() + " " + candidat.getPrenom());
+			cell.setCellValue("Jurys");
 			for (Critere critere : criteres) {
 				nbcriteres++;
 				cell = row.createCell(colNum++);
@@ -527,6 +549,8 @@ public class EventAccueilBean implements Serializable {
 				cell = row.createCell(colNum++);
 				cell.setCellValue("Commentaire " + critere.getTexte());
 			}
+			cell = row.createCell(colNum++);
+			cell.setCellValue("Total");
 			for (Evaluation eval : evaluations) {
 				nbrows++;
 				row = sheet.createRow(rowNum++);
@@ -534,14 +558,71 @@ public class EventAccueilBean implements Serializable {
 				cell = row.createCell(colNum++);
 				cell.setCellValue(
 						eval.getJury().getUtilisateur().getNom() + " " + eval.getJury().getUtilisateur().getPrenom());
+				StringBuilder sb = new StringBuilder();
+				sb.append("SUM(");
 				for (Note note : eval.getNotes()) {
+					if (!mapResultsByCritere.containsKey(note.getCritere().getTexte())) {
+						mapResultsByCritere.put(note.getCritere().getTexte(), new ArrayList<>());
+					}
+					mapResultsByCritere.get(note.getCritere().getTexte()).add(niveaux.get(note.getNiveau()));
 					cell = row.createCell(colNum++);
 					cell.setCellValue(niveaux.get(note.getNiveau()));
+					sb.append("Parametres!" + mapParam.get(note.getCritere().getTexte()).get("coef").formatAsString()
+							+ "*Parametres!" + mapParam.get(note.getCritere().getTexte())
+									.get(niveaux.get(note.getNiveau())).formatAsString());
 					cell = row.createCell(colNum++);
 					cell.setCellValue(note.getCommentaire());
+					sb.append("+");
 				}
-				cell = row.createCell(colNum++);
-				cell.setCellValue(""); // INSERT HERE FORMULA NOTE JURY POUR LE CANDIDAT
+				if (eval.getNotes().isEmpty()) {
+					sb.setLength(0);
+				} else {
+					sb.setLength(sb.length() - 1);
+					sb.append(")");
+				}
+				cell = row.createCell(colNum);
+				cell.setCellFormula(sb.toString());
+				colNum++;
+			}
+			colNum = 0;
+			row = sheet.createRow(rowNum);
+			cell = row.createCell(colNum++);
+			cell.setCellValue("Total");
+			for (Critere critere : criteres) {
+				StringBuilder sb = new StringBuilder();
+				sb.append("AVERAGE(");
+				if (mapResultsByCritere.containsKey(critere.getTexte())) {
+					for (String niveau : mapResultsByCritere.get(critere.getTexte())) {
+						sb.append("Parametres!" + mapParam.get(critere.getTexte()).get(niveau).formatAsString())
+								.append("+");
+					}
+					sb.setLength(sb.length() - 1);
+					sb.append(")");
+					cell = row.createCell(colNum++);
+					cell.setCellFormula(sb.toString());
+					colNum++;
+				} else {
+					sb.setLength(0);
+					cell = row.createCell(colNum++);
+					cell.setCellValue("");
+					colNum++;
+				}
+			}
+		}
+	}
+
+	private void autoSizeColumns(XSSFWorkbook workbook) {
+		int numberOfSheets = workbook.getNumberOfSheets();
+		for (int i = 0; i < numberOfSheets; i++) {
+			XSSFSheet sheet = workbook.getSheetAt(i);
+			if (sheet.getPhysicalNumberOfRows() > 0) {
+				Row row = sheet.getRow(0);
+				Iterator<Cell> cellIterator = row.cellIterator();
+				while (cellIterator.hasNext()) {
+					Cell cell = cellIterator.next();
+					int columnIndex = cell.getColumnIndex();
+					sheet.autoSizeColumn(columnIndex);
+				}
 			}
 		}
 	}
