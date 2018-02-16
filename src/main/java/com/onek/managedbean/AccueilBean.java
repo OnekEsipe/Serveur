@@ -31,7 +31,7 @@ public class AccueilBean implements Serializable {
 	
 	@Autowired
 	private UserService userService;
-
+	
 	private final Navigation navigation = new Navigation();
 
 	private List<Evenement> events;
@@ -48,6 +48,7 @@ public class AccueilBean implements Serializable {
 	private String typeMenu;
 	
 	public void before(ComponentSystemEvent e) {
+
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 		 login =  (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
 			user = userService.getUserByLogin(login);
@@ -68,7 +69,7 @@ public class AccueilBean implements Serializable {
 		}
 		
 	}
-
+	
 	public int getIdevent() {
 		return idevent;
 	}
@@ -112,7 +113,7 @@ public class AccueilBean implements Serializable {
 		this.events = events;
 	}
 
-
+	
 	public List<Evenement> getFilteredevents() {
 		return filteredevents;
 	}
@@ -128,7 +129,7 @@ public class AccueilBean implements Serializable {
 	public void setSelectedevent(Evenement selectedevent) {
 		this.selectedevent = selectedevent;
 	}
-
+	
 	public Utilisateur getUser() {
 		return user;
 	}
@@ -156,20 +157,20 @@ public class AccueilBean implements Serializable {
 
 	public void supprimerEvent() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 		idevent = Integer.valueOf(params.get("idevent"));
 		accueilservice.supprimerEvent(idevent);
 		events = accueilservice.listEvents();
 		refresh();
+		
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent",
-				selectedevent.getIdevent());
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", selectedevent.getIdevent());
 		navigation.redirect("eventAccueil.xhtml");
 	}
-
+	
 	public void buttonAction() {
 		navigation.redirect("viewCreateEvent.xhtml");
-	}
+    }
 }

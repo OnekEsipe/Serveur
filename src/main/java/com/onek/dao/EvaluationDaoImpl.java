@@ -27,7 +27,7 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		session.beginTransaction();
 		Evaluation evaluation = (Evaluation) session.createQuery("FROM Evaluation WHERE idevaluation = :id")
 				.setParameter("id", id).getSingleResult();
-		Hibernate.initialize(evaluation.getNotes());
+						Hibernate.initialize(evaluation.getNotes());
 		session.getTransaction().commit();
 		session.close();
 		return evaluation;
@@ -84,5 +84,17 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		session.getTransaction().commit();
 		session.close();
 	}
-
+	@Override
+	public void saveEvaluation(Candidat candidat, Jury jury) {
+		
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			Evaluation evaluation = new Evaluation();
+			evaluation.setJury(jury);
+			evaluation.setCandidat(candidat);
+			session.save(evaluation);
+			session.getTransaction().commit();
+			session.close();
+		
+	}
 }

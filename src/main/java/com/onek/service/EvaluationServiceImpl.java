@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onek.dao.EvaluationDao;
+import com.onek.model.Candidat;
 import com.onek.model.Evaluation;
 import com.onek.model.Jury;
 
@@ -33,4 +34,8 @@ public class EvaluationServiceImpl implements EvaluationService, Serializable {
 		evaluationDao.saveEvaluation(nomCandidat, prenomCandidat, idevent, jury);
 	}
 
+	@Override
+	public void saveEvaluation(Candidat candidat, Jury jury) {
+		evaluationDao.saveEvaluation(candidat, jury);
+	}
 }

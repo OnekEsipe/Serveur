@@ -22,7 +22,27 @@
 	<br />
 	<br />
 
-	<div>
+	<h:form>
+		<div class="ui-g">
+			<div class="ui-g-6">
+				<p:outputLabel for="methode" value="Méthode:" />
+				<p:selectOneMenu id="methode" value="#{attributionjc.methode}"
+					style="width:125px">
+					<f:selectItem itemLabel="Nombre Jury/Candidat" itemValue="1" />
+					<f:selectItem itemLabel="Nombre Candidat/Jury" itemValue="2" />
+				</p:selectOneMenu>
+				<p:spinner value="#{attributionjc.randomX}" min="1" max="99"
+					size="1" />
+			</div>
+			<div class="ui-g-6">
+				<p:commandButton value="Atribuer automatiquement" id="withIcon"
+					icon="ui-icon-refresh"
+					actionListener="#{attributionjc.attributionAutomatique}" />
+			</div>
+		</div>
+	</h:form>
+
+	<div class="ui-g">
 		<h:form>
 			<table>
 				<thead>
