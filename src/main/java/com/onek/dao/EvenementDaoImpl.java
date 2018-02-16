@@ -39,12 +39,11 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 		Evenement event = (Evenement) session.createQuery("FROM Evenement WHERE idevent = :id").setParameter("id", id)
 				.getSingleResult();
         Hibernate.initialize(event.getCriteres());        
-        
+        Hibernate.initialize(event.getCandidats());
         List<Critere> criteres = event.getCriteres();
         for(Critere c : criteres) {
         	Hibernate.initialize(c.getDescripteurs());
         }    
-        
         session.getTransaction().commit();
         session.close();
         

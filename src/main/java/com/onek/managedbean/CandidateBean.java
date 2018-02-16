@@ -19,7 +19,6 @@ import com.onek.model.Candidat;
 import com.onek.model.Evenement;
 import com.onek.service.CandidateService;
 import com.onek.service.EvenementService;
-import com.onek.utils.Navigation;
 
 @Component("candidate")
 public class CandidateBean implements Serializable{
