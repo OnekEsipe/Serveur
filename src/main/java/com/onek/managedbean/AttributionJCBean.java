@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import com.onek.model.Candidat;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
+import com.onek.service.EvaluationService;
 import com.onek.service.EventAccueilService;
 import com.onek.service.JuryService;
 
@@ -32,6 +33,10 @@ public class AttributionJCBean implements Serializable {
 	@Autowired
 	private JuryService juryservice;
 
+
+	@Autowired
+	private EvaluationService evaluationservice;
+	
 	private int idEvent;
 
 	private List<Utilisateur> utilisateursJurys;
@@ -272,13 +277,14 @@ public class AttributionJCBean implements Serializable {
 			indexCandidat++;
 		}
 
-		/*for (Candidat c : attribution.keySet()) {
-			System.out.println("candidat: "+c.getNom()+" "+c.getPrenom());
-			for (Jury jury : attribution.get(c)) {
-				System.out.print(jury.getUtilisateur().getNom()+" "+jury.getUtilisateur().getPrenom() + " || ");
+		for (Candidat candidat : attribution.keySet()) {
+			//System.out.println("candidat: "+c.getNom()+" "+c.getPrenom());
+			for (Jury jury : attribution.get(candidat)) {
+				//System.out.print(jury.getUtilisateur().getNom()+" "+jury.getUtilisateur().getPrenom() + " || ");
+				evaluationservice.saveEvaluation(candidat, jury);
 			}
-			System.out.println();
-		}*/
+			//System.out.println();
+		}
 	}
 
 	public void CandidatParJury(int randomX) {
@@ -328,13 +334,14 @@ public class AttributionJCBean implements Serializable {
 			attribution.put(jurys.get(indexJury), candidatparJury);
 			indexJury++;
 		}
-		/*for (Jury j : attribution.keySet()) {
-			System.out.println("jury: "+j.getUtilisateur().getNom()+" "+j.getUtilisateur().getPrenom());
-			for (Candidat candidat : attribution.get(j)) {
-				System.out.print(candidat.getNom() +" "+candidat.getPrenom()+ " || ");
+		for (Jury jury : attribution.keySet()) {
+			//System.out.println("jury: "+j.getUtilisateur().getNom()+" "+j.getUtilisateur().getPrenom());
+			for (Candidat candidat : attribution.get(jury)) {
+				//System.out.print(candidat.getNom() +" "+candidat.getPrenom()+ " || ");
+				evaluationservice.saveEvaluation(candidat, jury);
 			}
-			System.out.println();
-		}*/
+			//System.out.println();
+		}
 
 	}
 }

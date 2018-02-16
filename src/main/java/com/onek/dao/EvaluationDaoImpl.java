@@ -31,5 +31,14 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 	@Override
 	public void saveEvaluation(Candidat candidat, Jury jury) {
 		
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			Evaluation evaluation = new Evaluation();
+			evaluation.setJury(jury);
+			evaluation.setCandidat(candidat);
+			session.save(evaluation);
+			session.getTransaction().commit();
+			session.close();
+		
 	}
 }
