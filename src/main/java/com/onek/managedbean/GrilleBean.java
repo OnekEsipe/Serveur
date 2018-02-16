@@ -1,6 +1,7 @@
 package com.onek.managedbean;
 
 import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,13 @@ public class GrilleBean {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			criteres.clear();
 			newCriteres.clear();
-			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
+			Integer idvent = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent");
+			if(idvent == null) {
+				Navigation navigation = new Navigation();
+				navigation.redirect("accueil.xhtml");
+				return;
+			}
+			setIdEvent(idvent);
 			this.event = evenement.findById(idEvent);
 			for (Critere critere : event.getCriteres()) {
 				criteres.add(critere);

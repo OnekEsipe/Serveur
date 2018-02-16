@@ -38,13 +38,18 @@ public class EventBean implements Serializable {
 	private String debug;
 
 	private Evenement event;
+	private Navigation navigation;
 	
 	
 	public void before(ComponentSystemEvent e) {
 	
 		if (!FacesContext.getCurrentInstance().isPostback()) {
-	//	 String login =  (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-			//TODO faire une redirection si login == null
+			Integer idvent = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent");
+			if(idvent == null) {
+				 navigation = new Navigation();
+				navigation.redirect("accueil.xhtml");
+				return;
+			}
 		 	emptyForm();
 		}
 		
@@ -147,7 +152,6 @@ public class EventBean implements Serializable {
 		addEvent();
 		addEvenementCode();
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", event.getIdevent());
-		Navigation navigation = new Navigation();
 		navigation.redirect("grille.xhtml");
 		
 	}
