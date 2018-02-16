@@ -49,7 +49,7 @@ public class ApplicationController {
 	
 	/* login */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<?> login(@RequestBody LoginResource login) {
+	public ResponseEntity<? extends Object> login(@RequestBody LoginResource login) {
 		try {
 			if (!userService.userExistAndCorrectPassword(login.getLogin(), login.getPassword())) {
 				return new ResponseEntity<LoginResource>(login, HttpStatus.FORBIDDEN);
@@ -64,21 +64,25 @@ public class ApplicationController {
 	
 	/* import evaluation */
 	@RequestMapping(value = "/evaluation", method = RequestMethod.POST)
-	public ResponseEntity<?> evaluation(@RequestBody EvaluationResource evaluation) {
+	public ResponseEntity<? extends Object> evaluation(@RequestBody EvaluationResource evaluation) {
 		for(NoteResource noteResource : evaluation.getNotes()) {
-			if (noteResource.getSelectedLevel().length() != 1) {
+			if (noteResource.getSelectedLevel().length() > 1) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 			}
 		}
-		if (!applicationService.importEvaluation(evaluation)) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();	
+		try {
+			if (!applicationService.importEvaluation(evaluation)) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();	
+			}
+		} catch(IllegalStateException e) {
+			return  ResponseEntity.status(HttpStatus.CONFLICT).build();	
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	/* event export */
 	@RequestMapping(value = "/events/{idEvent}/{login}/export", method = RequestMethod.GET)
-	public ResponseEntity<?> export(@PathVariable String idEvent, @PathVariable String login) {			
+	public ResponseEntity<? extends Object> export(@PathVariable String idEvent, @PathVariable String login) {			
 		Optional<EvenementResource> event = applicationService.export(idEvent, login);		
 		if (!event.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -88,7 +92,7 @@ public class ApplicationController {
 	
 	/* code event */
 	@RequestMapping(value = "/events/code", method = RequestMethod.POST)
-	public ResponseEntity<?> codeEvent(@RequestBody CodeEvenementResource eventCode) {
+	public ResponseEntity<? extends Object> codeEvent(@RequestBody CodeEvenementResource eventCode) {
 		if (!applicationService.subscribe(eventCode)) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
