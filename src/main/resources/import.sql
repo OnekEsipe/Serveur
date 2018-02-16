@@ -37,7 +37,7 @@ INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdelete
 --
 
 INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 1', '2018-02-13', '2019-02-16', 'Ouvert', 'Code1', false, true, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 2', '2017-02-16', '2017-02-17', 'Fermé', 'Code2', false, true, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 2', '2017-02-16', '2017-02-17', 'Ferme', 'Code2', false, true, 1, false);
 INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 3', '2018-02-17', '2018-03-18', 'Ouvert', 'Code3', false, true, 1, false);
 INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 4', '2018-02-17', '2018-02-18', 'Brouillon', 'Code4', false, true, 1, false);
 INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 5', '2017-02-17', '2017-02-18', 'Ouvert', 'Code 5', true, false, 1, false);
@@ -160,6 +160,8 @@ INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, 
 INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 17, 14);
 INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 16, 14);
 INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 18, 14);
+INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 2, 3);
+INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 1, 3);
 
 --
 -- TOC entry 2889 (class 0 OID 17427)
@@ -167,32 +169,32 @@ INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, 
 -- Data for Name: notes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("A", '15-02-2018', "Okay", 1, 1);
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("A", '15-02-2018', "Cool", 1, 2);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (0, '2018-02-15', 'Okay', 1, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (0, '2018-02-15', 'Cool', 1, 2);
 
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("B", '15-02-2018', "Mouais", 2, 1);
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("B", '15-02-2018', "Good", 2, 2);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (1, '2018-02-15', 'Mouais', 2, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (1, '2018-02-15', 'Good', 2, 2);
 
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("C", '15-02-2018', "Non", 3, 1);
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("A", '15-02-2018', "Bien joue", 3, 2);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Non', 3, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (0, '2018-02-15', 'Bien joue', 3, 2);
 
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("C", '15-02-2018', "Pas bon", 4, 1);
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("B", '15-02-2018', "Okay", 4, 2);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Pas bon', 4, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (1, '2018-02-15', 'Okay', 4, 2);
 
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("C", '15-02-2018', "Essaie encore", 5, 1);
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("C", '15-02-2018', "Pas ca", 5, 2);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Essaie encore', 5, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Pas ca', 5, 2);
 
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("A", '15-02-2018', "Parfait", 6, 1);
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("B", '15-02-2018', "Encore du travail", 6, 2);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (0, '2018-02-15', 'Parfait', 6, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (1, '2018-02-15', 'Encore du travail', 6, 2);
 
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("B", '15-02-2018', "Allez", 7, 1);
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("B", '15-02-2018', "Au boulot", 7, 2);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Allez', 7, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Au boulot', 7, 2);
 
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("A", '15-02-2018', "Excellent", 8, 1);
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("B", '15-02-2018', "D'accord", 8, 2);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (0, '2018-02-15', 'Excellent', 8, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (1, '2018-02-15', 'D accord', 8, 2);
 
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("A", '15-02-2018', "Oui oui", 9, 1);
-INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES ("C", '15-02-2018', "Aie", 9, 2);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (0, '2018-02-15', 'Oui oui', 9, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Aie', 9, 2);
 
 -- Completed on 2018-02-13 10:13:46
 
