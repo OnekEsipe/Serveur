@@ -12,7 +12,9 @@
 	</link>
 	<h:outputStylesheet library="css" name="createEvent.css" />
 </h:head>
-
+<f:metadata>
+	<f:event type="preRenderView" listener="#{event.before}" />
+</f:metadata>
 <h:body>
 	<!-- Insertion du menu -->
 	<ui:include src="#{accueil.typeMenu}" />

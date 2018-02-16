@@ -44,10 +44,6 @@ public class AccueilBean implements Serializable {
 	
 	private String visible;
 
-	private String nom;
-	private String status;
-	private Date datestart;
-	private Date datestop;
 	private int idevent;
 	private String typeMenu;
 	
@@ -69,17 +65,11 @@ public class AccueilBean implements Serializable {
 			UIViewRoot root = handler.createView(context, viewId);
 			root.setViewId(viewId);
 			context.setViewRoot(root);
-			System.out.println("----------------------------------\n"+visible);
-			/*
-			try {
-				fc.redirect(fc.getRequestContextPath()+"/accueil.xhtml");
-			} catch (IOException e1) {
-				return;
-			}*/
+			
 		}
 		
 	}
-  
+
 	public int getIdevent() {
 		return idevent;
 	}
@@ -124,37 +114,6 @@ public class AccueilBean implements Serializable {
 		this.events = events;
 	}
 
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public Date getDatestart() {
-		return datestart;
-	}
-
-	public void setDatestart(Date datestart) {
-		this.datestart = datestart;
-	}
-
-	public Date getDatestop() {
-		return datestop;
-	}
-
-	public void setDatestop(Date datestop) {
-		this.datestop = datestop;
-	}
 
 	public List<Evenement> getFilteredevents() {
 		return filteredevents;
