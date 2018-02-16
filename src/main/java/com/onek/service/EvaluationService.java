@@ -1,12 +1,10 @@
-package com.onek.dao;
+package com.onek.service;
 
-import com.onek.model.Evaluation;
 import com.onek.model.Jury;
 
-public interface EvaluationDao {
+public interface EvaluationService {
 
-	Evaluation findById(Integer id);
 	void deleteEvaluation(int idJury, int idCandidat);
 	void saveEvaluation(String nomCandidat, String prenomCandidat, int idevent, Jury jury);
-	void update(Evaluation evaluation);
+	
 }
