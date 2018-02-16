@@ -170,6 +170,12 @@ public class EventAccueilBean implements Serializable {
 
 	public void before(ComponentSystemEvent e) throws ParseException {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
+			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+				Navigation navigation = new Navigation();
+				navigation.redirect("accueil.xhtml");
+				return;
+			}
+			
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
@@ -195,7 +201,6 @@ public class EventAccueilBean implements Serializable {
 				setVisibleF("true");
 
 			}
-			System.out.println();
 			this.dateStart = event.getDatestart();
 			this.dateEnd = event.getDatestop();
 

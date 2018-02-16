@@ -47,7 +47,6 @@ public class GrilleBean {
 			criteres.clear();
 			newCriteres.clear();
 			
-			
 			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
 				Navigation navigation = new Navigation();
 				navigation.redirect("accueil.xhtml");
