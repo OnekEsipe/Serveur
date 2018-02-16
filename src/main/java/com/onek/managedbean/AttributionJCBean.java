@@ -69,32 +69,32 @@ public class AttributionJCBean implements Serializable {
 
 			/// Recuperation des attributions jury-candidat actuel de l'evenement
 			List<Jury> test2 = juryservice.findJuryByIdevent(idEvent);
-			for (Jury jury : test2) {
+			/*for (Jury jury : test2) {
 				System.out.println(jury.getUtilisateur().getNom());
 			}
-
+*/
 			HashMap<Jury, List<Candidat>> associatedJurysCandidates = juryservice
 					.associatedJurysCandidatesByEvent(test2, idEvent);
 			for (Entry<Jury, List<Candidat>> entry8 : associatedJurysCandidates.entrySet()) {
 				List<Candidat> testt = entry8.getValue();
-				System.out.print(entry8.getKey().getUtilisateur().getNom() + ": ");
-				for (Candidat candidatt : testt) {
+				//System.out.print(entry8.getKey().getUtilisateur().getNom() + ": ");
+				/*for (Candidat candidatt : testt) {
 					System.out.print(candidatt.getNom() + " ");
 				}
-				System.out.println("");
+				System.out.println("");*/
 			}
 			// FIN TEST
 
 			LinkedHashMap<String, Boolean> test = new LinkedHashMap<String, Boolean>();
 			test.put("Hugo Fourcade", true);
 
-			for (String jury : jurys.keySet()) {
+			/*for (String jury : jurys.keySet()) {
 				if (jury.equals("Damien Duper")) {
 					attribJC.put(jury, test);
 				} else {
 					attribJC.put(jury, new LinkedHashMap<String, Boolean>());
 				}
-			}
+			}*/
 		}
 	}
 
@@ -225,7 +225,7 @@ public class AttributionJCBean implements Serializable {
 		}
 	}
 
-	private void JuryParCandidat(int randomX2) {
+	private void JuryParCandidat(int randomX) {
 		List<Candidat> candidats;
 		List<Jury> jurys;
 		candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
@@ -247,7 +247,8 @@ public class AttributionJCBean implements Serializable {
 
 		while (indexCandidat < candidats.size()) {
 			List<Jury> juryParCandidat = new ArrayList<>();
-			for (int i = 0; i < randomX; i++) {
+			int i=0;
+			while(i<randomX) {
 
 				sizeList = alljury.get(indexJury).size();
 
@@ -258,20 +259,26 @@ public class AttributionJCBean implements Serializable {
 					sizeList = alljury.get(indexJury).size();
 				}
 				x = random.nextInt(sizeList);
-				juryParCandidat.add(alljury.get(indexJury).get(x));
-				Jury jury = alljury.get(indexJury).remove(x);
-				alljury.get(indexAttributionCandidat).add(jury);
+				Jury jury=alljury.get(indexJury).get(x);
+				if(!juryParCandidat.contains(jury)) {
+					juryParCandidat.add(jury);
+					alljury.get(indexJury).remove(x);
+					alljury.get(indexAttributionCandidat).add(jury);
+					i++;
+				}
+
 			}
 			attribution.put(candidats.get(indexCandidat), juryParCandidat);
 			indexCandidat++;
 		}
-		for (Candidat c : attribution.keySet()) {
-			System.out.println(c.getNom());
+
+		/*for (Candidat c : attribution.keySet()) {
+			System.out.println("candidat: "+c.getNom()+" "+c.getPrenom());
 			for (Jury jury : attribution.get(c)) {
-				System.out.print(jury.getUtilisateur().getNom() + " ");
+				System.out.print(jury.getUtilisateur().getNom()+" "+jury.getUtilisateur().getPrenom() + " || ");
 			}
 			System.out.println();
-		}
+		}*/
 	}
 
 	public void CandidatParJury(int randomX) {
@@ -298,8 +305,8 @@ public class AttributionJCBean implements Serializable {
 		while (indexJury < jurys.size()) {
 
 			List<Candidat> candidatparJury = new ArrayList<>();
-			for (int i = 0; i < randomX; i++) {
-
+			int i=0;
+			while(i<randomX){
 				sizeList = allcandidat.get(indexCandidat).size();
 
 				if (sizeList <= 0) {
@@ -309,21 +316,25 @@ public class AttributionJCBean implements Serializable {
 					sizeList = allcandidat.get(indexCandidat).size();
 				}
 				x = random.nextInt(sizeList);
-				candidatparJury.add(allcandidat.get(indexCandidat).get(x));
-				Candidat candidat = allcandidat.get(indexCandidat).remove(x);
-				allcandidat.get(indexAttributionCandidat).add(candidat);
-			}
+				Candidat candidat = allcandidat.get(indexCandidat).get(x);
+				if(!candidatparJury.contains(candidat)) {
+					i++;
+					candidatparJury.add(candidat);
+					allcandidat.get(indexCandidat).remove(x);
+					allcandidat.get(indexAttributionCandidat).add(candidat);
+				}		
 
+			}
 			attribution.put(jurys.get(indexJury), candidatparJury);
 			indexJury++;
 		}
-		for (Jury j : attribution.keySet()) {
-			System.out.println(j.getUtilisateur().getNom());
+		/*for (Jury j : attribution.keySet()) {
+			System.out.println("jury: "+j.getUtilisateur().getNom()+" "+j.getUtilisateur().getPrenom());
 			for (Candidat candidat : attribution.get(j)) {
-				System.out.print(candidat.getNom() + " ");
+				System.out.print(candidat.getNom() +" "+candidat.getPrenom()+ " || ");
 			}
 			System.out.println();
-		}
+		}*/
 
 	}
 }
