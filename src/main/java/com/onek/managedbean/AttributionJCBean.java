@@ -37,7 +37,14 @@ public class AttributionJCBean implements Serializable{
 	
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
-			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
+			Integer idvent = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent");
+			if(idvent == null) {
+				Navigation navigation = new Navigation();
+				navigation.redirect("accueil.xhtml");
+				return;
+			}
+			setIdEvent(idvent);
+			
 			candidats = attributionjcservice.listCandidatsByEvent(idEvent);
 		    utilisateurs = attributionjcservice.listJurysByEvent(idEvent);
 		}
