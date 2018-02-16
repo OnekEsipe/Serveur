@@ -36,6 +36,7 @@ public class AccueilBean implements Serializable {
 
 	private List<Evenement> events;
 	private Evenement evenement;
+	private String evenementChoisi;
 	private List<Evenement> filteredevents;
 	private Evenement selectedevent;
 
@@ -155,6 +156,15 @@ public class AccueilBean implements Serializable {
 		this.visible = visible;
 	}
 
+	
+	public String getEvenementChoisi() {
+		return evenementChoisi;
+	}
+
+	public void setEvenementChoisi(String evenementChoisi) {
+		this.evenementChoisi = evenementChoisi;
+	}
+
 	public void supprimerEvent() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
@@ -167,6 +177,7 @@ public class AccueilBean implements Serializable {
 
 	public void onRowSelect(SelectEvent event) {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", selectedevent.getIdevent());
+		setEvenementChoisi("Nom de l'évènement selectionné : "+selectedevent.getNom());
 		navigation.redirect("eventAccueil.xhtml");
 	}
 	
