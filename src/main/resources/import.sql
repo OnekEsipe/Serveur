@@ -37,7 +37,7 @@ INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdelete
 --
 
 INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 1', '2018-02-13', '2019-02-16', 'Ouvert', 'Code1', false, true, 1, false);
-INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 2', '2017-02-16', '2017-02-17', 'Fermé', 'Code2', false, true, 1, false);
+INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 2', '2017-02-16', '2017-02-17', 'Ferme', 'Code2', false, true, 1, false);
 INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 3', '2018-02-17', '2018-03-18', 'Ouvert', 'Code3', false, true, 1, false);
 INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 4', '2018-02-17', '2018-02-18', 'Brouillon', 'Code4', false, true, 1, false);
 INSERT INTO evenements (nom, datestart, datestop, status, code, issigned, isopened, iduser, isdeleted) VALUES ('Olympiade 5', '2017-02-17', '2017-02-18', 'Ouvert', 'Code 5', true, false, 1, false);
@@ -160,6 +160,8 @@ INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, 
 INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 17, 14);
 INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 16, 14);
 INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 18, 14);
+INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 2, 3);
+INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 1, 3);
 
 --
 -- TOC entry 2889 (class 0 OID 17427)

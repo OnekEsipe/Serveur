@@ -230,11 +230,8 @@
 					<!-- ********fin*********** -->
 				</p:dataTable>
 			</h:form>
-
-
 			<h:form>
 				<div class="ui-g-12">
-					<p:growl id="growl" life="2000" />
 					<div class="ui-g">
 						<div class="ui-g-8">
 							<h:outputLabel for="juryAnonyme"
@@ -255,9 +252,10 @@
 							actionListener="#{eventAccueil.buttonResult}" ajax="false" />
 					</div>
 					<br />
-				</div>
-				<p:commandButton value="Gestion attribution Jury / Candidat"
+					<p:commandButton value="Gestion attribution Jury / Candidat"
 					actionListener="#{eventAccueil.buttonAttribution}" ajax="false" />
+				</div>
+				
 			</h:form>
 		</div>
 	</div>
