@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
@@ -218,5 +219,37 @@ public class AttributionJCBean implements Serializable {
 	public void attributionAutomatique() {
 		System.out.println(methode);
 		System.out.println(randomX);
+		CandidatParJury(randomX);
+	}
+	public void CandidatParJury(int randomX) {
+		List<Candidat> candidats;
+		List<Jury> jurys;
+		candidats = candidatsJurys;
+		jurys = juryservice.findJuryByIdevent(idEvent);
+		HashMap<Integer, List<Candidat>> allcandidat = new HashMap<>();
+		HashMap<Jury, List<Candidat>> attribution = new HashMap<>();
+		int indexJury = 0;
+		int indexAttributionCandidat =0;
+		int indexCandidat =0;
+		allcandidat.put(indexAttributionCandidat, candidats);
+		List<Candidat> candidatparJury = new ArrayList<>();
+
+		Random random = new Random();
+		int x;
+		int sizeList =0;
+		while(indexJury<jurys.size()) {
+			sizeList = allcandidat.get(indexCandidat).size();
+			for(int i=0;i<randomX;i++) {
+				if(sizeList<=0) {
+					indexCandidat++;
+				}
+				x = random.nextInt(sizeList)+1;
+				candidatparJury.add(allcandidat.get(indexCandidat).get(x));
+				candidats.remove(x);
+			}	
+			attribution.put(jurys.get(indexJury),candidatparJury);
+			indexJury++;
+			allcandidat.put(indexAttributionCandidat, candidatparJury);
+		}	
 	}
 }
