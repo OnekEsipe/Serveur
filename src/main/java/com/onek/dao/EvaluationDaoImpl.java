@@ -1,6 +1,7 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -78,6 +79,7 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		Evaluation evaluation = new Evaluation();
 		evaluation.setJury(jury);
 		evaluation.setCandidat(candidat);
+		evaluation.setDatedernieremodif(new Date());
 		session.save(evaluation);
 		session.getTransaction().commit();
 		session.close();
