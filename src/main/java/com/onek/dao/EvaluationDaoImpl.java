@@ -7,7 +7,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.onek.model.Candidat;
 import com.onek.model.Evaluation;
+import com.onek.model.Jury;
 
 @Repository
 public class EvaluationDaoImpl implements EvaluationDao, Serializable {
@@ -26,5 +28,8 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		session.close();
 		return evaluation;
 	}
-
+	@Override
+	public void saveEvaluation(Candidat candidat, Jury jury) {
+		
+	}
 }
