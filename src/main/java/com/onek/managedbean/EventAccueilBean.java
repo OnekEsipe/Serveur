@@ -170,15 +170,7 @@ public class EventAccueilBean implements Serializable {
 
 	public void before(ComponentSystemEvent e) throws ParseException {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
-
-			Integer idevent = (Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent");
-		
-			if(idevent == null) {
-				Navigation navigation = new Navigation();
-				navigation.redirect("accueil.xhtml");
-				return;
-			}
-			setIdEvent(idevent);
+			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
