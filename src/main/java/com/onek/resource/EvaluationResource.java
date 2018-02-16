@@ -72,6 +72,9 @@ public class EvaluationResource implements Serializable {
 	
 	@JsonGetter("LastUpdatedDate")
 	public String getDateLastChangeString() {
+		if (lastUpdatedDate == null) {
+			return null;
+		}
 		return formater.format(lastUpdatedDate);
 	}
 	
