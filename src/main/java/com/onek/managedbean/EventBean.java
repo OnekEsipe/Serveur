@@ -23,7 +23,7 @@ public class EventBean implements Serializable {
 	UserService userService;
 	private static final long serialVersionUID = 1L;	
 	private static final int ecartHour = 3_600_000; //en milliseconde
-	
+
 	@Autowired
 	private EvenementService evenementService;
 	private String name;
@@ -38,18 +38,12 @@ public class EventBean implements Serializable {
 	private String debug;
 
 	private Evenement event;
-	
-	
+
+
 	public void before(ComponentSystemEvent e) {
-	
-		if (!FacesContext.getCurrentInstance().isPostback()) {
-	//	 String login =  (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-			//TODO faire une redirection si login == null
-		 	emptyForm();
-		}
-		
+		emptyForm();
 	}
-	
+
 	private void emptyForm() {
 		setName("");
 		setDate1(null);
@@ -59,8 +53,8 @@ public class EventBean implements Serializable {
 		setIsOpened(false);
 		setIsSigned(false);
 	}
-	
-	
+
+
 	public void addEvent() {
 		event = new Evenement();
 		event.setNom(name);
@@ -72,7 +66,7 @@ public class EventBean implements Serializable {
 		event.setIsdeleted(false);
 		evenementService.addEvenement(event);
 	}
-	
+
 	public String getLogInfo() {
 		return logInfo;
 	}
@@ -136,7 +130,7 @@ public class EventBean implements Serializable {
 	public void setIsSigned(boolean issigned) {
 		this.isSigned = issigned;
 	}	
-	
+
 	public void click() {
 
 		if(name.isEmpty() || !validDate(date1, date2) || !validHour(hour1, hour2) ) {
@@ -149,9 +143,9 @@ public class EventBean implements Serializable {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", event.getIdevent());
 		Navigation navigation = new Navigation();
 		navigation.redirect("grille.xhtml");
-		
+
 	}
-	
+
 	private void addEvenementCode() {
 		PasswordGenerator pass = new PasswordGenerator();
 		Integer id = event.getIdevent();
@@ -164,7 +158,7 @@ public class EventBean implements Serializable {
 	private boolean validDate(Date d1, Date d2) {
 		return d2.getTime() >= d1.getTime();
 	}
-	
+
 	private boolean validHour(Date hour1, Date hour2) {
 		if(date1.getTime() == date2.getTime()) {
 			return hour2.getTime() > hour1.getTime();
@@ -176,5 +170,5 @@ public class EventBean implements Serializable {
 				date2+"Heure de debut : "+hour1+"\n"+"Heure de fin : "+hour2;
 	}
 
-	
+
 }
