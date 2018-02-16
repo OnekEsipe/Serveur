@@ -42,13 +42,13 @@ public class AccueilBean implements Serializable {
 	private Utilisateur user;
 	private String login;
 	
-	private String visible;
+	private String visible = "false";
 
 	private int idevent;
 	private String typeMenu;
 	
-		public void before(ComponentSystemEvent e) {
-		visible = "false";
+	public void before(ComponentSystemEvent e) {
+
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 		 login =  (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
 			user = userService.getUserByLogin(login);
@@ -87,15 +87,6 @@ public class AccueilBean implements Serializable {
 	}
 
 	public void refresh() {
-		events = accueilservice.listEvents();
-		for (Evenement evenement : events) {
-			if (evenement.getStatus().equals("Ouvert") && (evenement.getDatestart().compareTo(new Date()) < 0)) {
-				evenement.setStatus("Démarré");
-			}
-			if (evenement.getStatus().equals("Démarré") && (evenement.getDatestop().compareTo(new Date()) < 0)) {
-				evenement.setStatus("Stoppé");
-			}
-		}
 		
 		if(user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
 			events = accueilservice.listEvents();
@@ -103,6 +94,14 @@ public class AccueilBean implements Serializable {
 			events = accueilservice.myListEvents(user.getIduser());
 		}else {
 			events = new ArrayList<>();
+		}
+		for (Evenement evenement : events) {
+			if (evenement.getStatus().equals("Ouvert") && (evenement.getDatestart().compareTo(new Date()) < 0)) {
+				evenement.setStatus("Démarré");
+			}
+			if (evenement.getStatus().equals("Démarré") && (evenement.getDatestop().compareTo(new Date()) < 0)) {
+				evenement.setStatus("Stoppé");
+			}
 		}
 	}
 

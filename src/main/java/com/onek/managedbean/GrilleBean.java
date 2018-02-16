@@ -46,6 +46,12 @@ public class GrilleBean {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			criteres.clear();
 			newCriteres.clear();
+			
+			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+				Navigation navigation = new Navigation();
+				navigation.redirect("accueil.xhtml");
+				return;
+			}		
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			for (Critere critere : event.getCriteres()) {
