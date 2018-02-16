@@ -41,9 +41,19 @@ public class UserBean {
 	public void before(ComponentSystemEvent e) {
 
 		users = userService.getAllUsersExceptDeleted();
-
+		emptyForm();
+		
 	}
 	
+	private void emptyForm() {
+		setFirstName("");
+		setLastName("");
+		setLogin("");
+		setPassword("");
+		setConfirmationPassword("");
+		setMail("");
+		
+	}
 	public String isOption() {
 		return option;
 	}

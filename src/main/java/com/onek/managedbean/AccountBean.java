@@ -37,9 +37,16 @@ public class AccountBean implements Serializable{
 			user = userService.getUserByLogin(name);
 			this.lastEmail = user.getMail();
 			this.login = name;
+			emptyForm();
 		}
 	}
 
+	private void emptyForm() {
+		setLastPassword("");
+		setNewPassword("");
+		setConfirmNewPassword("");
+		setLastEmail("");
+	}
 	
 	public String getLogin() {
 		return login;
@@ -134,7 +141,6 @@ public class AccountBean implements Serializable{
 	}
 
 	public boolean updatePassword() {
-		if(lastPassword == null || newPassword == null || confirmNewPassword == null) return false;
 		if(lastPassword.isEmpty() || newPassword.isEmpty() || confirmNewPassword.isEmpty()) {
 			logPassword = "Merci de renseigner tous les champs";
 			return false;
