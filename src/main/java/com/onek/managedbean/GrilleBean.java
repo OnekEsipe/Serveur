@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
@@ -38,7 +37,7 @@ public class GrilleBean {
 
 	@PostConstruct
 	public void postInit() {
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 7; i++) {
 			numbers.add(i);
 		}
 	}
@@ -66,11 +65,13 @@ public class GrilleBean {
 	private BigDecimal poids3;
 	private BigDecimal poids4;
 	private BigDecimal poids5;
+	private BigDecimal poids6;
 	private String texte1;
 	private String texte2;
 	private String texte3;
 	private String texte4;
 	private String texte5;
+	private String texte6;
 
 	public void onClicAdd() {
 		Critere c = new Critere();
@@ -120,6 +121,14 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
+		if (texte6 != null && !texte6.isEmpty() && poids6 != null && poids6.compareTo(ref) > 0) {
+			d = new Descripteur();
+			d.setNiveau("E");
+			d.setPoids(poids5);
+			d.setTexte(texte5);
+			d.setCritere(c);
+			c.addDescripteur(d);
+		}
 		criteres.add(c);
 		newCriteres.add(c);
 		resetValues();
@@ -134,11 +143,13 @@ public class GrilleBean {
 		poids3 = ref;
 		poids4 = ref;
 		poids5 = ref;
+		poids6 = ref;
 		texte1 = "";
 		texte2 = "";
 		texte3 = "";
 		texte4 = "";
 		texte5 = "";
+		texte6 = "";
 	}
 
 	public void onClicSave() {
@@ -211,6 +222,14 @@ public class GrilleBean {
 		this.poids5 = poids5;
 	}
 
+	public BigDecimal getPoids6() {
+		return poids6;
+	}
+
+	public void setPoids6(BigDecimal poids6) {
+		this.poids6 = poids6;
+	}
+
 	public String getTexte1() {
 		return texte1;
 	}
@@ -249,6 +268,14 @@ public class GrilleBean {
 
 	public void setTexte5(String texte5) {
 		this.texte5 = texte5;
+	}
+
+	public String getTexte6() {
+		return texte6;
+	}
+
+	public void setTexte6(String texte6) {
+		this.texte6 = texte6;
 	}
 
 	public List<Critere> getCriteres() {

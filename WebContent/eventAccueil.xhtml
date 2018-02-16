@@ -18,7 +18,7 @@
 <h:body>
 	<!-- Insertion du menu -->
 
-	<ui:include src="menu.xhtml" />
+	<ui:include src="#{accueil.typeMenu}" />
 	<br />
 	<br />
 
@@ -32,16 +32,26 @@
 						<h:outputText value="#{eventAccueil.event.getNom()}"></h:outputText>
 						<p:outputLabel value="Code événement : " />
 						<h:outputText value="#{eventAccueil.event.getCode()}"></h:outputText>
-						<p:outputLabel for="statut" value="Statut : " />
-						<p:selectOneMenu id="statut" value="#{eventAccueil.statut}"
-							style="width:125px">
+						<p:outputLabel  value="Statut : " />
+
+						<p:selectOneMenu value="#{eventAccueil.statut}"
+							style="width:125px" rendered="#{eventAccueil.visibleB}">
 							<f:selectItem itemLabel="Brouillon" itemValue="Brouillon" />
 							<f:selectItem itemLabel="Ouvert" itemValue="Ouvert" />
-							<f:selectItem itemLabel="Demarré" itemValue="Demarré" />
-							<f:selectItem itemLabel="Stoppé" itemValue="Stoppé" />
 							<f:selectItem itemLabel="Fermé" itemValue="Fermé" />
 						</p:selectOneMenu>
 
+						<p:selectOneMenu value="#{eventAccueil.statut}"
+							style="width:125px" rendered="#{eventAccueil.visibleO}">
+
+							<f:selectItem itemLabel="Ouvert" itemValue="Ouvert" />
+							<f:selectItem itemLabel="Fermé" itemValue="Fermé" />
+						</p:selectOneMenu>
+
+						<p:selectOneMenu value="#{eventAccueil.statut}"
+							style="width:125px" rendered="#{eventAccueil.visibleF}">
+							<f:selectItem itemLabel="Fermé" itemValue="Fermé" />
+						</p:selectOneMenu>
 						<p:outputLabel for="dateStart" value="Date début : " />
 						<p:calendar id="dateStart" value="#{eventAccueil.dateStart}" />
 
@@ -136,9 +146,9 @@
 
 
 			<h:form>
-					<!-- Debut liste jurys anonymes -->
-				<p:dataTable id="tabJurysAnos" var="utilisateursAno" style="display:none;"
-					value="#{eventAccueil.utilisateursAnos}"
+				<!-- Debut liste jurys anonymes -->
+				<p:dataTable id="tabJurysAnos" var="utilisateursAno"
+					style="display:none;" value="#{eventAccueil.utilisateursAnos}"
 					widgetVar="utilisateurTable2" scrollable="true" scrollHeight="300"
 					rowKey="#{utilisateursAno.nom}">
 
@@ -151,7 +161,7 @@
 						<h:outputText value="#{utilisateursAno.motdepasse}" />
 					</p:column>
 				</p:dataTable>
-				
+
 				<!-- Fin liste jurys anonymes -->
 
 				<p:growl id="growl" life="2000" />
@@ -220,11 +230,8 @@
 					<!-- ********fin*********** -->
 				</p:dataTable>
 			</h:form>
-
-
 			<h:form>
 				<div class="ui-g-12">
-					<p:growl id="growl" life="2000" />
 					<div class="ui-g">
 						<div class="ui-g-8">
 							<h:outputLabel for="juryAnonyme"
@@ -241,11 +248,14 @@
 
 						<p:commandButton value="Gérer la grille critériée"
 							actionListener="#{eventAccueil.buttonGrille}" ajax="false" />
+						<p:commandButton value="Exporter les résultats de l'événement"
+							actionListener="#{eventAccueil.buttonResult}" ajax="false" />
 					</div>
 					<br />
-				</div>
-				<p:commandButton value="Gestion attribution Jury / Candidat"
+					<p:commandButton value="Gestion attribution Jury / Candidat"
 					actionListener="#{eventAccueil.buttonAttribution}" ajax="false" />
+				</div>
+				
 			</h:form>
 		</div>
 	</div>

@@ -31,7 +31,7 @@ public class AccueilBean implements Serializable {
 	
 	@Autowired
 	private UserService userService;
-	
+
 	private final Navigation navigation = new Navigation();
 
 	private List<Evenement> events;
@@ -44,10 +44,6 @@ public class AccueilBean implements Serializable {
 	
 	private String visible;
 
-	private String nom;
-	private String status;
-	private Date datestart;
-	private Date datestop;
 	private int idevent;
 	private String typeMenu;
 	
@@ -69,17 +65,11 @@ public class AccueilBean implements Serializable {
 			UIViewRoot root = handler.createView(context, viewId);
 			root.setViewId(viewId);
 			context.setViewRoot(root);
-			System.out.println("----------------------------------\n"+visible);
-			/*
-			try {
-				fc.redirect(fc.getRequestContextPath()+"/accueil.xhtml");
-			} catch (IOException e1) {
-				return;
-			}*/
+			
 		}
 		
 	}
-	
+
 	public int getIdevent() {
 		return idevent;
 	}
@@ -97,6 +87,15 @@ public class AccueilBean implements Serializable {
 	}
 
 	public void refresh() {
+		events = accueilservice.listEvents();
+		for (Evenement evenement : events) {
+			if (evenement.getStatus().equals("Ouvert") && (evenement.getDatestart().compareTo(new Date()) < 0)) {
+				evenement.setStatus("Démarré");
+			}
+			if (evenement.getStatus().equals("Démarré") && (evenement.getDatestop().compareTo(new Date()) < 0)) {
+				evenement.setStatus("Stoppé");
+			}
+		}
 		
 		if(user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
 			events = accueilservice.listEvents();
@@ -105,7 +104,6 @@ public class AccueilBean implements Serializable {
 		}else {
 			events = new ArrayList<>();
 		}
-		
 	}
 
 	public List<Evenement> getEvents() {
@@ -116,37 +114,6 @@ public class AccueilBean implements Serializable {
 		this.events = events;
 	}
 
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public Date getDatestart() {
-		return datestart;
-	}
-
-	public void setDatestart(Date datestart) {
-		this.datestart = datestart;
-	}
-
-	public Date getDatestop() {
-		return datestop;
-	}
-
-	public void setDatestop(Date datestop) {
-		this.datestop = datestop;
-	}
 
 	public List<Evenement> getFilteredevents() {
 		return filteredevents;
@@ -191,19 +158,20 @@ public class AccueilBean implements Serializable {
 
 	public void supprimerEvent() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		idevent = Integer.valueOf(params.get("idevent"));
 		accueilservice.supprimerEvent(idevent);
+		events = accueilservice.listEvents();
 		refresh();
-		
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", selectedevent.getIdevent());
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent",
+				selectedevent.getIdevent());
 		navigation.redirect("eventAccueil.xhtml");
 	}
-	
+
 	public void buttonAction() {
 		navigation.redirect("viewCreateEvent.xhtml");
-    }
+	}
 }
