@@ -1,7 +1,10 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +27,62 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		session.beginTransaction();
 		Evaluation evaluation = (Evaluation) session.createQuery("FROM Evaluation WHERE idevaluation = :id")
 				.setParameter("id", id).getSingleResult();
+						Hibernate.initialize(evaluation.getNotes());
 		session.getTransaction().commit();
 		session.close();
 		return evaluation;
+	}
+	
+	@Override
+	public void update(Evaluation evaluation) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(evaluation);
+		session.getTransaction().commit();
+		session.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Evaluation> findByIdCandidate(Integer idCandidat) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		List<Evaluation> evaluations = (List<Evaluation>) session.createQuery("FROM Evaluation WHERE idevaluation = :id").setParameter("id", idCandidat).list();
+		for (Evaluation evaluation : evaluations) {
+			Hibernate.initialize(evaluation.getNotes());
+		}
+		session.getTransaction().commit();
+		session.close();
+		return evaluations;
+	}
+  
+	@Override
+	public void deleteEvaluation(int idJury, int idCandidat) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Evaluation evaluationToDelete = (Evaluation) session
+				.createQuery("FROM Evaluation WHERE idjuryeval = :idJury AND idcandidat = :idCandidat")
+				.setParameter("idJury", idJury).setParameter("idCandidat", idCandidat).getSingleResult();
+		session.delete(evaluationToDelete);
+		session.getTransaction().commit();
+		session.close();
+	}
+
+	@Override
+	public void saveEvaluation(String nomCandidat, String prenomCandidat, int idevent, Jury jury) {
+		System.out.println(nomCandidat + " " + prenomCandidat);
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Candidat candidat = (Candidat) session.createQuery("FROM Candidat WHERE idevent = :idevent AND nom = :nomCandidat AND prenom = :prenomCandidat")
+				.setParameter("idevent", idevent).setParameter("nomCandidat", nomCandidat)
+				.setParameter("prenomCandidat", prenomCandidat).getSingleResult();
+		Evaluation evaluation = new Evaluation();
+		evaluation.setJury(jury);
+		evaluation.setCandidat(candidat);
+		evaluation.setDatedernieremodif(new Date());
+		session.save(evaluation);
+		session.getTransaction().commit();
+		session.close();
 	}
 	@Override
 	public void saveEvaluation(Candidat candidat, Jury jury) {

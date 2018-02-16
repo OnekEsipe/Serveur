@@ -16,7 +16,7 @@
 </f:metadata>
 <h:body>
 	<!-- Insertion du menu -->
-	<ui:include src="menu.xhtml" />
+	<ui:include src="#{accueil.typeMenu}" />
 	<br />
 	<br />
 	
@@ -113,7 +113,19 @@
 							</h:panelGrid>
 						</p:panel>
 					</div>
+					<div class="ui-g-12 ui-lg-4">
+						<p:panel header="F" style="width:300px; height:200px;"
+							rendered="#{grille.nbDescripteur > 5}">
+							<h:panelGrid columns="1" cellpadding="3">
+								<h:outputLabel value="Poids :" style="font-weight:bold" />
+								<p:inputNumber value="#{grille.poids6}" decimalPlaces="0"
+									label="Poids" />
 
+								<h:outputLabel value="Description :" style="font-weight:bold" />
+								<p:inputText value="#{grille.texte6}" label="Description" />
+							</h:panelGrid>
+						</p:panel>
+					</div>
 				</p:outputPanel>
 			</div>
 			<div>

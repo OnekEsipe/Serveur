@@ -75,8 +75,8 @@ INSERT INTO jurys (iduser, idevent) VALUES (6, 4);
 INSERT INTO jurys (iduser, idevent) VALUES (6, 5);
 INSERT INTO jurys (iduser, idevent) VALUES (6, 6);
 INSERT INTO jurys (iduser, idevent) VALUES (6, 1);
-INSERT INTO jurys (iduser, idevent) VALUES (6, 2);
-INSERT INTO jurys (iduser, idevent) VALUES (6, 3);
+INSERT INTO jurys (iduser, idevent) VALUES (7, 1);
+INSERT INTO jurys (iduser, idevent) VALUES (8, 1);
 INSERT INTO jurys (iduser, idevent) VALUES (4, 7);
 INSERT INTO jurys (iduser, idevent) VALUES (4, 8);
 INSERT INTO jurys (iduser, idevent) VALUES (4, 9);
@@ -90,25 +90,25 @@ INSERT INTO jurys (iduser, idevent) VALUES (4, 12);
 -- Data for Name: candidats; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Hugo', 'Fourcade', 1);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Hugo', 'Fourcade', 2);
 INSERT INTO candidats (nom, prenom, idevent) VALUES ('Vincent', 'Leman', 1);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Medalie', 'Noubigh', 1);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Yanis', 'Salah', 1);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Etienne', 'Jannot', 1);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Florie', 'Monnier', 1);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Benjamin', 'Gonzales', 1);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Medalie', 'Noubigh', 2);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Yanis', 'Salah', 2);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Etienne', 'Jannot', 2);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Florie', 'Monnier', 2);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Benjamin', 'Gonzales', 2);
 INSERT INTO candidats (nom, prenom, idevent) VALUES ('Paul', 'Ochon', 1);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Gregoire', 'Duhail', 1);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Kevin', 'Mernissi', 1);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Antoine', 'Ganthier', 1);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Rodolphe', 'Drocourt', 1);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Gregoire', 'Duhail', 2);
 INSERT INTO candidats (nom, prenom, idevent) VALUES ('Kevin', 'Mernissi', 2);
 INSERT INTO candidats (nom, prenom, idevent) VALUES ('Antoine', 'Ganthier', 2);
 INSERT INTO candidats (nom, prenom, idevent) VALUES ('Rodolphe', 'Drocourt', 2);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Thibault', 'Outerovitch', 1);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Julien', 'Brossard', 1);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Axel', 'Rolo', 1);
-INSERT INTO candidats (nom, prenom, idevent) VALUES ('Fabienne', 'Heimburger', 1);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Kevin', 'Mernissi', 2);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Antoine', 'Ganthier', 1);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Rodolphe', 'Drocourt', 2);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Thibault', 'Outerovitch', 2);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Julien', 'Brossard', 2);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Axel', 'Rolo', 2);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Fabienne', 'Heimburger', 2);
 
 
 --
@@ -160,6 +160,8 @@ INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, 
 INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 17, 14);
 INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 16, 14);
 INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 18, 14);
+INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 2, 3);
+INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, idcandidat) VALUES ('2018-02-12', NULL, '', 1, 3);
 
 --
 -- TOC entry 2889 (class 0 OID 17427)
@@ -167,9 +169,36 @@ INSERT INTO evaluations (datedernieremodif, signature, commentaire, idjuryeval, 
 -- Data for Name: notes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (0, '2018-02-15', 'Okay', 1, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (0, '2018-02-15', 'Cool', 1, 2);
+
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (1, '2018-02-15', 'Mouais', 2, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (1, '2018-02-15', 'Good', 2, 2);
+
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Non', 3, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (0, '2018-02-15', 'Bien joue', 3, 2);
+
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Pas bon', 4, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (1, '2018-02-15', 'Okay', 4, 2);
+
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Essaie encore', 5, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Pas ca', 5, 2);
+
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (0, '2018-02-15', 'Parfait', 6, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (1, '2018-02-15', 'Encore du travail', 6, 2);
+
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Allez', 7, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Au boulot', 7, 2);
+
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (0, '2018-02-15', 'Excellent', 8, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (1, '2018-02-15', 'D accord', 8, 2);
+
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (0, '2018-02-15', 'Oui oui', 9, 1);
+INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2, '2018-02-15', 'Aie', 9, 2);
 
 -- Completed on 2018-02-13 10:13:46
 
 --
 -- PostgreSQL database dump complete
 --
+

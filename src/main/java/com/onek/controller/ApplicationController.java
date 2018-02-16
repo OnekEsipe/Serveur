@@ -20,6 +20,7 @@ import com.onek.resource.CreateJuryResource;
 import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.LoginResource;
+import com.onek.resource.NoteResource;
 import com.onek.service.ApplicationService;
 import com.onek.service.UserService;
 
@@ -39,16 +40,16 @@ public class ApplicationController {
 		try {			
 			applicationService.createJury(createJuryResource);		
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {			
-			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		} catch(IllegalStateException e) {
-			return new ResponseEntity<String>(HttpStatus.CONFLICT);
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	/* login */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<?> login(@RequestBody LoginResource login) {
+	public ResponseEntity<? extends Object> login(@RequestBody LoginResource login) {
 		try {
 			if (!userService.userExistAndCorrectPassword(login.getLogin(), login.getPassword())) {
 				return new ResponseEntity<LoginResource>(login, HttpStatus.FORBIDDEN);
@@ -63,24 +64,35 @@ public class ApplicationController {
 	
 	/* import evaluation */
 	@RequestMapping(value = "/evaluation", method = RequestMethod.POST)
-	public ResponseEntity<?> evaluation(@RequestBody EvaluationResource evaluation) {		
-		evaluation = applicationService.importEvaluation(evaluation);		
-		return new ResponseEntity<EvaluationResource>(evaluation, HttpStatus.OK);
+	public ResponseEntity<? extends Object> evaluation(@RequestBody EvaluationResource evaluation) {
+		for(NoteResource noteResource : evaluation.getNotes()) {
+			if (noteResource.getSelectedLevel().length() > 1) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			}
+		}
+		try {
+			if (!applicationService.importEvaluation(evaluation)) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();	
+			}
+		} catch(IllegalStateException e) {
+			return  ResponseEntity.status(HttpStatus.CONFLICT).build();	
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	/* event export */
 	@RequestMapping(value = "/events/{idEvent}/{login}/export", method = RequestMethod.GET)
-	public ResponseEntity<?> export(@PathVariable String idEvent, @PathVariable String login) {			
+	public ResponseEntity<? extends Object> export(@PathVariable String idEvent, @PathVariable String login) {			
 		Optional<EvenementResource> event = applicationService.export(idEvent, login);		
 		if (!event.isPresent()) {
-			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}			
 		return new ResponseEntity<EvenementResource>(event.get(), HttpStatus.OK);
 	}	
 	
 	/* code event */
 	@RequestMapping(value = "/events/code", method = RequestMethod.POST)
-	public ResponseEntity<?> codeEvent(@RequestBody CodeEvenementResource eventCode) {
+	public ResponseEntity<? extends Object> codeEvent(@RequestBody CodeEvenementResource eventCode) {
 		if (!applicationService.subscribe(eventCode)) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
