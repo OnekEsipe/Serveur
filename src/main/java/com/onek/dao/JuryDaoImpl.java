@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -18,8 +17,6 @@ import com.onek.model.Evaluation;
 import com.onek.model.Jury;
 import com.onek.model.Note;
 import com.onek.model.Utilisateur;
-import com.onek.resource.CandidatResource;
-import com.onek.resource.JuryResource;
 
 @Repository
 public class JuryDaoImpl implements JuryDao, Serializable {

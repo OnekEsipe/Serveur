@@ -52,12 +52,12 @@
 			<br />
 			<div class="ui-g">
 				<div class="ui-g-12">
-					<p:commandButton value="Prévisualisation des attributions"
+					<p:commandButton value="Prévisualiser les attributions"
 						actionListener="#{attributionjc.previsualisationButton}"
 						update="@(form)" />
 				</div>
 				<div class="ui-g-12">
-					<p:commandButton value="Valider l'attribution"
+					<p:commandButton value="Valider les attributions"
 						actionListener="#{attributionjc.validationButton}" />
 				</div>
 			</div>
@@ -68,6 +68,11 @@
         		</f:facet>
         			#{message}
 			</p:dataList>
+			<br />
+			<div class="ui-g-12">
+				<p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
+					actionListener="#{attributionjc.retour}" />
+			</div>
 		</h:form>
 	</div>
 </h:body>

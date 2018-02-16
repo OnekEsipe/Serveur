@@ -20,6 +20,7 @@ import com.onek.model.Utilisateur;
 import com.onek.service.EvaluationService;
 import com.onek.service.EventAccueilService;
 import com.onek.service.JuryService;
+import com.onek.utils.Navigation;
 
 @Component("attributionjc")
 public class AttributionJCBean implements Serializable {
@@ -48,6 +49,8 @@ public class AttributionJCBean implements Serializable {
 	private Map<String, Map<String, Boolean>> attribJC;
 
 	private ArrayList<String> message;
+	
+	private Navigation navigation = new Navigation();
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -215,8 +218,6 @@ public class AttributionJCBean implements Serializable {
 				} else if (!(candidatesEnd.contains(candidatBegin.getNom() + " " + candidatBegin.getPrenom()))) {
 					System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom() + " pas dans candidatEnd -> suppression de l'evaluation candidatBegin");
 					evaluationService.deleteEvaluation(jury.getIdjury(), candidatBegin.getIdcandidat());
-					// Mettre le boolean de attribJC à false
-					
 				}
 			}
 
@@ -231,9 +232,16 @@ public class AttributionJCBean implements Serializable {
 					System.out.println(candidatEnd + " pas dans candidatBegin -> creation evaluation candidatEnd");
 					String[] splitNameCandidatEnd = candidatEnd.split(" ");
 					evaluationService.saveEvaluation(splitNameCandidatEnd[0], splitNameCandidatEnd[1], idEvent, jury);
-					// Mettre le boolean de attribJC à true
 				}
 			}
+			
+			// Update des listes
+			List<Jury> juryList = juryservice.findJuryByIdevent(idEvent);
+			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 		}
+	}
+	
+	public void retour() {
+		navigation.redirect("eventAccueil.xhtml");
 	}
 }
