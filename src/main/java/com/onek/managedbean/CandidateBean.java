@@ -52,7 +52,13 @@ public class CandidateBean implements Serializable{
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			candidats = candidateService.findCandidatesByEvent(idEvent);
+			emptyForm();
 		}
+	}
+	
+	private void emptyForm() {
+		setFirstName("");
+		setLastName("");
 	}
 	
 	public String getLogInfo() {

@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -90,15 +91,15 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
 				return Optional.empty();
 			}
-			// check if end date of event > date today // TODO uncomment
-			// if ((event.getDatestop().getTime() < new Date().getTime())) {
-			// return Optional.empty();
-			// }
+			// check if end date of event > date today (status stopped)
+			if ((event.getDatestop().getTime() < new Date().getTime())) {
+				return Optional.empty();
+			}
 			EvenementResource eventResource = new EvenementResource(event);
 			List<Jury> jurys = juryDao.findJuryAndAnonymousByIdEvent(id, login);
 			List<EvaluationResource> evaluations = createEvaluationList(jurys);
 			eventResource.setEvaluations(evaluations);
-			eventResource.setJurys(associatedJurysCandidates(jurys));
+			eventResource.setJurys(associatedJurysCandidates(jurys, id));
 			return Optional.of(eventResource);
 		} catch (NoResultException nre) {
 			return Optional.empty();
@@ -145,15 +146,15 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
 			return false;
 		}
-		long dateLastChangeEvalRes = evaluationResource.getDateLastChange().getTime();
-		long dateLastChangeEvalDb = evaluation.getDatedernieremodif().getTime();
+		long dateLastChangeNewEval = evaluationResource.getDateLastChange().getTime();
+		long dateLastChangeEvalDB = evaluation.getDatedernieremodif().getTime();
 		// check last update date for evaluation
-		if (dateLastChangeEvalRes < dateLastChangeEvalDb) {
-			return false;
+		if (dateLastChangeNewEval < dateLastChangeEvalDB) {
+			throw new IllegalStateException();
 		}
 		// active check date if necessary
 		boolean checkDate = false;
-		if (dateLastChangeEvalRes > dateLastChangeEvalDb && dateLastChangeEvalRes > event.getDatestop().getTime()) {			
+		if (dateLastChangeNewEval > dateLastChangeEvalDB && dateLastChangeNewEval > event.getDatestop().getTime()) {			
 			checkDate = true;
 		}
 		evaluation.setCommentaire(evaluationResource.getComment());		
@@ -227,7 +228,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	}	
 	
 	/* associated jurys and candidates for an event */
-	private List<JuryResource> associatedJurysCandidates(List<Jury> jurys) {
+	private List<JuryResource> associatedJurysCandidates(List<Jury> jurys, Integer idEvent) {
 		HashMap<Jury, List<Candidat>> map = new HashMap<>();
 		List<JuryResource> jurysResource = new ArrayList<>();
 		for (Jury jury : jurys) {
@@ -236,8 +237,12 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			}
 			List<Evaluation> evaluations = jury.getEvaluations();
 			for (Evaluation evaluation : evaluations) {
-				List<Candidat> candidates = map.get(jury);
-				candidates.add(evaluation.getCandidat());
+				Candidat candidate = evaluation.getCandidat();
+				if (candidate.getEvenement().getIdevent() != idEvent) {
+					continue;
+				}
+				List<Candidat> candidates = map.get(jury);				
+				candidates.add(candidate);
 				map.put(jury, candidates);
 			}
 		}

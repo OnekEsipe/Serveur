@@ -1,20 +1,26 @@
 package com.onek.managedbean;
 
 import java.io.Serializable;
+
 import java.util.Date;
 
+
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Evenement;
 import com.onek.service.EvenementService;
+import com.onek.service.UserService;
 import com.onek.utils.Navigation;
 import com.onek.utils.PasswordGenerator;
 
 @Component("event")
 public class EventBean implements Serializable {
+	@Autowired
+	UserService userService;
 	private static final long serialVersionUID = 1L;	
 	private static final int ecartHour = 3_600_000; //en milliseconde
 	
@@ -31,8 +37,29 @@ public class EventBean implements Serializable {
 	private String logInfo;
 	private String debug;
 
-
 	private Evenement event;
+	
+	
+	public void before(ComponentSystemEvent e) {
+	
+		if (!FacesContext.getCurrentInstance().isPostback()) {
+	//	 String login =  (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+			//TODO faire une redirection si login == null
+		 	emptyForm();
+		}
+		
+	}
+	
+	private void emptyForm() {
+		setName("");
+		setDate1(null);
+		setDate2(null);
+		setHour1(null);
+		setHour2(null);
+		setIsOpened(false);
+		setIsSigned(false);
+	}
+	
 	
 	public void addEvent() {
 		event = new Evenement();
@@ -111,11 +138,7 @@ public class EventBean implements Serializable {
 	}	
 	
 	public void click() {
-		//debug();
-		if(name == null || date1 == null || date2 == null || hour1 == null || hour2 == null) {
-			logInfo = "Merci de remplir tous les champs du formulaire";
-			return;
-		}
+
 		if(name.isEmpty() || !validDate(date1, date2) || !validHour(hour1, hour2) ) {
 			logInfo = "Formulaire invalide, merci de vérifier vos saisies "+name.isEmpty()+" "+validDate(date1, date2)+" "+validHour(hour1, hour2)+
 					" "+date1.getTime()+" "+date2.getTime();

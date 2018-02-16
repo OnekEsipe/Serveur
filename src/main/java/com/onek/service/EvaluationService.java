@@ -1,10 +1,17 @@
+
 package com.onek.service;
 
+import java.util.List;
 import com.onek.model.Jury;
+import com.onek.model.Evaluation;
 
 public interface EvaluationService {
 
-	void deleteEvaluation(int idJury, int idCandidat);
+	List<Evaluation> findByIdCandidate(Integer idCandidat);
+  void deleteEvaluation(int idJury, int idCandidat);
 	void saveEvaluation(String nomCandidat, String prenomCandidat, int idevent, Jury jury);
-	
 }
+
+
+
+

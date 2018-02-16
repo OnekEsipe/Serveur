@@ -16,7 +16,7 @@ import com.onek.model.Note;
 
 public class NoteResource implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	private final SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	
 	@JsonProperty("Id")
 	private Integer idCriteria;
@@ -57,7 +57,7 @@ public class NoteResource implements Serializable {
 		for(Descripteur descripteur : note.getCritere().getDescripteurs()) {
 			DescripteurResource descripteurResource = new DescripteurResource(descripteur);
 			descriptors.add(descripteurResource);
-			if (descripteur.getNiveau().equals(String.valueOf((char) (level + 65)))) {
+			if (level != -1 && descripteur.getNiveau().equals(String.valueOf((char) (level + 65)))) {
 				selectedDescriptor = descripteurResource;
 			}
 		}				
@@ -93,12 +93,19 @@ public class NoteResource implements Serializable {
 	
 	@JsonSetter("SelectedLevel")
 	public void setSelectedLevel(String selectedLevel) {
+		if (selectedLevel.isEmpty()) {
+			level = -1;
+			return;
+		}
 		char levelChar = selectedLevel.charAt(0);
 		level = levelChar % 65;
 	}
 	
 	@JsonGetter("SelectedLevel")
 	public String getSelectedLevel() {
+		if (level == -1) {
+			return "";
+		}
 		char levelChar = (char) (level + 65);
 		return String.valueOf(levelChar);
 	}
