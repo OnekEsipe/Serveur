@@ -217,39 +217,113 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	public void attributionAutomatique() {
-		System.out.println(methode);
-		System.out.println(randomX);
-		CandidatParJury(randomX);
+		if(methode==2) {
+			CandidatParJury(randomX);
+		}
+		else {
+			JuryParCandidat(randomX);
+		}
 	}
+
+	private void JuryParCandidat(int randomX2) {
+		List<Candidat> candidats;
+		List<Jury> jurys;
+		candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
+		jurys = juryservice.findJuryByIdevent(idEvent);
+		if (randomX > jurys.size()) {
+			System.out.println("attribution impossible");
+			return;
+		}
+		HashMap<Integer, List<Jury>> alljury = new HashMap<>();
+		HashMap<Candidat, List<Jury>> attribution = new HashMap<>();
+		alljury.put(1, new ArrayList<>());
+		int indexJury = 0;
+		int indexAttributionCandidat = 1;
+		int indexCandidat = 0;
+		alljury.put(0, jurys);
+		Random random = new Random();
+		int x;
+		int sizeList = 0;
+
+		while (indexCandidat < candidats.size()) {
+			List<Jury> juryParCandidat = new ArrayList<>();
+			for (int i = 0; i < randomX; i++) {
+
+				sizeList = alljury.get(indexJury).size();
+
+				if (sizeList <= 0) {
+					indexJury++;
+					indexAttributionCandidat++;
+					alljury.put(indexAttributionCandidat, new ArrayList<>());
+					sizeList = alljury.get(indexJury).size();
+				}
+				x = random.nextInt(sizeList);
+				juryParCandidat.add(alljury.get(indexJury).get(x));
+				Jury jury = alljury.get(indexJury).remove(x);
+				alljury.get(indexAttributionCandidat).add(jury);
+			}
+			attribution.put(candidats.get(indexCandidat), juryParCandidat);
+			indexCandidat++;
+		}
+		for (Candidat c : attribution.keySet()) {
+			System.out.println(c.getNom());
+			for (Jury jury : attribution.get(c)) {
+				System.out.print(jury.getUtilisateur().getNom() + " ");
+			}
+			System.out.println();
+		}
+	}
+
 	public void CandidatParJury(int randomX) {
 		List<Candidat> candidats;
 		List<Jury> jurys;
-		candidats = candidatsJurys;
+		candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
 		jurys = juryservice.findJuryByIdevent(idEvent);
+		if (randomX > candidats.size()) {
+			System.out.println("attribution impossible");
+			return;
+		}
 		HashMap<Integer, List<Candidat>> allcandidat = new HashMap<>();
 		HashMap<Jury, List<Candidat>> attribution = new HashMap<>();
+		allcandidat.put(1, new ArrayList<>());
 		int indexJury = 0;
-		int indexAttributionCandidat =0;
-		int indexCandidat =0;
-		allcandidat.put(indexAttributionCandidat, candidats);
-		List<Candidat> candidatparJury = new ArrayList<>();
+		int indexAttributionCandidat = 1;
+		int indexCandidat = 0;
+		allcandidat.put(0, candidats);
 
 		Random random = new Random();
 		int x;
-		int sizeList =0;
-		while(indexJury<jurys.size()) {
-			sizeList = allcandidat.get(indexCandidat).size();
-			for(int i=0;i<randomX;i++) {
-				if(sizeList<=0) {
+		int sizeList = 0;
+
+		while (indexJury < jurys.size()) {
+
+			List<Candidat> candidatparJury = new ArrayList<>();
+			for (int i = 0; i < randomX; i++) {
+
+				sizeList = allcandidat.get(indexCandidat).size();
+
+				if (sizeList <= 0) {
 					indexCandidat++;
+					indexAttributionCandidat++;
+					allcandidat.put(indexAttributionCandidat, new ArrayList<>());
+					sizeList = allcandidat.get(indexCandidat).size();
 				}
-				x = random.nextInt(sizeList)+1;
+				x = random.nextInt(sizeList);
 				candidatparJury.add(allcandidat.get(indexCandidat).get(x));
-				candidats.remove(x);
-			}	
-			attribution.put(jurys.get(indexJury),candidatparJury);
+				Candidat candidat = allcandidat.get(indexCandidat).remove(x);
+				allcandidat.get(indexAttributionCandidat).add(candidat);
+			}
+
+			attribution.put(jurys.get(indexJury), candidatparJury);
 			indexJury++;
-			allcandidat.put(indexAttributionCandidat, candidatparJury);
-		}	
+		}
+		for (Jury j : attribution.keySet()) {
+			System.out.println(j.getUtilisateur().getNom());
+			for (Candidat candidat : attribution.get(j)) {
+				System.out.print(candidat.getNom() + " ");
+			}
+			System.out.println();
+		}
+
 	}
 }
