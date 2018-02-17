@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
+import com.onek.utils.DroitsUtilisateur;
 
 @Repository
 public class UserDaoImpl implements UserDao, Serializable {
@@ -30,7 +31,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.close();
 	}
 
-	public Utilisateur getUserByLogin(String login) {
+	public Utilisateur findByLogin(String login) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where login = :login")
@@ -91,16 +92,38 @@ public class UserDaoImpl implements UserDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> getAllUsersExceptDeleted() {
-		boolean isdeleted = false;
-
 		List<Utilisateur> users = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		users = (List<Utilisateur>) session.createQuery("from Utilisateur where isdeleted = :isdeleted")
-				.setParameter("isdeleted", isdeleted).list();
+				.setParameter("isdeleted", false).list();
 		session.getTransaction().commit();
 		session.close();
 		return users;
+	}
+
+	@Override
+	public boolean userExist(String login) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		long result = (Long) session.createQuery("SELECT COUNT(e) from Utilisateur e WHERE e.login =:login")
+				.setParameter("login", login).getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return result == 1;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Utilisateur> findAllJurys() {
+		List<Utilisateur> jurys = new ArrayList<>();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		jurys = (List<Utilisateur>) session.createQuery("FROM Utilisateur WHERE droits = :droits")
+				.setParameter("droits", DroitsUtilisateur.JURY.toString()).list();
+		session.getTransaction().commit();
+		session.close();
+		return jurys;
 	}
 
 }

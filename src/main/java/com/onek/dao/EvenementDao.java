@@ -2,9 +2,7 @@ package com.onek.dao;
 
 import java.util.List;
 
-import com.onek.model.Candidat;
 import com.onek.model.Evenement;
-import com.onek.model.Jury;
 
 public interface EvenementDao {
 

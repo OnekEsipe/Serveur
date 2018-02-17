@@ -9,11 +9,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.onek.model.Candidat;
 import com.onek.model.Critere;
-import com.onek.model.Evaluation;
 import com.onek.model.Evenement;
-import com.onek.model.Jury;
 
 @Repository
 public class EvenementDaoImpl implements EvenementDao, Serializable {

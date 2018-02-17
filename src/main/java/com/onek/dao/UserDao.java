@@ -6,12 +6,14 @@ import com.onek.model.Utilisateur;
 
 public interface UserDao {
   
+	public void addUser(Utilisateur user);
+	public void deleteUser(int idUser) ;
+	public boolean userExist(String login);
 	public void updateUserInfos(Utilisateur user);
-	void addJurysAnonymes(List<Utilisateur> utilisateurs, Evenement event);
-	public Utilisateur getUserByLogin(String login);
+	public void addJurysAnonymes(List<Utilisateur> utilisateurs, Evenement event);
+	public Utilisateur findByLogin(String login);
 	public List<Utilisateur> getAllUsers();
 	public List<Utilisateur> getAllUsersExceptDeleted();
-	public void deleteUser(int idUser) ;
-	public void addUser(Utilisateur user);
-
+	public List<Utilisateur> findAllJurys();
+	
 }

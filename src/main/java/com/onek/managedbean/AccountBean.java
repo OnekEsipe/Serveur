@@ -34,7 +34,7 @@ public class AccountBean implements Serializable{
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			String name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-			user = userService.getUserByLogin(name);
+			user = userService.findByLogin(name);
 			this.lastEmail = user.getMail();
 			this.login = name;
 			emptyForm();

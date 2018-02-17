@@ -20,7 +20,6 @@ import com.onek.dao.EvaluationDao;
 import com.onek.dao.EvenementDao;
 import com.onek.dao.GrilleDao;
 import com.onek.dao.JuryDao;
-import com.onek.dao.LoginDao;
 import com.onek.dao.NoteDao;
 import com.onek.model.Candidat;
 import com.onek.model.Evaluation;
@@ -47,9 +46,6 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	private EvenementDao eventDao;
 
 	@Autowired
-	private LoginDao loginDao;
-
-	@Autowired
 	private JuryDao juryDao;
 
 	@Autowired
@@ -60,12 +56,12 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 
 	@Autowired
 	private NoteDao noteDao;
-
+	
 	@Autowired
 	private UserService userService;
 
 	@Autowired
-	private AddJuryService addJuryService;
+	private JuryService juryService;	
 
 	@Override
 	public Optional<EvenementResource> export(String idEvent, String login) {
@@ -77,11 +73,11 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			return Optional.empty();
 		}
 		// check if login exist
-		if (!loginDao.userExist(login)) {
+		if (!userService.userExist(login)) {
 			return Optional.empty();
 		}
 		// check if jury is assigned
-		int idUser = loginDao.findUserByLogin(login).getIduser();
+		int idUser = userService.findByLogin(login).getIduser();
 		if (!juryDao.juryIsAssigned(idUser, id)) {
 			return Optional.empty();
 		}
@@ -109,7 +105,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	/* account */
 	@Override
 	public List<AccountResource> account(String login) {
-		Utilisateur user = loginDao.findUserByLogin(login);
+		Utilisateur user = userService.findByLogin(login);
 		List<Jury> jurys = juryDao.findByUser(user);
 		List<AccountResource> accounts = new ArrayList<>();
 		// search idEvents for the login
@@ -210,10 +206,10 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 
 	@Override
 	public boolean subscribe(CodeEvenementResource eventCode) {
-		if (!loginDao.userExist(eventCode.getLogin())) {
+		if (!userService.userExist(eventCode.getLogin())) {
 			return false;
 		}
-		Utilisateur user = loginDao.findUserByLogin(eventCode.getLogin());
+		Utilisateur user = userService.findByLogin(eventCode.getLogin());
 		Evenement event;
 		try {
 			event = eventDao.findByCode(eventCode.getEventCode());
@@ -223,7 +219,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		Jury jury = new Jury();
 		jury.setUtilisateur(user);
 		jury.setEvenement(event);
-		addJuryService.addJuryToEvent(jury);
+		juryService.addJuryToEvent(jury);
 		return true;
 	}	
 	

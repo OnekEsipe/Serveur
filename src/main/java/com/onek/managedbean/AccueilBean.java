@@ -51,7 +51,7 @@ public class AccueilBean implements Serializable {
 
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 		 login =  (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-			user = userService.getUserByLogin(login);
+			user = userService.findByLogin(login);
 			if(user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
 				typeMenu = "menu.xhtml";
 				setVisible("true");

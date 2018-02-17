@@ -1,10 +1,9 @@
 package com.onek.dao;
 
-import org.hibernate.Session;
+import java.util.List;
 
 import com.onek.model.Candidat;
 import com.onek.model.Evaluation;
-import java.util.List;
 import com.onek.model.Jury;
 
 public interface EvaluationDao {
