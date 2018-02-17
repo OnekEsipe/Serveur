@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService, Serializable {
 	
 	@Override
 	public List<Utilisateur> findAllJurys() {
-		return userDao.findAllJurys();
+		return userDao.getAllUsers();
 	}
  
 	@Override

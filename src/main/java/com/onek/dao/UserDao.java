@@ -14,6 +14,5 @@ public interface UserDao {
 	public Utilisateur findByLogin(String login);
 	public List<Utilisateur> getAllUsers();
 	public List<Utilisateur> getAllUsersExceptDeleted();
-	public List<Utilisateur> findAllJurys();
 	
 }

@@ -1,9 +1,8 @@
 package com.onek.dao;
 
 import java.io.Serializable;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
-import com.onek.utils.DroitsUtilisateur;
 
 @Repository
 public class UserDaoImpl implements UserDao, Serializable {
@@ -111,19 +109,6 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.getTransaction().commit();
 		session.close();
 		return result == 1;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Utilisateur> findAllJurys() {
-		List<Utilisateur> jurys = new ArrayList<>();
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		jurys = (List<Utilisateur>) session.createQuery("FROM Utilisateur WHERE droits = :droits")
-				.setParameter("droits", DroitsUtilisateur.JURY.toString()).list();
-		session.getTransaction().commit();
-		session.close();
-		return jurys;
 	}
 
 }

@@ -43,7 +43,7 @@ public class JuryServiceImpl implements JuryService, Serializable{
 	}
 	@Override
 	public List<Utilisateur> findAllJurys(){
-		return userDao.findAllJurys();
+		return userDao.getAllUsers();
 	}
 	@Override
 	public void supprimerUtilisateur(int iduser) {
