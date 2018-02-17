@@ -14,16 +14,16 @@ public class PasswordServiceImpl implements PasswordService, Serializable {
 	@Autowired
 	private UserDao userDao;
 	
-	//@Autowired
+	@Autowired
 	private EmailService emailService;
 	
 	@Override
 	public boolean reset(String mail) {
-		if (!userDao.mailExist(mail)) {
-			return false;
-		}
-		emailService.sendMail("onek2018esipe@gmail.com", "onek2018esipe@gmail.com", "Réinitialisation du mot de passe", "toto");
-		return false;
+		//if (!userDao.mailExist(mail)) {
+		//	return false;
+		//}
+		emailService.sendMail(mail, "ONEK - Réinitialisation du mot de passe", "toto");
+		return true;
 	}
 	
 	
