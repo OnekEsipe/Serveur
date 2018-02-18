@@ -1,6 +1,7 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.onek.model.Candidat;
+import com.onek.model.Critere;
 import com.onek.model.Evaluation;
 import com.onek.model.Jury;
 import com.onek.model.Note;
@@ -59,18 +61,38 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		session.close();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void saveEvaluation(String nomCandidat, String prenomCandidat, int idevent, Jury jury) {
+	public void saveEvaluation(String nomCandidat, String prenomCandidat, int idevent, Jury jury, Date date) {
 		System.out.println(nomCandidat + " " + prenomCandidat);
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
+		
+		//Creation de l'evaluation 
 		Candidat candidat = (Candidat) session.createQuery("FROM Candidat WHERE idevent = :idevent AND nom = :nomCandidat AND prenom = :prenomCandidat")
 				.setParameter("idevent", idevent).setParameter("nomCandidat", nomCandidat)
 				.setParameter("prenomCandidat", prenomCandidat).getSingleResult();
 		Evaluation evaluation = new Evaluation();
-		evaluation.setJury(jury);
 		evaluation.setCandidat(candidat);
+		evaluation.setCommentaire("");
+		evaluation.setDatedernieremodif(date);
+		evaluation.setJury(jury);
+		evaluation.setSignature(new byte[0]);
 		session.save(evaluation);
+		
+		//Creation de notes (initialisé à -1) pour chaque criteres de l'evenement
+		List<Critere> criteres = (List<Critere>) session.createQuery("FROM Critere WHERE idevent = :idevent")
+				.setParameter("idevent", idevent).getResultList();
+		for(Critere critere : criteres) {
+			Note note = new Note();
+			note.setCommentaire("");
+			note.setCritere(critere);
+			note.setDate(date);
+			note.setEvaluation(evaluation);
+			note.setNiveau(-1);
+			session.save(note);
+		}
+		
 		session.getTransaction().commit();
 		session.close();
 	}
