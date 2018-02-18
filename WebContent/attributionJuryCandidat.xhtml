@@ -10,6 +10,7 @@
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
+	<h:outputStylesheet library="css" name="attrib.css" />
 </h:head>
 <f:metadata>
 	<f:viewParam name="event" value="#{attributionjc.idEvent}" />
@@ -22,6 +23,7 @@
 	<br />
 	<br />
 
+	<!-- Attribution automatique -->
 	<h:form>
 		<div class="ui-g">
 			<div class="ui-g-6">
@@ -42,6 +44,8 @@
 		</div>
 	</h:form>
 
+	<br /> <p:separator /><br />
+	<!-- Attribution manuel -->
 	<div class="ui-g">
 		<h:form>
 			<table>
@@ -82,13 +86,21 @@
 				</div>
 			</div>
 			<br />
-			<p:dataList value="#{attributionjc.message}" var="message">
-				<f:facet name="header">
-            		Attributions réalisées
-        		</f:facet>
-        			#{message}
-			</p:dataList>
-			<br />
+			<!-- Affichage -->
+			<p:dataTable id="attrib" var="attrib"
+				value="#{attributionjc.messageAttrib}">
+				<p:column headerText="Jury">
+					<h:outputText value="#{attrib.jury}" />
+				</p:column>
+				<p:column headerText="Candidats">
+					<h:outputText value="#{attrib.candidats}" />
+				</p:column>
+			</p:dataTable>
+			<h:commandLink>
+				<p:graphicImage name="/image/csv.png" width="30" />
+				<p:dataExporter type="csv" target="attrib"
+					fileName="Attribution_JuryCandidats"/>
+			</h:commandLink>
 			<div class="ui-g-12">
 				<p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
 					actionListener="#{attributionjc.retour}" />

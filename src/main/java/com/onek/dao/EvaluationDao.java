@@ -1,7 +1,5 @@
 package com.onek.dao;
 
-import org.hibernate.Session;
-
 import com.onek.model.Candidat;
 import java.util.Date;
 
