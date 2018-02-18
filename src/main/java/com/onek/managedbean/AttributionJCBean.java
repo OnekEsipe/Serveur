@@ -64,6 +64,7 @@ public class AttributionJCBean implements Serializable {
 			candidats = new LinkedHashMap<>();
 			attribJC = new LinkedHashMap<>();
 			attributionFinal = new LinkedHashMap<>();
+			message = new ArrayList<>();
 
 			// Initialisation-update de la liste des candidats, utilisateurs, jurys et de
 			// l'attribution deja realisee
@@ -183,7 +184,6 @@ public class AttributionJCBean implements Serializable {
 		}
 
 		// Formatage de l'affichage
-		message = new ArrayList<>();
 		for (Entry<String, ArrayList<String>> attrib : attributionFinal.entrySet()) {
 			ArrayList<String> candidats = attrib.getValue();
 			StringBuilder sb = new StringBuilder();
