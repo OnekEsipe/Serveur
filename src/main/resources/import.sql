@@ -201,4 +201,3 @@ INSERT INTO notes (niveau, date, commentaire, idevaluation, idcritere) VALUES (2
 --
 -- PostgreSQL database dump complete
 --
-

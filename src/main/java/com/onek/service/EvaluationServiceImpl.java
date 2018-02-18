@@ -2,6 +2,7 @@ package com.onek.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,8 @@ public class EvaluationServiceImpl implements EvaluationService, Serializable {
 	}
 	
 	@Override
-	public void saveEvaluation(String nomCandidat, String prenomCandidat, int idevent, Jury jury) {
-		evaluationDao.saveEvaluation(nomCandidat, prenomCandidat, idevent, jury);
+	public void saveEvaluation(String nomCandidat, String prenomCandidat, int idevent, Jury jury, Date date) {
+		evaluationDao.saveEvaluation(nomCandidat, prenomCandidat, idevent, jury, date);
 	}
 
 	@Override

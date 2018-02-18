@@ -2,6 +2,7 @@ package com.onek.managedbean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,9 @@ import com.onek.utils.Navigation;
 
 @Component("attributionjc")
 public class AttributionJCBean implements Serializable {
-
+	// A faire : reset message arrayList dans before
+	// Check le status de l'event pour ajout/suppr de l'evaluation
+	// Afficher un putain de growl pour validation ou un message
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
@@ -86,6 +90,7 @@ public class AttributionJCBean implements Serializable {
 			candidats = new LinkedHashMap<>();
 			attribJC = new LinkedHashMap<>();
 			attributionFinal = new LinkedHashMap<>();
+			message = new ArrayList<>();
 
 			// Initialisation-update de la liste des candidats, utilisateurs, jurys et de
 			// l'attribution deja realisee
@@ -205,7 +210,6 @@ public class AttributionJCBean implements Serializable {
 		}
 
 		// Formatage de l'affichage
-		message = new ArrayList<>();
 		for (Entry<String, ArrayList<String>> attrib : attributionFinal.entrySet()) {
 			ArrayList<String> candidats = attrib.getValue();
 			StringBuilder sb = new StringBuilder();
@@ -217,8 +221,9 @@ public class AttributionJCBean implements Serializable {
 		}
 	}
 
-	public void validationButton() {
+	public void validationButton(ActionEvent actionEvent) {
 		ArrayList<String> selectedCandidates;
+		Date date = new Date();
 
 		// Remplissage map en fonction checkbox selectionnees
 		for (Entry<String, Map<String, Boolean>> entry : attribJC.entrySet()) {
@@ -257,7 +262,7 @@ public class AttributionJCBean implements Serializable {
 				if (!(candidatesStringBegin.contains(candidatEnd))) {
 					System.out.println(candidatEnd + " pas dans candidatBegin -> creation evaluation candidatEnd");
 					String[] splitNameCandidatEnd = candidatEnd.split(" ");
-					evaluationService.saveEvaluation(splitNameCandidatEnd[0], splitNameCandidatEnd[1], idEvent, jury);
+					evaluationService.saveEvaluation(splitNameCandidatEnd[0], splitNameCandidatEnd[1], idEvent, jury, date);
 				}
 			}
 			
