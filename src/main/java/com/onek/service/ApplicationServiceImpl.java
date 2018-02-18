@@ -35,7 +35,7 @@ import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.JuryResource;
 import com.onek.resource.NoteResource;
-import com.onek.utils.EncodePassword;
+import com.onek.utils.Encode;
 import com.onek.utils.StatutEvenement;
 
 @Service
@@ -198,7 +198,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		user.setNom(createJuryResource.getLastname());
 		user.setMail(createJuryResource.getMail());
 		user.setLogin(createJuryResource.getLogin());
-		user.setMotdepasse(EncodePassword.sha1(createJuryResource.getPassword()));
+		user.setMotdepasse(Encode.sha1(createJuryResource.getPassword()));
 		user.setDroits("J");
 		user.setIsdeleted(false);
 		userService.addUser(user);

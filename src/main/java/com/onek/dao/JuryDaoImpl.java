@@ -137,7 +137,6 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		List<Jury> jurys = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-
 		jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent")
 				.setParameter("idevent", idevent).list();
 		for (Jury jury : jurys) {
@@ -147,7 +146,6 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		}
 		session.getTransaction().commit();
 		session.close();
-
 		return utilisateurs;
 	}
 
@@ -159,7 +157,6 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		List<Utilisateur> utilisateursAnnonymes = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-
 		jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent")
 				.setParameter("idevent", idevent).list();
 		for (Jury jury : jurys) {
@@ -174,7 +171,6 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		}
 		session.getTransaction().commit();
 		session.close();
-
 		return utilisateursAnnonymes;
 	}
 

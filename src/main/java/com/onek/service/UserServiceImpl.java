@@ -12,7 +12,7 @@ import com.onek.dao.UserDao;
 import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
 import com.onek.utils.DroitsUtilisateur;
-import com.onek.utils.EncodePassword;
+import com.onek.utils.Encode;
 
 @Service
 public class UserServiceImpl implements UserService, Serializable {
@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService, Serializable {
 		}
 		String hash;
 		try {
-			hash = EncodePassword.sha1(password);
+			hash = Encode.sha1(password);
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 			throw new IllegalStateException();

@@ -5,12 +5,11 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class EncodePassword {
-
-	public static String sha1(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+public class Encode {
+	public static String sha1(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		MessageDigest digest = MessageDigest.getInstance("SHA-1");
 		digest.reset();		
-		digest.update(password.getBytes("utf8"));	
+		digest.update(s.getBytes("utf8"));	
 		return String.format("%040x", new BigInteger(1, digest.digest()));
     } 
 }
