@@ -49,6 +49,7 @@ public class AttributionJCBean implements Serializable {
 
 	private Map<String, Utilisateur> jurys;
 	private Map<String, Candidat> candidats;
+	private List<Jury> juryList;
 	private HashMap<Jury, List<Candidat>> associatedJurysCandidates;
 	private Map<String, ArrayList<String>> attributionFinal;
 
@@ -93,7 +94,7 @@ public class AttributionJCBean implements Serializable {
 			// l'attribution deja realisee
 			candidatsJurys = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateursJurys = eventAccueilservice.listJurysByEvent(idEvent);
-			List<Jury> juryList = juryservice.findJuryByIdevent(idEvent);
+			juryList = juryservice.findJuryByIdevent(idEvent);
 			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 
 			// Remplissage des maps pour l'affichage des noms des jurys/candidats dans le
@@ -124,6 +125,34 @@ public class AttributionJCBean implements Serializable {
 				attribJC.put(entryAssociation.getKey().getUtilisateur().getNom() + " "
 						+ entryAssociation.getKey().getUtilisateur().getPrenom(), candidatesPreChecked);
 			}
+			
+			
+			// --------- DEBUT Affichage des attributions dans la dataTable----------
+			for (Entry<String, Map<String, Boolean>> entry : attribJC.entrySet()) {
+				String jury = entry.getKey();
+				Map<String, Boolean> candidats = entry.getValue();
+				ArrayList<String> selectedCandidates = new ArrayList<>();
+				for (Entry<String, Boolean> entry2 : candidats.entrySet()) {
+					if (entry2.getValue() == true) {
+						selectedCandidates.add(entry2.getKey());
+					}
+					attributionFinal.put(jury, selectedCandidates);
+				}
+			}
+
+			// Formatage de l'affichage
+			messageAttrib = new ArrayList<>();
+			for (Entry<String, ArrayList<String>> attrib : attributionFinal.entrySet()) {
+				ArrayList<String> candidats = attrib.getValue();
+				StringBuilder sb = new StringBuilder();
+				for (String candidat : candidats) {
+					sb.append(candidat).append(", ");
+				}
+				sb.setLength(Math.max(sb.length() - 2, 0));;
+				messageAttrib.add(new MessageAttrib(attrib.getKey(), sb.toString()));
+			}
+			Collections.sort(messageAttrib, (o1, o2) -> o1.getJury().compareTo(o2.getJury()));
+			// --------- FIN Affichage des attributions dans la dataTable----------
 		}
 	}
 
@@ -192,13 +221,12 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	public void previsualisationButton() {
-		ArrayList<String> selectedCandidates;
 
 		// Remplissage map en fonction checkbox selectionnees
 		for (Entry<String, Map<String, Boolean>> entry : attribJC.entrySet()) {
 			String jury = entry.getKey();
 			Map<String, Boolean> candidats = entry.getValue();
-			selectedCandidates = new ArrayList<>();
+			ArrayList<String> selectedCandidates = new ArrayList<>();
 			for (Entry<String, Boolean> entry2 : candidats.entrySet()) {
 				if (entry2.getValue() == true) {
 					selectedCandidates.add(entry2.getKey());
@@ -272,7 +300,7 @@ public class AttributionJCBean implements Serializable {
 			}
 
 			// Update des listes
-			List<Jury> juryList = juryservice.findJuryByIdevent(idEvent);
+			juryList = juryservice.findJuryByIdevent(idEvent);
 			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 		}
 	}
@@ -291,10 +319,6 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	private void JuryParCandidat(int randomX) {
-		List<Candidat> candidats;
-		List<Jury> jurys;
-		candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
-		jurys = juryservice.findJuryByIdevent(idEvent);
 		if (randomX > jurys.size()) {
 			System.out.println("attribution impossible");
 			return;
@@ -305,12 +329,12 @@ public class AttributionJCBean implements Serializable {
 		int indexJury = 0;
 		int indexAttributionCandidat = 1;
 		int indexCandidat = 0;
-		alljury.put(0, jurys);
+		alljury.put(0, juryList);
 		Random random = new Random();
 		int x;
 		int sizeList = 0;
 
-		while (indexCandidat < candidats.size()) {
+		while (indexCandidat < candidatsJurys.size()) {
 			List<Jury> juryParCandidat = new ArrayList<>();
 			int i = 0;
 			while (i < randomX) {
@@ -333,7 +357,7 @@ public class AttributionJCBean implements Serializable {
 				}
 
 			}
-			attribution.put(candidats.get(indexCandidat), juryParCandidat);
+			attribution.put(candidatsJurys.get(indexCandidat), juryParCandidat);
 			indexCandidat++;
 		}
 
@@ -350,11 +374,7 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	public void CandidatParJury(int randomX) {
-		List<Candidat> candidats;
-		List<Jury> jurys;
-		candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
-		jurys = juryservice.findJuryByIdevent(idEvent);
-		if (randomX > candidats.size()) {
+		if (randomX > candidatsJurys.size()) {
 			System.out.println("attribution impossible");
 			return;
 		}
@@ -364,7 +384,7 @@ public class AttributionJCBean implements Serializable {
 		int indexJury = 0;
 		int indexAttributionCandidat = 1;
 		int indexCandidat = 0;
-		allcandidat.put(0, candidats);
+		allcandidat.put(0, candidatsJurys);
 
 		Random random = new Random();
 		int x;
@@ -393,7 +413,7 @@ public class AttributionJCBean implements Serializable {
 				}
 
 			}
-			attribution.put(jurys.get(indexJury), candidatparJury);
+			attribution.put(juryList.get(indexJury), candidatparJury);
 			indexJury++;
 		}
 		for (Jury jury : attribution.keySet()) {
@@ -408,6 +428,7 @@ public class AttributionJCBean implements Serializable {
 		navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
+	// Inner class pour la datatable 
 	public static class MessageAttrib {
 		private String jury;
 		private String candidats;
@@ -432,7 +453,5 @@ public class AttributionJCBean implements Serializable {
 		public void setCandidats(String candidats) {
 			this.candidats = candidats;
 		}
-
-		
 	}
 }
