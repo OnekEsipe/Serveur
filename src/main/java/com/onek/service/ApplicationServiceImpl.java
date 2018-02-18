@@ -16,9 +16,9 @@ import javax.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.onek.dao.CritereDao;
 import com.onek.dao.EvaluationDao;
 import com.onek.dao.EvenementDao;
-import com.onek.dao.GrilleDao;
 import com.onek.dao.JuryDao;
 import com.onek.dao.NoteDao;
 import com.onek.model.Candidat;
@@ -49,7 +49,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	private JuryDao juryDao;
 
 	@Autowired
-	private GrilleDao critereDao;
+	private CritereDao critereDao;
 
 	@Autowired
 	private EvaluationDao evaluationDao;
