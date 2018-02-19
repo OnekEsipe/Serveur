@@ -18,9 +18,12 @@
 <h:body>
 	<!-- Insertion du menu -->
 	<h:outputStylesheet library="css" name="candidate.css" />
+	<h:outputStylesheet library="css" name="accueil.css" />
 	<ui:include src="#{accueil.typeMenu}" />
 	<br />
 	<br />
+ 	<p:outputLabel  id="evenementChoisi"  value="#{accueil.evenementChoisi}"/>
+
 	<div class="ui-g">
 		<div>
 			<h:form enctype="multipart/form-data">
@@ -50,7 +53,7 @@
 				<p:outputLabel for="firstnameCandidat" value="Prénom" />
 				<p:inputText id="firstnameCandidat" name="firstnameCandidat"
 					placeholder="Entrer le prénom" size="20"
-					value="#{candidate.firstName}" required="true" />
+					value="#{candidate.firstName}" />
 
 				<p:commandButton value="Valider" action="#{candidate.click}"
 					icon="ui-icon-check" update="tabCandidat" ajax="false" />

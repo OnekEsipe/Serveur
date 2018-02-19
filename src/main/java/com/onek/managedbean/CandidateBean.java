@@ -19,6 +19,7 @@ import com.onek.model.Candidat;
 import com.onek.model.Evenement;
 import com.onek.service.CandidateService;
 import com.onek.service.EvenementService;
+import com.onek.utils.Navigation;
 
 @Component("candidate")
 public class CandidateBean implements Serializable{
@@ -49,6 +50,11 @@ public class CandidateBean implements Serializable{
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
+			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+				Navigation navigation = new Navigation();
+				navigation.redirect("accueil.xhtml");
+				return;
+			}
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			candidats = candidateService.findCandidatesByEvent(idEvent);

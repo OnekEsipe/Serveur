@@ -39,10 +39,10 @@ import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Note;
 import com.onek.model.Utilisateur;
-import com.onek.service.AddJuryService;
 import com.onek.service.EvaluationService;
 import com.onek.service.EvenementService;
 import com.onek.service.EventAccueilService;
+import com.onek.service.JuryService;
 import com.onek.service.UserService;
 import com.onek.utils.Navigation;
 import com.onek.utils.PasswordGenerator;
@@ -61,7 +61,7 @@ public class EventAccueilBean implements Serializable {
 	private UserService userService;
 
 	@Autowired
-	private AddJuryService juryServices;
+	private JuryService juryService;
 
 	@Autowired
 	EvaluationService evaluation;
@@ -170,13 +170,19 @@ public class EventAccueilBean implements Serializable {
 
 	public void before(ComponentSystemEvent e) throws ParseException {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
+			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+				Navigation navigation = new Navigation();
+				navigation.redirect("accueil.xhtml");
+				return;
+			}
+			
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
 
 			utilisateursAnos = new ArrayList<>();
-			List<Jury> jurys = juryServices.listJurysAnnonymesByEvent(idEvent);
+			List<Jury> jurys = juryService.listJurysAnnonymesByEvent(idEvent);
 			jurys.forEach(jury -> utilisateursAnos.add(jury.getUtilisateur()));
 
 			this.statut = event.getStatus();
@@ -195,7 +201,6 @@ public class EventAccueilBean implements Serializable {
 				setVisibleF("true");
 
 			}
-			System.out.println();
 			this.dateStart = event.getDatestart();
 			this.dateEnd = event.getDatestop();
 
@@ -313,7 +318,7 @@ public class EventAccueilBean implements Serializable {
 		passwordGenerator = new PasswordGenerator();
 		List<Utilisateur> anonymousJurys = new ArrayList<>();
 		Utilisateur anonymousJury;
-		int increment = juryServices.findAnonymousByIdEvent(idEvent).size();
+		int increment = juryService.findAnonymousByIdEvent(idEvent).size();
 		if (juryAnonyme > 0) {
 			for (int i = 0 + increment; i < juryAnonyme + increment; i++) {
 				anonymousJury = new Utilisateur();

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
-import com.onek.service.AccueilService;
+import com.onek.service.EvenementService;
 import com.onek.service.UserService;
 import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Navigation;
@@ -27,31 +27,32 @@ public class AccueilBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private AccueilService accueilservice;
+	private EvenementService eventService;
 	
 	@Autowired
 	private UserService userService;
-
+	
 	private final Navigation navigation = new Navigation();
 
 	private List<Evenement> events;
 	private Evenement evenement;
+	private String evenementChoisi;
 	private List<Evenement> filteredevents;
 	private Evenement selectedevent;
 
 	private Utilisateur user;
 	private String login;
 	
-	private String visible;
+	private String visible = "false";
 
 	private int idevent;
 	private String typeMenu;
 	
 	public void before(ComponentSystemEvent e) {
-		visible = "false";
+
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 		 login =  (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-			user = userService.getUserByLogin(login);
+			user = userService.findByLogin(login);
 			if(user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
 				typeMenu = "menu.xhtml";
 				setVisible("true");
@@ -69,7 +70,7 @@ public class AccueilBean implements Serializable {
 		}
 		
 	}
-
+	
 	public int getIdevent() {
 		return idevent;
 	}
@@ -87,7 +88,14 @@ public class AccueilBean implements Serializable {
 	}
 
 	public void refresh() {
-		events = accueilservice.listEvents();
+		
+		if(user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
+			events = eventService.findAll();
+		}else if(user.getDroits().equals(DroitsUtilisateur.ORGANISATEUR.toString())) {
+			events = eventService.myListEvents(user.getIduser());
+		}else {
+			events = new ArrayList<>();
+		}
 		for (Evenement evenement : events) {
 			if (evenement.getStatus().equals("Ouvert") && (evenement.getDatestart().compareTo(new Date()) < 0)) {
 				evenement.setStatus("Démarré");
@@ -95,14 +103,6 @@ public class AccueilBean implements Serializable {
 			if (evenement.getStatus().equals("Démarré") && (evenement.getDatestop().compareTo(new Date()) < 0)) {
 				evenement.setStatus("Stoppé");
 			}
-		}
-		
-		if(user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
-			events = accueilservice.listEvents();
-		}else if(user.getDroits().equals(DroitsUtilisateur.ORGANISATEUR.toString())) {
-			events = accueilservice.myListEvents(user.getIduser());
-		}else {
-			events = new ArrayList<>();
 		}
 	}
 
@@ -114,7 +114,7 @@ public class AccueilBean implements Serializable {
 		this.events = events;
 	}
 
-
+	
 	public List<Evenement> getFilteredevents() {
 		return filteredevents;
 	}
@@ -130,7 +130,7 @@ public class AccueilBean implements Serializable {
 	public void setSelectedevent(Evenement selectedevent) {
 		this.selectedevent = selectedevent;
 	}
-
+	
 	public Utilisateur getUser() {
 		return user;
 	}
@@ -156,22 +156,32 @@ public class AccueilBean implements Serializable {
 		this.visible = visible;
 	}
 
+	
+	public String getEvenementChoisi() {
+		return evenementChoisi;
+	}
+
+	public void setEvenementChoisi(String evenementChoisi) {
+		this.evenementChoisi = evenementChoisi;
+	}
+
 	public void supprimerEvent() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 		idevent = Integer.valueOf(params.get("idevent"));
-		accueilservice.supprimerEvent(idevent);
-		events = accueilservice.listEvents();
+		eventService.supprimerEvent(idevent);
+		events = eventService.findAll();
 		refresh();
+		
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent",
-				selectedevent.getIdevent());
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", selectedevent.getIdevent());
+		setEvenementChoisi("Nom de l'évènement selectionné : "+selectedevent.getNom());
 		navigation.redirect("eventAccueil.xhtml");
 	}
-
+	
 	public void buttonAction() {
 		navigation.redirect("viewCreateEvent.xhtml");
-	}
+    }
 }

@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
@@ -32,12 +33,15 @@ public class AttributionJCBean implements Serializable {
 
 	@Autowired
 	private JuryService juryservice;
-	
+
 	@Autowired
 	private EvaluationService evaluationService;
-
+	
 	private int idEvent;
 
+	private int methode;
+	private int randomX;
+	
 	private List<Utilisateur> utilisateursJurys;
 	private List<Candidat> candidatsJurys;
 
@@ -46,14 +50,36 @@ public class AttributionJCBean implements Serializable {
 	private HashMap<Jury, List<Candidat>> associatedJurysCandidates;
 	private Map<String, ArrayList<String>> attributionFinal;
 
-	private Map<String, Map<String, Boolean>> attribJC;
+		private Map<String, Map<String, Boolean>> attribJC;
 
 	private ArrayList<String> message;
 	
 	private Navigation navigation = new Navigation();
 
+	public int getMethode() {
+		return methode;
+	}
+
+	public void setMethode(int methode) {
+		this.methode = methode;
+	}
+
+	public int getRandomX() {
+		return randomX;
+	}
+
+	public void setRandomX(int randomX) {
+		this.randomX = randomX;
+	}
+
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
+			
+			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+				Navigation navigation = new Navigation();
+				navigation.redirect("accueil.xhtml");
+				return;
+			}
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 
 			jurys = new LinkedHashMap<>();
@@ -65,7 +91,7 @@ public class AttributionJCBean implements Serializable {
 			// l'attribution deja realisee
 			candidatsJurys = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateursJurys = eventAccueilservice.listJurysByEvent(idEvent);
-			List<Jury> juryList = juryservice.findJuryByIdevent(idEvent);
+			List<Jury> juryList = juryservice.findJurysByIdevent(idEvent);
 			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 
 			// Remplissage des maps pour l'affichage des noms des jurys/candidats dans le
@@ -236,12 +262,137 @@ public class AttributionJCBean implements Serializable {
 			}
 			
 			// Update des listes
-			List<Jury> juryList = juryservice.findJuryByIdevent(idEvent);
+			List<Jury> juryList = juryservice.findJurysByIdevent(idEvent);
 			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 		}
 	}
 	
 	public void retour() {
 		navigation.redirect("eventAccueil.xhtml");
+	}
+
+	public void attributionAutomatique() {
+		
+		if(methode==2) {
+			CandidatParJury(randomX);
+		}
+		else {
+			JuryParCandidat(randomX);
+		}
+	}
+
+	private void JuryParCandidat(int randomX) {
+		List<Candidat> candidats;
+		List<Jury> jurys;
+		candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
+		jurys = juryservice.findJurysByIdevent(idEvent);
+		if (randomX > jurys.size()) {
+			System.out.println("attribution impossible");
+			return;
+		}
+		HashMap<Integer, List<Jury>> alljury = new HashMap<>();
+		HashMap<Candidat, List<Jury>> attribution = new HashMap<>();
+		alljury.put(1, new ArrayList<>());
+		int indexJury = 0;
+		int indexAttributionCandidat = 1;
+		int indexCandidat = 0;
+		alljury.put(0, jurys);
+		Random random = new Random();
+		int x;
+		int sizeList = 0;
+
+		while (indexCandidat < candidats.size()) {
+			List<Jury> juryParCandidat = new ArrayList<>();
+			int i=0;
+			while(i<randomX) {
+
+				sizeList = alljury.get(indexJury).size();
+
+				if (sizeList <= 0) {
+					indexJury++;
+					indexAttributionCandidat++;
+					alljury.put(indexAttributionCandidat, new ArrayList<>());
+					sizeList = alljury.get(indexJury).size();
+				}
+				x = random.nextInt(sizeList);
+				Jury jury=alljury.get(indexJury).get(x);
+				if(!juryParCandidat.contains(jury)) {
+					juryParCandidat.add(jury);
+					alljury.get(indexJury).remove(x);
+					alljury.get(indexAttributionCandidat).add(jury);
+					i++;
+				}
+
+			}
+			attribution.put(candidats.get(indexCandidat), juryParCandidat);
+			indexCandidat++;
+		}
+
+		for (Candidat candidat : attribution.keySet()) {
+			//System.out.println("candidat: "+c.getNom()+" "+c.getPrenom());
+			for (Jury jury : attribution.get(candidat)) {
+				//System.out.print(jury.getUtilisateur().getNom()+" "+jury.getUtilisateur().getPrenom() + " || ");
+				evaluationService.saveEvaluation(candidat, jury);
+			}
+			//System.out.println();
+		}
+	}
+
+	public void CandidatParJury(int randomX) {
+		List<Candidat> candidats;
+		List<Jury> jurys;
+		candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
+		jurys = juryservice.findJurysByIdevent(idEvent);
+		if (randomX > candidats.size()) {
+			System.out.println("attribution impossible");
+			return;
+		}
+		HashMap<Integer, List<Candidat>> allcandidat = new HashMap<>();
+		HashMap<Jury, List<Candidat>> attribution = new HashMap<>();
+		allcandidat.put(1, new ArrayList<>());
+		int indexJury = 0;
+		int indexAttributionCandidat = 1;
+		int indexCandidat = 0;
+		allcandidat.put(0, candidats);
+
+		Random random = new Random();
+		int x;
+		int sizeList = 0;
+
+		while (indexJury < jurys.size()) {
+
+			List<Candidat> candidatparJury = new ArrayList<>();
+			int i=0;
+			while(i<randomX){
+				sizeList = allcandidat.get(indexCandidat).size();
+
+				if (sizeList <= 0) {
+					indexCandidat++;
+					indexAttributionCandidat++;
+					allcandidat.put(indexAttributionCandidat, new ArrayList<>());
+					sizeList = allcandidat.get(indexCandidat).size();
+				}
+				x = random.nextInt(sizeList);
+				Candidat candidat = allcandidat.get(indexCandidat).get(x);
+				if(!candidatparJury.contains(candidat)) {
+					i++;
+					candidatparJury.add(candidat);
+					allcandidat.get(indexCandidat).remove(x);
+					allcandidat.get(indexAttributionCandidat).add(candidat);
+				}		
+
+			}
+			attribution.put(jurys.get(indexJury), candidatparJury);
+			indexJury++;
+		}
+		for (Jury jury : attribution.keySet()) {
+			//System.out.println("jury: "+j.getUtilisateur().getNom()+" "+j.getUtilisateur().getPrenom());
+			for (Candidat candidat : attribution.get(jury)) {
+				//System.out.print(candidat.getNom() +" "+candidat.getPrenom()+ " || ");
+				evaluationService.saveEvaluation(candidat, jury);
+			}
+			//System.out.println();
+		}
+
 	}
 }

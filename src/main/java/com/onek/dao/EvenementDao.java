@@ -11,5 +11,7 @@ public interface EvenementDao {
 	public List<Evenement> findByIdUser(int idUser);
 	public Evenement findByCode(String code);
 	public void editEvenement(Evenement event);
+	public List<Evenement> findAll();
+	public void supprimerEvent(int idevent);
 	
 }
