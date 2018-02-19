@@ -8,14 +8,14 @@ import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.onek.service.LoginService;
+import com.onek.service.UserService;
 
 @Component("login")
 public class LoginBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private LoginService loginservice;
+	private UserService userService;
 
 	private String login;
 	private String motDePasse;
@@ -55,7 +55,7 @@ public class LoginBean implements Serializable {
 	}
 
 	public void buttonAction() {
-		if (!loginservice.authentification(login, motDePasse)) {
+		if (!userService.authentification(login, motDePasse)) {
 			message = "Utilisateur ou mot de passe incorrect.";
 			return;
 		}		

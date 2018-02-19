@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
-import com.onek.service.AccueilService;
+import com.onek.service.EvenementService;
 import com.onek.service.UserService;
 import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Navigation;
@@ -27,7 +27,7 @@ public class AccueilBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private AccueilService accueilservice;
+	private EvenementService eventService;
 	
 	@Autowired
 	private UserService userService;
@@ -51,7 +51,7 @@ public class AccueilBean implements Serializable {
 
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 		 login =  (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-			user = userService.getUserByLogin(login);
+			user = userService.findByLogin(login);
 			if(user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
 				typeMenu = "menu.xhtml";
 				setVisible("true");
@@ -89,9 +89,9 @@ public class AccueilBean implements Serializable {
 	public void refresh() {
 		
 		if(user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
-			events = accueilservice.listEvents();
+			events = eventService.findAll();
 		}else if(user.getDroits().equals(DroitsUtilisateur.ORGANISATEUR.toString())) {
-			events = accueilservice.myListEvents(user.getIduser());
+			events = eventService.myListEvents(user.getIduser());
 		}else {
 			events = new ArrayList<>();
 		}
@@ -159,8 +159,8 @@ public class AccueilBean implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 		idevent = Integer.valueOf(params.get("idevent"));
-		accueilservice.supprimerEvent(idevent);
-		events = accueilservice.listEvents();
+		eventService.supprimerEvent(idevent);
+		events = eventService.findAll();
 		refresh();
 		
 	}

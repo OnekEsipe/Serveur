@@ -1,9 +1,7 @@
 package com.onek.managedbean;
 
 import java.io.Serializable;
-
 import java.util.Date;
-
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
@@ -15,7 +13,6 @@ import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
 import com.onek.service.EvenementService;
 import com.onek.service.UserService;
-import com.onek.service.LoginService;
 import com.onek.utils.Navigation;
 import com.onek.utils.PasswordGenerator;
 
@@ -24,8 +21,6 @@ public class EventBean implements Serializable {
 	@Autowired
 	UserService userService;
 	
-	@Autowired
-	LoginService loginService;
 	private static final long serialVersionUID = 1L;	
 	private static final int ecartHour = 3_600_000; //en milliseconde
 
@@ -63,7 +58,7 @@ public class EventBean implements Serializable {
 	public void addEvent() {
 	FacesContext fc = FacesContext.getCurrentInstance();
 		String login = (String) fc.getExternalContext().getSessionMap().get("user");
-		Utilisateur utilisateur = loginService.findUserByLogin(login);
+		Utilisateur utilisateur = userService.findByLogin(login);
 		event = new Evenement();
 		event.setNom(name);
 		event.setDatestart(new Date(date1.getTime()+hour1.getTime() + ecartHour));

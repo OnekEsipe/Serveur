@@ -91,7 +91,7 @@ public class AttributionJCBean implements Serializable {
 			// l'attribution deja realisee
 			candidatsJurys = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateursJurys = eventAccueilservice.listJurysByEvent(idEvent);
-			List<Jury> juryList = juryservice.findJuryByIdevent(idEvent);
+			List<Jury> juryList = juryservice.findJurysByIdevent(idEvent);
 			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 
 			// Remplissage des maps pour l'affichage des noms des jurys/candidats dans le
@@ -262,7 +262,7 @@ public class AttributionJCBean implements Serializable {
 			}
 			
 			// Update des listes
-			List<Jury> juryList = juryservice.findJuryByIdevent(idEvent);
+			List<Jury> juryList = juryservice.findJurysByIdevent(idEvent);
 			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 		}
 	}
@@ -285,7 +285,7 @@ public class AttributionJCBean implements Serializable {
 		List<Candidat> candidats;
 		List<Jury> jurys;
 		candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
-		jurys = juryservice.findJuryByIdevent(idEvent);
+		jurys = juryservice.findJurysByIdevent(idEvent);
 		if (randomX > jurys.size()) {
 			System.out.println("attribution impossible");
 			return;
@@ -342,7 +342,7 @@ public class AttributionJCBean implements Serializable {
 		List<Candidat> candidats;
 		List<Jury> jurys;
 		candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
-		jurys = juryservice.findJuryByIdevent(idEvent);
+		jurys = juryservice.findJurysByIdevent(idEvent);
 		if (randomX > candidats.size()) {
 			System.out.println("attribution impossible");
 			return;

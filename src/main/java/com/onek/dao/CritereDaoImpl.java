@@ -1,43 +1,45 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.onek.model.Utilisateur;
+import com.onek.model.Critere;
+import com.onek.model.Descripteur;
 
 @Repository
-public class LoginDaoImpl implements LoginDao, Serializable {
+public class CritereDaoImpl implements CritereDao, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
-	public Utilisateur findUserByLogin(String login) {
+	public void addCriteres(List<Critere> criteres) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where login = :login")
-				.setParameter("login", login).getSingleResult();
+		for (Critere critere : criteres) {
+			session.save(critere);
+			for (Descripteur descripteur : critere.getDescripteurs()) {
+				session.save(descripteur);
+			}
+		}
 		session.getTransaction().commit();
 		session.close();
-
-		return user;
 	}
 
 	@Override
-	public boolean userExist(String login) {
+	public Critere findById(Integer id) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		long result = (Long) session.createQuery("SELECT COUNT(e) from Utilisateur e WHERE e.login =:login")
-				.setParameter("login", login).getSingleResult();
+		Critere critere = (Critere) session.createQuery("FROM Critere WHERE idcritere = :id").setParameter("id", id)
+				.getSingleResult();
 		session.getTransaction().commit();
 		session.close();
-
-		return result == 1;
+		return critere;
 	}
-	
 }
