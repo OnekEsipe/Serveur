@@ -31,19 +31,21 @@ public class EmailServiceImpl implements EmailService, Serializable {
 	}
 
 	@Override
-	public void sendMail(String to, String subject, String msg) {
+	public boolean sendMail(String to, String subject, String msg) {
 		MimeMessage message = new MimeMessage(session);
 		try {
 			message.setFrom(new InternetAddress(session.getProperty("mail.from")));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 			message.setSubject(subject);
-			message.setText(msg);
+			message.setContent(msg, "text/html; charset=utf-8");
 			Transport transport = session.getTransport("smtp");
 			transport.connect(session.getProperty("mail.smtp.host"), session.getProperty("mail.smtp.user"),
 					session.getProperty("mail.smtp.password"));
 			transport.sendMessage(message, message.getAllRecipients());
 		} catch (MessagingException e) {
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 }

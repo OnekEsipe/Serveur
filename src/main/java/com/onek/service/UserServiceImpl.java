@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService, Serializable {
 		if (userExist(user.getLogin())) {
 			throw new IllegalStateException();
 		}
-		addUser(user);
+		userDao.addUser(user);
 	}
 
 	@Override
@@ -98,5 +98,15 @@ public class UserServiceImpl implements UserService, Serializable {
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public boolean mailExist(String mail) {
+		return userDao.mailExist(mail);
+	}
+	
+	@Override
+	public Utilisateur findByMail(String mail) {
+		return userDao.findByMail(mail);
 	}
 }

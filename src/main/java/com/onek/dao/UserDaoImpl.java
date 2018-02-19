@@ -29,6 +29,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.close();
 	}
 
+	@Override
 	public Utilisateur findByLogin(String login) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -120,6 +121,17 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.getTransaction().commit();
 		session.close();
 		return result == 1;
+	}
+	
+	@Override
+	public Utilisateur findByMail(String mail) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where mail = :mail")
+				.setParameter("mail", mail).getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return user;
 	}
 
 }

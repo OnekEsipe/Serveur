@@ -17,4 +17,6 @@ public interface UserService {
 	public void deleteUser(int idUser);
 	public void addUser(Utilisateur user);
 	public boolean authentification(String login, String password);
+	public boolean mailExist(String mail);
+	public Utilisateur findByMail(String mail);
 }

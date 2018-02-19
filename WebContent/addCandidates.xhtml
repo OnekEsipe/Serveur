@@ -22,7 +22,7 @@
 	<ui:include src="#{accueil.typeMenu}" />
 	<br />
 	<br />
- 	<p:outputLabel  id="evenementChoisi"  value="#{accueil.evenementChoisi}"/>
+	<p:outputLabel id="evenementChoisi" value="#{accueil.evenementChoisi}" />
 
 	<div class="ui-g">
 		<div>
@@ -121,7 +121,10 @@
 			</div>
 		</h:form>
 	</div>
-
+		<h:form>
+			<br /><p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
+				actionListener="#{candidate.retour}" />
+		</h:form>
 
 	<br />
 	<br />
