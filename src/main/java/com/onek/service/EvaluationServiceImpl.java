@@ -39,4 +39,9 @@ public class EvaluationServiceImpl implements EvaluationService, Serializable {
 	public void saveEvaluation(Candidat candidat, Jury jury, Date date, int idevent) {
 		evaluationDao.saveEvaluation(candidat, jury, date, idevent);
 	}
+
+	@Override
+	public List<Evaluation> findByIdJury(Integer idJury) {
+		return evaluationDao.findByIdJury(idJury);
+	}
 }
