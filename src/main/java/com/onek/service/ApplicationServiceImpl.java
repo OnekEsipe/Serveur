@@ -35,6 +35,8 @@ import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.JuryResource;
 import com.onek.resource.NoteResource;
+import com.onek.resource.PasswordModify;
+import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Encode;
 import com.onek.utils.StatutEvenement;
 
@@ -214,7 +216,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		try {
 			event = eventDao.findByCode(eventCode.getEventCode());
 		} catch (NoResultException rse) {
-			return false;
+			throw new IllegalArgumentException();
 		}
 		Jury jury = new Jury();
 		jury.setUtilisateur(user);
@@ -222,6 +224,24 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		juryService.addJuryToEvent(jury);
 		return true;
 	}	
+	
+	@Override
+	public boolean changePassword(PasswordModify passwordModify) {
+		String login = passwordModify.getLogin();
+		if (!userService.userExist(login)) {
+			return false;
+		}
+		Utilisateur user = userService.findByLogin(login);		
+		if (user.getDroits().equals(DroitsUtilisateur.ANONYME.toString())) {
+			return false;
+		}		
+		if (!user.getMotdepasse().equals(passwordModify.getOldPassword())) {
+			return false;
+		}
+		user.setMotdepasse(passwordModify.getNewPassword());
+		userService.updateUserInfos(user);
+		return true;
+	}
 	
 	/* associated jurys and candidates for an event */
 	private List<JuryResource> associatedJurysCandidates(List<Jury> jurys, Integer idEvent) {
