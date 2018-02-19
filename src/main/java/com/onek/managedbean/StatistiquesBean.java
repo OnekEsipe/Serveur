@@ -42,9 +42,9 @@ public class StatistiquesBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	EvaluationService evaluation;
+	private EvaluationService evaluation;
 	@Autowired
-	EvenementService evenement;
+	private EvenementService evenement;
 
 	private int idEvent;
 	private Evenement event;
@@ -179,18 +179,15 @@ public class StatistiquesBean implements Serializable {
 			Cell cell = row.createCell(colNum);
 			cell.setCellValue(critere.getTexte());
 			cell.setCellStyle(style2);
-			System.out.println(cell.getStringCellValue() + " --> " + cell.getAddress());
 			rowNum++;
 			row = sheet.createRow(rowNum);
 			cell = row.createCell(colNum);
 			cell.setCellValue("Coefficient : ");
 			cell.setCellStyle(style);
-			System.out.println(cell.getStringCellValue() + " --> " + cell.getAddress().formatAsString());
 			colNum++;
 			cell = row.createCell(colNum);
 			cell.setCellValue(critere.getCoefficient().doubleValue());
 			cell.setCellStyle(style);
-			System.out.println(cell.getNumericCellValue() + " --> " + cell.getAddress().formatAsString());
 			mapParam.get(critere.getTexte()).put("coef", cell.getAddress());
 			colNum--;
 			rowNum++;
@@ -198,12 +195,10 @@ public class StatistiquesBean implements Serializable {
 			cell = row.createCell(colNum);
 			cell.setCellValue("Descripteur");
 			cell.setCellStyle(style2);
-			System.out.println(cell.getStringCellValue() + " --> " + cell.getAddress().formatAsString());
 			colNum++;
 			cell = row.createCell(colNum);
 			cell.setCellValue("Poids");
 			cell.setCellStyle(style2);
-			System.out.println(cell.getStringCellValue() + " --> " + cell.getAddress().formatAsString());
 			for (Descripteur descripteur : critere.getDescripteurs()) {
 				rowNum++;
 				colNum--;
@@ -211,14 +206,23 @@ public class StatistiquesBean implements Serializable {
 				cell = row.createCell(colNum);
 				cell.setCellValue(descripteur.getNiveau());
 				cell.setCellStyle(style);
-				System.out.println(cell.getStringCellValue() + " --> " + cell.getAddress().formatAsString());
 				colNum++;
 				cell = row.createCell(colNum);
 				cell.setCellValue(descripteur.getPoids().doubleValue());
 				cell.setCellStyle(style);
-				System.out.println(cell.getNumericCellValue() + " --> " + cell.getAddress().formatAsString());
 				mapParam.get(critere.getTexte()).put(descripteur.getNiveau(), cell.getAddress());
 			}
+			rowNum++;
+			colNum--;
+			row = sheet.createRow(rowNum);
+			cell = row.createCell(colNum);
+			cell.setCellValue("-");
+			cell.setCellStyle(style);
+			colNum++;
+			cell = row.createCell(colNum);
+			cell.setCellValue(0);
+			cell.setCellStyle(style);
+			mapParam.get(critere.getTexte()).put("-", cell.getAddress());
 			rowNum += 2;
 			colNum = 0;
 		}
@@ -230,8 +234,10 @@ public class StatistiquesBean implements Serializable {
 			int rowNum = 0;
 			int colNum = 0;
 			Map<String, List<String>> mapResultsByCritere = new HashMap<>();
+			System.out.println("ID Candidat : "+candidat.getIdcandidat());
 			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
 			XSSFSheet sheet = workbook.createSheet(candidat.getNom() + " " + candidat.getPrenom());
+			System.out.println("Nombre d'évaluation : "+evaluations.size());
 			Row row = sheet.createRow(rowNum++);
 			Cell cell = row.createCell(colNum++);
 			cell.setCellValue("Jurys");
@@ -248,6 +254,7 @@ public class StatistiquesBean implements Serializable {
 			cell.setCellValue("Total");
 			cell.setCellStyle(style2);
 			for (Evaluation eval : evaluations) {
+				System.out.println("Nombre de notes : "+eval.getNotes().size());
 				row = sheet.createRow(rowNum++);
 				colNum = 0;
 				cell = row.createCell(colNum++);
@@ -257,6 +264,7 @@ public class StatistiquesBean implements Serializable {
 				cell.setCellStyle(style2);
 				sb.append("SUM(");
 				for (Note note : eval.getNotes()) {
+					System.out.println("Note : niveau = "+note.getNiveau()+" critère = "+note.getCritere().getTexte()+ " commentaire = "+note.getCommentaire());
 					if (!mapResultsByCritere.containsKey(note.getCritere().getTexte())) {
 						mapResultsByCritere.put(note.getCritere().getTexte(), new ArrayList<>());
 					}
@@ -266,7 +274,7 @@ public class StatistiquesBean implements Serializable {
 					cell.setCellStyle(style2);
 					sb.append("Parametres!" + mapParam.get(note.getCritere().getTexte()).get("coef").formatAsString()
 							+ "*Parametres!" + mapParam.get(note.getCritere().getTexte())
-									.get(niveaux.get(note.getNiveau())).formatAsString());
+									.get(niveaux.get(note.getNiveau())));
 					cell = row.createCell(colNum++);
 					cell.setCellValue(note.getCommentaire());
 					cell.setCellStyle(style);
@@ -294,7 +302,7 @@ public class StatistiquesBean implements Serializable {
 				sb.append("AVERAGE(");
 				if (mapResultsByCritere.containsKey(critere.getTexte())) {
 					for (String niveau : mapResultsByCritere.get(critere.getTexte())) {
-						sb.append("Parametres!" + mapParam.get(critere.getTexte()).get(niveau).formatAsString())
+						sb.append("Parametres!" + mapParam.get(critere.getTexte()).get(niveau))
 								.append("+");
 					}
 					sb.setLength(sb.length() - 1);
