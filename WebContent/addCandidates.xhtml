@@ -27,21 +27,31 @@
 	<div class="ui-g">
 		<div>
 			<h:form enctype="multipart/form-data">
-				<p:growl id="messages" showDetail="true" />
-				<p:fileUpload id="upload" value="#{candidate.file}" mode="simple"
-					skinSimple="true" />
-				<p:tooltip for="upload" value="Format : 2 colonnes (nom;prenom)"
+				<p:fileUpload fileUploadListener="#{candidate.importFile}" auto="true" id="upload" allowTypes="/(\.|\/)(csv)$/" update="send"/>
+				<p:tooltip for="upload" value="Format : 2 colonnes (nom,prenom)" 
 					position="top" />
-				<br />
-				<p:commandButton value="Envoyer" ajax="false"
-					actionListener="#{candidate.importFile}" icon="ui-icon-check" />
+					
+				<!-- Dialogue de confirmation -->
+					<p:commandButton value="Envoyer" icon="ui-icon-check" id="send"
+						actionListener="#{candidate.sendFile}" >
+						<p:confirm header="Confirmation" message="#{candidate.message}" 
+							icon="ui-icon-check" />
+					</p:commandButton>
+					
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+					
+
 				<br />
 				<h3 id="importLog">#{candidate.importLog}</h3>
 			</h:form>
 		</div>
 		<h:form>
 			<p:growl id="msgs" showDetail="true" />
-			<h3>Ajouter un nouveau candidat</h3>
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="lastnameCandidat" value="Nom:" />
