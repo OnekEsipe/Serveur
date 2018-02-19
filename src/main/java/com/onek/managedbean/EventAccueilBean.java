@@ -18,12 +18,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
+import com.onek.model.Critere;
+import com.onek.model.Descripteur;
 import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
+import com.onek.service.CandidateService;
 import com.onek.service.EvaluationService;
 import com.onek.service.EvenementService;
 import com.onek.service.EventAccueilService;
+import com.onek.service.GrilleService;
 import com.onek.service.JuryService;
 import com.onek.service.UserService;
 import com.onek.utils.Navigation;
@@ -47,6 +51,16 @@ public class EventAccueilBean implements Serializable {
 
 	@Autowired
 	EvaluationService evaluation;
+	
+	@Autowired
+	private EvenementService evenementService;
+	
+	@Autowired
+	private GrilleService grilleservice;
+	
+	@Autowired
+	private CandidateService candidatService;
+	
 
 	private final Navigation navigation = new Navigation();
 
@@ -385,5 +399,99 @@ public class EventAccueilBean implements Serializable {
 	public void buttonStats() {
 		navigation.redirect("statistiques.xhtml");
 	}
+	public void buttonDupliquer() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		String login = (String) fc.getExternalContext().getSessionMap().get("user");
+		Utilisateur utilisateur = userService.findByLogin(login);
+		Evenement eventbis = evenementService.addDuplicatedEvent(createEventDuplique(utilisateur));
+		List<Critere> criteresbis = new ArrayList<>();
+		criteresbis = duplicateCritere(eventbis);
+		grilleservice.addCriteres(criteresbis);
+		eventbis.setCriteres(new ArrayList<>());
+		for (Critere critere : criteresbis) {
+			eventbis.addCritere(critere);
+		}
+		List<Candidat> candidatsBis = new ArrayList<>();
+		candidatsBis = duplicateCandidat(eventbis);
+		candidatService.addCandidates(candidatsBis);
+		eventbis.setCandidats(new ArrayList<>());
+		for (Candidat candidat : candidatsBis) {
+			eventbis.addCandidat(candidat);
+		}
+		List<Jury> jurysBis = new ArrayList<>();
+		jurysBis = duplicateJury(eventbis);	
+		eventbis.setJurys(new ArrayList<>());
+		for (Jury jury : jurysBis) {
+			eventbis.addJury(jury);
+		}
+		juryService.addListJurys(jurysBis);
+		
+	}
 
+	private List<Critere> duplicateCritere(Evenement eventbis) {
+		List<Critere> criteres = new ArrayList<>();
+		for (Critere critere : event.getCriteres()) {
+			Critere c = new Critere();
+			c.setDescripteurs(new ArrayList<>());
+			c.setEvenement(eventbis);
+			c.setCategorie(critere.getCategorie());
+			c.setCoefficient(critere.getCoefficient());
+			c.setTexte(critere.getTexte());
+			for (Descripteur descripteur : critere.getDescripteurs()) {
+				Descripteur d = new Descripteur();
+				d.setNiveau(descripteur.getNiveau());
+				d.setPoids(descripteur.getPoids());
+				d.setTexte(descripteur.getTexte());
+				d.setCritere(c);
+				c.addDescripteur(d);
+			}
+			criteres.add(c);
+		}
+		return criteres;
+	}
+
+	private List<Jury> duplicateJury(Evenement eventbis) {
+		List<Jury> jurysBis = new ArrayList<>();
+		for (Jury jury : event.getJurys()) {
+			Jury jurybis = new Jury();
+			jurybis.setEvenement(eventbis);
+			jurybis.setUtilisateur(jury.getUtilisateur());
+			jurysBis.add(jurybis);
+		}
+		return jurysBis;
+	}
+
+	private List<Candidat> duplicateCandidat(Evenement eventbis) {
+		List<Candidat> candidatsBis = new ArrayList<>();
+		for (Candidat candidat : event.getCandidats()) {
+			Candidat candidatbis = new Candidat();
+			candidatbis.setNom(candidat.getNom());
+			candidatbis.setPrenom(candidat.getPrenom());
+			candidatbis.setEvenement(eventbis);
+			candidatsBis.add(candidatbis);
+		}
+		return candidatsBis;
+	}
+
+	private Evenement createEventDuplique(Utilisateur utilisateur) {
+		Evenement eventBis = new Evenement();
+		eventBis.setNom(event.getNom()+"Bis");
+		eventBis.setDatestart(event.getDatestart());
+		eventBis.setDatestop(event.getDatestop());
+		eventBis.setIsdeleted(false);
+		eventBis.setIsopened(false);
+		eventBis.setUtilisateur(utilisateur);
+		eventBis.setStatus("Brouillon");
+		eventBis.setIssigned(event.getIssigned());
+		eventBis.setCode(generateCode());
+		return eventBis;
+	}
+
+	private String generateCode() {
+		PasswordGenerator pass = new PasswordGenerator();
+		Integer id = event.getIdevent();
+		int length = (int) (Math.log10(id) + 1);
+		String codeEvent = id+pass.generateCode(10-length);
+		return codeEvent;
+	}
 }

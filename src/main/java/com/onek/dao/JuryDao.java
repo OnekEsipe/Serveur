@@ -18,4 +18,5 @@ public interface JuryDao {
 	public List<Utilisateur> findJurysAnnonymesByEvent(int idevent);
 	public void supprimerUtilisateur(int iduser);
 	public void addJuryToEvent(Jury jury);
+	public void addListJurys(List<Jury> jurys);
 }
