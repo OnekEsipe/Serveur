@@ -41,7 +41,7 @@ public class AddJuryBean implements Serializable {
 	private List<Utilisateur> filteredutilisateurs;
 	private List<Utilisateur> selectedutilisateurs;
 	private List<Utilisateur> utilisateursAll;
-	
+	private Navigation navigation = new Navigation();
 
 	public List<Utilisateur> getUtilisateurs() {
 		return utilisateurs;
@@ -143,5 +143,7 @@ public class AddJuryBean implements Serializable {
 		navigation.redirect("eventAccueil.xhtml?id="+idEvent);
 	}
 
-
+	public void retour() {
+		navigation.redirect("eventAccueil.xhtml");
+	}
 }
