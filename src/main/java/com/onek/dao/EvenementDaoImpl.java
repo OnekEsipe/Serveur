@@ -38,6 +38,7 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 				.getSingleResult();
 		Hibernate.initialize(event.getCriteres());
 		Hibernate.initialize(event.getCandidats());
+		Hibernate.initialize(event.getJurys());
 		List<Critere> criteres = event.getCriteres();
 		for (Critere c : criteres) {
 			Hibernate.initialize(c.getDescripteurs());
@@ -102,5 +103,13 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 		session.getTransaction().commit();
 		session.close();
 		System.out.println("Delete done (isDeleted = true) - Id: " + event.getIdevent());
+	}
+	public Evenement addDuplicatedEvent(Evenement event) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.save(event);	
+		session.getTransaction().commit();
+		session.close();
+		return event;
 	}
 }

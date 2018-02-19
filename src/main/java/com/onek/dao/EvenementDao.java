@@ -13,5 +13,5 @@ public interface EvenementDao {
 	public void editEvenement(Evenement event);
 	public List<Evenement> findAll();
 	public void supprimerEvent(int idevent);
-	
+	public Evenement addDuplicatedEvent(Evenement event);
 }

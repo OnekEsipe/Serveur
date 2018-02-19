@@ -194,5 +194,15 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		session.close();
 		System.out.println("Add done !");
 	}
+	@Override
+	public void addListJurys(List<Jury> jurys) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		jurys.forEach(jury -> session.save(jury));
+		session.getTransaction().commit();
+		session.close();
+		System.out.println("Add All done !");
+		
+	}
 
 }

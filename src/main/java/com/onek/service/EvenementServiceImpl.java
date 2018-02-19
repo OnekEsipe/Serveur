@@ -50,4 +50,7 @@ public class EvenementServiceImpl implements EvenementService, Serializable{
 	public List<Evenement> myListEvents(int iduser) {		
 		return eventDao.findByIdUser(iduser);
 	}
+	public Evenement addDuplicatedEvent(Evenement event) {
+		return eventDao.addDuplicatedEvent(event);
+	}
 }
