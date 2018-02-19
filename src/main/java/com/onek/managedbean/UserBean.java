@@ -53,6 +53,7 @@ public class UserBean {
 		setPassword("");
 		setConfirmationPassword("");
 		setMail("");
+		logInfo="";
 		
 	}
 	public String isOption() {
@@ -174,6 +175,7 @@ public class UserBean {
 	public void onClickAdd() {		
 		if (!password.equals(confirmationPassword)) {
 			logInfo = "Les mots de passe ne correspondent pas !";
+			return;
 		}
 		Utilisateur newUser = new Utilisateur();
 		newUser.setNom(lastName);
