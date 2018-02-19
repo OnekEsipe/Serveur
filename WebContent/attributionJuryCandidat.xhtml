@@ -18,10 +18,11 @@
 </f:metadata>
 <h:body>
 	<!-- Insertion du menu -->
-
+	<h:outputStylesheet library="css" name="accueil.css" />
 	<ui:include src="menu.xhtml" />
 	<br />
 	<br />
+ 	<p:outputLabel  id="evenementChoisi"  value="#{accueil.evenementChoisi}"/>
 
 	<!-- Attribution automatique -->
 	<h:form>

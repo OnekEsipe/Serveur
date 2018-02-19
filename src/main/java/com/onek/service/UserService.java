@@ -9,10 +9,12 @@ public interface UserService {
 	public void updateUserInfos(Utilisateur user);
 	public boolean userExistAndCorrectPassword(String login, String password);
 	public void addJurysAnonymes(List<Utilisateur> utilisateurs, Evenement event);
-	public Utilisateur getUserByLogin(String login);
-
+	public Utilisateur findByLogin(String login);
+	public boolean userExist(String login);
 	public List<Utilisateur> getAllUsers();
 	public List<Utilisateur> getAllUsersExceptDeleted();
+	public List<Utilisateur> findAllJurys();
 	public void deleteUser(int idUser);
 	public void addUser(Utilisateur user);
+	public boolean authentification(String login, String password);
 }

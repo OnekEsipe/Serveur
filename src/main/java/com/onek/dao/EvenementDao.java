@@ -2,9 +2,7 @@ package com.onek.dao;
 
 import java.util.List;
 
-import com.onek.model.Candidat;
 import com.onek.model.Evenement;
-import com.onek.model.Jury;
 
 public interface EvenementDao {
 
@@ -13,5 +11,7 @@ public interface EvenementDao {
 	public List<Evenement> findByIdUser(int idUser);
 	public Evenement findByCode(String code);
 	public void editEvenement(Evenement event);
+	public List<Evenement> findAll();
+	public void supprimerEvent(int idevent);
 	
 }

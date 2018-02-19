@@ -94,7 +94,7 @@ public class AttributionJCBean implements Serializable {
 			// l'attribution deja realisee
 			candidatsJurys = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateursJurys = eventAccueilservice.listJurysByEvent(idEvent);
-			juryList = juryservice.findJuryByIdevent(idEvent);
+			juryList = juryservice.findJurysByIdevent(idEvent);
 			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 
 			// Remplissage des maps pour l'affichage des noms des jurys/candidats dans le
@@ -300,7 +300,7 @@ public class AttributionJCBean implements Serializable {
 			}
 
 			// Update des listes
-			juryList = juryservice.findJuryByIdevent(idEvent);
+			juryList = juryservice.findJurysByIdevent(idEvent);
 			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 		}
 	}
