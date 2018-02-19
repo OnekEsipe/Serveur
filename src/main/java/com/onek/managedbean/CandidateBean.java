@@ -146,9 +146,12 @@ public class CandidateBean implements Serializable{
 	}
 
 	public void click() {
-		if(firstName.isEmpty() || lastName.isEmpty()) {
+		if(lastName.isEmpty()) {
 			logInfo = "Merci de remplir tous les champs du formulaire";
 			return;
+		}
+		if(firstName.isEmpty()) {
+			firstName = "";
 		}
 		Candidat newCandidat = new Candidat();
 		newCandidat.setPrenom(firstName);
