@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
@@ -38,7 +37,7 @@ public class GrilleBean {
 
 	@PostConstruct
 	public void postInit() {
-		for (int i = 0; i < 6; i++) {
+		for (int i = 2; i < 7; i++) {
 			numbers.add(i);
 		}
 	}
@@ -47,11 +46,18 @@ public class GrilleBean {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			criteres.clear();
 			newCriteres.clear();
+			
+			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+				Navigation navigation = new Navigation();
+				navigation.redirect("accueil.xhtml");
+				return;
+			}		
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			for (Critere critere : event.getCriteres()) {
 				criteres.add(critere);
 			}
+			resetValues();
 		}
 	}
 
@@ -66,11 +72,13 @@ public class GrilleBean {
 	private BigDecimal poids3;
 	private BigDecimal poids4;
 	private BigDecimal poids5;
+	private BigDecimal poids6;
 	private String texte1;
 	private String texte2;
 	private String texte3;
 	private String texte4;
 	private String texte5;
+	private String texte6;
 
 	public void onClicAdd() {
 		Critere c = new Critere();
@@ -80,7 +88,7 @@ public class GrilleBean {
 		c.setCoefficient(coefficient);
 		c.setTexte(nom);
 		Descripteur d;
-		if (texte1 != null && !texte1.isEmpty() && poids1 != null && poids1.compareTo(ref) > 0) {
+		if (texte1 != null && !texte1.isEmpty() && poids1 != null && poids1.compareTo(ref) >= 0) {
 			d = new Descripteur();
 			d.setNiveau("A");
 			d.setPoids(poids1);
@@ -88,7 +96,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (texte2 != null && !texte2.isEmpty() && poids2 != null && poids2.compareTo(ref) > 0) {
+		if (texte2 != null && !texte2.isEmpty() && poids2 != null && poids2.compareTo(ref) >= 0) {
 			d = new Descripteur();
 			d.setNiveau("B");
 			d.setPoids(poids2);
@@ -96,7 +104,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (texte3 != null && !texte3.isEmpty() && poids3 != null && poids3.compareTo(ref) > 0) {
+		if (texte3 != null && !texte3.isEmpty() && poids3 != null && poids3.compareTo(ref) >= 0) {
 			d = new Descripteur();
 			d.setNiveau("C");
 			d.setPoids(poids3);
@@ -104,7 +112,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (texte4 != null && !texte4.isEmpty() && poids4 != null && poids4.compareTo(ref) > 0) {
+		if (texte4 != null && !texte4.isEmpty() && poids4 != null && poids4.compareTo(ref) >= 0) {
 			d = new Descripteur();
 			d.setNiveau("D");
 			d.setPoids(poids4);
@@ -112,7 +120,15 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (texte5 != null && !texte5.isEmpty() && poids5 != null && poids5.compareTo(ref) > 0) {
+		if (texte5 != null && !texte5.isEmpty() && poids5 != null && poids5.compareTo(ref) >= 0) {
+			d = new Descripteur();
+			d.setNiveau("E");
+			d.setPoids(poids5);
+			d.setTexte(texte5);
+			d.setCritere(c);
+			c.addDescripteur(d);
+		}
+		if (texte6 != null && !texte6.isEmpty() && poids6 != null && poids6.compareTo(ref) >= 0) {
 			d = new Descripteur();
 			d.setNiveau("E");
 			d.setPoids(poids5);
@@ -134,11 +150,13 @@ public class GrilleBean {
 		poids3 = ref;
 		poids4 = ref;
 		poids5 = ref;
+		poids6 = ref;
 		texte1 = "";
 		texte2 = "";
 		texte3 = "";
 		texte4 = "";
 		texte5 = "";
+		texte6 = "";
 	}
 
 	public void onClicSave() {
@@ -211,6 +229,14 @@ public class GrilleBean {
 		this.poids5 = poids5;
 	}
 
+	public BigDecimal getPoids6() {
+		return poids6;
+	}
+
+	public void setPoids6(BigDecimal poids6) {
+		this.poids6 = poids6;
+	}
+
 	public String getTexte1() {
 		return texte1;
 	}
@@ -249,6 +275,14 @@ public class GrilleBean {
 
 	public void setTexte5(String texte5) {
 		this.texte5 = texte5;
+	}
+
+	public String getTexte6() {
+		return texte6;
+	}
+
+	public void setTexte6(String texte6) {
+		this.texte6 = texte6;
 	}
 
 	public List<Critere> getCriteres() {

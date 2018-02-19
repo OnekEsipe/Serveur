@@ -35,22 +35,7 @@
 			</props>
 		</property>
 	</bean>
-	
-	<!-- Mail -->
-<!-- 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> -->
-<!-- 		<property name="host" value="smtp.gmail.com" /> -->
-<!-- 		<property name="port" value="587" /> -->
-<!-- 		<property name="username" value="onek2018esipe@gmail.com" /> -->
-<!-- 		<property name="password" value="onek2018!" /> -->
-	
-<!-- 		<property name="javaMailProperties"> -->
-<!-- 		   <props> -->
-<!-- 	       	      <prop key="mail.smtp.auth">true</prop> -->
-<!-- 	       	      <prop key="mail.smtp.starttls.enable">true</prop> -->
-<!-- 	       	   </props> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
-	    
+
 	<!-- Enable the configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<!-- Transaction Manager is defined -->

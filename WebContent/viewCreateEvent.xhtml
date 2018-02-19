@@ -12,7 +12,9 @@
 	</link>
 	<h:outputStylesheet library="css" name="createEvent.css" />
 </h:head>
-
+<f:metadata>
+	<f:event type="preRenderView" listener="#{event.before}" />
+</f:metadata>
 <h:body>
 	<!-- Insertion du menu -->
 	<ui:include src="#{accueil.typeMenu}" />
@@ -35,8 +37,8 @@
 					<p:outputLabel for="date2" value="Date de fin:" />
 					<p:calendar id="date2" value="#{event.date2}"
 						mindate="#{calendarView.date1}" maxdate="31/12/20"
-						pattern="dd-MM-yyyy" required="true"
-						action="#{event.dateValid}" />
+						pattern="dd-MM-yyyy" placeholder="11-03-2018"
+						action="#{event.dateValid}" required="true" />
 
 					<p:outputLabel for="time1" value="Heure de début:" />
 					<p:calendar id="time1" value="#{event.hour1}" pattern="HH:mm"

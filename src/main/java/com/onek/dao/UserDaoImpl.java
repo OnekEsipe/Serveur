@@ -1,9 +1,8 @@
 package com.onek.dao;
 
 import java.io.Serializable;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,7 +29,8 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.close();
 	}
 
-	public Utilisateur getUserByLogin(String login) {
+	@Override
+	public Utilisateur findByLogin(String login) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where login = :login")
@@ -91,13 +91,11 @@ public class UserDaoImpl implements UserDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> getAllUsersExceptDeleted() {
-		boolean isdeleted = false;
-
 		List<Utilisateur> users = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		users = (List<Utilisateur>) session.createQuery("from Utilisateur where isdeleted = :isdeleted")
-				.setParameter("isdeleted", isdeleted).list();
+				.setParameter("isdeleted", false).list();
 		session.getTransaction().commit();
 		session.close();
 		return users;
@@ -112,6 +110,28 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.getTransaction().commit();
 		session.close();
 		return result == 1;		
+	}
+
+	@Override
+	public boolean userExist(String login) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		long result = (Long) session.createQuery("SELECT COUNT(e) from Utilisateur e WHERE e.login =:login")
+				.setParameter("login", login).getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return result == 1;
+	}
+	
+	@Override
+	public Utilisateur findByMail(String mail) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where mail = :mail")
+				.setParameter("mail", mail).getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return user;
 	}
 
 }

@@ -16,11 +16,10 @@ import javax.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.onek.dao.CritereDao;
 import com.onek.dao.EvaluationDao;
 import com.onek.dao.EvenementDao;
-import com.onek.dao.GrilleDao;
 import com.onek.dao.JuryDao;
-import com.onek.dao.LoginDao;
 import com.onek.dao.NoteDao;
 import com.onek.model.Candidat;
 import com.onek.model.Evaluation;
@@ -36,7 +35,9 @@ import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.JuryResource;
 import com.onek.resource.NoteResource;
-import com.onek.utils.EncodePassword;
+import com.onek.resource.PasswordModify;
+import com.onek.utils.DroitsUtilisateur;
+import com.onek.utils.Encode;
 import com.onek.utils.StatutEvenement;
 
 @Service
@@ -47,25 +48,22 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	private EvenementDao eventDao;
 
 	@Autowired
-	private LoginDao loginDao;
-
-	@Autowired
 	private JuryDao juryDao;
 
 	@Autowired
-	private GrilleDao critereDao;
+	private CritereDao critereDao;
 
 	@Autowired
 	private EvaluationDao evaluationDao;
 
 	@Autowired
 	private NoteDao noteDao;
-
+	
 	@Autowired
 	private UserService userService;
 
 	@Autowired
-	private AddJuryService addJuryService;
+	private JuryService juryService;	
 
 	@Override
 	public Optional<EvenementResource> export(String idEvent, String login) {
@@ -77,11 +75,11 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			return Optional.empty();
 		}
 		// check if login exist
-		if (!loginDao.userExist(login)) {
+		if (!userService.userExist(login)) {
 			return Optional.empty();
 		}
 		// check if jury is assigned
-		int idUser = loginDao.findUserByLogin(login).getIduser();
+		int idUser = userService.findByLogin(login).getIduser();
 		if (!juryDao.juryIsAssigned(idUser, id)) {
 			return Optional.empty();
 		}
@@ -91,15 +89,15 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
 				return Optional.empty();
 			}
-			// check if end date of event > date today // TODO uncomment
-			// if ((event.getDatestop().getTime() < new Date().getTime())) {
-			// return Optional.empty();
-			// }
+			// check if end date of event > date today (status stopped)
+			if ((event.getDatestop().getTime() < new Date().getTime())) {
+				return Optional.empty();
+			}
 			EvenementResource eventResource = new EvenementResource(event);
 			List<Jury> jurys = juryDao.findJuryAndAnonymousByIdEvent(id, login);
 			List<EvaluationResource> evaluations = createEvaluationList(jurys);
 			eventResource.setEvaluations(evaluations);
-			eventResource.setJurys(associatedJurysCandidates(jurys));
+			eventResource.setJurys(associatedJurysCandidates(jurys, id));
 			return Optional.of(eventResource);
 		} catch (NoResultException nre) {
 			return Optional.empty();
@@ -109,7 +107,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	/* account */
 	@Override
 	public List<AccountResource> account(String login) {
-		Utilisateur user = loginDao.findUserByLogin(login);
+		Utilisateur user = userService.findByLogin(login);
 		List<Jury> jurys = juryDao.findByUser(user);
 		List<AccountResource> accounts = new ArrayList<>();
 		// search idEvents for the login
@@ -146,15 +144,15 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
 			return false;
 		}
-		long dateLastChangeEvalRes = evaluationResource.getDateLastChange().getTime();
-		long dateLastChangeEvalDb = evaluation.getDatedernieremodif().getTime();
+		long dateLastChangeNewEval = evaluationResource.getDateLastChange().getTime();
+		long dateLastChangeEvalDB = evaluation.getDatedernieremodif().getTime();
 		// check last update date for evaluation
-		if (dateLastChangeEvalRes < dateLastChangeEvalDb) {
-			return false;
+		if (dateLastChangeNewEval < dateLastChangeEvalDB) {
+			throw new IllegalStateException();
 		}
 		// active check date if necessary
 		boolean checkDate = false;
-		if (dateLastChangeEvalRes > dateLastChangeEvalDb && dateLastChangeEvalRes > event.getDatestop().getTime()) {			
+		if (dateLastChangeNewEval > dateLastChangeEvalDB && dateLastChangeNewEval > event.getDatestop().getTime()) {			
 			checkDate = true;
 		}
 		evaluation.setCommentaire(evaluationResource.getComment());		
@@ -202,7 +200,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		user.setNom(createJuryResource.getLastname());
 		user.setMail(createJuryResource.getMail());
 		user.setLogin(createJuryResource.getLogin());
-		user.setMotdepasse(EncodePassword.sha1(createJuryResource.getPassword()));
+		user.setMotdepasse(Encode.sha1(createJuryResource.getPassword()));
 		user.setDroits("J");
 		user.setIsdeleted(false);
 		userService.addUser(user);
@@ -210,25 +208,46 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 
 	@Override
 	public boolean subscribe(CodeEvenementResource eventCode) {
-		if (!loginDao.userExist(eventCode.getLogin())) {
+		if (!userService.userExist(eventCode.getLogin())) {
 			return false;
 		}
-		Utilisateur user = loginDao.findUserByLogin(eventCode.getLogin());
+		Utilisateur user = userService.findByLogin(eventCode.getLogin());
 		Evenement event;
 		try {
 			event = eventDao.findByCode(eventCode.getEventCode());
 		} catch (NoResultException rse) {
+			throw new IllegalArgumentException();
+		}
+		if (!event.getIsopened()) {
 			return false;
 		}
 		Jury jury = new Jury();
 		jury.setUtilisateur(user);
 		jury.setEvenement(event);
-		addJuryService.addJuryToEvent(jury);
+		juryService.addJuryToEvent(jury);
 		return true;
 	}	
 	
+	@Override
+	public boolean changePassword(PasswordModify passwordModify) {
+		String login = passwordModify.getLogin();
+		if (!userService.userExist(login)) {
+			return false;
+		}
+		Utilisateur user = userService.findByLogin(login);		
+		if (user.getDroits().equals(DroitsUtilisateur.ANONYME.toString())) {
+			return false;
+		}		
+		if (!user.getMotdepasse().equals(passwordModify.getOldPassword())) {
+			return false;
+		}
+		user.setMotdepasse(passwordModify.getNewPassword());
+		userService.updateUserInfos(user);
+		return true;
+	}
+	
 	/* associated jurys and candidates for an event */
-	private List<JuryResource> associatedJurysCandidates(List<Jury> jurys) {
+	private List<JuryResource> associatedJurysCandidates(List<Jury> jurys, Integer idEvent) {
 		HashMap<Jury, List<Candidat>> map = new HashMap<>();
 		List<JuryResource> jurysResource = new ArrayList<>();
 		for (Jury jury : jurys) {
@@ -237,8 +256,12 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			}
 			List<Evaluation> evaluations = jury.getEvaluations();
 			for (Evaluation evaluation : evaluations) {
-				List<Candidat> candidates = map.get(jury);
-				candidates.add(evaluation.getCandidat());
+				Candidat candidate = evaluation.getCandidat();
+				if (candidate.getEvenement().getIdevent() != idEvent) {
+					continue;
+				}
+				List<Candidat> candidates = map.get(jury);				
+				candidates.add(candidate);
 				map.put(jury, candidates);
 			}
 		}

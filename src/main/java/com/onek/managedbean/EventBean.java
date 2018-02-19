@@ -4,20 +4,26 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Evenement;
+import com.onek.model.Utilisateur;
 import com.onek.service.EvenementService;
+import com.onek.service.UserService;
 import com.onek.utils.Navigation;
 import com.onek.utils.PasswordGenerator;
 
 @Component("event")
 public class EventBean implements Serializable {
+	@Autowired
+	UserService userService;
+	
 	private static final long serialVersionUID = 1L;	
 	private static final int ecartHour = 3_600_000; //en milliseconde
-	
+
 	@Autowired
 	private EvenementService evenementService;
 	private String name;
@@ -31,10 +37,28 @@ public class EventBean implements Serializable {
 	private String logInfo;
 	private String debug;
 
-
 	private Evenement event;
-	
+
+
+	public void before(ComponentSystemEvent e) {
+		emptyForm();
+	}
+
+	private void emptyForm() {
+		setName("");
+		setDate1(null);
+		setDate2(null);
+		setHour1(null);
+		setHour2(null);
+		setIsOpened(false);
+		setIsSigned(false);
+	}
+
+
 	public void addEvent() {
+	FacesContext fc = FacesContext.getCurrentInstance();
+		String login = (String) fc.getExternalContext().getSessionMap().get("user");
+		Utilisateur utilisateur = userService.findByLogin(login);
 		event = new Evenement();
 		event.setNom(name);
 		event.setDatestart(new Date(date1.getTime()+hour1.getTime() + ecartHour));
@@ -42,10 +66,11 @@ public class EventBean implements Serializable {
 		event.setIsopened(isOpened);
 		event.setIssigned(isSigned);
 		event.setStatus(status);
+		event.setUtilisateur(utilisateur);
 		event.setIsdeleted(false);
 		evenementService.addEvenement(event);
 	}
-	
+
 	public String getLogInfo() {
 		return logInfo;
 	}
@@ -109,13 +134,9 @@ public class EventBean implements Serializable {
 	public void setIsSigned(boolean issigned) {
 		this.isSigned = issigned;
 	}	
-	
+
 	public void click() {
-		//debug();
-		if(name == null || date1 == null || date2 == null || hour1 == null || hour2 == null) {
-			logInfo = "Merci de remplir tous les champs du formulaire";
-			return;
-		}
+
 		if(name.isEmpty() || !validDate(date1, date2) || !validHour(hour1, hour2) ) {
 			logInfo = "Formulaire invalide, merci de vérifier vos saisies "+name.isEmpty()+" "+validDate(date1, date2)+" "+validHour(hour1, hour2)+
 					" "+date1.getTime()+" "+date2.getTime();
@@ -126,9 +147,9 @@ public class EventBean implements Serializable {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", event.getIdevent());
 		Navigation navigation = new Navigation();
 		navigation.redirect("grille.xhtml");
-		
+
 	}
-	
+
 	private void addEvenementCode() {
 		PasswordGenerator pass = new PasswordGenerator();
 		Integer id = event.getIdevent();
@@ -141,7 +162,7 @@ public class EventBean implements Serializable {
 	private boolean validDate(Date d1, Date d2) {
 		return d2.getTime() >= d1.getTime();
 	}
-	
+
 	private boolean validHour(Date hour1, Date hour2) {
 		if(date1.getTime() == date2.getTime()) {
 			return hour2.getTime() > hour1.getTime();
@@ -153,5 +174,5 @@ public class EventBean implements Serializable {
 				date2+"Heure de debut : "+hour1+"\n"+"Heure de fin : "+hour2;
 	}
 
-	
+
 }

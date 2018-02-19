@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.onek.model.Utilisateur;
 import com.onek.service.UserService;
+import com.onek.utils.DroitsUtilisateur;
 
 @Component("user")
 public class UserBean {
@@ -41,9 +42,19 @@ public class UserBean {
 	public void before(ComponentSystemEvent e) {
 
 		users = userService.getAllUsersExceptDeleted();
-
+		emptyForm();
+		
 	}
 	
+	private void emptyForm() {
+		setFirstName("");
+		setLastName("");
+		setLogin("");
+		setPassword("");
+		setConfirmationPassword("");
+		setMail("");
+		
+	}
 	public String isOption() {
 		return option;
 	}
@@ -160,8 +171,7 @@ public class UserBean {
 		System.out.println("lol");
 	}
 
-	public void onClickAdd() {
-		
+	public void onClickAdd() {		
 		if (!password.equals(confirmationPassword)) {
 			logInfo = "Les mots de passe ne correspondent pas !";
 		}
@@ -170,16 +180,20 @@ public class UserBean {
 		newUser.setPrenom(firstName);
 		newUser.setMail(mail);
 		newUser.setLogin(login);
-		// TODO AJOUTER HASH PASSWORD
 		newUser.setMotdepasse(password);
 		if(isAdmin) {
-			newUser.setDroits("R");
+			newUser.setDroits(DroitsUtilisateur.ADMINISTRATEUR.toString());
 		}else {
-			newUser.setDroits("O");
+			newUser.setDroits(DroitsUtilisateur.ORGANISATEUR.toString());
 		}
 		newUser.setIsdeleted(false);
-		userService.addUser(newUser);
-		users.add(newUser);
+		try {
+			userService.addUser(newUser);
+			users.add(newUser);
+		}		
+		catch(IllegalStateException e) { // login exist
+			logInfo = "Création impossible : le login est déjà utilisé.";
+		}
 	}
 
 	public void deleteUser() {

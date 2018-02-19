@@ -13,7 +13,7 @@ import com.onek.model.Evenement;
 
 public class EvenementResource implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	private final SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
 	@JsonProperty("Id")
 	private final Integer idEvent;

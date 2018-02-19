@@ -16,7 +16,7 @@ import com.onek.model.Note;
 
 public class EvaluationResource implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	private final SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	
 	@JsonProperty("Id")
 	private Integer idEvaluation;
@@ -72,6 +72,9 @@ public class EvaluationResource implements Serializable {
 	
 	@JsonGetter("LastUpdatedDate")
 	public String getDateLastChangeString() {
+		if (lastUpdatedDate == null) {
+			return null;
+		}
 		return formater.format(lastUpdatedDate);
 	}
 	

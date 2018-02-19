@@ -1,1 +1,7 @@
 @charset "ISO-8859-1";
+
+#evenementChoisi{
+	font-style: italic;
+	text-align: center;
+	border: 10px;
+}

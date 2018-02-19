@@ -21,13 +21,10 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public  List<Candidat> findCandidatesByEvent(int idevent) {
-
 		List<Candidat> candidates = new ArrayList<>();
-
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		candidates = (List<Candidat>) session.createQuery("from Candidat where evenement.idevent = :idevent order by nom").setParameter("idevent", idevent) .list();
-
 		session.getTransaction().commit();
 		session.close();
 		return candidates;
@@ -40,10 +37,7 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 		session.save(candidat);
 		session.getTransaction().commit();
 		session.close();
-
-		System.out.println("Add done");
-
-
+		System.out.println("Add done !");
 	}
 
 
@@ -54,7 +48,7 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 		candidates.forEach(candidat -> session.save(candidat));
 		session.getTransaction().commit();
 		session.close();
-		System.out.println("Add All done");
+		System.out.println("Add All done !");
 		
 	}
 		

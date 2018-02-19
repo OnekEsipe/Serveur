@@ -6,40 +6,52 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.onek.dao.EventAccueilDao;
+import com.onek.dao.CandidatesDao;
+import com.onek.dao.EvenementDao;
+import com.onek.dao.JuryDao;
 import com.onek.model.Candidat;
 import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
 
 @Service
-public class EventAccueilServiceImpl implements EventAccueilService, Serializable{
+public class EventAccueilServiceImpl implements EventAccueilService, Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Autowired
-	private EventAccueilDao eventAccueilDao;
+	private CandidatesDao candidateDao;
+
+	@Autowired
+	private JuryDao juryDao;
 	
+	@Autowired 
+	private EvenementDao eventDao;
+
 	@Override
-	public List<Candidat> listCandidatsByEvent(int idevent){
-		return eventAccueilDao.listCandidatsByEvent(idevent);
+	public List<Candidat> listCandidatsByEvent(int idevent) {
+		return candidateDao.findCandidatesByEvent(idevent);
 	}
 
 	@Override
 	public List<Utilisateur> listJurysByEvent(int idevent) {
-		return eventAccueilDao.listJurysByEvent(idevent);
+		return juryDao.listJurysByEvent(idevent);
 	}
+
 	@Override
 	public List<Utilisateur> listJurysAnnonymesByEvent(int idevent) {
-		return eventAccueilDao.listJurysAnnonymesByEvent(idevent);
+		return juryDao.findJurysAnnonymesByEvent(idevent);
 	}
+
 	@Override
 	public void supprimerCandidat(int idcandidat) {
-		eventAccueilDao.supprimerCandidat(idcandidat);
+		candidateDao.supprimerCandidat(idcandidat);
 	}
+
 	public void supprimerUtilisateur(int iduser) {
-		eventAccueilDao.supprimerUtilisateur(iduser);
+		juryDao.supprimerUtilisateur(iduser);
 	}
+
 	@Override
 	public void editEvenement(Evenement event) {
-		eventAccueilDao.editEvenement(event);
+		eventDao.editEvenement(event);
 	}
 }
