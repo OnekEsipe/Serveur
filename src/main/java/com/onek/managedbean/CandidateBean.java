@@ -1,17 +1,20 @@
 package com.onek.managedbean;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
-import org.primefaces.model.UploadedFile;
+import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,12 +32,12 @@ public class CandidateBean implements Serializable{
 	CandidateService candidateService;
 	@Autowired
 	EvenementService evenement;
-	
+
 	private List<Candidat> filteredcandidats;
 
 	private String firstName;
 	private String lastName;
-	
+
 	private int idEvent;
 	private Evenement event;
 
@@ -43,10 +46,9 @@ public class CandidateBean implements Serializable{
 	//Gestion import
 	private final List<Candidat> importedCandidates = new ArrayList<>();
 
-	private UploadedFile file;
-
 	private String logInfo;
 	private String importLog;
+	private String message = "Confirmer l'envoi du fichier ?";
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -61,12 +63,13 @@ public class CandidateBean implements Serializable{
 			emptyForm();
 		}
 	}
-	
+
 	private void emptyForm() {
 		setFirstName("");
 		setLastName("");
+		setImportLog("");
 	}
-	
+
 	public String getLogInfo() {
 		return logInfo;
 	}
@@ -123,16 +126,8 @@ public class CandidateBean implements Serializable{
 		this.filteredcandidats = filteredcandidats;
 	}
 
-	public UploadedFile getFile() {
-		return file;
-	}
-
-
 	public List<Candidat> getImportedCandidates() {
 		return importedCandidates;
-	}
-	public void setFile(UploadedFile file) {
-		this.file = file;
 	}
 
 
@@ -142,6 +137,14 @@ public class CandidateBean implements Serializable{
 
 	public void setImportLog(String importLog) {
 		this.importLog = importLog;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public void click() {
@@ -158,33 +161,88 @@ public class CandidateBean implements Serializable{
 		firstName = "";
 		lastName = "";
 	}
-  
-	public void importFile()  {
 
-		if(file.getFileName().isEmpty()) {
-			importLog = "Merci d'importer votre fichier de candidat";
-		}else {
-			importLog = "Votre fichier a bien été envoyé";
-			try (BufferedReader reader =  new BufferedReader(new FileReader(file.getFileName()))){
+	public void importFile(FileUploadEvent  event)   {
+
+		InputStream input = null;
+		BufferedReader reader = null;
+			try {
+				 input = event.getFile().getInputstream();
+				 reader = new BufferedReader(new InputStreamReader(input));
 				String line;
 				while((line = reader.readLine()) != null) {
-					String [] values = line.split(",|;|:", 2);
+					String [] values = line.split(",|;");
 					
-					// Création de l'objet candidat
-					
-					Candidat candidat = new Candidat();
-					candidat.setNom(values[0]);
-					candidat.setPrenom(values[1]);
-					candidat.setEvenement(event);
-					importedCandidates.add(candidat);
+					if(values.length > 1 && values[0].length() > 0 && values[1].length() > 0) {
+						// Création de l'objet candidat
+						if(values[0].contains("|,|;") || values[1].contains("|,|;")) {
+							importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
+							return;
+						}
+
+						addCandidate(values[0],values[1]);
+					}
+					else if(values.length == 1 && values[0].length() > 0) {
+						addCandidate(values[0],"");
+						
+					}else {
+						//On autorise les lignes vides (simplicité  le cas écheant pour l'utilisaliteur en terme de lisibilité)
+						continue;
+					}
+
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
+				return;
+			}finally {
+				try {
+					input.close();
+					reader.close();
+				} catch (IOException e) {
+					return;
+				}
+				
 			}
-			addCandidates(importedCandidates);
+			//verification si doublon
+		if(!importedCandidates.isEmpty()) {
+
+			//Verification si doublon
+			Set<String> setCandidats = new HashSet<>();
+			importedCandidates.forEach(candidat -> {
+				System.out.println(candidat.getNom()+" "+candidat.getPrenom());
+				if(!setCandidats.add(candidat.getNom()+candidat.getPrenom())) {
+					String str  = "Votre fichier comporte des candidats homonymes, voulez vous envoyez?";
+					
+					//Mettre à jour le contenu du dialogue
+					setMessage(str);
+					return;
+				}
+			});
+			setCandidats.clear();
+		}else {
+			importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
+			return;
 		}
+
 	}
-	
+
+	private void addCandidate(String nom, String prenom) {
+		Candidat candidat = new Candidat();
+		candidat.setNom(nom);
+		candidat.setPrenom(prenom);
+		candidat.setEvenement(event);
+		importedCandidates.add(candidat);
+		setMessage("Confirmer l'envoi du fichier ?");
+	}
+
+	public void sendFile() {
+
+		if(importedCandidates.isEmpty()) return;
+		addCandidates(importedCandidates);
+		importedCandidates.clear();
+		importLog = "Votre fichier a bien été envoyé";
+	}
+
 	public void supprimerCandidat() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
