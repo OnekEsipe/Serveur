@@ -28,11 +28,9 @@ public class AccueilBean implements Serializable {
 
 	@Autowired
 	private EvenementService eventService;
-	
+
 	@Autowired
 	private UserService userService;
-	
-	private final Navigation navigation = new Navigation();
 
 	private List<Evenement> events;
 	private Evenement evenement;
@@ -42,35 +40,40 @@ public class AccueilBean implements Serializable {
 
 	private Utilisateur user;
 	private String login;
-	
+
 	private String visible = "false";
 
 	private int idevent;
 	private String typeMenu;
-	
-	public void before(ComponentSystemEvent e) {
 
+	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
-		 login =  (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+				Navigation.redirect("index.xhtml");
+				return;
+			}
+			if(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("idEvent");
+			}
+			login = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
 			user = userService.findByLogin(login);
-			if(user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
+			if (user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
 				typeMenu = "menu.xhtml";
 				setVisible("true");
-			}else {
+			} else {
 				typeMenu = "menuorg.xhtml";
 			}
-			
 			FacesContext context = FacesContext.getCurrentInstance();
 			String viewId = context.getViewRoot().getViewId();
-			 ViewHandler handler = context.getApplication().getViewHandler();
+			ViewHandler handler = context.getApplication().getViewHandler();
 			UIViewRoot root = handler.createView(context, viewId);
 			root.setViewId(viewId);
 			context.setViewRoot(root);
-			
+			refresh();
 		}
-		
+
 	}
-	
+
 	public int getIdevent() {
 		return idevent;
 	}
@@ -88,12 +91,11 @@ public class AccueilBean implements Serializable {
 	}
 
 	public void refresh() {
-		
-		if(user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
+		if (user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
 			events = eventService.findAll();
-		}else if(user.getDroits().equals(DroitsUtilisateur.ORGANISATEUR.toString())) {
+		} else if (user.getDroits().equals(DroitsUtilisateur.ORGANISATEUR.toString())) {
 			events = eventService.myListEvents(user.getIduser());
-		}else {
+		} else {
 			events = new ArrayList<>();
 		}
 		for (Evenement evenement : events) {
@@ -114,7 +116,6 @@ public class AccueilBean implements Serializable {
 		this.events = events;
 	}
 
-	
 	public List<Evenement> getFilteredevents() {
 		return filteredevents;
 	}
@@ -130,7 +131,7 @@ public class AccueilBean implements Serializable {
 	public void setSelectedevent(Evenement selectedevent) {
 		this.selectedevent = selectedevent;
 	}
-	
+
 	public Utilisateur getUser() {
 		return user;
 	}
@@ -146,7 +147,6 @@ public class AccueilBean implements Serializable {
 	public void setTypeMenu(String typeMenu) {
 		this.typeMenu = typeMenu;
 	}
-	
 
 	public String getVisible() {
 		return visible;
@@ -156,7 +156,6 @@ public class AccueilBean implements Serializable {
 		this.visible = visible;
 	}
 
-	
 	public String getEvenementChoisi() {
 		return evenementChoisi;
 	}
@@ -167,21 +166,22 @@ public class AccueilBean implements Serializable {
 
 	public void supprimerEvent() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		idevent = Integer.valueOf(params.get("idevent"));
 		eventService.supprimerEvent(idevent);
 		events = eventService.findAll();
 		refresh();
-		
+
 	}
 
 	public void onRowSelect(SelectEvent event) {
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", selectedevent.getIdevent());
-		setEvenementChoisi("Nom de l'évènement selectionné : "+selectedevent.getNom());
-		navigation.redirect("eventAccueil.xhtml");
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent",
+				selectedevent.getIdevent());
+		setEvenementChoisi("Nom de l'évènement selectionné : " + selectedevent.getNom());
+		Navigation.redirect("eventAccueil.xhtml");
 	}
-	
+
 	public void buttonAction() {
-		navigation.redirect("viewCreateEvent.xhtml");
-    }
+		Navigation.redirect("viewCreateEvent.xhtml");
+	}
 }

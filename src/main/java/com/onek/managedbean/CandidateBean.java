@@ -47,13 +47,15 @@ public class CandidateBean implements Serializable{
 
 	private String logInfo;
 	private String importLog;
-	private Navigation navigation = new Navigation();
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+				Navigation.redirect("index.xhtml");
+				return;
+			}
 			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
-				Navigation navigation = new Navigation();
-				navigation.redirect("accueil.xhtml");
+				Navigation.redirect("accueil.xhtml");
 				return;
 			}
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
@@ -198,6 +200,6 @@ public class CandidateBean implements Serializable{
 	}
 
 	public void retour() {
-		navigation.redirect("eventAccueil.xhtml");
+		Navigation.redirect("eventAccueil.xhtml");
 	}
 }

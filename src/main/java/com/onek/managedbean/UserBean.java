@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.onek.model.Utilisateur;
 import com.onek.service.UserService;
 import com.onek.utils.DroitsUtilisateur;
+import com.onek.utils.Navigation;
 
 @Component("user")
 public class UserBean {
@@ -40,7 +41,10 @@ public class UserBean {
 	private String logInfo;
 
 	public void before(ComponentSystemEvent e) {
-
+		if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+			Navigation.redirect("index.xhtml");
+			return;
+		}
 		users = userService.getAllUsersExceptDeleted();
 		emptyForm();
 		
@@ -199,13 +203,11 @@ public class UserBean {
 	}
 
 	public void deleteUser() {
-
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		iduser = Integer.valueOf(params.get("iduser"));
 		userService.deleteUser(iduser);
 		users = userService.getAllUsersExceptDeleted();
-
 	}
 
 }

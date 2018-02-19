@@ -48,8 +48,6 @@ public class EventAccueilBean implements Serializable {
 	@Autowired
 	EvaluationService evaluation;
 
-	private final Navigation navigation = new Navigation();
-
 	private int idEvent;
 	private Evenement event;
 
@@ -152,9 +150,12 @@ public class EventAccueilBean implements Serializable {
 
 	public void before(ComponentSystemEvent e) throws ParseException {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+				Navigation.redirect("index.xhtml");
+				return;
+			}
 			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
-				Navigation navigation = new Navigation();
-				navigation.redirect("accueil.xhtml");
+				Navigation.redirect("accueil.xhtml");
 				return;
 			}
 			
@@ -367,23 +368,23 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	public void buttonGrille() {
-		navigation.redirect("grille.xhtml");
+		Navigation.redirect("grille.xhtml");
 	}
 
 	public void buttonAttribution() {
-		navigation.redirect("attributionJuryCandidat.xhtml");
+		Navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
 	public void buttonAddJury() {
-		navigation.redirect("addJury.xhtml");
+		Navigation.redirect("addJury.xhtml");
 	}
 
 	public void buttonAddCandidat() {
-		navigation.redirect("addCandidates.xhtml");
+		Navigation.redirect("addCandidates.xhtml");
 	}
 	
 	public void buttonStats() {
-		navigation.redirect("statistiques.xhtml");
+		Navigation.redirect("statistiques.xhtml");
 	}
 
 }
