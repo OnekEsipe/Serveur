@@ -36,7 +36,7 @@ public class EvaluationServiceImpl implements EvaluationService, Serializable {
 	}
 
 	@Override
-	public void saveEvaluation(Candidat candidat, Jury jury) {
-		evaluationDao.saveEvaluation(candidat, jury);
+	public void saveEvaluation(Candidat candidat, Jury jury, Date date, int idevent) {
+		evaluationDao.saveEvaluation(candidat, jury, date, idevent);
 	}
 }

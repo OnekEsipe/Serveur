@@ -110,15 +110,36 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		session.getTransaction().commit();
 		session.close();
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
-	public void saveEvaluation(Candidat candidat, Jury jury) {
+	public void saveEvaluation(Candidat candidat, Jury jury, Date date, int idevent) {
 		
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
+			
+			//Creation de l'evaluation 
 			Evaluation evaluation = new Evaluation();
-			evaluation.setJury(jury);
 			evaluation.setCandidat(candidat);
+			evaluation.setCommentaire("");
+			evaluation.setDatedernieremodif(date);
+			evaluation.setJury(jury);
+			evaluation.setSignature(new byte[0]);
 			session.save(evaluation);
+			
+			//Creation de notes (initialisé à -1) pour chaque criteres de l'evenement
+			List<Critere> criteres = (List<Critere>) session.createQuery("FROM Critere WHERE idevent = :idevent")
+					.setParameter("idevent", idevent).getResultList();
+			for(Critere critere : criteres) {
+				Note note = new Note();
+				note.setCommentaire("");
+				note.setCritere(critere);
+				note.setDate(date);
+				note.setEvaluation(evaluation);
+				note.setNiveau(-1);
+				session.save(note);
+			}
+			
 			session.getTransaction().commit();
 			session.close();
 		

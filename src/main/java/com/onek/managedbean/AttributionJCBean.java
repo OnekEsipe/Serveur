@@ -319,6 +319,7 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	private void JuryParCandidat(int randomX) {
+		Date date = new Date();
 		if (randomX > jurys.size()) {
 			System.out.println("attribution impossible");
 			return;
@@ -366,7 +367,7 @@ public class AttributionJCBean implements Serializable {
 			for (Jury jury : attribution.get(candidat)) {
 				// System.out.print(jury.getUtilisateur().getNom()+"
 				// "+jury.getUtilisateur().getPrenom() + " || ");
-				evaluationService.saveEvaluation(candidat, jury);
+				evaluationService.saveEvaluation(candidat, jury, date, idEvent);
 			}
 			// System.out.println();
 		}
@@ -374,6 +375,7 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	public void CandidatParJury(int randomX) {
+		Date date = new Date();
 		if (randomX > candidatsJurys.size()) {
 			System.out.println("attribution impossible");
 			return;
@@ -421,7 +423,7 @@ public class AttributionJCBean implements Serializable {
 			// "+j.getUtilisateur().getPrenom());
 			for (Candidat candidat : attribution.get(jury)) {
 				// System.out.print(candidat.getNom() +" "+candidat.getPrenom()+ " || ");
-				evaluationService.saveEvaluation(candidat, jury);
+				evaluationService.saveEvaluation(candidat, jury, date, idEvent);
 			}
 			// System.out.println();
 		}
