@@ -249,7 +249,7 @@ public class AttributionJCBean implements Serializable {
 				}
 			}
 		}
-		navigation.redirect("attributionJuryCandidat.xhtml");
+		Navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
 	public void retour() {
