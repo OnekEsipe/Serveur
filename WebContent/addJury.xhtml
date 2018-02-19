@@ -16,11 +16,11 @@
 </f:metadata>
 <h:body>
 	<!-- Insertion du menu -->
-
+		<h:outputStylesheet library="css" name="accueil.css" />
 	<ui:include src="#{accueil.typeMenu}" />
 	<br />
 	<br />
-
+ 	<p:outputLabel  id="evenementChoisi"  value="#{accueil.evenementChoisi}"/>
 	<div class="ui-g">
 		<div class="ui-g-6">
 		<h:form id="source">
