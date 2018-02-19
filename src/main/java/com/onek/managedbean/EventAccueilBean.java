@@ -51,20 +51,20 @@ public class EventAccueilBean implements Serializable {
 
 	@Autowired
 	EvaluationService evaluation;
-	
+
 	@Autowired
 	private EvenementService evenementService;
-	
+
 	@Autowired
 	private GrilleService grilleservice;
-	
+
 	@Autowired
 	private CandidateService candidatService;
-	
 
 	private int idEvent;
 	private Evenement event;
 
+	private String nom;
 	private String statut;
 	private Date dateStart;
 	private Date dateEnd;
@@ -89,6 +89,14 @@ public class EventAccueilBean implements Serializable {
 	private Utilisateur selectedutilisateur;
 
 	private PasswordGenerator passwordGenerator;
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 
 	public String getVisibleF() {
 		return visibleF;
@@ -168,11 +176,11 @@ public class EventAccueilBean implements Serializable {
 				Navigation.redirect("index.xhtml");
 				return;
 			}
-			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
 				Navigation.redirect("accueil.xhtml");
 				return;
 			}
-			
+
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
@@ -351,13 +359,9 @@ public class EventAccueilBean implements Serializable {
 	public void eventUpdateButton() {
 		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
-		if (event.getStatus().equals("Brouillon")) {
-			event.setStatus(statut);
-		} else {
-			if (event.getStatus().equals("Ouvert") && statut.equals("Fermé")) {
-				event.setStatus(statut);
-			}
-		}
+		event.setStatus(statut);
+		event.setNom(nom);
+
 		eventAccueilservice.editEvenement(event);
 
 	}
@@ -396,10 +400,11 @@ public class EventAccueilBean implements Serializable {
 	public void buttonAddCandidat() {
 		Navigation.redirect("addCandidates.xhtml");
 	}
-	
+
 	public void buttonStats() {
 		Navigation.redirect("statistiques.xhtml");
 	}
+
 	public void buttonDupliquer() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		String login = (String) fc.getExternalContext().getSessionMap().get("user");
@@ -420,13 +425,13 @@ public class EventAccueilBean implements Serializable {
 			eventbis.addCandidat(candidat);
 		}
 		List<Jury> jurysBis = new ArrayList<>();
-		jurysBis = duplicateJury(eventbis);	
+		jurysBis = duplicateJury(eventbis);
 		eventbis.setJurys(new ArrayList<>());
 		for (Jury jury : jurysBis) {
 			eventbis.addJury(jury);
 		}
 		juryService.addListJurys(jurysBis);
-		
+
 	}
 
 	private List<Critere> duplicateCritere(Evenement eventbis) {
@@ -476,7 +481,7 @@ public class EventAccueilBean implements Serializable {
 
 	private Evenement createEventDuplique(Utilisateur utilisateur) {
 		Evenement eventBis = new Evenement();
-		eventBis.setNom(event.getNom()+"Bis");
+		eventBis.setNom(event.getNom() + "Bis");
 		eventBis.setDatestart(event.getDatestart());
 		eventBis.setDatestop(event.getDatestop());
 		eventBis.setIsdeleted(false);
@@ -492,7 +497,7 @@ public class EventAccueilBean implements Serializable {
 		PasswordGenerator pass = new PasswordGenerator();
 		Integer id = event.getIdevent();
 		int length = (int) (Math.log10(id) + 1);
-		String codeEvent = id+pass.generateCode(10-length);
+		String codeEvent = id + pass.generateCode(10 - length);
 		return codeEvent;
 	}
 }

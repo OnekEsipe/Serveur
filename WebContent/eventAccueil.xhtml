@@ -32,6 +32,12 @@
 						<h:outputText value="#{eventAccueil.event.getNom()}"></h:outputText>
 						<p:outputLabel value="Code événement : " />
 						<h:outputText value="#{eventAccueil.event.getCode()}"></h:outputText>
+						
+						<h:panelGroup rendered="#{eventAccueil.visibleB}">
+							<p:outputLabel value="Nom événement : " />
+							<p:inputText value="#{eventAccueil.nom}" />
+						</h:panelGroup>
+						
 						<p:outputLabel value="Statut : " />
 
 						<p:selectOneMenu value="#{eventAccueil.statut}"
