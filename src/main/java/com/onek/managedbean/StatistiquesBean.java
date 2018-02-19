@@ -261,8 +261,13 @@ public class StatistiquesBean implements Serializable {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = facesContext.getExternalContext();
 			externalContext.setResponseContentType("application/vnd.ms-excel");
-			externalContext.setResponseHeader("Content-Disposition",
-					"attachment; filename=\"Export_" + event.getNom() + ".xlsx\"");
+			if (who.equals("jury")) {
+				externalContext.setResponseHeader("Content-Disposition",
+						"attachment; filename=\"Export_Jury_" + event.getNom() + ".xlsx\"");
+			} else if (who.equals("candidat")) {
+				externalContext.setResponseHeader("Content-Disposition",
+						"attachment; filename=\"Export_Candidat_" + event.getNom() + ".xlsx\"");
+			}
 			workbook.write(externalContext.getResponseOutputStream());
 			facesContext.responseComplete();
 		} catch (FileNotFoundException e) {
@@ -305,7 +310,6 @@ public class StatistiquesBean implements Serializable {
 				cell.setCellStyle(style2);
 				sb.append("SUM(");
 				for (Note note : eval.getNotes()) {
-					System.out.println("Note : niveau = "+note.getNiveau()+" critère = "+note.getCritere().getTexte()+ " commentaire = "+note.getCommentaire());
 					if (!mapResultsByCritere.containsKey(note.getCritere().getTexte())) {
 						mapResultsByCritere.put(note.getCritere().getTexte(), new ArrayList<>());
 					}
@@ -532,7 +536,6 @@ public class StatistiquesBean implements Serializable {
 			cell.setCellValue("Total");
 			cell.setCellStyle(style2);
 			for (Evaluation eval : evaluations) {
-				System.out.println("Nombre de notes : "+eval.getNotes().size());
 				row = sheet.createRow(rowNum++);
 				colNum = 0;
 				cell = row.createCell(colNum++);
@@ -542,7 +545,6 @@ public class StatistiquesBean implements Serializable {
 				cell.setCellStyle(style2);
 				sb.append("SUM(");
 				for (Note note : eval.getNotes()) {
-					System.out.println("Note : niveau = "+note.getNiveau()+" critère = "+note.getCritere().getTexte()+ " commentaire = "+note.getCommentaire());
 					if (!mapResultsByCritere.containsKey(note.getCritere().getTexte())) {
 						mapResultsByCritere.put(note.getCritere().getTexte(), new ArrayList<>());
 					}
