@@ -41,6 +41,10 @@ public class EventBean implements Serializable {
 
 
 	public void before(ComponentSystemEvent e) {
+		if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+			Navigation.redirect("index.xhtml");
+			return;
+		}
 		emptyForm();
 	}
 
@@ -53,7 +57,6 @@ public class EventBean implements Serializable {
 		setIsOpened(false);
 		setIsSigned(false);
 	}
-
 
 	public void addEvent() {
 	FacesContext fc = FacesContext.getCurrentInstance();
@@ -145,9 +148,7 @@ public class EventBean implements Serializable {
 		addEvent();
 		addEvenementCode();
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", event.getIdevent());
-		Navigation navigation = new Navigation();
-		navigation.redirect("grille.xhtml");
-
+		Navigation.redirect("grille.xhtml");
 	}
 
 	private void addEvenementCode() {

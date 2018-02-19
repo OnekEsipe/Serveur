@@ -56,7 +56,6 @@ public class AttributionJCBean implements Serializable {
 	private Map<String, Map<String, Boolean>> attribJC;
 
 	private List<MessageAttrib> messageAttrib;
-	private Navigation navigation = new Navigation();
 
 	public int getMethode() {
 		return methode;
@@ -76,10 +75,12 @@ public class AttributionJCBean implements Serializable {
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
-
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+				Navigation.redirect("index.xhtml");
+				return;
+			}
 			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
-				Navigation navigation = new Navigation();
-				navigation.redirect("accueil.xhtml");
+				Navigation.redirect("accueil.xhtml");
 				return;
 			}
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
@@ -306,7 +307,7 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	public void retour() {
-		navigation.redirect("eventAccueil.xhtml");
+		Navigation.redirect("eventAccueil.xhtml");
 	}
 
 	public void attributionAutomatique() {
@@ -371,7 +372,7 @@ public class AttributionJCBean implements Serializable {
 			}
 			// System.out.println();
 		}
-		navigation.redirect("attributionJuryCandidat.xhtml");
+		Navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
 	public void CandidatParJury(int randomX) {
@@ -427,7 +428,7 @@ public class AttributionJCBean implements Serializable {
 			}
 			// System.out.println();
 		}
-		navigation.redirect("attributionJuryCandidat.xhtml");
+		Navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
 	// Inner class pour la datatable 
