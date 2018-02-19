@@ -125,34 +125,7 @@ public class AttributionJCBean implements Serializable {
 				attribJC.put(entryAssociation.getKey().getUtilisateur().getNom() + " "
 						+ entryAssociation.getKey().getUtilisateur().getPrenom(), candidatesPreChecked);
 			}
-			
-			
-			// --------- DEBUT Affichage des attributions dans la dataTable----------
-			for (Entry<String, Map<String, Boolean>> entry : attribJC.entrySet()) {
-				String jury = entry.getKey();
-				Map<String, Boolean> candidats = entry.getValue();
-				ArrayList<String> selectedCandidates = new ArrayList<>();
-				for (Entry<String, Boolean> entry2 : candidats.entrySet()) {
-					if (entry2.getValue() == true) {
-						selectedCandidates.add(entry2.getKey());
-					}
-					attributionFinal.put(jury, selectedCandidates);
-				}
-			}
-
-			// Formatage de l'affichage
-			messageAttrib = new ArrayList<>();
-			for (Entry<String, ArrayList<String>> attrib : attributionFinal.entrySet()) {
-				ArrayList<String> candidats = attrib.getValue();
-				StringBuilder sb = new StringBuilder();
-				for (String candidat : candidats) {
-					sb.append(candidat).append(", ");
-				}
-				sb.setLength(Math.max(sb.length() - 2, 0));;
-				messageAttrib.add(new MessageAttrib(attrib.getKey(), sb.toString()));
-			}
-			Collections.sort(messageAttrib, (o1, o2) -> o1.getJury().compareTo(o2.getJury()));
-			// --------- FIN Affichage des attributions dans la dataTable----------
+			displayAttrib();
 		}
 	}
 
@@ -222,31 +195,7 @@ public class AttributionJCBean implements Serializable {
 
 	public void previsualisationButton() {
 
-		// Remplissage map en fonction checkbox selectionnees
-		for (Entry<String, Map<String, Boolean>> entry : attribJC.entrySet()) {
-			String jury = entry.getKey();
-			Map<String, Boolean> candidats = entry.getValue();
-			ArrayList<String> selectedCandidates = new ArrayList<>();
-			for (Entry<String, Boolean> entry2 : candidats.entrySet()) {
-				if (entry2.getValue() == true) {
-					selectedCandidates.add(entry2.getKey());
-				}
-				attributionFinal.put(jury, selectedCandidates);
-			}
-		}
-
-		// Formatage de l'affichage
-		messageAttrib = new ArrayList<>();
-		for (Entry<String, ArrayList<String>> attrib : attributionFinal.entrySet()) {
-			ArrayList<String> candidats = attrib.getValue();
-			StringBuilder sb = new StringBuilder();
-			for (String candidat : candidats) {
-				sb.append(candidat).append(", ");
-			}
-			sb.setLength(Math.max(sb.length() - 2, 0));;
-			messageAttrib.add(new MessageAttrib(attrib.getKey(), sb.toString()));
-		}
-		Collections.sort(messageAttrib, (o1, o2) -> o1.getJury().compareTo(o2.getJury()));
+		displayAttrib();
 	}
 
 	public void validationButton(ActionEvent actionEvent) {
@@ -298,11 +247,8 @@ public class AttributionJCBean implements Serializable {
 							date);
 				}
 			}
-
-			// Update des listes
-			juryList = juryservice.findJurysByIdevent(idEvent);
-			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 		}
+		navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
 	public void retour() {
@@ -363,13 +309,9 @@ public class AttributionJCBean implements Serializable {
 		}
 
 		for (Candidat candidat : attribution.keySet()) {
-			// System.out.println("candidat: "+c.getNom()+" "+c.getPrenom());
 			for (Jury jury : attribution.get(candidat)) {
-				// System.out.print(jury.getUtilisateur().getNom()+"
-				// "+jury.getUtilisateur().getPrenom() + " || ");
 				evaluationService.saveEvaluation(candidat, jury, date, idEvent);
 			}
-			// System.out.println();
 		}
 		navigation.redirect("attributionJuryCandidat.xhtml");
 	}
@@ -419,18 +361,42 @@ public class AttributionJCBean implements Serializable {
 			indexJury++;
 		}
 		for (Jury jury : attribution.keySet()) {
-			// System.out.println("jury: "+j.getUtilisateur().getNom()+"
-			// "+j.getUtilisateur().getPrenom());
 			for (Candidat candidat : attribution.get(jury)) {
-				// System.out.print(candidat.getNom() +" "+candidat.getPrenom()+ " || ");
 				evaluationService.saveEvaluation(candidat, jury, date, idEvent);
 			}
-			// System.out.println();
 		}
 		navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
-	// Inner class pour la datatable 
+	private void displayAttrib() {
+		for (Entry<String, Map<String, Boolean>> entry : attribJC.entrySet()) {
+			String jury = entry.getKey();
+			Map<String, Boolean> candidats = entry.getValue();
+			ArrayList<String> selectedCandidates = new ArrayList<>();
+			for (Entry<String, Boolean> entry2 : candidats.entrySet()) {
+				if (entry2.getValue() == true) {
+					selectedCandidates.add(entry2.getKey());
+				}
+				attributionFinal.put(jury, selectedCandidates);
+			}
+		}
+
+		// Formatage de l'affichage
+		messageAttrib = new ArrayList<>();
+		for (Entry<String, ArrayList<String>> attrib : attributionFinal.entrySet()) {
+			ArrayList<String> candidats = attrib.getValue();
+			StringBuilder sb = new StringBuilder();
+			for (String candidat : candidats) {
+				sb.append(candidat).append(", ");
+			}
+			sb.setLength(Math.max(sb.length() - 2, 0));
+			;
+			messageAttrib.add(new MessageAttrib(attrib.getKey(), sb.toString()));
+		}
+		Collections.sort(messageAttrib, (o1, o2) -> o1.getJury().compareTo(o2.getJury()));
+	}
+
+	// Inner class pour la datatable
 	public static class MessageAttrib {
 		private String jury;
 		private String candidats;
