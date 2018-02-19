@@ -37,7 +37,7 @@ public class PasswordServiceImpl implements PasswordService, Serializable {
 		}		
 		
 		String message;		
-		if (user.getPrenom().isEmpty()) {
+		if (user.getPrenom() == null || user.getPrenom().isEmpty()) {
 			message = "Bonjour,<br/><br/>";
 		}
 		else {
@@ -52,8 +52,8 @@ public class PasswordServiceImpl implements PasswordService, Serializable {
 		message += "<a href=\"http://localhost:8080/serveur/resetpassword.xhtml?token=" + token + "\">" + ""
 				+ "http://localhost:8080/serveur/resetpassword.xhtml?token=" + token + "</a><br/><br/>";
 		message += "Cordialement,<br/>";
-		message += "<strong>L'équipe ONEK</strong>";
-		return emailService.sendMail(mail, "ONEK - Réinitialisation du mot de passe", message);
+		message += "<strong>L'équipe ONEK</strong>";		
+		return emailService.sendMail(mail, "[ONEK] Reinitialisation du mot de passe", message);		
 	}
 	
 	@Override
