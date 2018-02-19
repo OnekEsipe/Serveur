@@ -57,6 +57,20 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		session.close();
 		return evaluations;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Evaluation> findByIdJury(Integer idJury) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		List<Evaluation> evaluations = (List<Evaluation>) session.createQuery("FROM Evaluation WHERE idjuryeval = :id").setParameter("id", idJury).list();
+		for (Evaluation evaluation : evaluations) {
+			Hibernate.initialize(evaluation.getNotes());
+		}
+		session.getTransaction().commit();
+		session.close();
+		return evaluations;
+	}
   
 	@SuppressWarnings("unchecked")
 	@Override

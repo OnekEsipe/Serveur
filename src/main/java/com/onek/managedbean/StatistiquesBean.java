@@ -31,7 +31,9 @@ import com.onek.model.Critere;
 import com.onek.model.Descripteur;
 import com.onek.model.Evaluation;
 import com.onek.model.Evenement;
+import com.onek.model.Jury;
 import com.onek.model.Note;
+import com.onek.model.Utilisateur;
 import com.onek.service.EvaluationService;
 import com.onek.service.EvenementService;
 import com.onek.utils.Navigation;
@@ -48,6 +50,50 @@ public class StatistiquesBean implements Serializable {
 
 	private int idEvent;
 	private Evenement event;
+	
+	private double totalAvancement;
+	
+	private List<StatsCandidate> notesByCandidats;
+	private List<StatsJury> notesByJurys;
+	
+	private List<Candidat> candidats;
+	private List<Jury> jurys;
+	
+	public class StatsJury {
+		String name;
+		double value;
+		
+		public StatsJury(String name, double value) {
+			this.name = name;
+			this.value = value;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public double getValue() {
+			return value;
+		}
+	}
+	
+	public class StatsCandidate {
+		String name;
+		double value;
+		
+		public StatsCandidate(String name, double value) {
+			this.name = name;
+			this.value = value;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public double getValue() {
+			return value;
+		}
+	}
 
 	public void before(ComponentSystemEvent e) throws ParseException {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -61,6 +107,12 @@ public class StatistiquesBean implements Serializable {
 			}
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
+			notesByCandidats = new ArrayList<>();
+			notesByJurys = new ArrayList<>();
+			candidats = event.getCandidats();
+			jurys = event.getJurys();
+			InitStatByCandidat();
+			InitStatByJury();
 		}
 	}
 
@@ -78,6 +130,84 @@ public class StatistiquesBean implements Serializable {
 
 	public void setIdEvent(int idEvent) {
 		this.idEvent = idEvent;
+	}
+
+	public List<StatsCandidate> getNotesByCandidats() {
+		return notesByCandidats;
+	}
+
+	public void setNotesByCandidats(List<StatsCandidate> notesByCandidats) {
+		this.notesByCandidats = notesByCandidats;
+	}
+
+	public List<StatsJury> getNotesByJurys() {
+		return notesByJurys;
+	}
+
+	public void setNotesByJurys(List<StatsJury> notesByJurys) {
+		this.notesByJurys = notesByJurys;
+	}
+	
+	public double getTotalAvancement() {
+		return totalAvancement;
+	}
+
+	public void setTotalAvancement(double totalAvancement) {
+		this.totalAvancement = totalAvancement;
+	}
+
+	public void InitStatByCandidat() {
+		int total = 0;
+		int totalNoteDone = 0;
+		for (Candidat candidat : this.candidats) {
+			int totalNotes = 0;
+			int nbNoted = 0;
+			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
+			for (Evaluation evaluation : evaluations) {
+				List<Note> notes = evaluation.getNotes();
+				for (Note note : notes) {
+					totalNotes++;
+					total++;
+					if(note.getNiveau() > -1) {
+						nbNoted++;
+						totalNoteDone++;
+					}
+				}
+			}
+			if(totalNotes == 0) {
+				notesByCandidats.add(new StatsCandidate(candidat.getNom()+" "+candidat.getPrenom(), 100));
+			} else {
+				notesByCandidats.add(new StatsCandidate(candidat.getNom()+" "+candidat.getPrenom(), (double) ((nbNoted/totalNotes)*100)));
+				
+			}
+		}
+		if (total == 0) {
+			this.setTotalAvancement(100);
+		}
+		this.setTotalAvancement((totalNoteDone/total)*100);
+	}
+	
+	public void InitStatByJury() {
+		for (Jury jury : this.jurys) {
+			int totalNotes = 0;
+			int nbNoted = 0;
+			List<Evaluation> evaluations = evaluation.findByIdJury(jury.getIdjury());
+			for (Evaluation evaluation : evaluations) {
+				List<Note> notes = evaluation.getNotes();
+				for (Note note : notes) {
+					totalNotes++;
+					if(note.getNiveau() > -1) {
+						nbNoted++;
+					}
+				}
+			}
+			Utilisateur user = jury.getUtilisateur();
+			if(totalNotes == 0) {
+				notesByJurys.add(new StatsJury(user.getNom()+" "+user.getPrenom(), (double) 100));
+			} else {
+				notesByJurys.add(new StatsJury(user.getNom()+" "+user.getPrenom(), (double) ((nbNoted/totalNotes)*100)));
+			}
+		}
 	}
 
 	// PARTIE EXPORT DE L'EVENEMENT
@@ -236,10 +366,8 @@ public class StatistiquesBean implements Serializable {
 			int rowNum = 0;
 			int colNum = 0;
 			Map<String, List<String>> mapResultsByCritere = new HashMap<>();
-			System.out.println("ID Candidat : "+candidat.getIdcandidat());
 			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
 			XSSFSheet sheet = workbook.createSheet(candidat.getNom() + " " + candidat.getPrenom());
-			System.out.println("Nombre d'évaluation : "+evaluations.size());
 			Row row = sheet.createRow(rowNum++);
 			Cell cell = row.createCell(colNum++);
 			cell.setCellValue("Jurys");
