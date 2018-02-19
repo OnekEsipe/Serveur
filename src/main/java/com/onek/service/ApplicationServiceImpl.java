@@ -218,6 +218,9 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		} catch (NoResultException rse) {
 			throw new IllegalArgumentException();
 		}
+		if (!event.getIsopened()) {
+			return false;
+		}
 		Jury jury = new Jury();
 		jury.setUtilisateur(user);
 		jury.setEvenement(event);
