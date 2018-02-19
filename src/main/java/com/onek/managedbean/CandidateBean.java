@@ -47,6 +47,7 @@ public class CandidateBean implements Serializable{
 
 	private String logInfo;
 	private String importLog;
+	private Navigation navigation = new Navigation();
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -193,4 +194,7 @@ public class CandidateBean implements Serializable{
 		candidats = candidateService.findCandidatesByEvent(idEvent);   
 	}
 
+	public void retour() {
+		navigation.redirect("eventAccueil.xhtml");
+	}
 }
