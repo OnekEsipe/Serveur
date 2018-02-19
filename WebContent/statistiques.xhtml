@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Onek team</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+	<h:outputStylesheet library="css" name="accueilEvent.css" />
+</h:head>
+<f:metadata>
+	<f:event type="preRenderView" listener="#{eventAccueil.before}" />
+</f:metadata>
+<h:body>
+	<ui:include src="#{accueil.typeMenu}" />
+	<br />
+	<br />
+	<h:form>
+		<p:commandButton value="Exporter les résultats de l'événement"
+			actionListener="#{statistiques.buttonResult}" ajax="false" />
+		<p:commandButton value="Retour"
+			actionListener="#{statistiques.buttonRetour}" ajax="false" />
+	</h:form>
+</h:body>
+</html>
