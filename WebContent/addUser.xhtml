@@ -36,7 +36,8 @@
 					<p:outputLabel for="mailUser" value="Mail :" />
 					<p:inputText id="mailUser" name="mailUser"
 						placeholder="Entrez l'adresse mail" size="20" value="#{user.mail}"
-						validatorMessage="Format de l'adresse mail invalide" required="true">
+						validatorMessage="Format de l'adresse mail invalide"
+						required="true">
 						<f:validateRegex
 							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 					</p:inputText>
@@ -69,14 +70,8 @@
 				<p:commandButton value="Valider" action="#{user.onClickAdd}"
 					icon="ui-icon-check" ajax="false" />
 
-				<br />
-				<div id="errorCreationUser">
-					<h:outputText value="#{user.logInfo}" />
-				</div>
-
 			</p:panel>
 		</h:form>
-
 	</div>
 	<div class="ui-g">
 		<h:form>

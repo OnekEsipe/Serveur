@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
-
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,8 +32,8 @@ public class UserBean {
 	private String mail;
 	private Boolean isAdmin;
 	private String option;
-	
-	
+
+
 	private List<Utilisateur> users = new ArrayList<>();
 
 	private List<Utilisateur> filteredusers = new ArrayList<>();
@@ -47,9 +48,9 @@ public class UserBean {
 		}
 		users = userService.getAllUsersExceptDeleted();
 		emptyForm();
-		
+
 	}
-	
+
 	private void emptyForm() {
 		setFirstName("");
 		setLastName("");
@@ -57,8 +58,8 @@ public class UserBean {
 		setPassword("");
 		setConfirmationPassword("");
 		setMail("");
-		logInfo="";
-		
+		setLogInfo("");
+
 	}
 	public String isOption() {
 		return option;
@@ -179,8 +180,20 @@ public class UserBean {
 	public void onClickAdd() {		
 		if (!password.equals(confirmationPassword)) {
 			logInfo = "Les mots de passe ne correspondent pas !";
+			showLogMessage();
 			return;
 		}
+		
+		//Verification si mail deja existant
+		List<Utilisateur> allUsers = userService.getAllUsers();
+		for(Utilisateur user : allUsers) {
+			if(mail.equals(user.getMail())) {
+				logInfo = "Création impossible : adresse mail déjà utilisée.";
+				showLogMessage();
+				return;
+			}
+		}
+
 		Utilisateur newUser = new Utilisateur();
 		newUser.setNom(lastName);
 		newUser.setPrenom(firstName);
@@ -196,9 +209,12 @@ public class UserBean {
 		try {
 			userService.addUser(newUser);
 			users.add(newUser);
+			logInfo = "Ajout effectué avec succès !";
+			showLogMessage();
 		}		
 		catch(IllegalStateException e) { // login exist
 			logInfo = "Création impossible : le login est déjà utilisé.";
+			showLogMessage();
 		}
 	}
 
@@ -213,10 +229,10 @@ public class UserBean {
 				return;
 			}
 		});
-		
-
-
-
+	}
+	
+	public void showLogMessage() {
+		RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,"Ajout d'un nouvel utilisateur",logInfo));
 	}
 
 }
