@@ -27,24 +27,25 @@
 	<div class="ui-g">
 		<div>
 			<h:form enctype="multipart/form-data">
-				<p:fileUpload fileUploadListener="#{candidate.importFile}" auto="true" id="upload" allowTypes="/(\.|\/)(csv)$/" update="send"/>
-				<p:tooltip for="upload" value="Format : 2 colonnes (nom,prenom)" 
+				<p:fileUpload fileUploadListener="#{candidate.importFile}"
+					auto="true" id="upload" allowTypes="/(\.|\/)(csv)$/" update="send" />
+				<p:tooltip for="upload" value="Format : 2 colonnes (nom,prenom)"
 					position="top" />
-					
+
 				<!-- Dialogue de confirmation -->
-					<p:commandButton value="Envoyer" icon="ui-icon-check" id="send"
-						actionListener="#{candidate.sendFile}" >
-						<p:confirm header="Confirmation" message="#{candidate.message}" 
-							icon="ui-icon-check" />
-					</p:commandButton>
-					
-					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-						<p:commandButton value="Yes" type="button"
-							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-						<p:commandButton value="No" type="button"
-							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-					</p:confirmDialog>
-					
+				<p:commandButton value="Envoyer" icon="ui-icon-check" id="send"
+					actionListener="#{candidate.sendFile}">
+					<p:confirm header="Confirmation" message="#{candidate.message}"
+						icon="ui-icon-check" />
+				</p:commandButton>
+
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Yes" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
 
 				<br />
 				<h3 id="importLog">#{candidate.importLog}</h3>
@@ -68,7 +69,8 @@
 				<p:commandButton value="Valider" action="#{candidate.click}"
 					icon="ui-icon-check" update="tabCandidat" ajax="false" />
 			</h:panelGrid>
-
+		</h:form>
+		<h:form>
 			<div>
 				<!-- ************Tableau des candidat**************** -->
 				<div class="ui-g">
@@ -76,37 +78,24 @@
 					<div class="ui-g-12 ui-md-4"></div>
 				</div>
 				<p:dataTable id="tabCandidat" var="candidat"
-					value="#{candidate.candidats}" widgetVar="candidatTable"
-					emptyMessage="aucun candidat trouvé avec ce nom"
-					filteredValue="#{candidate.filteredcandidats}" scrollable="true"
-					scrollHeight="100">
+					value="#{candidate.candidats}" scrollable="true" scrollHeight="100">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
-						<p:outputPanel>
-							<div>
-								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
-								<p:inputText id="globalFilter"
-									onkeyup="PF('candidatTable').filter()" style="width:150px"
-									placeholder="nom candidat" />
-							</div>
-						</p:outputPanel>
+						Liste des candidats de l'événement
 					</f:facet>
-					<!-- ********fin*********** -->
 
-					<!-- ********fin*********** -->
-
-					<p:column headerText="Nom" filterBy="#{candidat.nom}"
-						filterMatchMode="startsWith" filterStyle="display:none">
+					<p:column headerText="Nom" sortBy="#{candidat.nom}">
 						<h:outputText value="#{candidat.nom}" />
 					</p:column>
 
-					<p:column headerText="prénom">
+					<p:column headerText="prénom" sortBy="#{candidat.prenom}">
 						<h:outputText value="#{candidat.prenom}" />
 					</p:column>
 
 					<!-- ********la colonne supprimée*********** -->
-					<p:column style="width:32px;text-align: center" rendered="#{not eventAccueil.disabledSiBrouillon}">
+					<p:column style="width:32px;text-align: center"
+						rendered="#{not eventAccueil.disabledSiBrouillon}">
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
 							actionListener="#{candidate.supprimerCandidat}" ajax="true"
@@ -131,10 +120,11 @@
 			</div>
 		</h:form>
 	</div>
-		<h:form>
-			<br /><p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
-				actionListener="#{candidate.retour}" />
-		</h:form>
+	<h:form>
+		<br />
+		<p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
+			actionListener="#{candidate.retour}" />
+	</h:form>
 
 	<br />
 	<br />

@@ -89,8 +89,17 @@ public class EventAccueilBean implements Serializable {
 	private Utilisateur selectedutilisateur;
 	private List<String> selectedoptions;
 	private PasswordGenerator passwordGenerator;
-	
+
 	private boolean disabledSiBrouillon;
+	private boolean disabledSiSupprime;
+
+	public boolean isDisabledSiSupprime() {
+		return disabledSiSupprime;
+	}
+
+	public void setDisabledSiSupprime(boolean disabledSiSupprime) {
+		this.disabledSiSupprime = disabledSiSupprime;
+	}
 
 	public boolean isDisabledSiBrouillon() {
 		return disabledSiBrouillon;
@@ -207,7 +216,7 @@ public class EventAccueilBean implements Serializable {
 			utilisateursAnos = new ArrayList<>();
 			List<Jury> jurys = juryService.listJurysAnnonymesByEvent(idEvent);
 			jurys.forEach(jury -> utilisateursAnos.add(jury.getUtilisateur()));
-
+			disabledSiSupprime = event.getIsdeleted();
 			this.statut = event.getStatus();
 			if (statut.equals("Brouillon")) {
 
@@ -424,6 +433,19 @@ public class EventAccueilBean implements Serializable {
 
 	public void buttonStats() {
 		Navigation.redirect("statistiques.xhtml");
+	}
+
+	public void supprimerEvent() {
+
+		evenementService.supprimerEvent(event.getIdevent());
+		Navigation.redirect("accueil.xhtml");
+
+	}
+
+	public void buttonRecuperer() {
+		event.setIsdeleted(false);
+		evenementService.editEvenement(event);
+		Navigation.redirect("accueil.xhtml");
 	}
 
 	public void buttonDupliquer() {

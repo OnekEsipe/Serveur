@@ -78,73 +78,8 @@
 				</h:form>
 			</p:panel>
 
-			<!-- ************Tableau des candidats**************** -->
-			<h:form>
-				<div class="ui-g">
-					<div class="ui-g-12 ui-md-8"></div>
-					<div class="ui-g-12 ui-md-4">
-						<p:commandButton value="candidat" id="withIcon"
-							actionListener="#{eventAccueil.buttonAddCandidat}"
-							icon="ui-icon-plusthick" />
-						#{eventAccueil.message}
-					</div>
-				</div>
 
-				<p:dataTable var="candidat" value="#{eventAccueil.candidats}"
-					widgetVar="candidatTable"
-					emptyMessage="aucun candidat trouvé avec ce nom"
-					filteredValue="#{eventAccueil.filteredcandidats}" scrollable="true"
-					scrollHeight="200">
 
-					<!-- barre de recherche -->
-					<f:facet name="header">
-						<p:outputPanel>
-							<div>
-								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
-								<p:inputText id="globalFilter"
-									onkeyup="PF('candidatTable').filter()" style="width:150px"
-									placeholder="nom candidat" />
-							</div>
-						</p:outputPanel>
-					</f:facet>
-					<!-- ********fin*********** -->
-
-					<!-- ********fin*********** -->
-
-					<p:column headerText="Nom" filterBy="#{candidat.nom}"
-						filterMatchMode="startsWith" filterStyle="display:none">
-						<h:outputText value="#{candidat.nom}" />
-					</p:column>
-
-					<p:column headerText="prénom">
-						<h:outputText value="#{candidat.prenom}" />
-					</p:column>
-
-					<!-- ********la colonne supprimer*********** -->
-					<p:column style="width:32px;text-align: center">
-						<p:growl id="message" showDetail="true" />
-						<p:commandButton id="iconOnly" icon="ui-icon-trash"
-							actionListener="#{eventAccueil.supprimerCandidat}" ajax="true"
-							update="@(form)">
-							<p:confirm header="Confirmation"
-								message="vous voulez vraiment supprimer le candidat"
-								icon="ui-icon-trash" />
-
-							<f:param name="idcandidat" value="#{candidat.idcandidat}" />
-						</p:commandButton>
-						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-							<p:commandButton value="Yes" type="button"
-								styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
-
-							</p:commandButton>
-							<p:commandButton value="No" type="button"
-								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-						</p:confirmDialog>
-					</p:column>
-					<!-- ********fin*********** -->
-				</p:dataTable>
-
-			</h:form>
 		</div>
 		<!-- ************Tableau des Jurys**************** -->
 		<div class="ui-g-1"></div>
@@ -170,86 +105,64 @@
 
 				<!-- Fin liste jurys anonymes -->
 
-				<p:growl id="growl" life="2000" />
-				<div class="ui-g">
-					<div class="ui-g-12 ui-md-6"></div>
-					<div class="ui-g-12 ui-md-6">
-						<p:commandButton value="jury" id="withIcon"
-							actionListener="#{eventAccueil.buttonAddJury}"
-							icon="ui-icon-plusthick" />
-						<h:commandLink>
-							<p:graphicImage name="/image/csv.png" width="30" />
-							<p:dataExporter type="csv" target="tabJurysAnos"
-								fileName="liste_jurys" pageOnly="true" />
-						</h:commandLink>
 
-					</div>
-				</div>
-				<p:dataTable var="utilisateur" value="#{eventAccueil.utilisateurs}"
-					widgetVar="utilisateurTable"
-					emptyMessage="aucun jury trouvé avec ce nom"
-					filteredValue="#{eventAccueil.filteredutilisateurs}"
-					scrollable="true" scrollHeight="300" rowKey="#{utilisateur.nom}">
-
-					<!-- barre de recherche -->
-					<f:facet name="header">
-						<p:outputPanel>
-							<div>
-								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
-								<p:inputText id="globalFilter"
-									onkeyup="PF('utilisateurTable').filter()" style="width:150px"
-									placeholder="nom jury" />
-							</div>
-						</p:outputPanel>
-					</f:facet>
-					<!-- ********fin*********** -->
-
-
-					<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
-						filterMatchMode="startsWith" filterStyle="display:none">
-						<h:outputText value="#{utilisateur.nom}" />
-					</p:column>
-
-					<p:column headerText="prénom">
-						<h:outputText value="#{utilisateur.prenom}" />
-					</p:column>
-
-					<!-- ********la colonne supprimer*********** -->
-					<p:column style="width:32px;text-align: center">
-						<p:growl id="message" showDetail="true" />
-						<p:commandButton id="iconOnly2" icon="ui-icon-trash"
-							actionListener="#{eventAccueil.supprimerUtilisateur}"
-							update="@(form)">
-							<p:confirm header="Confirmation"
-								message="vous voulez vraiment supprimer le jury"
-								icon="ui-icon-trash" />
-							<f:param name="iduser" value="#{utilisateur.iduser}" />
-						</p:commandButton>
-
-						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-							<p:commandButton value="Yes" type="button"
-								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-							<p:commandButton value="No" type="button"
-								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-						</p:confirmDialog>
-					</p:column>
-					<!-- ********fin*********** -->
-				</p:dataTable>
 			</h:form>
 			<p:panel id="dupliquerEvent" header="Dupliquer l'événement"
 				style="margin-bottom:20px">
 				<h:form>
-				
+
 					<p:selectManyCheckbox id="basic"
 						value="#{eventAccueil.selectedoptions}">
-						<f:selectItem itemLabel="Liste des Candidats" itemValue="candidats" />
+						<f:selectItem itemLabel="Liste des Candidats"
+							itemValue="candidats" />
 						<f:selectItem itemLabel="Liste des Jurys" itemValue="jurys" />
 					</p:selectManyCheckbox>
 					<p:commandButton value="Valider"
-							actionListener="#{eventAccueil.buttonDupliquer}" ajax="false"/>
+						actionListener="#{eventAccueil.buttonDupliquer}" ajax="false" />
 				</h:form>
 			</p:panel>
 			<h:form>
+				<p:commandButton value="Supprimer l'événement"
+					actionListener="#{eventAccueil.supprimerEvent}"
+					disabled="#{eventAccueil.disabledSiSupprime}">
+					<p:confirm header="Confirmation"
+						message="vous voulez vraiment supprimer l'événement"
+						icon="ui-icon-trash" />
+				</p:commandButton>
+
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Yes" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</h:form>
+			<h:form>
+				<p:commandButton value="récupérer l'événement"
+					actionListener="#{eventAccueil.buttonRecuperer}"
+					disabled="#{not eventAccueil.disabledSiSupprime}" ajax="false" />
+			</h:form>
+			<h:form>
+				<p:commandButton value="candidat" id="withIcon"
+					actionListener="#{eventAccueil.buttonAddCandidat}"
+					icon="ui-icon-plusthick" />
+			</h:form>
+
+			<h:form>
+				<p:growl id="growl" life="2000" />
+				<div class="ui-g">
+
+					<p:commandButton value="jury" id="withIcon"
+						actionListener="#{eventAccueil.buttonAddJury}"
+						icon="ui-icon-plusthick" />
+					<h:commandLink>
+						<p:graphicImage name="/image/csv.png" width="30" />
+						<p:dataExporter type="csv" target="tabJurysAnos"
+							fileName="liste_jurys" pageOnly="true" />
+					</h:commandLink>
+
+
+				</div>
 				<div class="ui-g-12">
 					<div class="ui-g">
 						<div class="ui-g-8">
@@ -266,7 +179,8 @@
 						<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
 
 						<p:commandButton value="Gérer la grille critériée"
-							actionListener="#{eventAccueil.buttonGrille}" disabled="#{eventAccueil.disabledSiBrouillon}" ajax="false" />
+							actionListener="#{eventAccueil.buttonGrille}"
+							disabled="#{eventAccueil.disabledSiBrouillon}" ajax="false" />
 						<p:commandButton value="Dupliquer l'événement"
 							actionListener="#{eventAccueil.buttonDupliquer}" ajax="false" />
 						<p:commandButton value="Statistiques"
