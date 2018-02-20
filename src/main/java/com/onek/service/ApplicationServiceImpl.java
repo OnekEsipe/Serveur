@@ -232,6 +232,12 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		if (!event.getIsopened()) {
 			return false;
 		}
+		if (event.getIsdeleted()) {
+			return false;
+		}
+		if (event.getStatus().equals(StatutEvenement.FERME.toString())) {
+			return false;
+		}
 		Jury jury = new Jury();
 		jury.setUtilisateur(user);
 		jury.setEvenement(event);
