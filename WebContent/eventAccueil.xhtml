@@ -29,15 +29,12 @@
 				<h:form>
 					<h:panelGrid columns="2" cellpadding="10">
 						<p:outputLabel value="Nom événement : " />
-						<h:outputText value="#{eventAccueil.event.getNom()}"></h:outputText>
+						<h:outputText value="#{eventAccueil.event.getNom()}" rendered="#{eventAccueil.visibleO}"/>
+						<h:outputText value="#{eventAccueil.event.getNom()}" rendered="#{eventAccueil.visibleF}"/>
+						<p:inputText value="#{eventAccueil.nom}"
+							rendered="#{eventAccueil.visibleB}" placeholder="#{eventAccueil.event.getNom()}" />
 						<p:outputLabel value="Code événement : " />
 						<h:outputText value="#{eventAccueil.event.getCode()}"></h:outputText>
-						
-						<h:panelGroup rendered="#{eventAccueil.visibleB}">
-							<p:outputLabel value="Nom événement : " />
-							<p:inputText value="#{eventAccueil.nom}" />
-						</h:panelGroup>
-						
 						<p:outputLabel value="Statut : " />
 
 						<p:selectOneMenu value="#{eventAccueil.statut}"
