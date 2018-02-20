@@ -29,10 +29,13 @@
 				<h:form>
 					<h:panelGrid columns="2" cellpadding="10">
 						<p:outputLabel value="Nom événement : " />
-						<h:outputText value="#{eventAccueil.event.getNom()}" rendered="#{eventAccueil.visibleO}"/>
-						<h:outputText value="#{eventAccueil.event.getNom()}" rendered="#{eventAccueil.visibleF}"/>
+						<h:outputText value="#{eventAccueil.event.getNom()}"
+							rendered="#{eventAccueil.visibleO}" />
+						<h:outputText value="#{eventAccueil.event.getNom()}"
+							rendered="#{eventAccueil.visibleF}" />
 						<p:inputText value="#{eventAccueil.nom}"
-							rendered="#{eventAccueil.visibleB}" placeholder="#{eventAccueil.event.getNom()}" />
+							rendered="#{eventAccueil.visibleB}"
+							placeholder="#{eventAccueil.event.getNom()}" />
 						<p:outputLabel value="Code événement : " />
 						<h:outputText value="#{eventAccueil.event.getCode()}"></h:outputText>
 						<p:outputLabel value="Statut : " />
@@ -233,6 +236,19 @@
 					<!-- ********fin*********** -->
 				</p:dataTable>
 			</h:form>
+			<p:panel id="dupliquerEvent" header="Dupliquer l'événement"
+				style="margin-bottom:20px">
+				<h:form>
+				
+					<p:selectManyCheckbox id="basic"
+						value="#{eventAccueil.selectedoptions}">
+						<f:selectItem itemLabel="Liste des Candidats" itemValue="candidats" />
+						<f:selectItem itemLabel="Liste des Jurys" itemValue="jurys" />
+					</p:selectManyCheckbox>
+					<p:commandButton value="Valider"
+							actionListener="#{eventAccueil.buttonDupliquer}" ajax="false"/>
+				</h:form>
+			</p:panel>
 			<h:form>
 				<div class="ui-g-12">
 					<div class="ui-g">
