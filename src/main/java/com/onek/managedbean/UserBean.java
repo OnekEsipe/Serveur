@@ -206,8 +206,17 @@ public class UserBean {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		iduser = Integer.valueOf(params.get("iduser"));
-		userService.deleteUser(iduser);
-		users = userService.getAllUsersExceptDeleted();
+		users.forEach(user -> {
+			if (user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString()) && user.getIduser() != iduser) {
+				userService.deleteUser(iduser);
+				users = userService.getAllUsersExceptDeleted();
+				return;
+			}
+		});
+		
+
+
+
 	}
 
 }

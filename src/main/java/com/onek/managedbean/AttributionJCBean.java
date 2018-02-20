@@ -19,9 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
+import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
 import com.onek.service.EvaluationService;
+import com.onek.service.EvenementService;
 import com.onek.service.EventAccueilService;
 import com.onek.service.JuryService;
 import com.onek.utils.Navigation;
@@ -38,6 +40,9 @@ public class AttributionJCBean implements Serializable {
 
 	@Autowired
 	private EvaluationService evaluationService;
+	
+	@Autowired
+	private EvenementService evenement;
 
 	private int idEvent;
 
@@ -46,7 +51,8 @@ public class AttributionJCBean implements Serializable {
 
 	private List<Utilisateur> utilisateursJurys;
 	private List<Candidat> candidatsJurys;
-
+	
+	private String status="";
 	private Map<String, Utilisateur> jurys;
 	private Map<String, Candidat> candidats;
 	private List<Jury> juryList;
@@ -56,6 +62,7 @@ public class AttributionJCBean implements Serializable {
 	private Map<String, Map<String, Boolean>> attribJC;
 
 	private List<MessageAttrib> messageAttrib;
+	private String avertissementMessage;
 
 	public int getMethode() {
 		return methode;
@@ -92,7 +99,12 @@ public class AttributionJCBean implements Serializable {
 			messageAttrib = new ArrayList<>();
 
 			// Initialisation-update de la liste des candidats, utilisateurs, jurys et de
-			// l'attribution deja realisee
+			// l'attribution deja realisee + init du message d'avertissement
+			status = evenement.findById(idEvent).getStatus();
+			avertissementMessage = "";
+			if(!status.equals("Brouillon")) {
+				avertissementMessage = "Status de l'événement: " + status + ". Les suppressions d'attributions ne seront pas prises en compte ";
+			}
 			candidatsJurys = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateursJurys = eventAccueilservice.listJurysByEvent(idEvent);
 			juryList = juryservice.findJurysByIdevent(idEvent);
@@ -128,6 +140,14 @@ public class AttributionJCBean implements Serializable {
 			}
 			displayAttrib();
 		}
+	}
+
+	public String getAvertissementMessage() {
+		return avertissementMessage;
+	}
+
+	public void setAvertissementMessage(String avertissementMessage) {
+		this.avertissementMessage = avertissementMessage;
 	}
 
 	public int getIdEvent() {
@@ -227,9 +247,11 @@ public class AttributionJCBean implements Serializable {
 					System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom()
 							+ " trouvé dans les 2 listes -> Attibution identique avant/aprés : pas d'action a faire sur l'evaluation");
 				} else if (!(candidatesEnd.contains(candidatBegin.getNom() + " " + candidatBegin.getPrenom()))) {
-					System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom()
-							+ " pas dans candidatEnd -> suppression de l'evaluation candidatBegin");
-					evaluationService.deleteEvaluation(jury.getIdjury(), candidatBegin.getIdcandidat());
+					if(status.equals("Brouillon")) {
+						System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom()
+						+ " pas dans candidatEnd -> suppression de l'evaluation candidatBegin");
+						evaluationService.deleteEvaluation(jury.getIdjury(), candidatBegin.getIdcandidat());
+					}				
 				}
 			}
 
