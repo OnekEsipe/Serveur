@@ -34,6 +34,25 @@ public class GrilleBean {
 	private List<Critere> newCriteres = new ArrayList<>();
 	private List<Integer> numbers = new ArrayList<>();
 	private final BigDecimal ref = new BigDecimal(1);
+	
+	private int nbDescripteur;
+
+	private String nom;
+	private BigDecimal coefficient;
+	private String categorie;
+
+	private BigDecimal poids1;
+	private BigDecimal poids2;
+	private BigDecimal poids3;
+	private BigDecimal poids4;
+	private BigDecimal poids5;
+	private BigDecimal poids6;
+	private String texte1;
+	private String texte2;
+	private String texte3;
+	private String texte4;
+	private String texte5;
+	private String texte6;
 
 	@PostConstruct
 	public void postInit() {
@@ -63,24 +82,7 @@ public class GrilleBean {
 		}
 	}
 
-	private int nbDescripteur;
 
-	private String nom;
-	private BigDecimal coefficient;
-	private String categorie;
-
-	private BigDecimal poids1;
-	private BigDecimal poids2;
-	private BigDecimal poids3;
-	private BigDecimal poids4;
-	private BigDecimal poids5;
-	private BigDecimal poids6;
-	private String texte1;
-	private String texte2;
-	private String texte3;
-	private String texte4;
-	private String texte5;
-	private String texte6;
 
 	public void onClicAdd() {
 		Critere c = new Critere();
