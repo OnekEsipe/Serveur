@@ -10,24 +10,31 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
+
+import com.onek.bean.MailBean;
 
 @Service
 public class EmailServiceImpl implements EmailService, Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private MailBean mailBean;
 	private Session session;
 
 	public EmailServiceImpl() {
-		Properties properties = System.getProperties();
-		properties.put("mail.smtp.port", "587");
-		properties.put("mail.smtp.auth", "true");
-		properties.put("mail.smtp.starttls.enable", "true");
-		properties.put("mail.smtp.host", "smtp.gmail.com");
-		properties.put("mail.smtp.user", "onek2018esipe@gmail.com");
-		properties.put("mail.smtp.password", "onek2018!");
-		properties.put("mail.from", "onek2018esipe@gmail.com");
-		session = Session.getInstance(properties);
+		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("mail.xml")) {
+			mailBean = (MailBean) context.getBean("mailBean");
+			Properties properties = System.getProperties();
+			properties.put("mail.smtp.port", mailBean.getPort());
+			properties.put("mail.smtp.auth", mailBean.getAuth());
+			properties.put("mail.smtp.starttls.enable", mailBean.getStarttlsEnable());
+			properties.put("mail.smtp.host", mailBean.getHost());
+			properties.put("mail.smtp.user", mailBean.getUser());
+			properties.put("mail.smtp.password", mailBean.getPassword());
+			properties.put("mail.from", mailBean.getFrom());
+			session = Session.getInstance(properties);
+		}		
 	}
 
 	@Override
@@ -47,5 +54,10 @@ public class EmailServiceImpl implements EmailService, Serializable {
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public MailBean getMailBean() {
+		return mailBean;
 	}
 }

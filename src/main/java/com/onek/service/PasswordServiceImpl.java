@@ -36,6 +36,7 @@ public class PasswordServiceImpl implements PasswordService, Serializable {
 			return false;
 		}		
 		
+		String url = emailService.getMailBean().getUrl();
 		String message;		
 		if (user.getPrenom() == null || user.getPrenom().isEmpty()) {
 			message = "Bonjour,<br/><br/>";
@@ -49,8 +50,8 @@ public class PasswordServiceImpl implements PasswordService, Serializable {
 		message += "Si vous n'avez pas demandé une réinitialisation du mot de passe, IGNOREZ et EFFACEZ cet email. "
 				+ "Continuez uniquement si vous souhaitez que votre mot de passe soit réinitialisé.<br/><br/>";
 		message += "Cliquez ou recopiez simplement le lien et complétez le reste du formulaire :<br/>";
-		message += "<a href=\"http://localhost:8080/serveur/resetpassword.xhtml?token=" + token + "\">" + ""
-				+ "http://localhost:8080/serveur/resetpassword.xhtml?token=" + token + "</a><br/><br/>";
+		message += "<a href=\"" + url +"?token=" + token + "\">" + ""
+				+  url + "?token=" + token + "</a><br/><br/>";
 		message += "Cordialement,<br/>";
 		message += "<strong>L'équipe ONEK</strong>";		
 		return emailService.sendMail(mail, "[ONEK] Reinitialisation du mot de passe", message);		
