@@ -105,8 +105,8 @@
 						<h:outputText value="#{candidat.prenom}" />
 					</p:column>
 
-					<!-- ********la colonne supprimer*********** -->
-					<p:column style="width:32px;text-align: center">
+					<!-- ********la colonne supprimée*********** -->
+					<p:column style="width:32px;text-align: center" rendered="#{not eventAccueil.disabledSiBrouillon}">
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
 							actionListener="#{candidate.supprimerCandidat}" ajax="true"
