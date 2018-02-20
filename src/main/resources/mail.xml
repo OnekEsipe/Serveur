@@ -13,7 +13,7 @@
         <property name="password" value="onek2018!"/>				<!-- mail.smtp.password -->
         <property name="from" value="onek2018esipe@gmail.com"/>		<!-- mail.from -->
         <!-- Par défaut : http://localhost:8080/serveur/resetpassword.xhtml -->
-        <property name="url" value="https://onek/serveur/resetpassword.xhtml"/>
+        <property name="url" value="https://173.249.25.49/serveur/resetpassword.xhtml"/>
 	</bean>	 
 	
 </beans>
