@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.onek.model.Utilisateur;
 import com.onek.service.UserService;
 import com.onek.utils.DroitsUtilisateur;
+import com.onek.utils.Navigation;
 
 @Component("user")
 public class UserBean {
@@ -40,7 +41,10 @@ public class UserBean {
 	private String logInfo;
 
 	public void before(ComponentSystemEvent e) {
-
+		if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+			Navigation.redirect("index.xhtml");
+			return;
+		}
 		users = userService.getAllUsersExceptDeleted();
 		emptyForm();
 		
@@ -53,6 +57,7 @@ public class UserBean {
 		setPassword("");
 		setConfirmationPassword("");
 		setMail("");
+		logInfo="";
 		
 	}
 	public String isOption() {
@@ -174,6 +179,7 @@ public class UserBean {
 	public void onClickAdd() {		
 		if (!password.equals(confirmationPassword)) {
 			logInfo = "Les mots de passe ne correspondent pas !";
+			return;
 		}
 		Utilisateur newUser = new Utilisateur();
 		newUser.setNom(lastName);
@@ -197,12 +203,19 @@ public class UserBean {
 	}
 
 	public void deleteUser() {
-
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		iduser = Integer.valueOf(params.get("iduser"));
-		userService.deleteUser(iduser);
-		users = userService.getAllUsersExceptDeleted();
+		users.forEach(user -> {
+			if (user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString()) && user.getIduser() != iduser) {
+				userService.deleteUser(iduser);
+				users = userService.getAllUsersExceptDeleted();
+				return;
+			}
+		});
+		
+
+
 
 	}
 

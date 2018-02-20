@@ -2,14 +2,15 @@ package com.onek.managedbean;
 
 import java.io.Serializable;
 
-
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.onek.model.Utilisateur;
 import com.onek.service.UserService;
+import com.onek.utils.Navigation;
 
 @Component("userInfo")
 public class AccountBean implements Serializable{
@@ -33,6 +34,10 @@ public class AccountBean implements Serializable{
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+				Navigation.redirect("index.xhtml");
+				return;
+			}
 			String name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
 			user = userService.findByLogin(name);
 			this.lastEmail = user.getMail();

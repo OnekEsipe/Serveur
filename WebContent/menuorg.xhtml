@@ -11,17 +11,17 @@
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
 </h:head>
-
 <h:body>
+	
 	<h:form>
 		<p:tabMenu activeIndex="#{param.i}">
 			<p:menuitem value="Mes événements" outcome="accueil.xhtml">
 				<f:param name="i" value="0" />
 			</p:menuitem>
-			<p:menuitem value="Mon compte" outcome="account.xhtml">
+			<p:menuitem value="Mon compte Organisateur" outcome="account.xhtml">
 				<f:param name="i" value="1" />
 			</p:menuitem>
-			<p:menuitem value="Aide" >
+			<p:menuitem value="Aide">
 				<f:param name="i" value="2" />
 			</p:menuitem>
 			<p:menuitem value="Déconnexion" outcome="index.xhtml">

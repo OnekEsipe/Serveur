@@ -44,14 +44,16 @@ public class GrilleBean {
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
-			criteres.clear();
-			newCriteres.clear();
-			
-			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
-				Navigation navigation = new Navigation();
-				navigation.redirect("accueil.xhtml");
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+				Navigation.redirect("index.xhtml");
 				return;
-			}		
+			}
+			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+				Navigation.redirect("accueil.xhtml");
+				return;
+			}	
+			criteres.clear();
+			newCriteres.clear();	
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			for (Critere critere : event.getCriteres()) {
@@ -161,8 +163,7 @@ public class GrilleBean {
 
 	public void onClicSave() {
 		grille.addCriteres(newCriteres);
-		Navigation navigation = new Navigation();
-		navigation.redirect("eventAccueil.xhtml");
+		Navigation.redirect("eventAccueil.xhtml");
 	}
 
 	public String getNom() {

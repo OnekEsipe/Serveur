@@ -19,9 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
+import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
 import com.onek.service.EvaluationService;
+import com.onek.service.EvenementService;
 import com.onek.service.EventAccueilService;
 import com.onek.service.JuryService;
 import com.onek.utils.Navigation;
@@ -38,6 +40,9 @@ public class AttributionJCBean implements Serializable {
 
 	@Autowired
 	private EvaluationService evaluationService;
+	
+	@Autowired
+	private EvenementService evenement;
 
 	private int idEvent;
 
@@ -46,7 +51,8 @@ public class AttributionJCBean implements Serializable {
 
 	private List<Utilisateur> utilisateursJurys;
 	private List<Candidat> candidatsJurys;
-
+	
+	private String status="";
 	private Map<String, Utilisateur> jurys;
 	private Map<String, Candidat> candidats;
 	private List<Jury> juryList;
@@ -56,7 +62,7 @@ public class AttributionJCBean implements Serializable {
 	private Map<String, Map<String, Boolean>> attribJC;
 
 	private List<MessageAttrib> messageAttrib;
-	private Navigation navigation = new Navigation();
+	private String avertissementMessage;
 
 	public int getMethode() {
 		return methode;
@@ -76,10 +82,12 @@ public class AttributionJCBean implements Serializable {
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
-
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+				Navigation.redirect("index.xhtml");
+				return;
+			}
 			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
-				Navigation navigation = new Navigation();
-				navigation.redirect("accueil.xhtml");
+				Navigation.redirect("accueil.xhtml");
 				return;
 			}
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
@@ -91,7 +99,12 @@ public class AttributionJCBean implements Serializable {
 			messageAttrib = new ArrayList<>();
 
 			// Initialisation-update de la liste des candidats, utilisateurs, jurys et de
-			// l'attribution deja realisee
+			// l'attribution deja realisee + init du message d'avertissement
+			status = evenement.findById(idEvent).getStatus();
+			avertissementMessage = "";
+			if(!status.equals("Brouillon")) {
+				avertissementMessage = "Status de l'événement: " + status + ". Les suppressions d'attributions ne seront pas prises en compte ";
+			}
 			candidatsJurys = eventAccueilservice.listCandidatsByEvent(idEvent);
 			utilisateursJurys = eventAccueilservice.listJurysByEvent(idEvent);
 			juryList = juryservice.findJurysByIdevent(idEvent);
@@ -125,35 +138,16 @@ public class AttributionJCBean implements Serializable {
 				attribJC.put(entryAssociation.getKey().getUtilisateur().getNom() + " "
 						+ entryAssociation.getKey().getUtilisateur().getPrenom(), candidatesPreChecked);
 			}
-			
-			
-			// --------- DEBUT Affichage des attributions dans la dataTable----------
-			for (Entry<String, Map<String, Boolean>> entry : attribJC.entrySet()) {
-				String jury = entry.getKey();
-				Map<String, Boolean> candidats = entry.getValue();
-				ArrayList<String> selectedCandidates = new ArrayList<>();
-				for (Entry<String, Boolean> entry2 : candidats.entrySet()) {
-					if (entry2.getValue() == true) {
-						selectedCandidates.add(entry2.getKey());
-					}
-					attributionFinal.put(jury, selectedCandidates);
-				}
-			}
-
-			// Formatage de l'affichage
-			messageAttrib = new ArrayList<>();
-			for (Entry<String, ArrayList<String>> attrib : attributionFinal.entrySet()) {
-				ArrayList<String> candidats = attrib.getValue();
-				StringBuilder sb = new StringBuilder();
-				for (String candidat : candidats) {
-					sb.append(candidat).append(", ");
-				}
-				sb.setLength(Math.max(sb.length() - 2, 0));;
-				messageAttrib.add(new MessageAttrib(attrib.getKey(), sb.toString()));
-			}
-			Collections.sort(messageAttrib, (o1, o2) -> o1.getJury().compareTo(o2.getJury()));
-			// --------- FIN Affichage des attributions dans la dataTable----------
+			displayAttrib();
 		}
+	}
+
+	public String getAvertissementMessage() {
+		return avertissementMessage;
+	}
+
+	public void setAvertissementMessage(String avertissementMessage) {
+		this.avertissementMessage = avertissementMessage;
 	}
 
 	public int getIdEvent() {
@@ -222,31 +216,7 @@ public class AttributionJCBean implements Serializable {
 
 	public void previsualisationButton() {
 
-		// Remplissage map en fonction checkbox selectionnees
-		for (Entry<String, Map<String, Boolean>> entry : attribJC.entrySet()) {
-			String jury = entry.getKey();
-			Map<String, Boolean> candidats = entry.getValue();
-			ArrayList<String> selectedCandidates = new ArrayList<>();
-			for (Entry<String, Boolean> entry2 : candidats.entrySet()) {
-				if (entry2.getValue() == true) {
-					selectedCandidates.add(entry2.getKey());
-				}
-				attributionFinal.put(jury, selectedCandidates);
-			}
-		}
-
-		// Formatage de l'affichage
-		messageAttrib = new ArrayList<>();
-		for (Entry<String, ArrayList<String>> attrib : attributionFinal.entrySet()) {
-			ArrayList<String> candidats = attrib.getValue();
-			StringBuilder sb = new StringBuilder();
-			for (String candidat : candidats) {
-				sb.append(candidat).append(", ");
-			}
-			sb.setLength(Math.max(sb.length() - 2, 0));;
-			messageAttrib.add(new MessageAttrib(attrib.getKey(), sb.toString()));
-		}
-		Collections.sort(messageAttrib, (o1, o2) -> o1.getJury().compareTo(o2.getJury()));
+		displayAttrib();
 	}
 
 	public void validationButton(ActionEvent actionEvent) {
@@ -277,9 +247,11 @@ public class AttributionJCBean implements Serializable {
 					System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom()
 							+ " trouvé dans les 2 listes -> Attibution identique avant/aprés : pas d'action a faire sur l'evaluation");
 				} else if (!(candidatesEnd.contains(candidatBegin.getNom() + " " + candidatBegin.getPrenom()))) {
-					System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom()
-							+ " pas dans candidatEnd -> suppression de l'evaluation candidatBegin");
-					evaluationService.deleteEvaluation(jury.getIdjury(), candidatBegin.getIdcandidat());
+					if(status.equals("Brouillon")) {
+						System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom()
+						+ " pas dans candidatEnd -> suppression de l'evaluation candidatBegin");
+						evaluationService.deleteEvaluation(jury.getIdjury(), candidatBegin.getIdcandidat());
+					}				
 				}
 			}
 
@@ -298,15 +270,12 @@ public class AttributionJCBean implements Serializable {
 							date);
 				}
 			}
-
-			// Update des listes
-			juryList = juryservice.findJurysByIdevent(idEvent);
-			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 		}
+		Navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
 	public void retour() {
-		navigation.redirect("eventAccueil.xhtml");
+		Navigation.redirect("eventAccueil.xhtml");
 	}
 
 	public void attributionAutomatique() {
@@ -363,15 +332,11 @@ public class AttributionJCBean implements Serializable {
 		}
 
 		for (Candidat candidat : attribution.keySet()) {
-			// System.out.println("candidat: "+c.getNom()+" "+c.getPrenom());
 			for (Jury jury : attribution.get(candidat)) {
-				// System.out.print(jury.getUtilisateur().getNom()+"
-				// "+jury.getUtilisateur().getPrenom() + " || ");
 				evaluationService.saveEvaluation(candidat, jury, date, idEvent);
 			}
-			// System.out.println();
 		}
-		navigation.redirect("attributionJuryCandidat.xhtml");
+		Navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
 	public void CandidatParJury(int randomX) {
@@ -419,18 +384,42 @@ public class AttributionJCBean implements Serializable {
 			indexJury++;
 		}
 		for (Jury jury : attribution.keySet()) {
-			// System.out.println("jury: "+j.getUtilisateur().getNom()+"
-			// "+j.getUtilisateur().getPrenom());
 			for (Candidat candidat : attribution.get(jury)) {
-				// System.out.print(candidat.getNom() +" "+candidat.getPrenom()+ " || ");
 				evaluationService.saveEvaluation(candidat, jury, date, idEvent);
 			}
-			// System.out.println();
 		}
-		navigation.redirect("attributionJuryCandidat.xhtml");
+		Navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
-	// Inner class pour la datatable 
+	private void displayAttrib() {
+		for (Entry<String, Map<String, Boolean>> entry : attribJC.entrySet()) {
+			String jury = entry.getKey();
+			Map<String, Boolean> candidats = entry.getValue();
+			ArrayList<String> selectedCandidates = new ArrayList<>();
+			for (Entry<String, Boolean> entry2 : candidats.entrySet()) {
+				if (entry2.getValue() == true) {
+					selectedCandidates.add(entry2.getKey());
+				}
+				attributionFinal.put(jury, selectedCandidates);
+			}
+		}
+
+		// Formatage de l'affichage
+		messageAttrib = new ArrayList<>();
+		for (Entry<String, ArrayList<String>> attrib : attributionFinal.entrySet()) {
+			ArrayList<String> candidats = attrib.getValue();
+			StringBuilder sb = new StringBuilder();
+			for (String candidat : candidats) {
+				sb.append(candidat).append(", ");
+			}
+			sb.setLength(Math.max(sb.length() - 2, 0));
+			;
+			messageAttrib.add(new MessageAttrib(attrib.getKey(), sb.toString()));
+		}
+		Collections.sort(messageAttrib, (o1, o2) -> o1.getJury().compareTo(o2.getJury()));
+	}
+
+	// Inner class pour la datatable
 	public static class MessageAttrib {
 		private String jury;
 		private String candidats;
