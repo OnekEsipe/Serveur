@@ -1,7 +1,5 @@
 package com.onek.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,10 +43,8 @@ public class ApplicationController {
 	public ResponseEntity<String> createJury(@RequestBody CreateJuryResource createJuryResource) {
 		try {
 			applicationService.createJury(createJuryResource);
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		} catch (IllegalStateException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}

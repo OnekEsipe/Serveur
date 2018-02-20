@@ -15,6 +15,7 @@ import com.onek.service.PasswordService;
 import com.onek.service.UserService;
 import com.onek.utils.Encode;
 import com.onek.utils.Navigation;
+import com.onek.utils.Password;
 
 @Component("resetPassword")
 public class ResetPasswordBean implements Serializable {
@@ -26,7 +27,6 @@ public class ResetPasswordBean implements Serializable {
 	@Autowired
 	private UserService userService;
 
-	private Navigation navigation = new Navigation();
 	private Utilisateur user;
 	private boolean tokenIsValid;
 	private String newPassword;
@@ -87,10 +87,16 @@ public class ResetPasswordBean implements Serializable {
 	public void reset() {
 		logInfo = "Votre mot de passe a été réinitialisé avec succès !";
 		if (newPassword.isEmpty() || confirmNewPassword.isEmpty()) {
-			logInfo = "Merci de renseigner tous les champs.";			
+			logInfo = "Merci de renseigner tous les champs.";	
+			return;
 		}
 		else if (!newPassword.equals(confirmNewPassword)) {
-			logInfo = "Nouveau mot de passe différent du mot de passe de confirmation.";			
+			logInfo = "Nouveau mot de passe différent du mot de passe de confirmation.";	
+			return;
+		}
+		if (!Password.verifyPasswordRule(newPassword)) {
+			logInfo = "Le mot de passe doit être composé d'au moins 6 caractères et comporter au moins une majuscule.";
+			return;
 		}
 		try {
 			user.setMotdepasse(Encode.sha1(newPassword));
@@ -98,6 +104,6 @@ public class ResetPasswordBean implements Serializable {
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			logInfo = "Une erreur interne a empêché la réinitilisation du mot de passe.";
 		}		
-		navigation.redirect("resetpassword.xhtml?token=" + token);
+		Navigation.redirect("resetpassword.xhtml?token=" + token);
 	}
 }

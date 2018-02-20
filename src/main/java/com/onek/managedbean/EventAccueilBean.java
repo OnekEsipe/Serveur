@@ -30,7 +30,7 @@ import com.onek.service.GrilleService;
 import com.onek.service.JuryService;
 import com.onek.service.UserService;
 import com.onek.utils.Navigation;
-import com.onek.utils.PasswordGenerator;
+import com.onek.utils.Password;
 
 @Component("eventAccueil")
 public class EventAccueilBean implements Serializable {
@@ -361,7 +361,7 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	private String generateCode() {
-		PasswordGenerator pass = new PasswordGenerator();
+		Password pass = new Password();
 		Integer id = event.getIdevent();
 		int length = (int) (Math.log10(id) + 1);
 		String codeEvent = id + pass.generateCode(10 - length);
