@@ -425,7 +425,12 @@ public class EventAccueilBean implements Serializable {
 	public void buttonStats() {
 		Navigation.redirect("statistiques.xhtml");
 	}
+	public void supprimerEvent() {
+		
+		evenementService.supprimerEvent(event.getIdevent());
+		Navigation.redirect("accueil.xhtml");
 
+	}
 	public void buttonDupliquer() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		String login = (String) fc.getExternalContext().getSessionMap().get("user");

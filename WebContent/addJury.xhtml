@@ -24,30 +24,38 @@
 	<div class="ui-g">
 		<div class="ui-g-6">
 			<h:form id="source">
-
-				<div class="ui-g-5">
-
 					<p:dataTable id="checkboxDT" var="utilisateur"
 						value="#{addjury.utilisateursAll}"
+						emptyMessage="Le jury n'existe pas"
+						filteredValue="#{addjury.filteredutilisateurs}"
 						selection="#{addjury.selectedutilisateurs}"
 						rowKey="#{utilisateur.nom}" style="margin-bottom:0"
-						scrollable="true" scrollHeight="100"
+						scrollable="true" scrollHeight="400"
 						widgetVar="utilisateurallTable">
 
 						<f:facet name="header">
-						Listes de tous les jurys 
-					</f:facet>
+							<p:outputPanel>
+								<div>
+									<span class="ui-inputgroup-addon"><i
+										class="fa fa-search"></i></span>
+
+									<p:inputText id="globalFilter"
+										onkeyup="PF('utilisateurallTable').filter()"
+										style="width:150px" placeholder="nom jury" />
+								</div>
+							</p:outputPanel>
+
+						</f:facet>
 						<p:column selectionMode="multiple"
 							style="width:16px;text-align:center" />
-						<p:column headerText="Nom">
+						<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
+							filterMatchMode="contains" filterStyle="display:none">
 							<h:outputText value="#{utilisateur.nom}" />
 						</p:column>
 						<p:column headerText="prénom">
 							<h:outputText value="#{utilisateur.prenom}" />
 						</p:column>
 					</p:dataTable>
-
-				</div>
 
 				<div class="ui-g-1">
 					<p:commandButton process="checkboxDT"
@@ -65,8 +73,7 @@
 			<h:form>
 
 				<p:dataTable var="utilisateur" value="#{addjury.utilisateurs}"
-					widgetVar="utilisateurTable" scrollable="true" scrollHeight="100"
-					rowKey="#{utilisateur.nom}">
+					scrollable="true" scrollHeight="400">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
@@ -74,17 +81,17 @@
 					</f:facet>
 					<!-- ********fin*********** -->
 
-
-					<p:column headerText="Nom">
+					<p:column headerText="Nom" sortBy="#{utilisateur.nom}">
 						<h:outputText value="#{utilisateur.nom}" />
 					</p:column>
 
-					<p:column headerText="prénom">
+					<p:column headerText="prénom" sortBy="#{utilisateur.prenom}">
 						<h:outputText value="#{utilisateur.prenom}" />
 					</p:column>
 
 					<!-- ********la colonne supprimée*********** -->
-					<p:column style="width:32px;text-align: center" rendered="#{not eventAccueil.disabledSiBrouillon}">
+					<p:column style="width:32px;text-align:center"
+						rendered="#{not eventAccueil.disabledSiBrouillon}">
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
 							actionListener="#{addjury.supprimerUtilisateur}" ajax="true"
