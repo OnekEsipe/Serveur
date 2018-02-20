@@ -123,7 +123,24 @@
 			</p:panel>
 			<h:form>
 				<p:commandButton value="Supprimer l'événement"
-					actionListener="#{eventAccueil.supprimerEvent}" />
+					actionListener="#{eventAccueil.supprimerEvent}"
+					disabled="#{eventAccueil.disabledSiSupprime}">
+					<p:confirm header="Confirmation"
+						message="vous voulez vraiment supprimer l'événement"
+						icon="ui-icon-trash" />
+				</p:commandButton>
+
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Yes" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</h:form>
+			<h:form>
+				<p:commandButton value="récupérer l'événement"
+					actionListener="#{eventAccueil.buttonRecuperer}"
+					disabled="#{not eventAccueil.disabledSiSupprime}" ajax="false" />
 			</h:form>
 			<h:form>
 				<p:commandButton value="candidat" id="withIcon"
