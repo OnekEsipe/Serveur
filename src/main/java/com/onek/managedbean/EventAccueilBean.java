@@ -87,7 +87,7 @@ public class EventAccueilBean implements Serializable {
 	private Utilisateur utilisateur;
 	private List<Utilisateur> filteredutilisateurs;
 	private Utilisateur selectedutilisateur;
-
+	private List<String> selectedoptions;
 	private PasswordGenerator passwordGenerator;
 
 	public String getNom() {
@@ -168,6 +168,14 @@ public class EventAccueilBean implements Serializable {
 
 	public void setEvent(Evenement event) {
 		this.event = event;
+	}
+
+	public List<String> getSelectedoptions() {
+		return selectedoptions;
+	}
+
+	public void setSelectedoptions(List<String> selectedoptions) {
+		this.selectedoptions = selectedoptions;
 	}
 
 	public void before(ComponentSystemEvent e) throws ParseException {
@@ -417,20 +425,29 @@ public class EventAccueilBean implements Serializable {
 		for (Critere critere : criteresbis) {
 			eventbis.addCritere(critere);
 		}
-		List<Candidat> candidatsBis = new ArrayList<>();
-		candidatsBis = duplicateCandidat(eventbis);
-		candidatService.addCandidates(candidatsBis);
-		eventbis.setCandidats(new ArrayList<>());
-		for (Candidat candidat : candidatsBis) {
-			eventbis.addCandidat(candidat);
+		if (!selectedoptions.isEmpty()) {
+			for (String option : selectedoptions) {
+				if (option.equals("candidats")) {
+					List<Candidat> candidatsBis = new ArrayList<>();
+					candidatsBis = duplicateCandidat(eventbis);
+					candidatService.addCandidates(candidatsBis);
+					eventbis.setCandidats(new ArrayList<>());
+					for (Candidat candidat : candidatsBis) {
+						eventbis.addCandidat(candidat);
+					}
+				}
+				if (option.equals("jurys")) {
+					List<Jury> jurysBis = new ArrayList<>();
+					jurysBis = duplicateJury(eventbis);
+					eventbis.setJurys(new ArrayList<>());
+					for (Jury jury : jurysBis) {
+						eventbis.addJury(jury);
+					}
+					juryService.addListJurys(jurysBis);
+				}
+			}
 		}
-		List<Jury> jurysBis = new ArrayList<>();
-		jurysBis = duplicateJury(eventbis);
-		eventbis.setJurys(new ArrayList<>());
-		for (Jury jury : jurysBis) {
-			eventbis.addJury(jury);
-		}
-		juryService.addListJurys(jurysBis);
+		selectedoptions.clear();
 
 	}
 
