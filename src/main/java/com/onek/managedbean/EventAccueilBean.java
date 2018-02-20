@@ -89,6 +89,16 @@ public class EventAccueilBean implements Serializable {
 	private Utilisateur selectedutilisateur;
 
 	private PasswordGenerator passwordGenerator;
+	
+	private boolean disabledSiBrouillon;
+
+	public boolean isDisabledSiBrouillon() {
+		return disabledSiBrouillon;
+	}
+
+	public void setDisabledSiBrouillon(boolean disabledSiBrouillon) {
+		this.disabledSiBrouillon = disabledSiBrouillon;
+	}
 
 	public String getVisibleF() {
 		return visibleF;
@@ -188,15 +198,17 @@ public class EventAccueilBean implements Serializable {
 				setVisibleB("true");
 				setVisibleO("false");
 				setVisibleF("false");
+				disabledSiBrouillon = false;
 			} else if (statut.equals("Ouvert")) {
 				setVisibleB("false");
 				setVisibleO("true");
 				setVisibleF("false");
+				disabledSiBrouillon = true;
 			} else {
 				setVisibleB("false");
 				setVisibleO("false");
 				setVisibleF("true");
-
+				disabledSiBrouillon = true;
 			}
 			this.dateStart = event.getDatestart();
 			this.dateEnd = event.getDatestop();
@@ -359,6 +371,7 @@ public class EventAccueilBean implements Serializable {
 			}
 		}
 		eventAccueilservice.editEvenement(event);
+		Navigation.redirect("eventAccueil.xhtml");
 
 	}
 
