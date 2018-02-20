@@ -99,4 +99,14 @@ public class UserServiceImpl implements UserService, Serializable {
 		}
 		return true;
 	}
+	
+	@Override
+	public boolean mailExist(String mail) {
+		return userDao.mailExist(mail);
+	}
+	
+	@Override
+	public Utilisateur findByMail(String mail) {
+		return userDao.findByMail(mail);
+	}
 }

@@ -12,4 +12,11 @@ public class Encode {
 		digest.update(s.getBytes("utf8"));	
 		return String.format("%040x", new BigInteger(1, digest.digest()));
     } 
+	
+	public static String sha256(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		digest.reset();		
+		digest.update(s.getBytes("utf8"));	
+		return String.format("%040x", new BigInteger(1, digest.digest()));
+    } 
 }

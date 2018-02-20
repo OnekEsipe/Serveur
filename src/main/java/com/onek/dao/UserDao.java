@@ -14,5 +14,7 @@ public interface UserDao {
 	public Utilisateur findByLogin(String login);
 	public List<Utilisateur> getAllUsers();
 	public List<Utilisateur> getAllUsersExceptDeleted();
-	
+	public boolean mailExist(String mail);
+	public Utilisateur findByMail(String mail);
+
 }
