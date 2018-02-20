@@ -31,7 +31,7 @@ import com.onek.service.GrilleService;
 import com.onek.service.JuryService;
 import com.onek.service.UserService;
 import com.onek.utils.Navigation;
-import com.onek.utils.PasswordGenerator;
+import com.onek.utils.Password;
 
 @Component("eventAccueil")
 public class EventAccueilBean implements Serializable {
@@ -88,9 +88,19 @@ public class EventAccueilBean implements Serializable {
 	private List<Utilisateur> filteredutilisateurs;
 	private Utilisateur selectedutilisateur;
 	private List<String> selectedoptions;
-	private PasswordGenerator passwordGenerator;
-	
+
+	private Password passwordGenerator;
+  
 	private boolean disabledSiBrouillon;
+	private boolean disabledSiSupprime;
+
+	public boolean isDisabledSiSupprime() {
+		return disabledSiSupprime;
+	}
+
+	public void setDisabledSiSupprime(boolean disabledSiSupprime) {
+		this.disabledSiSupprime = disabledSiSupprime;
+	}
 
 	public boolean isDisabledSiBrouillon() {
 		return disabledSiBrouillon;
@@ -207,7 +217,7 @@ public class EventAccueilBean implements Serializable {
 			utilisateursAnos = new ArrayList<>();
 			List<Jury> jurys = juryService.listJurysAnnonymesByEvent(idEvent);
 			jurys.forEach(jury -> utilisateursAnos.add(jury.getUtilisateur()));
-
+			disabledSiSupprime = event.getIsdeleted();
 			this.statut = event.getStatus();
 			if (statut.equals("Brouillon")) {
 
@@ -340,7 +350,7 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	public void addJuryAnonymeButton() {
-		passwordGenerator = new PasswordGenerator();
+		passwordGenerator = new Password();
 		List<Utilisateur> anonymousJurys = new ArrayList<>();
 		Utilisateur anonymousJury;
 		int increment = juryService.findAnonymousByIdEvent(idEvent).size();
@@ -424,6 +434,19 @@ public class EventAccueilBean implements Serializable {
 
 	public void buttonStats() {
 		Navigation.redirect("statistiques.xhtml");
+	}
+
+	public void supprimerEvent() {
+
+		evenementService.supprimerEvent(event.getIdevent());
+		Navigation.redirect("accueil.xhtml");
+
+	}
+
+	public void buttonRecuperer() {
+		event.setIsdeleted(false);
+		evenementService.editEvenement(event);
+		Navigation.redirect("accueil.xhtml");
 	}
 
 	public void buttonDupliquer() {
@@ -524,7 +547,7 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	private String generateCode() {
-		PasswordGenerator pass = new PasswordGenerator();
+		Password pass = new Password();
 		Integer id = event.getIdevent();
 		int length = (int) (Math.log10(id) + 1);
 		String codeEvent = id + pass.generateCode(10 - length);

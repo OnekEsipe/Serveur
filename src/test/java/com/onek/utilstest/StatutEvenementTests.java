@@ -14,7 +14,7 @@ public class StatutEvenementTests {
 	public void testCorrespondingValuesAndString() {
 		assertEquals("Brouillon", StatutEvenement.BROUILLON.toString());
 		assertEquals("Ouvert", StatutEvenement.OUVERT.toString());
-		assertEquals("Fermé", StatutEvenement.FERME.toString());
+		assertEquals("Ferme", StatutEvenement.FERME.toString());
 	}
 	
 	@Test

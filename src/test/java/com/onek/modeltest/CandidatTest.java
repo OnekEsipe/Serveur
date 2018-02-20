@@ -76,19 +76,9 @@ public class CandidatTest {
 	
 	@Test
 	public void candidatTest() {
-		Candidat candidat1 = Mockito.mock(Candidat.class);		
-		Candidat candidat2 = Mockito.mock(Candidat.class);	
+		Candidat candidat = Mockito.mock(Candidat.class);		
 		
-		Evenement event = new Evenement();
-		event.setIdevent(1);
-		
-		candidat1.setNom("Tamela");candidat1.setPrenom("Hamed");candidat1.setEvenement(event);
-		candidat2.setNom("Tamela");candidat2.setPrenom("Hamed");candidat2.setEvenement(event);
-		candidatedao.addCandidate(candidat1);
-		candidatedao.addCandidate(candidat2);
-		assertNotNull(candidat1);
-		assertNotNull(candidat2);
-	//	assertNotEquals(candidat1.getIdcandidat(), candidat2.getIdcandidat());
+		assertNotNull(candidat);
 	}
 	
 }

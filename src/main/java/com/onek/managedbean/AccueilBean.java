@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
@@ -164,15 +163,6 @@ public class AccueilBean implements Serializable {
 		this.evenementChoisi = evenementChoisi;
 	}
 
-	public void supprimerEvent() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-		idevent = Integer.valueOf(params.get("idevent"));
-		eventService.supprimerEvent(idevent);
-		events = eventService.findAll();
-		refresh();
-
-	}
 
 	public void onRowSelect(SelectEvent event) {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent",
