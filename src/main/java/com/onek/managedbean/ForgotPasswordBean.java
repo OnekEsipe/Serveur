@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.onek.service.PasswordService;
 import com.onek.service.UserService;
+import com.onek.utils.Navigation;
 
 @Component("forgotPassword")
 public class ForgotPasswordBean {
@@ -41,6 +42,10 @@ public class ForgotPasswordBean {
 		} else {
 			logInfo = "L'adresse mail saisie ne correspond à aucun utilisateur.";
 		}
+	}
+	
+	public void retour() {
+		Navigation.redirect("index.xhtml");
 	}
 
 }
