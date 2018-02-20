@@ -133,6 +133,13 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			Integer idEvent = event.getIdevent();
 			List<Jury> anonymous = juryDao.findAnonymousByIdEvent(idEvent);
 			for (Jury anonym : anonymous) {
+				Utilisateur anonymUser = anonym.getUtilisateur();
+				try {
+					anonymUser.setMotdepasse(Encode.sha1(anonymUser.getMotdepasse()));
+				} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {					
+					e.printStackTrace();
+					continue;
+				}
 				List<Integer> idEventsAnonym = new ArrayList<>();
 				idEventsAnonym.add(idEvent);
 				accounts.add(new AccountResource(anonym.getUtilisateur(), idEventsAnonym));
@@ -204,16 +211,15 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	}
 
 	@Override
-	public void createJury(CreateJuryResource createJuryResource)
-			throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	public void createJury(CreateJuryResource createJuryResource) {
 		Utilisateur user = new Utilisateur();
 		user.setPrenom(createJuryResource.getFirstname());
 		user.setNom(createJuryResource.getLastname());
 		user.setMail(createJuryResource.getMail());
 		user.setLogin(createJuryResource.getLogin());
-		user.setMotdepasse(Encode.sha1(createJuryResource.getPassword()));
-		user.setDroits("J");
-		user.setIsdeleted(false);
+		user.setMotdepasse(createJuryResource.getPassword());
+		user.setDroits(DroitsUtilisateur.JURY.toString());
+		user.setIsdeleted(false);		
 		userService.addUser(user);
 	}
 
