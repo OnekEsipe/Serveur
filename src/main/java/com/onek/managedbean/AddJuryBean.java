@@ -19,7 +19,7 @@ import com.onek.service.EventAccueilService;
 import com.onek.service.JuryService;
 import com.onek.service.UserService;
 import com.onek.utils.Navigation;
-import com.onek.utils.PasswordGenerator;
+import com.onek.utils.Password;
 
 @Component("addjury")
 public class AddJuryBean implements Serializable {
@@ -49,7 +49,7 @@ public class AddJuryBean implements Serializable {
 	private List<Utilisateur> utilisateursAll;
 	private List<Utilisateur> utilisateursAnos;
 	
-	private PasswordGenerator passwordGenerator;
+	private Password passwordGenerator;
 	private int juryAnonyme;
 	
 	
@@ -69,11 +69,11 @@ public class AddJuryBean implements Serializable {
 		this.juryAnonyme = juryAnonyme;
 	}
 
-	public PasswordGenerator getPasswordGenerator() {
+	public Password getPasswordGenerator() {
 		return passwordGenerator;
 	}
 
-	public void setPasswordGenerator(PasswordGenerator passwordGenerator) {
+	public void setPasswordGenerator(Password passwordGenerator) {
 		this.passwordGenerator = passwordGenerator;
 	}
 
@@ -186,7 +186,7 @@ public class AddJuryBean implements Serializable {
 		Navigation.redirect("eventAccueil.xhtml");
 	}
 	public void addJuryAnonymeButton() {
-		passwordGenerator = new PasswordGenerator();
+		passwordGenerator = new Password();
 		List<Utilisateur> anonymousJurys = new ArrayList<>();
 		Utilisateur anonymousJury;
 		int increment = juryService.findAnonymousByIdEvent(idEvent).size();
