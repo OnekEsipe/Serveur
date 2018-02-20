@@ -37,26 +37,29 @@ public class GrilleBean {
 
 	@PostConstruct
 	public void postInit() {
-		for (int i = 0; i < 7; i++) {
+		for (int i = 2; i < 7; i++) {
 			numbers.add(i);
 		}
 	}
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
-			criteres.clear();
-			newCriteres.clear();
-			
-			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
-				Navigation navigation = new Navigation();
-				navigation.redirect("accueil.xhtml");
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+				Navigation.redirect("index.xhtml");
 				return;
-			}		
+			}
+			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+				Navigation.redirect("accueil.xhtml");
+				return;
+			}	
+			criteres.clear();
+			newCriteres.clear();	
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			for (Critere critere : event.getCriteres()) {
 				criteres.add(critere);
 			}
+			resetValues();
 		}
 	}
 
@@ -87,7 +90,7 @@ public class GrilleBean {
 		c.setCoefficient(coefficient);
 		c.setTexte(nom);
 		Descripteur d;
-		if (texte1 != null && !texte1.isEmpty() && poids1 != null && poids1.compareTo(ref) > 0) {
+		if (texte1 != null && !texte1.isEmpty() && poids1 != null && poids1.compareTo(ref) >= 0) {
 			d = new Descripteur();
 			d.setNiveau("A");
 			d.setPoids(poids1);
@@ -95,7 +98,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (texte2 != null && !texte2.isEmpty() && poids2 != null && poids2.compareTo(ref) > 0) {
+		if (texte2 != null && !texte2.isEmpty() && poids2 != null && poids2.compareTo(ref) >= 0) {
 			d = new Descripteur();
 			d.setNiveau("B");
 			d.setPoids(poids2);
@@ -103,7 +106,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (texte3 != null && !texte3.isEmpty() && poids3 != null && poids3.compareTo(ref) > 0) {
+		if (texte3 != null && !texte3.isEmpty() && poids3 != null && poids3.compareTo(ref) >= 0) {
 			d = new Descripteur();
 			d.setNiveau("C");
 			d.setPoids(poids3);
@@ -111,7 +114,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (texte4 != null && !texte4.isEmpty() && poids4 != null && poids4.compareTo(ref) > 0) {
+		if (texte4 != null && !texte4.isEmpty() && poids4 != null && poids4.compareTo(ref) >= 0) {
 			d = new Descripteur();
 			d.setNiveau("D");
 			d.setPoids(poids4);
@@ -119,7 +122,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (texte5 != null && !texte5.isEmpty() && poids5 != null && poids5.compareTo(ref) > 0) {
+		if (texte5 != null && !texte5.isEmpty() && poids5 != null && poids5.compareTo(ref) >= 0) {
 			d = new Descripteur();
 			d.setNiveau("E");
 			d.setPoids(poids5);
@@ -127,7 +130,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (texte6 != null && !texte6.isEmpty() && poids6 != null && poids6.compareTo(ref) > 0) {
+		if (texte6 != null && !texte6.isEmpty() && poids6 != null && poids6.compareTo(ref) >= 0) {
 			d = new Descripteur();
 			d.setNiveau("E");
 			d.setPoids(poids5);
@@ -160,8 +163,7 @@ public class GrilleBean {
 
 	public void onClicSave() {
 		grille.addCriteres(newCriteres);
-		Navigation navigation = new Navigation();
-		navigation.redirect("eventAccueil.xhtml");
+		Navigation.redirect("eventAccueil.xhtml");
 	}
 
 	public String getNom() {

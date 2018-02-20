@@ -61,4 +61,7 @@ public class JuryServiceImpl implements JuryService, Serializable{
 	public List<Jury> findAnonymousByIdEvent(int idEvent) {
 		return juryDao.findAnonymousByIdEvent(idEvent);
 	}
+	public void addListJurys(List<Jury> jurys) {
+		juryDao.addListJurys(jurys);
+	}
 }

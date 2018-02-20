@@ -10,6 +10,7 @@ import com.onek.resource.AccountResource;
 import com.onek.resource.CodeEvenementResource;
 import com.onek.resource.CreateJuryResource;
 import com.onek.resource.EvenementResource;
+import com.onek.resource.PasswordModify;
 
 public interface ApplicationService {
 	
@@ -18,5 +19,6 @@ public interface ApplicationService {
 	public List<AccountResource> account(String login);
 	public void createJury(CreateJuryResource createJuryResource) throws NoSuchAlgorithmException, UnsupportedEncodingException;
 	public boolean subscribe(CodeEvenementResource eventCode);
+	public boolean changePassword(PasswordModify passwordModify);
 	
 }

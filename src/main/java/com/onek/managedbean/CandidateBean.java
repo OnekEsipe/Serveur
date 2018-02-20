@@ -52,9 +52,12 @@ public class CandidateBean implements Serializable{
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+				Navigation.redirect("index.xhtml");
+				return;
+			}
 			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
-				Navigation navigation = new Navigation();
-				navigation.redirect("accueil.xhtml");
+				Navigation.redirect("accueil.xhtml");
 				return;
 			}
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
@@ -148,9 +151,12 @@ public class CandidateBean implements Serializable{
 	}
 
 	public void click() {
-		if(firstName.isEmpty() || lastName.isEmpty()) {
+		if(lastName.isEmpty()) {
 			logInfo = "Merci de remplir tous les champs du formulaire";
 			return;
+		}
+		if(firstName.isEmpty()) {
+			firstName = "";
 		}
 		Candidat newCandidat = new Candidat();
 		newCandidat.setPrenom(firstName);
@@ -251,4 +257,7 @@ public class CandidateBean implements Serializable{
 		candidats = candidateService.findCandidatesByEvent(idEvent);   
 	}
 
+	public void retour() {
+		Navigation.redirect("eventAccueil.xhtml");
+	}
 }

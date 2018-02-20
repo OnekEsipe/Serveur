@@ -21,6 +21,7 @@ import com.onek.resource.EvaluationResource;
 import com.onek.resource.EvenementResource;
 import com.onek.resource.LoginResource;
 import com.onek.resource.NoteResource;
+import com.onek.resource.PasswordModify;
 import com.onek.service.ApplicationService;
 import com.onek.service.UserService;
 
@@ -75,7 +76,7 @@ public class ApplicationController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();	
 			}
 		} catch(IllegalStateException e) {
-			return  ResponseEntity.status(HttpStatus.CONFLICT).build();	
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();	
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
@@ -93,9 +94,22 @@ public class ApplicationController {
 	/* code event */
 	@RequestMapping(value = "/events/code", method = RequestMethod.POST)
 	public ResponseEntity<? extends Object> codeEvent(@RequestBody CodeEvenementResource eventCode) {
-		if (!applicationService.subscribe(eventCode)) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		try {
+			if (!applicationService.subscribe(eventCode)) {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
 		}
-		return  ResponseEntity.status(HttpStatus.OK).build();
+		catch(IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+	
+	@RequestMapping(value = "/password/modify", method = RequestMethod.POST)
+	public ResponseEntity<? extends Object> passwordModify(@RequestBody PasswordModify passwordModify) {
+		if (!applicationService.changePassword(passwordModify)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();	
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 }

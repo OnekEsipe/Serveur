@@ -41,7 +41,6 @@ public class AddJuryBean implements Serializable {
 	private List<Utilisateur> filteredutilisateurs;
 	private List<Utilisateur> selectedutilisateurs;
 	private List<Utilisateur> utilisateursAll;
-	
 
 	public List<Utilisateur> getUtilisateurs() {
 		return utilisateurs;
@@ -93,9 +92,12 @@ public class AddJuryBean implements Serializable {
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+				Navigation.redirect("index.xhtml");
+				return;
+			}
 			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
-				Navigation navigation = new Navigation();
-				navigation.redirect("accueil.xhtml");
+				Navigation.redirect("accueil.xhtml");
 				return;
 			}
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
@@ -139,9 +141,10 @@ public class AddJuryBean implements Serializable {
 	}
 	
 	public void buttonActionValider() {
-		Navigation navigation = new Navigation();
-		navigation.redirect("eventAccueil.xhtml?id="+idEvent);
+		Navigation.redirect("eventAccueil.xhtml");
 	}
 
-
+	public void retour() {
+		Navigation.redirect("eventAccueil.xhtml");
+	}
 }

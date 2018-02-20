@@ -12,4 +12,5 @@ public interface EvenementService {
 	public List<Evenement> findAll();
 	public void supprimerEvent(int idevent);
 	public List<Evenement> myListEvents(int iduser);
+	public Evenement addDuplicatedEvent(Evenement event);
 }

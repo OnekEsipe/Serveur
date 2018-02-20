@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,16 @@ public class LoginBean implements Serializable {
 	private String message;
 	private Boolean checkbox;
 
+	public void before(ComponentSystemEvent e) {
+		if (!FacesContext.getCurrentInstance().isPostback()) {
+			if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("user");
+				return;
+			}
+		}
+	}
+
+	
 	public String getLogin() {
 		return login;
 	}

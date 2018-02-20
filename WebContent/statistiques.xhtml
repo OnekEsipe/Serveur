@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Onek team</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+	<h:outputStylesheet library="css" name="accueilEvent.css" />
+</h:head>
+<f:metadata>
+	<f:event type="preRenderView" listener="#{statistiques.before}" />
+</f:metadata>
+<h:body>
+	<ui:include src="#{accueil.typeMenu}" />
+	<br />
+	<br />
+	<h:form>
+		<p:panel header="Avancement de la notation de l'événement">
+			<p:progressBar value="#{statistiques.totalAvancement}"
+				labelTemplate="{value}%" displayOnly="true" />
+		</p:panel>
+		<br />
+		<br />
+		<p:dataTable var="juryStat" value="#{statistiques.notesByJurys}">
+			<p:column headerText="Jury">
+				<h:outputText value="#{juryStat.name}" />
+			</p:column>
+			<p:column headerText="Avancement">
+				<p:progressBar value="#{juryStat.value}" labelTemplate="{value}%"
+					displayOnly="true" />
+			</p:column>
+		</p:dataTable>
+		<br />
+		<br />
+		<p:dataTable var="candiStat" value="#{statistiques.notesByCandidats}">
+			<p:column headerText="Candidat">
+				<h:outputText value="#{candiStat.name}" />
+			</p:column>
+			<p:column headerText="Avancement">
+				<p:progressBar value="#{candiStat.value}" labelTemplate="{value}%"
+					displayOnly="true" />
+			</p:column>
+		</p:dataTable>
+		<br />
+		<br />
+		<p:commandButton value="Exporter les résultats par candidat de l'événement"
+			actionListener="#{statistiques.buttonResult}" ajax="false" />
+		<br />
+		<br />
+		<p:commandButton value="Exporter les résultats par jury de l'événement"
+			actionListener="#{statistiques.buttonResultByJurys}" ajax="false" />
+		<br />
+		<br />
+		<p:commandButton value="Retour"
+			actionListener="#{statistiques.buttonRetour}" ajax="false" />
+	</h:form>
+</h:body>
+</html>
