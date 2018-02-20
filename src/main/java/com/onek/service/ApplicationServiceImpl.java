@@ -85,6 +85,10 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		}
 		try {
 			Evenement event = eventDao.findById(id);
+			// check if evenement is deleted
+			if (event.getIsdeleted()) {
+				return Optional.empty();
+			}			
 			// check if evenement is opened
 			if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
 				return Optional.empty();
@@ -113,13 +117,20 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		// search idEvents for the login
 		List<Integer> idEvents = new ArrayList<>();
 		for (Jury jury : jurys) {
-			idEvents.add(jury.getEvenement().getIdevent());
+			Evenement event = jury.getEvenement();
+			if (!event.getIsdeleted()) {
+				idEvents.add(event.getIdevent());
+			}
 		}
 		Collections.sort(idEvents);
 		accounts.add(new AccountResource(user, idEvents));
 		// search anonymous for all events affected at login
 		for (Jury jury : jurys) {
-			Integer idEvent = jury.getEvenement().getIdevent();
+			Evenement event = jury.getEvenement();
+			if (event.getIsdeleted()) {
+				continue;
+			}
+			Integer idEvent = event.getIdevent();
 			List<Jury> anonymous = juryDao.findAnonymousByIdEvent(idEvent);
 			for (Jury anonym : anonymous) {
 				List<Integer> idEventsAnonym = new ArrayList<>();
