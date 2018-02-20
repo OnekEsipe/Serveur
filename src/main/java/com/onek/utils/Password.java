@@ -21,11 +21,17 @@ public class Password {
 	}
 
 	public String generatePassword(int length) {
+		if(length < 1 || length > Integer.MAX_VALUE) {
+			throw new IllegalArgumentException("length must be positive and inf Integer.MAX_VALUE");
+		}
 		String password = initGeneratePassword(length, ALPHA_CAPS + ALPHA + NUMERIC);
 		return password;
 	}
 	
 	public String generateCode(int length) {
+		if(length < 1 || length > Integer.MAX_VALUE) {
+			throw new IllegalArgumentException("length must be positive and inf Integer.MAX_VALUE");
+		}
 		String password = initGeneratePassword(length, NUMERIC);
 		return password;
 	}

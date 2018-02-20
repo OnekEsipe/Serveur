@@ -6,13 +6,21 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import com.onek.dao.CandidatesDao;
+import com.onek.dao.CandidatesDaoImpl;
 import com.onek.model.Candidat;
+import com.onek.model.Evenement;
+
 
 public class CandidatTest {
 
+
+	CandidatesDao candidatedao;
 	@Before
 	public void setUp() {
 	    MockitoAnnotations.initMocks(this);
+	    candidatedao = new CandidatesDaoImpl();
 	}
 	
 	@Test
@@ -53,4 +61,24 @@ public class CandidatTest {
 
 		assertEquals(1, candidat.getIdcandidat().intValue());
 	}
+	
+
+	@Test
+	public void getEvenementTest() {
+		Candidat candidat = Mockito.mock(Candidat.class);		 
+		candidat.setNom("Tamela");
+		Mockito.when(candidat.getEvenement()).thenCallRealMethod();
+		
+		assertEquals(null, candidat.getEvenement());
+		Mockito.when(candidat.getEvenement()).thenReturn(new Evenement());
+		assertNotNull(candidat.getEvenement());
+	}
+	
+	@Test
+	public void candidatTest() {
+		Candidat candidat = Mockito.mock(Candidat.class);		
+		
+		assertNotNull(candidat);
+	}
+	
 }
