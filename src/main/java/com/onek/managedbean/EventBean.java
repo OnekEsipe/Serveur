@@ -14,7 +14,7 @@ import com.onek.model.Utilisateur;
 import com.onek.service.EvenementService;
 import com.onek.service.UserService;
 import com.onek.utils.Navigation;
-import com.onek.utils.PasswordGenerator;
+import com.onek.utils.Password;
 
 @Component("event")
 public class EventBean implements Serializable {
@@ -153,7 +153,7 @@ public class EventBean implements Serializable {
 	}
 
 	private void addEvenementCode() {
-		PasswordGenerator pass = new PasswordGenerator();
+		Password pass = new Password();
 		Integer id = event.getIdevent();
 		int length = (int) (Math.log10(id) + 1);
 		String codeEvent = id+pass.generateCode(10-length);
