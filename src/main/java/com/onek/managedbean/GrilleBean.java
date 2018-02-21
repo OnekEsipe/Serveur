@@ -133,7 +133,7 @@ public class GrilleBean {
 		}
 		if (texte6 != null && !texte6.isEmpty() && poids6 != null && poids6.compareTo(ref) >= 0) {
 			d = new Descripteur();
-			d.setNiveau("E");
+			d.setNiveau("F");
 			d.setPoids(poids5);
 			d.setTexte(texte5);
 			d.setCritere(c);

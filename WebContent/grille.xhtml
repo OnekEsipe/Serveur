@@ -50,19 +50,23 @@
 			<div class="ui-g">
 				<p:outputPanel id="toUpdate">
 					<div class="ui-g-12 ui-lg-4">
-						<p:panel header="A" style="width:300px; height:200px;">
+						<p:panel header="A" style="width:300px; height:300px;">
 							<h:panelGrid columns="1" cellpadding="3">
 								<h:outputLabel value="Poids :" style="font-weight:bold" />
 								<p:inputNumber value="#{grille.poids1}" decimalPlaces="0"
 									label="Poids" />
 
 								<h:outputLabel value="Description :" style="font-weight:bold" />
-								<p:inputText value="#{grille.texte1}" label="Description" />
+								<p:inputTextarea counter="display"
+									maxlength="255" counterTemplate="{0} characters remaining."
+									autoResize="true" value="#{grille.texte1}" label="Description"/>
+								<h:outputText id="display" />
+								<!--  <p:inputText value="#{grille.texte1}" label="Description" /> -->
 							</h:panelGrid>
 						</p:panel>
 					</div>
 					<div class="ui-g-12 ui-lg-4">
-						<p:panel header="B" style="width:300px; height:200px;">
+						<p:panel header="B" style="width:300px; height:300px;">
 							<h:panelGrid columns="1" cellpadding="3">
 								<h:outputLabel value="Poids :" style="font-weight:bold" />
 								<p:inputNumber value="#{grille.poids2}" decimalPlaces="0"
@@ -74,7 +78,7 @@
 						</p:panel>
 					</div>
 					<div class="ui-g-12 ui-lg-4">
-						<p:panel header="C" style="width:300px; height:200px;"
+						<p:panel header="C" style="width:300px; height:300px;"
 							rendered="#{grille.nbDescripteur > 2}">
 							<h:panelGrid columns="1" cellpadding="3">
 								<h:outputLabel value="Poids :" style="font-weight:bold" />
@@ -87,7 +91,7 @@
 						</p:panel>
 					</div>
 					<div class="ui-g-12 ui-lg-4">
-						<p:panel header="D" style="width:300px; height:200px;"
+						<p:panel header="D" style="width:300px; height:300px;"
 							rendered="#{grille.nbDescripteur > 3}">
 							<h:panelGrid columns="1" cellpadding="3">
 								<h:outputLabel value="Poids :" style="font-weight:bold" />
@@ -100,7 +104,7 @@
 						</p:panel>
 					</div>
 					<div class="ui-g-12 ui-lg-4">
-						<p:panel header="E" style="width:300px; height:200px;"
+						<p:panel header="E" style="width:300px; height:300px;"
 							rendered="#{grille.nbDescripteur > 4}">
 							<h:panelGrid columns="1" cellpadding="3">
 								<h:outputLabel value="Poids :" style="font-weight:bold" />
@@ -113,7 +117,7 @@
 						</p:panel>
 					</div>
 					<div class="ui-g-12 ui-lg-4">
-						<p:panel header="F" style="width:300px; height:200px;"
+						<p:panel header="F" style="width:300px; height:300px;"
 							rendered="#{grille.nbDescripteur > 5}">
 							<h:panelGrid columns="1" cellpadding="3">
 								<h:outputLabel value="Poids :" style="font-weight:bold" />
@@ -150,7 +154,22 @@
 				</p:column>
 
 				<p:column headerText="Descripteur">
-					<h:outputText value="#{critere.printDescripteurs()}" />
+					<p:commandButton id="DescBtn" value="Afficher les descripteurs"
+						type="button" />
+					<p:overlayPanel id="DescPanel" for="DescBtn" hideEffect="fade"
+						dynamic="true" style="width:600px">
+						<p:dataTable var="descripteur" value="#{critere.descripteurs}">
+							<p:column headerText="Niveau">
+								<h:outputText value="#{descripteur.niveau}" />
+							</p:column>
+							<p:column headerText="Poids">
+								<h:outputText value="#{descripteur.poids}" />
+							</p:column>
+							<p:column headerText="Description" style='width:400px'>
+								<h:outputText value="#{descripteur.texte}" />
+							</p:column>
+						</p:dataTable>
+					</p:overlayPanel>
 				</p:column>
 				<!-- ********la colonne supprimée*********** -->
 				<p:column style="width:32px;text-align:center"
