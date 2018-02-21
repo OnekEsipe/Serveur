@@ -256,11 +256,22 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@Override
 	public void supprimerUtilisateur(int iduser, int idevent) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();		
-		session.createQuery("delete from Jury where iduser = :iduser AND idevent = :idevent")
-				.setParameter("iduser", iduser).setParameter("idevent", idevent).executeUpdate();
-		session.getTransaction().commit();
-		session.close();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();		
+			session.createQuery("delete from Jury where iduser = :iduser AND idevent = :idevent")
+					.setParameter("iduser", iduser).setParameter("idevent", idevent).executeUpdate();
+			transaction.commit();
+			logger.info("Delete jury done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}
 	}
 
 	@Override
