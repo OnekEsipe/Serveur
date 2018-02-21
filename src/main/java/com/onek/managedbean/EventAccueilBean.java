@@ -243,8 +243,9 @@ public class EventAccueilBean implements Serializable {
 		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
 		event.setStatus(statut);
-		event.setNom(nom);
-
+		if (!nom.isEmpty()) {
+			event.setNom(nom);
+		}
 		eventAccueilservice.editEvenement(event);
 		Navigation.redirect("eventAccueil.xhtml");
 
