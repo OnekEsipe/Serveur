@@ -90,12 +90,12 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Utilisateur> getAllUsersExceptDeleted() {
+	public List<Utilisateur> getAllUsersExceptCurrent(int idcurrentUser) {
 		List<Utilisateur> users = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		users = (List<Utilisateur>) session.createQuery("from Utilisateur where isdeleted = :isdeleted")
-				.setParameter("isdeleted", false).list();
+		users = (List<Utilisateur>) session.createQuery("from Utilisateur where iduser != :iduser")
+				.setParameter("iduser", idcurrentUser).list();
 		session.getTransaction().commit();
 		session.close();
 		return users;
@@ -133,5 +133,22 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.close();
 		return user;
 	}
-
+	@Override
+	public Utilisateur findUserById(int iduser) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where iduser = :iduser")
+				.setParameter("iduser", iduser).getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return user;
+	}
+	@Override
+	public void EditUser(Utilisateur user) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(user);
+		session.getTransaction().commit();
+		session.close();
+	}
 }

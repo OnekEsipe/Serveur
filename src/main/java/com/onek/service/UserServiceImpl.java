@@ -67,8 +67,8 @@ public class UserServiceImpl implements UserService, Serializable {
 	}
 
 	@Override
-	public List<Utilisateur> getAllUsersExceptDeleted() {
-		return userDao.getAllUsersExceptDeleted();
+	public List<Utilisateur> getAllUsersExceptCurrent(int idcurrentUser) {
+		return userDao.getAllUsersExceptCurrent(idcurrentUser);
 	}
 	
 	@Override
@@ -121,5 +121,13 @@ public class UserServiceImpl implements UserService, Serializable {
 	@Override
 	public Utilisateur findByMail(String mail) {
 		return userDao.findByMail(mail);
+	}
+	@Override
+	public void EditUser(Utilisateur user) {
+		userDao.EditUser(user);
+	}
+	@Override
+	public Utilisateur findUserById(int iduser) {
+		return userDao.findUserById(iduser);
 	}
 }
