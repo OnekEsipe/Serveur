@@ -14,6 +14,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -41,7 +42,8 @@ import com.onek.utils.Navigation;
 @Component("statistiques")
 public class StatistiquesBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;	
+	private final static Logger logger = Logger.getLogger(StatistiquesBean.class);
 
 	@Autowired
 	private EvaluationService evaluation;
@@ -271,9 +273,9 @@ public class StatistiquesBean implements Serializable {
 			workbook.write(externalContext.getResponseOutputStream());
 			facesContext.responseComplete();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.error(this.getClass().getName(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(this.getClass().getName(), e);
 		}
 	}
 

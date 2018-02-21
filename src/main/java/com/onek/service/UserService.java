@@ -19,6 +19,6 @@ public interface UserService {
 	public boolean authentification(String login, String password);
 	public boolean mailExist(String mail);
 	public Utilisateur findByMail(String mail);
-	public void EditUser(Utilisateur user);
+	public void editUser(Utilisateur user);
 	public Utilisateur findUserById(int iduser);
 }

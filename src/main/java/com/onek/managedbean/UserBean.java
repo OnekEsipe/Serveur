@@ -246,9 +246,7 @@ public class UserBean {
 		iduser = Integer.valueOf(params.get("iduser"));
 		Utilisateur user = userService.findUserById(iduser);
 		user.setIsdeleted(false);
-		userService.EditUser(user);
-		
-		
+		userService.editUser(user);		
 	}
 	
 	public void showLogMessage() {
