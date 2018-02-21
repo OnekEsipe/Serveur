@@ -168,12 +168,7 @@ public class GrilleBean {
 		int id = Integer.valueOf(params.get("idcritere"));
 		Critere critere = grille.getCritereById(id);
 		grille.supprimerCritere(id);
-		for (Critere crit : criteres) {
-			if (crit.getIdcritere() == id) {
-				criteres.remove(crit);
-				break;
-			}
-		}
+		criteres.remove(critere);
 	}
 
 	public void onClicSave() {
