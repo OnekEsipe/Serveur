@@ -24,7 +24,7 @@
 		</div>
 
 		<div class="ui-g">
-			<div class="ui-g-4">
+			<div class="ui-g-2">
 				<ul class="menu">
 					<li><a href="eventAccueil.xhtml">Accueil</a></li>
 					<li><a href="grille.xhtml">Gestion de la grille</a></li>
@@ -38,13 +38,12 @@
 
 				</ul>
 			</div>
-			<br /> <br />
-
-			<div class="ui-g-8">
-				<div class="ui-g-6">
+			<br />
+			<div class="ui-g-9">
+				<div class="ui-g-7" style="padding-left:50px">
 					<p:panel id="infoEvt" header="Infos evenements"
 						style="margin-bottom:20px">
-						<h:form>
+						<h:form style="width:1000px !important">
 							<h:panelGrid columns="2" cellpadding="10">
 								<p:outputLabel value="Nom événement : " />
 								<h:outputText value="#{eventAccueil.event.getNom()}"
@@ -71,7 +70,7 @@
 									<f:selectItem itemLabel="Ouvert" itemValue="Ouvert" />
 									<f:selectItem itemLabel="Fermé" itemValue="Fermé" />
 								</p:selectOneMenu>
-
+								
 								<p:selectOneMenu value="#{eventAccueil.statut}"
 									style="width:125px" rendered="#{eventAccueil.visibleF}">
 									<f:selectItem itemLabel="Fermé" itemValue="Fermé" />
@@ -95,7 +94,7 @@
 
 								<p:commandButton value="Supprimer l'événement"
 									actionListener="#{eventAccueil.supprimerEvent}"
-									disabled="#{eventAccueil.disabledSiSupprime}">
+									disabled="#{eventAccueil.disabledSiSupprime}" rendered="#{not eventAccueil.disabledSiSupprime}">
 									<p:confirm header="Confirmation"
 										message="vous voulez vraiment supprimer l'événement"
 										icon="ui-icon-trash" />
@@ -108,22 +107,16 @@
 									<p:commandButton value="No" type="button"
 										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 								</p:confirmDialog>
-								<p:commandButton value="réactiver l'événement"
+								<p:commandButton value="Réactiver"
 									actionListener="#{eventAccueil.buttonRecuperer}"
-									disabled="#{not eventAccueil.disabledSiSupprime}" ajax="false" />
+									disabled="#{not eventAccueil.disabledSiSupprime}" ajax="false" rendered="#{eventAccueil.disabledSiSupprime}"/>
 							</h:panelGrid>
 						</h:form>
 					</p:panel>
-
-
-
 				</div>
 				<!-- ************Tableau des Jurys**************** -->
 				<div class="ui-g-1"></div>
 				<div class="ui-g-5">
-
-
-					
 					<p:panel id="dupliquerEvent" header="Dupliquer l'événement"
 						style="margin-bottom:20px">
 						<h:form>
