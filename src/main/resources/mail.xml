@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+       
+	<bean name="mailBean" class="com.onek.bean.MailBean"> 
+        <property name="port" value="587"/> 						<!-- mail.smtp.port -->
+        <property name="auth" value="true"/>						<!-- mail.smtp.auth -->
+        <property name="starttlsEnable" value="true"/>				<!-- mail.smtp.starttls.enable -->
+        <property name="host" value="smtp.gmail.com"/>				<!-- mail.smtp.host -->
+        <property name="user" value="onek2018esipe@gmail.com"/>		<!-- mail.smtp.user -->
+        <property name="password" value="onek2018!"/>				<!-- mail.smtp.password -->
+        <property name="from" value="onek2018esipe@gmail.com"/>		<!-- mail.from -->
+        <!-- Par défaut : http://localhost:8080/serveur/resetpassword.xhtml -->
+        <property name="url" value="https://173.249.25.49/serveur/resetpassword.xhtml"/>
+	</bean>	 
+	
+</beans>

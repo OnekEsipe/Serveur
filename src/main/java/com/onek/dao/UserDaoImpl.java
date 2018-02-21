@@ -29,6 +29,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.close();
 	}
 
+	@Override
 	public Utilisateur findByLogin(String login) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -89,15 +90,26 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Utilisateur> getAllUsersExceptDeleted() {
+	public List<Utilisateur> getAllUsersExceptCurrent(int idcurrentUser) {
 		List<Utilisateur> users = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		users = (List<Utilisateur>) session.createQuery("from Utilisateur where isdeleted = :isdeleted")
-				.setParameter("isdeleted", false).list();
+		users = (List<Utilisateur>) session.createQuery("from Utilisateur where iduser != :iduser")
+				.setParameter("iduser", idcurrentUser).list();
 		session.getTransaction().commit();
 		session.close();
 		return users;
+	}
+	
+	@Override
+	public boolean mailExist(String mail) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		long result = (Long) session.createQuery("SELECT COUNT(e) from Utilisateur e WHERE e.mail = :mail")
+				.setParameter("mail", mail).getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return result == 1;		
 	}
 
 	@Override
@@ -110,5 +122,33 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.close();
 		return result == 1;
 	}
-
+	
+	@Override
+	public Utilisateur findByMail(String mail) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where mail = :mail")
+				.setParameter("mail", mail).getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return user;
+	}
+	@Override
+	public Utilisateur findUserById(int iduser) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where iduser = :iduser")
+				.setParameter("iduser", iduser).getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return user;
+	}
+	@Override
+	public void EditUser(Utilisateur user) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(user);
+		session.getTransaction().commit();
+		session.close();
+	}
 }

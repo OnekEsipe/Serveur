@@ -20,4 +20,20 @@ public class GrilleServiceImpl implements GrilleService, Serializable{
 	public void addCriteres(List<Critere> criteres) {
 		critereDao.addCriteres(criteres);		
 	}
+	
+	@Override
+	public void addCritere(Critere critere) {
+		critereDao.addCritere(critere);
+	}
+
+	@Override
+	public Critere getCritereById(int id) {
+		return critereDao.findById(id);
+	}
+
+	@Override
+	public void supprimerCritere(int id) {
+		critereDao.supprimerCritere(id);
+	}
+	
 }

@@ -3,6 +3,7 @@ package com.onek.managedbean;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -31,38 +32,9 @@ public class GrilleBean {
 	private Evenement event;
 
 	private List<Critere> criteres = new ArrayList<>();
-	private List<Critere> newCriteres = new ArrayList<>();
 	private List<Integer> numbers = new ArrayList<>();
 	private final BigDecimal ref = new BigDecimal(1);
-
-	@PostConstruct
-	public void postInit() {
-		for (int i = 2; i < 7; i++) {
-			numbers.add(i);
-		}
-	}
-
-	public void before(ComponentSystemEvent e) {
-		if (!FacesContext.getCurrentInstance().isPostback()) {
-			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
-				Navigation.redirect("index.xhtml");
-				return;
-			}
-			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
-				Navigation.redirect("accueil.xhtml");
-				return;
-			}	
-			criteres.clear();
-			newCriteres.clear();	
-			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
-			this.event = evenement.findById(idEvent);
-			for (Critere critere : event.getCriteres()) {
-				criteres.add(critere);
-			}
-			resetValues();
-		}
-	}
-
+	
 	private int nbDescripteur;
 
 	private String nom;
@@ -81,6 +53,35 @@ public class GrilleBean {
 	private String texte4;
 	private String texte5;
 	private String texte6;
+
+	@PostConstruct
+	public void postInit() {
+		for (int i = 2; i < 7; i++) {
+			numbers.add(i);
+		}
+	}
+
+	public void before(ComponentSystemEvent e) {
+		if (!FacesContext.getCurrentInstance().isPostback()) {
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
+				Navigation.redirect("index.xhtml");
+				return;
+			}
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+				Navigation.redirect("accueil.xhtml");
+				return;
+			}
+			criteres.clear();
+			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
+			this.event = evenement.findById(idEvent);
+			for (Critere critere : event.getCriteres()) {
+				criteres.add(critere);
+			}
+			resetValues();
+		}
+	}
+
+
 
 	public void onClicAdd() {
 		Critere c = new Critere();
@@ -138,8 +139,8 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
+		grille.addCritere(c);
 		criteres.add(c);
-		newCriteres.add(c);
 		resetValues();
 	}
 
@@ -161,8 +162,16 @@ public class GrilleBean {
 		texte6 = "";
 	}
 
+	public void supprimerCritere() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		int id = Integer.valueOf(params.get("idcritere"));
+		Critere critere = grille.getCritereById(id);
+		grille.supprimerCritere(id);
+		criteres.remove(critere);
+	}
+
 	public void onClicSave() {
-		grille.addCriteres(newCriteres);
 		Navigation.redirect("eventAccueil.xhtml");
 	}
 
@@ -288,10 +297,6 @@ public class GrilleBean {
 
 	public List<Critere> getCriteres() {
 		return criteres;
-	}
-
-	public List<Critere> getNewCriteres() {
-		return newCriteres;
 	}
 
 	public int getNbDescripteur() {

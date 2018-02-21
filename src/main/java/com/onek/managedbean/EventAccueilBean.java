@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
@@ -31,7 +30,7 @@ import com.onek.service.GrilleService;
 import com.onek.service.JuryService;
 import com.onek.service.UserService;
 import com.onek.utils.Navigation;
-import com.onek.utils.PasswordGenerator;
+import com.onek.utils.Password;
 
 @Component("eventAccueil")
 public class EventAccueilBean implements Serializable {
@@ -70,27 +69,22 @@ public class EventAccueilBean implements Serializable {
 	private Date dateEnd;
 	private Date timeStart;
 	private Date timeEnd;
-	private String message;
-	private int juryAnonyme;
+	private List<String> selectedoptions;
+	private boolean disabledSiBrouillon;
+	private boolean disabledSiSupprime;
+	
 	private String visibleB = "false";
 	private String visibleO = "false";
 	private String visibleF = "false";
-
-	private List<Candidat> filteredcandidats;
-	private Candidat selectedcandidat;
-	private List<Candidat> candidats;
-	private Candidat candidat;
-
-	private List<Utilisateur> utilisateurs;
-	private List<Utilisateur> utilisateursAnos;
-
-	private Utilisateur utilisateur;
-	private List<Utilisateur> filteredutilisateurs;
-	private Utilisateur selectedutilisateur;
-
-	private PasswordGenerator passwordGenerator;
 	
-	private boolean disabledSiBrouillon;
+
+	public boolean isDisabledSiSupprime() {
+		return disabledSiSupprime;
+	}
+
+	public void setDisabledSiSupprime(boolean disabledSiSupprime) {
+		this.disabledSiSupprime = disabledSiSupprime;
+	}
 
 	public boolean isDisabledSiBrouillon() {
 		return disabledSiBrouillon;
@@ -132,52 +126,20 @@ public class EventAccueilBean implements Serializable {
 		this.visibleO = visibleO;
 	}
 
-	public List<Utilisateur> getFilteredutilisateurs() {
-		return filteredutilisateurs;
-	}
-
-	public void setFilteredutilisateurs(List<Utilisateur> filteredutilisateurs) {
-		this.filteredutilisateurs = filteredutilisateurs;
-	}
-
-	public Utilisateur getSelectedutilisateur() {
-		return selectedutilisateur;
-	}
-
-	public void setSelectedutilisateur(Utilisateur selectedutilisateur) {
-		this.selectedutilisateur = selectedutilisateur;
-	}
-
-	public List<Candidat> getFilteredcandidats() {
-		return filteredcandidats;
-	}
-
-	public void setFilteredcandidats(List<Candidat> filteredcandidats) {
-		this.filteredcandidats = filteredcandidats;
-	}
-
-	public Candidat getSelectedcandidat() {
-		return selectedcandidat;
-	}
-
-	public void setSelectedcandidat(Candidat selectedcandidat) {
-		this.selectedcandidat = selectedcandidat;
-	}
-
-	public int getJuryAnonyme() {
-		return juryAnonyme;
-	}
-
-	public void setJuryAnonyme(int juryAnonyme) {
-		this.juryAnonyme = juryAnonyme;
-	}
-
 	public Evenement getEvent() {
 		return event;
 	}
 
 	public void setEvent(Evenement event) {
 		this.event = event;
+	}
+
+	public List<String> getSelectedoptions() {
+		return selectedoptions;
+	}
+
+	public void setSelectedoptions(List<String> selectedoptions) {
+		this.selectedoptions = selectedoptions;
 	}
 
 	public void before(ComponentSystemEvent e) throws ParseException {
@@ -193,16 +155,10 @@ public class EventAccueilBean implements Serializable {
 
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
-			candidats = eventAccueilservice.listCandidatsByEvent(idEvent);
-			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
 
-			utilisateursAnos = new ArrayList<>();
-			List<Jury> jurys = juryService.listJurysAnnonymesByEvent(idEvent);
-			jurys.forEach(jury -> utilisateursAnos.add(jury.getUtilisateur()));
-
+			disabledSiSupprime = event.getIsdeleted();
 			this.statut = event.getStatus();
 			if (statut.equals("Brouillon")) {
-
 				setVisibleB("true");
 				setVisibleO("false");
 				setVisibleF("false");
@@ -233,46 +189,6 @@ public class EventAccueilBean implements Serializable {
 			root.setViewId(viewId);
 			context.setViewRoot(root);
 		}
-	}
-
-	public List<Utilisateur> getUtilisateurs() {
-		return utilisateurs;
-	}
-
-	public void setUtilisateurs(List<Utilisateur> utilisateurs) {
-		this.utilisateurs = utilisateurs;
-	}
-
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
-
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}
-
-	public List<Candidat> getCandidats() {
-		return candidats;
-	}
-
-	public void setCandidats(List<Candidat> candidats) {
-		this.candidats = candidats;
-	}
-
-	public Candidat getCandidat() {
-		return candidat;
-	}
-
-	public void setCandidat(Candidat candidat) {
-		this.candidat = candidat;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
 	}
 
 	public Date getTimeStart() {
@@ -323,51 +239,6 @@ public class EventAccueilBean implements Serializable {
 		this.idEvent = idEvent;
 	}
 
-	public List<Utilisateur> getUtilisateursAnos() {
-		return utilisateursAnos;
-	}
-
-	public void setUtilisateursAnos(List<Utilisateur> utilisateursAnos) {
-		this.utilisateursAnos = utilisateursAnos;
-	}
-
-	public void addJuryAnonymeButton() {
-		passwordGenerator = new PasswordGenerator();
-		List<Utilisateur> anonymousJurys = new ArrayList<>();
-		Utilisateur anonymousJury;
-		int increment = juryService.findAnonymousByIdEvent(idEvent).size();
-		if (juryAnonyme > 0) {
-			for (int i = 0 + increment; i < juryAnonyme + increment; i++) {
-				anonymousJury = new Utilisateur();
-				anonymousJury.setDroits("A");
-				anonymousJury.setIsdeleted(false);
-				if (i < 10) {
-					anonymousJury.setLogin("Jury00" + i + "_" + idEvent);
-					anonymousJury.setNom("Jury00" + i + "_" + idEvent);
-				}
-				if ((i >= 10) && (i < 100)) {
-					anonymousJury.setLogin("Jury0" + i + "_" + idEvent);
-					anonymousJury.setNom("Jury0" + i + "_" + idEvent);
-				}
-				if ((i >= 100) && (i < 1000)) {
-					anonymousJury.setLogin("Jury" + i + "_" + idEvent);
-					anonymousJury.setNom("Jury" + i + "_" + idEvent);
-				}
-				anonymousJury.setMotdepasse(passwordGenerator.generatePassword(8));
-				anonymousJury.setMail("");
-				anonymousJury.setPrenom("");
-				anonymousJurys.add(anonymousJury);
-			}
-			userService.addJurysAnonymes(anonymousJurys, event);
-			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
-
-			// On met à jour la liste des jurys anonymes
-			anonymousJurys.forEach(jury -> utilisateursAnos.add(jury));
-			utilisateursAnos.forEach(juryAno -> System.out.println(juryAno.getNom()));
-
-		}
-	}
-
 	public void eventUpdateButton() {
 		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
@@ -378,44 +249,18 @@ public class EventAccueilBean implements Serializable {
 		Navigation.redirect("eventAccueil.xhtml");
 
 	}
+	
+	public void supprimerEvent() {
 
-	public void supprimerCandidat() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-		int idcandidat = Integer.valueOf(params.get("idcandidat"));
-
-		eventAccueilservice.supprimerCandidat(idcandidat);
-		candidats = eventAccueilservice.listCandidatsByEvent(1);
+		evenementService.supprimerEvent(event.getIdevent());
+		Navigation.redirect("accueil.xhtml");
 
 	}
 
-	public void supprimerUtilisateur() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-		int iduser = Integer.valueOf(params.get("iduser"));
-
-		eventAccueilservice.supprimerUtilisateur(iduser);
-		utilisateurs = eventAccueilservice.listJurysByEvent(1);
-	}
-
-	public void buttonGrille() {
-		Navigation.redirect("grille.xhtml");
-	}
-
-	public void buttonAttribution() {
-		Navigation.redirect("attributionJuryCandidat.xhtml");
-	}
-
-	public void buttonAddJury() {
-		Navigation.redirect("addJury.xhtml");
-	}
-
-	public void buttonAddCandidat() {
-		Navigation.redirect("addCandidates.xhtml");
-	}
-
-	public void buttonStats() {
-		Navigation.redirect("statistiques.xhtml");
+	public void buttonRecuperer() {
+		event.setIsdeleted(false);
+		evenementService.editEvenement(event);
+		Navigation.redirect("accueil.xhtml");
 	}
 
 	public void buttonDupliquer() {
@@ -430,20 +275,29 @@ public class EventAccueilBean implements Serializable {
 		for (Critere critere : criteresbis) {
 			eventbis.addCritere(critere);
 		}
-		List<Candidat> candidatsBis = new ArrayList<>();
-		candidatsBis = duplicateCandidat(eventbis);
-		candidatService.addCandidates(candidatsBis);
-		eventbis.setCandidats(new ArrayList<>());
-		for (Candidat candidat : candidatsBis) {
-			eventbis.addCandidat(candidat);
+		if (!selectedoptions.isEmpty()) {
+			for (String option : selectedoptions) {
+				if (option.equals("candidats")) {
+					List<Candidat> candidatsBis = new ArrayList<>();
+					candidatsBis = duplicateCandidat(eventbis);
+					candidatService.addCandidates(candidatsBis);
+					eventbis.setCandidats(new ArrayList<>());
+					for (Candidat candidat : candidatsBis) {
+						eventbis.addCandidat(candidat);
+					}
+				}
+				if (option.equals("jurys")) {
+					List<Jury> jurysBis = new ArrayList<>();
+					jurysBis = duplicateJury(eventbis);
+					eventbis.setJurys(new ArrayList<>());
+					for (Jury jury : jurysBis) {
+						eventbis.addJury(jury);
+					}
+					juryService.addListJurys(jurysBis);
+				}
+			}
 		}
-		List<Jury> jurysBis = new ArrayList<>();
-		jurysBis = duplicateJury(eventbis);
-		eventbis.setJurys(new ArrayList<>());
-		for (Jury jury : jurysBis) {
-			eventbis.addJury(jury);
-		}
-		juryService.addListJurys(jurysBis);
+		selectedoptions.clear();
 
 	}
 
@@ -507,7 +361,7 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	private String generateCode() {
-		PasswordGenerator pass = new PasswordGenerator();
+		Password pass = new Password();
 		Integer id = event.getIdevent();
 		int length = (int) (Math.log10(id) + 1);
 		String codeEvent = id + pass.generateCode(10 - length);

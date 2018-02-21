@@ -12,9 +12,13 @@ public interface UserService {
 	public Utilisateur findByLogin(String login);
 	public boolean userExist(String login);
 	public List<Utilisateur> getAllUsers();
-	public List<Utilisateur> getAllUsersExceptDeleted();
+	public List<Utilisateur> getAllUsersExceptCurrent(int idcurrentUser);
 	public List<Utilisateur> findAllJurys();
 	public void deleteUser(int idUser);
 	public void addUser(Utilisateur user);
 	public boolean authentification(String login, String password);
+	public boolean mailExist(String mail);
+	public Utilisateur findByMail(String mail);
+	public void EditUser(Utilisateur user);
+	public Utilisateur findUserById(int iduser);
 }

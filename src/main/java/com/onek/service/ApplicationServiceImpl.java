@@ -85,6 +85,10 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		}
 		try {
 			Evenement event = eventDao.findById(id);
+			// check if evenement is deleted
+			if (event.getIsdeleted()) {
+				return Optional.empty();
+			}			
 			// check if evenement is opened
 			if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
 				return Optional.empty();
@@ -113,15 +117,29 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		// search idEvents for the login
 		List<Integer> idEvents = new ArrayList<>();
 		for (Jury jury : jurys) {
-			idEvents.add(jury.getEvenement().getIdevent());
+			Evenement event = jury.getEvenement();
+			if (!event.getIsdeleted()) {
+				idEvents.add(event.getIdevent());
+			}
 		}
 		Collections.sort(idEvents);
 		accounts.add(new AccountResource(user, idEvents));
 		// search anonymous for all events affected at login
 		for (Jury jury : jurys) {
-			Integer idEvent = jury.getEvenement().getIdevent();
+			Evenement event = jury.getEvenement();
+			if (event.getIsdeleted()) {
+				continue;
+			}
+			Integer idEvent = event.getIdevent();
 			List<Jury> anonymous = juryDao.findAnonymousByIdEvent(idEvent);
 			for (Jury anonym : anonymous) {
+				Utilisateur anonymUser = anonym.getUtilisateur();
+				try {
+					anonymUser.setMotdepasse(Encode.sha1(anonymUser.getMotdepasse()));
+				} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {					
+					e.printStackTrace();
+					continue;
+				}
 				List<Integer> idEventsAnonym = new ArrayList<>();
 				idEventsAnonym.add(idEvent);
 				accounts.add(new AccountResource(anonym.getUtilisateur(), idEventsAnonym));
@@ -193,16 +211,15 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	}
 
 	@Override
-	public void createJury(CreateJuryResource createJuryResource)
-			throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	public void createJury(CreateJuryResource createJuryResource) {
 		Utilisateur user = new Utilisateur();
 		user.setPrenom(createJuryResource.getFirstname());
 		user.setNom(createJuryResource.getLastname());
 		user.setMail(createJuryResource.getMail());
 		user.setLogin(createJuryResource.getLogin());
-		user.setMotdepasse(Encode.sha1(createJuryResource.getPassword()));
-		user.setDroits("J");
-		user.setIsdeleted(false);
+		user.setMotdepasse(createJuryResource.getPassword());
+		user.setDroits(DroitsUtilisateur.JURY.toString());
+		user.setIsdeleted(false);		
 		userService.addUser(user);
 	}
 
@@ -219,6 +236,12 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			throw new IllegalArgumentException();
 		}
 		if (!event.getIsopened()) {
+			return false;
+		}
+		if (event.getIsdeleted()) {
+			return false;
+		}
+		if (event.getStatus().equals(StatutEvenement.FERME.toString())) {
 			return false;
 		}
 		Jury jury = new Jury();

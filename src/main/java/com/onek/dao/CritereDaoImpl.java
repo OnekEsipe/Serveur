@@ -3,6 +3,7 @@ package com.onek.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,39 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 		session.beginTransaction();
 		Critere critere = (Critere) session.createQuery("FROM Critere WHERE idcritere = :id").setParameter("id", id)
 				.getSingleResult();
+		Hibernate.initialize(critere.getDescripteurs());
 		session.getTransaction().commit();
 		session.close();
 		return critere;
+	}
+
+	@Override
+	public void addCritere(Critere critere) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.save(critere);
+		for (Descripteur descripteur : critere.getDescripteurs()) {
+			session.save(descripteur);
+		}
+		session.getTransaction().commit();
+		session.close();
+	}
+
+	@Override
+	public void supprimerCritere(int id) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Critere critere = findById(id);
+		System.out.println(critere.getTexte()+" "+critere.getIdcritere());
+		System.out.println(critere.getDescripteurs().size());
+		for (Descripteur descripteur : critere.getDescripteurs()) {
+			System.out.println("Descripteur : "+descripteur.getIddescripteur());
+			session.createQuery("delete from Descripteur where iddescripteur = :iddescripteur")
+			.setParameter("iddescripteur", descripteur.getIddescripteur()).executeUpdate();
+		}
+		session.createQuery("delete from Critere where idcritere = :idcritere")
+		.setParameter("idcritere", id).executeUpdate();
+		session.getTransaction().commit();
+		session.close();
 	}
 }

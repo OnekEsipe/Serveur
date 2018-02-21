@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,7 @@ import com.onek.model.Utilisateur;
 import com.onek.service.UserService;
 import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Navigation;
+import com.onek.utils.Password;
 
 @Component("user")
 public class UserBean {
@@ -23,6 +26,7 @@ public class UserBean {
 
 	private Utilisateur utilisateur;
 	private int iduser;
+	private boolean isdeleted;
 	private String lastName;
 	private String firstName;
 	private String login;
@@ -31,8 +35,7 @@ public class UserBean {
 	private String mail;
 	private Boolean isAdmin;
 	private String option;
-	
-	
+
 	private List<Utilisateur> users = new ArrayList<>();
 
 	private List<Utilisateur> filteredusers = new ArrayList<>();
@@ -45,11 +48,13 @@ public class UserBean {
 			Navigation.redirect("index.xhtml");
 			return;
 		}
-		users = userService.getAllUsersExceptDeleted();
+		String loginUtilisateur = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+		Utilisateur utilisateurPrincipal = userService.findByLogin(loginUtilisateur);
+		users = userService.getAllUsersExceptCurrent(utilisateurPrincipal.getIduser());
 		emptyForm();
-		
+
 	}
-	
+
 	private void emptyForm() {
 		setFirstName("");
 		setLastName("");
@@ -57,9 +62,18 @@ public class UserBean {
 		setPassword("");
 		setConfirmationPassword("");
 		setMail("");
-		logInfo="";
-		
+		setLogInfo("");
+
 	}
+
+	public boolean isIsdeleted() {
+		return isdeleted;
+	}
+
+	public void setIsdeleted(boolean isdeleted) {
+		this.isdeleted = isdeleted;
+	}
+
 	public String isOption() {
 		return option;
 	}
@@ -176,9 +190,20 @@ public class UserBean {
 		System.out.println("lol");
 	}
 
-	public void onClickAdd() {		
+	public void onClickAdd() {
 		if (!password.equals(confirmationPassword)) {
 			logInfo = "Les mots de passe ne correspondent pas !";
+			showLogMessage();
+			return;
+		}
+		if (!Password.verifyPasswordRule(password)) {
+			logInfo = "Création impossible : Le mot de passe doit être composé d'au moins 6 caractères et comporter au moins une majuscule.";
+			showLogMessage();
+			return;
+		}
+		if (userService.mailExist(mail)) {
+			logInfo = "Création impossible : adresse mail déjà utilisée.";
+			showLogMessage();
 			return;
 		}
 		Utilisateur newUser = new Utilisateur();
@@ -187,18 +212,21 @@ public class UserBean {
 		newUser.setMail(mail);
 		newUser.setLogin(login);
 		newUser.setMotdepasse(password);
-		if(isAdmin) {
+		newUser.setIsdeleted(false);
+		if (isAdmin) {
 			newUser.setDroits(DroitsUtilisateur.ADMINISTRATEUR.toString());
-		}else {
+		} else {
 			newUser.setDroits(DroitsUtilisateur.ORGANISATEUR.toString());
 		}
-		newUser.setIsdeleted(false);
+		
 		try {
 			userService.addUser(newUser);
 			users.add(newUser);
-		}		
-		catch(IllegalStateException e) { // login exist
+			logInfo = "Ajout effectué avec succès !";
+			showLogMessage();
+		} catch (IllegalStateException e) { // login exist
 			logInfo = "Création impossible : le login est déjà utilisé.";
+			showLogMessage();
 		}
 	}
 
@@ -206,17 +234,26 @@ public class UserBean {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		iduser = Integer.valueOf(params.get("iduser"));
-		users.forEach(user -> {
-			if (user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString()) && user.getIduser() != iduser) {
-				userService.deleteUser(iduser);
-				users = userService.getAllUsersExceptDeleted();
-				return;
-			}
-		});
+		String loginUtilisateur = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+		Utilisateur utilisateurPrincipal = userService.findByLogin(loginUtilisateur);
+		if(iduser != utilisateurPrincipal.getIduser()) {
+			userService.deleteUser(iduser);
+		}
+	}
+	public void reactiverUser() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		iduser = Integer.valueOf(params.get("iduser"));
+		Utilisateur user = userService.findUserById(iduser);
+		user.setIsdeleted(false);
+		userService.EditUser(user);
 		
-
-
-
+		
+	}
+	
+	public void showLogMessage() {
+		RequestContext.getCurrentInstance().showMessageInDialog(
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Ajout d'un nouvel utilisateur", logInfo));
 	}
 
 }

@@ -6,6 +6,9 @@ import com.onek.model.Critere;
 
 public interface GrilleService {
 
-	void addCriteres(List<Critere> criteres);
+	public void addCriteres(List<Critere> criteres);
+	public void addCritere(Critere critere);
+	public Critere getCritereById(int id);
+	public void supprimerCritere(int id);
 
 }

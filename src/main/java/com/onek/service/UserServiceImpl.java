@@ -58,14 +58,17 @@ public class UserServiceImpl implements UserService, Serializable {
 	@Override
 	public void addUser(Utilisateur user) {
 		if (userExist(user.getLogin())) {
-			throw new IllegalStateException();
+			throw new IllegalStateException("Le login est déjà utilisé.");
+		}
+		if (mailExist(user.getMail())) {
+			throw new IllegalStateException("L'adresse mail est déjà utilisée.");
 		}
 		userDao.addUser(user);
 	}
 
 	@Override
-	public List<Utilisateur> getAllUsersExceptDeleted() {
-		return userDao.getAllUsersExceptDeleted();
+	public List<Utilisateur> getAllUsersExceptCurrent(int idcurrentUser) {
+		return userDao.getAllUsersExceptCurrent(idcurrentUser);
 	}
 	
 	@Override
@@ -73,23 +76,33 @@ public class UserServiceImpl implements UserService, Serializable {
 		if (!userExist(login)) {
 			return false;
 		}
+		if (password == null || password.isEmpty()) {
+			return false;
+		}
 		Utilisateur user = findByLogin(login);
-		if (user.getDroits().equals("A")) {
-			return user.getMotdepasse().equals(password);
-		}
-		String hash;
-		try {
-			hash = Encode.sha1(password);
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			e.printStackTrace();
-			throw new IllegalStateException();
-		}
-		return user.getMotdepasse().equals(hash);
+		if (user.getDroits().equals(DroitsUtilisateur.ANONYME.toString())) {
+			String hash;
+			try {
+				hash = Encode.sha1(user.getMotdepasse());
+			} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {				
+				e.printStackTrace();
+				throw new IllegalStateException();
+			}
+			return hash.equals(password);
+		}		
+		return user.getMotdepasse().equals(password);
 	}
 
 	@Override
 	public boolean authentification(String login, String password) {
-		if (!userExistAndCorrectPassword(login, password)) {
+		String hash;
+		try {
+			hash = Encode.sha1(password);
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {				
+			e.printStackTrace();
+			return false;
+		}
+		if (!userExistAndCorrectPassword(login, hash)) {
 			return false;
 		}
 		Utilisateur user = findByLogin(login);
@@ -98,5 +111,23 @@ public class UserServiceImpl implements UserService, Serializable {
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public boolean mailExist(String mail) {
+		return userDao.mailExist(mail);
+	}
+	
+	@Override
+	public Utilisateur findByMail(String mail) {
+		return userDao.findByMail(mail);
+	}
+	@Override
+	public void EditUser(Utilisateur user) {
+		userDao.EditUser(user);
+	}
+	@Override
+	public Utilisateur findUserById(int iduser) {
+		return userDao.findUserById(iduser);
 	}
 }

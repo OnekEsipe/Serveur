@@ -62,5 +62,14 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 		session.getTransaction().commit();
 		session.close();
 	}
-	
+	@Override
+	public  Candidat findCandidatesById(int idcandidat) {
+		Candidat candidat = new Candidat();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		candidat = (Candidat) session.createQuery("from Candidat where idcandidat = :idcandidat").setParameter("idcandidat", idcandidat).getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return candidat;
+	}
 }

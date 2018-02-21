@@ -34,5 +34,8 @@ public class CandidateServiceImpl implements CandidateService, Serializable{
 	public void addCandidates(List<Candidat> candidates) {
 		candidatedao.addCandidates(candidates);	
 	}
-
+	@Override
+	public  Candidat findCandidatesById(int idcandidat) {
+		return candidatedao.findCandidatesById(idcandidat);
+	}
 }

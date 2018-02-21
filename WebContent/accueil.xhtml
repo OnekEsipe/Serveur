@@ -86,26 +86,6 @@
 					<h:outputText value="#{evenement.isdeleted}" />
 				</p:column>
 
-
-				<!-- ********la colonne supprimer*********** -->
-				<p:column style="width:32px;text-align: center">
-					<p:growl id="message" showDetail="true" />
-					<p:commandButton id="iconOnly" icon="ui-icon-trash"
-						actionListener="#{accueil.supprimerEvent}" update="@(form)">
-						<f:param name="idevent" value="#{evenement.idevent}" />
-						<p:confirm header="Confirmation"
-							message="vous voulez vraiment supprimer l'événement"
-							icon="ui-icon-trash" />
-					</p:commandButton>
-
-					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-						<p:commandButton value="Yes" type="button"
-							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-						<p:commandButton value="No" type="button"
-							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-					</p:confirmDialog>
-				</p:column>
-				<!-- ********fin*********** -->
 			</p:dataTable>
 		</h:form>
 	</div>

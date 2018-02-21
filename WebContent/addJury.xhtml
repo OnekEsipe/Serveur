@@ -24,30 +24,37 @@
 	<div class="ui-g">
 		<div class="ui-g-6">
 			<h:form id="source">
+				<p:dataTable id="checkboxDT" var="utilisateur"
+					value="#{addjury.utilisateursAll}"
+					emptyMessage="Le jury n'existe pas"
+					filteredValue="#{addjury.filteredutilisateurs}"
+					selection="#{addjury.selectedutilisateurs}"
+					rowKey="#{utilisateur.nom}" style="margin-bottom:0"
+					scrollable="true" scrollHeight="400"
+					widgetVar="utilisateurallTable">
 
-				<div class="ui-g-5">
+					<f:facet name="header">
+						<p:outputPanel>
+							<div>
+								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
 
-					<p:dataTable id="checkboxDT" var="utilisateur"
-						value="#{addjury.utilisateursAll}"
-						selection="#{addjury.selectedutilisateurs}"
-						rowKey="#{utilisateur.nom}" style="margin-bottom:0"
-						scrollable="true" scrollHeight="100"
-						widgetVar="utilisateurallTable">
+								<p:inputText id="globalFilter"
+									onkeyup="PF('utilisateurallTable').filter()"
+									style="width:150px" placeholder="nom jury" />
+							</div>
+						</p:outputPanel>
 
-						<f:facet name="header">
-						Listes de tous les jurys 
 					</f:facet>
-						<p:column selectionMode="multiple"
-							style="width:16px;text-align:center" />
-						<p:column headerText="Nom">
-							<h:outputText value="#{utilisateur.nom}" />
-						</p:column>
-						<p:column headerText="prénom">
-							<h:outputText value="#{utilisateur.prenom}" />
-						</p:column>
-					</p:dataTable>
-
-				</div>
+					<p:column selectionMode="multiple"
+						style="width:16px;text-align:center" />
+					<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
+						filterMatchMode="contains" filterStyle="display:none">
+						<h:outputText value="#{utilisateur.nom}" />
+					</p:column>
+					<p:column headerText="prénom">
+						<h:outputText value="#{utilisateur.prenom}" />
+					</p:column>
+				</p:dataTable>
 
 				<div class="ui-g-1">
 					<p:commandButton process="checkboxDT"
@@ -58,15 +65,55 @@
 
 			</h:form>
 		</div>
-		<!-- ************Tableau des Jurys**************** -->
+
 
 		<div class="ui-g-6">
+		<h:form>
+						<!-- Debut liste jurys anonymes -->
+						<p:dataTable id="tabJurysAnos" var="utilisateursAno"
+							style="display:none;" value="#{addjury.utilisateursAnos}"
+							widgetVar="utilisateurTable2" scrollable="true"
+							scrollHeight="300" rowKey="#{utilisateursAno.nom}">
 
+							<!-- ********fin*********** -->
+							<p:column headerText="Nom">
+								<h:outputText value="#{utilisateursAno.nom}" />
+							</p:column>
+
+							<p:column headerText="Mot de passe">
+								<h:outputText value="#{utilisateursAno.motdepasse}" />
+							</p:column>
+						</p:dataTable>
+
+						<!-- Fin liste jurys anonymes -->
+
+
+			
+				<div class="ui-g">
+					<div class="ui-g-6">
+						<h:outputLabel for="juryAnonyme"
+							value="Ajouter des jurys anonymes : " />
+						<p:spinner id="juryAnonyme" value="#{addjury.juryAnonyme}"
+							min="0" max="999" size="1" />
+					</div>
+					<div class="ui-g-2">
+						<p:commandButton value="Ajouter" ajax="false"
+							actionListener="#{addjury.addJuryAnonymeButton}"
+							update="@(form) tabJurysAnos" />
+					</div>
+					<div class="ui-g-1">
+						<h:commandLink>
+							<p:graphicImage id="icon" name="/image/csv.png" width="30" />
+							<p:dataExporter type="csv" target="tabJurysAnos"
+								fileName="liste_jurys" pageOnly="true" />
+							<p:tooltip for="icon" value="exporter la liste des jurys annonymes" position="top"/>
+						</h:commandLink>
+					</div>
+				</div>
+			</h:form>
 			<h:form>
-
 				<p:dataTable var="utilisateur" value="#{addjury.utilisateurs}"
-					widgetVar="utilisateurTable" scrollable="true" scrollHeight="100"
-					rowKey="#{utilisateur.nom}">
+					scrollable="true" scrollHeight="350">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
@@ -74,23 +121,23 @@
 					</f:facet>
 					<!-- ********fin*********** -->
 
-
-					<p:column headerText="Nom">
+					<p:column headerText="Nom" sortBy="#{utilisateur.nom}">
 						<h:outputText value="#{utilisateur.nom}" />
 					</p:column>
 
-					<p:column headerText="prénom">
+					<p:column headerText="prénom" sortBy="#{utilisateur.prenom}">
 						<h:outputText value="#{utilisateur.prenom}" />
 					</p:column>
 
 					<!-- ********la colonne supprimée*********** -->
-					<p:column style="width:32px;text-align: center" rendered="#{not eventAccueil.disabledSiBrouillon}">
+					<p:column style="width:32px;text-align:center"
+						rendered="#{not eventAccueil.disabledSiBrouillon}">
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
 							actionListener="#{addjury.supprimerUtilisateur}" ajax="true"
 							update="@(form)">
 							<p:confirm header="Confirmation"
-								message="vous voulez vraiment supprimer le jury"
+								message="Voulez-vous vraiment supprimer le jury ?"
 								icon="ui-icon-trash" />
 							<f:param name="iduser" value="#{utilisateur.iduser}" />
 						</p:commandButton>
@@ -105,16 +152,12 @@
 					<!-- ********fin*********** -->
 				</p:dataTable>
 			</h:form>
-			<br /> <br />
-			<div class="ui-g-6"></div>
-			<div class="ui-g-6">
-				<h:form>
-					<p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
-						actionListener="#{addjury.retour}" />
-					<p:commandButton value="Valider"
-						actionListener="#{addjury.buttonActionValider}" ajax="false" />
-				</h:form>
-			</div>
+			<h:form>
+				<p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
+					actionListener="#{addjury.retour}" />
+				<p:commandButton value="Valider"
+					actionListener="#{addjury.buttonActionValider}" ajax="false" />
+			</h:form>
 		</div>
 	</div>
 </h:body>

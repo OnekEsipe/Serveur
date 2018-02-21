@@ -35,7 +35,7 @@
 			</props>
 		</property>
 	</bean>
-    
+
 	<!-- Enable the configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<!-- Transaction Manager is defined -->

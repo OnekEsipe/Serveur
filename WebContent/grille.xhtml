@@ -19,8 +19,8 @@
 	<ui:include src="#{accueil.typeMenu}" />
 	<br />
 	<br />
-	 	<p:outputLabel  id="evenementChoisi"  value="#{accueil.evenementChoisi}"/>
-	
+	<p:outputLabel id="evenementChoisi" value="#{accueil.evenementChoisi}" />
+
 	<h:form>
 		<div title="addCritère">
 			<p:outputPanel>
@@ -129,7 +129,7 @@
 			</div>
 			<div>
 				<p:commandButton value="Ajouter" action="#{grille.onClicAdd}"
-					update="displayCriteres" icon="ui-icon-check" ajax="false"/>
+					update="displayCriteres" icon="ui-icon-check" ajax="false" />
 			</div>
 			<br />
 		</div>
@@ -152,11 +152,31 @@
 				<p:column headerText="Descripteur">
 					<h:outputText value="#{critere.printDescripteurs()}" />
 				</p:column>
+				<!-- ********la colonne supprimée*********** -->
+				<p:column style="width:32px;text-align:center"
+					rendered="#{not eventAccueil.disabledSiBrouillon}">
+					<p:growl id="message" showDetail="true" />
+					<p:commandButton id="iconOnly" icon="ui-icon-trash"
+						actionListener="#{grille.supprimerCritere}" ajax="true"
+						update="@(form)">
+						<p:confirm header="Confirmation"
+							message="Voulez-vous vraiment supprimer le critère ?"
+							icon="ui-icon-trash" />
+						<f:param name="idcritere" value="#{critere.idcritere}" />
+					</p:commandButton>
 
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:column>
 			</p:dataTable>
 		</div>
 		<div>
-			<p:commandButton value="Enregistrer" action="#{grille.onClicSave}" ajax="false" />
+			<p:commandButton value="Enregistrer" action="#{grille.onClicSave}"
+				ajax="false" />
 		</div>
 	</h:form>
 </h:body>

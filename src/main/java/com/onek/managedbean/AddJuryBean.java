@@ -1,6 +1,7 @@
 package com.onek.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +18,13 @@ import com.onek.service.EvenementService;
 import com.onek.service.JuryService;
 import com.onek.service.UserService;
 import com.onek.utils.Navigation;
+import com.onek.utils.Password;
 
 @Component("addjury")
 public class AddJuryBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	
 	@Autowired
 	private JuryService juryService;
 	
@@ -41,6 +44,35 @@ public class AddJuryBean implements Serializable {
 	private List<Utilisateur> filteredutilisateurs;
 	private List<Utilisateur> selectedutilisateurs;
 	private List<Utilisateur> utilisateursAll;
+	private List<Utilisateur> utilisateursAnos;
+	
+	private Password passwordGenerator;
+	private int juryAnonyme;
+	
+	
+	public List<Utilisateur> getUtilisateursAnos() {
+		return utilisateursAnos;
+	}
+
+	public void setUtilisateursAnos(List<Utilisateur> utilisateursAnos) {
+		this.utilisateursAnos = utilisateursAnos;
+	}
+
+	public int getJuryAnonyme() {
+		return juryAnonyme;
+	}
+
+	public void setJuryAnonyme(int juryAnonyme) {
+		this.juryAnonyme = juryAnonyme;
+	}
+
+	public Password getPasswordGenerator() {
+		return passwordGenerator;
+	}
+
+	public void setPasswordGenerator(Password passwordGenerator) {
+		this.passwordGenerator = passwordGenerator;
+	}
 
 	public List<Utilisateur> getUtilisateurs() {
 		return utilisateurs;
@@ -107,6 +139,9 @@ public class AddJuryBean implements Serializable {
 			for (Utilisateur utilisateur : utilisateurs) {
 				utilisateursAll.remove(utilisateur);
 			}
+			utilisateursAnos = new ArrayList<>();
+			List<Jury> jurys = juryService.listJurysAnnonymesByEvent(idEvent);
+			jurys.forEach(jury -> utilisateursAnos.add(jury.getUtilisateur()));
 
 		}
 	}
@@ -115,13 +150,10 @@ public class AddJuryBean implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		int iduser = Integer.valueOf(params.get("iduser"));
-
-		juryService.supprimerUtilisateur(iduser);
-		utilisateurs = juryService.listJurysByEvent(idEvent);
-		utilisateursAll = userService.findAllJurys();
-		for (Utilisateur utilisateur : utilisateurs) {
-			utilisateursAll.remove(utilisateur);
-		}
+		Utilisateur jury = juryService.findById(iduser);
+		juryService.supprimerUtilisateur(iduser,idEvent);
+		utilisateurs.remove(jury);
+		utilisateursAll.add(jury);
 	}
 
 	public void buttonAdd() {
@@ -131,13 +163,10 @@ public class AddJuryBean implements Serializable {
 			newjuryEvent.setEvenement(event);
 			newjuryEvent.setUtilisateur(utilisateur);
 			juryService.addJuryToEvent(newjuryEvent);
-		}
-		utilisateurs = juryService.listJurysByEvent(idEvent);
-		utilisateursAll = juryService.findAllJurys();
-		for (Utilisateur utilisateur : utilisateurs) {
+			utilisateurs.add(utilisateur);
 			utilisateursAll.remove(utilisateur);
 		}
-		
+		selectedutilisateurs.clear();
 	}
 	
 	public void buttonActionValider() {
@@ -146,5 +175,41 @@ public class AddJuryBean implements Serializable {
 
 	public void retour() {
 		Navigation.redirect("eventAccueil.xhtml");
+	}
+	public void addJuryAnonymeButton() {
+		passwordGenerator = new Password();
+		List<Utilisateur> anonymousJurys = new ArrayList<>();
+		Utilisateur anonymousJury;
+		int increment = juryService.findAnonymousByIdEvent(idEvent).size();
+		if (juryAnonyme > 0) {
+			for (int i = 0 + increment; i < juryAnonyme + increment; i++) {
+				anonymousJury = new Utilisateur();
+				anonymousJury.setDroits("A");
+				anonymousJury.setIsdeleted(false);
+				if (i < 10) {
+					anonymousJury.setLogin("Jury00" + i + "_" + idEvent);
+					anonymousJury.setNom("Jury00" + i + "_" + idEvent);
+				}
+				if ((i >= 10) && (i < 100)) {
+					anonymousJury.setLogin("Jury0" + i + "_" + idEvent);
+					anonymousJury.setNom("Jury0" + i + "_" + idEvent);
+				}
+				if ((i >= 100) && (i < 1000)) {
+					anonymousJury.setLogin("Jury" + i + "_" + idEvent);
+					anonymousJury.setNom("Jury" + i + "_" + idEvent);
+				}
+				anonymousJury.setMotdepasse(passwordGenerator.generatePassword(8));
+				anonymousJury.setMail("");
+				anonymousJury.setPrenom("");
+				anonymousJurys.add(anonymousJury);
+			}
+			userService.addJurysAnonymes(anonymousJurys, event);
+			utilisateurs = juryService.listJurysByEvent(idEvent);
+
+			// On met à jour la liste des jurys anonymes
+			anonymousJurys.forEach(jury -> utilisateursAnos.add(jury));
+			utilisateursAnos.forEach(juryAno -> System.out.println(juryAno.getNom()));
+
+		}
 	}
 }
