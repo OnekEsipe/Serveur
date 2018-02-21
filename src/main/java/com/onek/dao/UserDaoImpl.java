@@ -32,14 +32,12 @@ public class UserDaoImpl implements UserDao, Serializable {
 			session.update(user);
 			transaction.commit();
 			logger.info("Update user done !");
-		}
-		catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 	}
@@ -55,14 +53,12 @@ public class UserDaoImpl implements UserDao, Serializable {
 					.setParameter("login", login).getSingleResult();
 			transaction.commit();
 			logger.info("Find user by login !");
-		}
-		catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 		return user;
@@ -83,14 +79,12 @@ public class UserDaoImpl implements UserDao, Serializable {
 			}
 			transaction.commit();
 			logger.info("Add anonymous done !");
-		}
-		catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 	}
@@ -106,14 +100,12 @@ public class UserDaoImpl implements UserDao, Serializable {
 			users = (List<Utilisateur>) session.createQuery("from Utilisateur").list();
 			transaction.commit();
 			logger.info("Find all users done !");
-		}
-		catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 		return users;
@@ -121,7 +113,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@Override
 	public void deleteUser(int idUser) {
-		Session session = sessionFactory.openSession();		
+		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -131,14 +123,12 @@ public class UserDaoImpl implements UserDao, Serializable {
 			session.update(utilisateur);
 			transaction.commit();
 			logger.info("Delete user done (isDeleted = true) - Id: " + utilisateur.getIduser());
-		}
-		catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 	}
@@ -152,43 +142,39 @@ public class UserDaoImpl implements UserDao, Serializable {
 			session.save(user);
 			transaction.commit();
 			logger.info("Add user done !");
-		}
-		catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Utilisateur> getAllUsersExceptDeleted() {
+	public List<Utilisateur> getAllUsersExceptCurrent(int idcurrentUser) {
 		List<Utilisateur> users = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			users = (List<Utilisateur>) session.createQuery("from Utilisateur where isdeleted = :isdeleted")
-					.setParameter("isdeleted", false).list();
+			users = (List<Utilisateur>) session.createQuery("from Utilisateur where iduser != :iduser")
+					.setParameter("iduser", idcurrentUser).list();
 			transaction.commit();
-			logger.info("Find all users except deleted done !");
-		}
-		catch(RuntimeException e) {
+			logger.info("Find all users except current done !");
+		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 		return users;
 	}
-	
+
 	@Override
 	public boolean mailExist(String mail) {
 		Session session = sessionFactory.openSession();
@@ -200,43 +186,39 @@ public class UserDaoImpl implements UserDao, Serializable {
 					.setParameter("mail", mail).getSingleResult();
 			transaction.commit();
 			logger.info("Check if mail exist done !");
-		}
-		catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
-		return result == 1;		
+		return result == 1;
 	}
 
 	@Override
 	public boolean userExist(String login) {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
-		Long result  = -1L;
+		Long result = -1L;
 		try {
 			transaction = session.beginTransaction();
 			result = (Long) session.createQuery("SELECT COUNT(e) from Utilisateur e WHERE e.login =:login")
 					.setParameter("login", login).getSingleResult();
 			transaction.commit();
 			logger.info("Check if login exist done !");
-		}
-		catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 		return result == 1;
 	}
-	
+
 	@Override
 	public Utilisateur findByMail(String mail) {
 		Session session = sessionFactory.openSession();
@@ -244,21 +226,38 @@ public class UserDaoImpl implements UserDao, Serializable {
 		Utilisateur user = null;
 		try {
 			transaction = session.beginTransaction();
-			user = (Utilisateur) session.createQuery("from Utilisateur where mail = :mail")
-					.setParameter("mail", mail).getSingleResult();
+			user = (Utilisateur) session.createQuery("from Utilisateur where mail = :mail").setParameter("mail", mail)
+					.getSingleResult();
 			transaction.commit();
 			logger.info("Find user by mail done !");
-		}
-		catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 		return user;
 	}
 
+	@Override
+	public Utilisateur findUserById(int iduser) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where iduser = :iduser")
+				.setParameter("iduser", iduser).getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return user;
+	}
+
+	@Override
+	public void editUser(Utilisateur user) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(user);
+		session.getTransaction().commit();
+		session.close();
+	}
 }

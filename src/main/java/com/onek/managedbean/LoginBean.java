@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.service.UserService;
+import com.onek.utils.Navigation;
 
 @Component("login")
 public class LoginBean implements Serializable {
@@ -67,14 +68,12 @@ public class LoginBean implements Serializable {
 
 	public void buttonAction() {
 		if (!userService.authentification(login, motDePasse)) {
-			message = "Utilisateur ou mot de passe incorrect.";
+			message = "Utilisateur ou mot de passe incorrect";
 			return;
 		}		
 		FacesContext fc = FacesContext.getCurrentInstance();
 		fc.getExternalContext().getSessionMap().put("user", login);
-		NavigationHandler nh = fc.getApplication().getNavigationHandler();
-		nh.handleNavigation(fc, null, String.format("%s%sfaces-redirect=true", "accueil.xhtml",
-				"accueil.xhtml".contains("?") ? "&" : "?"));		
+		Navigation.redirect("accueil.xhtml");	
 	}
 
 }
