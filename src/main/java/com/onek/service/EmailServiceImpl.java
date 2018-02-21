@@ -10,6 +10,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import com.onek.bean.MailBean;
 @Service
 public class EmailServiceImpl implements EmailService, Serializable {
 	private static final long serialVersionUID = 1L;
+	private final static Logger logger = Logger.getLogger(EmailServiceImpl.class);
 
 	private MailBean mailBean;
 	private Session session;
@@ -50,7 +52,7 @@ public class EmailServiceImpl implements EmailService, Serializable {
 					session.getProperty("mail.smtp.password"));
 			transport.sendMessage(message, message.getAllRecipients());
 		} catch (MessagingException e) {
-			e.printStackTrace();
+			logger.error("Error occurred while a sent mail !", e);			
 			return false;
 		}
 		return true;

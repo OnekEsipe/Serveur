@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import javax.persistence.NoResultException;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,7 @@ import com.onek.utils.StatutEvenement;
 @Service
 public class ApplicationServiceImpl implements ApplicationService, Serializable {
 	private static final long serialVersionUID = 1L;
+	private final static Logger logger = Logger.getLogger(ApplicationServiceImpl.class);
 
 	@Autowired
 	private EvenementDao eventDao;
@@ -58,12 +60,12 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 
 	@Autowired
 	private NoteDao noteDao;
-	
+
 	@Autowired
 	private UserService userService;
 
 	@Autowired
-	private JuryService juryService;	
+	private JuryService juryService;
 
 	@Override
 	public Optional<EvenementResource> export(String idEvent, String login) {
@@ -85,18 +87,9 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		}
 		try {
 			Evenement event = eventDao.findById(id);
-			// check if evenement is deleted
-			if (event.getIsdeleted()) {
+			if (!eventIsEligible(event)) {
 				return Optional.empty();
 			}			
-			// check if evenement is opened
-			if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
-				return Optional.empty();
-			}
-			// check if end date of event > date today (status stopped)
-			if ((event.getDatestop().getTime() < new Date().getTime())) {
-				return Optional.empty();
-			}
 			EvenementResource eventResource = new EvenementResource(event);
 			List<Jury> jurys = juryDao.findJuryAndAnonymousByIdEvent(id, login);
 			List<EvaluationResource> evaluations = createEvaluationList(jurys);
@@ -106,7 +99,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		} catch (NoResultException nre) {
 			return Optional.empty();
 		}
-	}	
+	}
 
 	/* account */
 	@Override
@@ -118,7 +111,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		List<Integer> idEvents = new ArrayList<>();
 		for (Jury jury : jurys) {
 			Evenement event = jury.getEvenement();
-			if (!event.getIsdeleted()) {
+			if (eventIsEligible(event)) {
 				idEvents.add(event.getIdevent());
 			}
 		}
@@ -127,7 +120,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		// search anonymous for all events affected at login
 		for (Jury jury : jurys) {
 			Evenement event = jury.getEvenement();
-			if (event.getIsdeleted()) {
+			if (!eventIsEligible(event)) {
 				continue;
 			}
 			Integer idEvent = event.getIdevent();
@@ -136,8 +129,8 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 				Utilisateur anonymUser = anonym.getUtilisateur();
 				try {
 					anonymUser.setMotdepasse(Encode.sha1(anonymUser.getMotdepasse()));
-				} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {					
-					e.printStackTrace();
+				} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+					logger.error(this.getClass().getName(), e);
 					continue;
 				}
 				List<Integer> idEventsAnonym = new ArrayList<>();
@@ -157,7 +150,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		Evenement event = eventDao.findById(evaluationResource.getIdEvent());
 		if (event == null) {
 			return false;
-		}		
+		}
 		// check if event if opened
 		if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
 			return false;
@@ -170,10 +163,10 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		}
 		// active check date if necessary
 		boolean checkDate = false;
-		if (dateLastChangeNewEval > dateLastChangeEvalDB && dateLastChangeNewEval > event.getDatestop().getTime()) {			
+		if (dateLastChangeNewEval > dateLastChangeEvalDB && dateLastChangeNewEval > event.getDatestop().getTime()) {
 			checkDate = true;
 		}
-		evaluation.setCommentaire(evaluationResource.getComment());		
+		evaluation.setCommentaire(evaluationResource.getComment());
 		evaluation.setDatedernieremodif(evaluationResource.getDateLastChange());
 		// evaluation.setSignature(evaluationResource.getSignature()); // TODO
 		evaluationDao.update(evaluation);
@@ -192,7 +185,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			// check if date should be add
 			if (checkDate && newMark.getDate().getTime() > event.getDatestop().getTime()) {
 				continue;
-			}			
+			}
 			boolean noteIsNotFound = true;
 			for (Note markDB : marksDB) {
 				// update
@@ -207,7 +200,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 				noteDao.addNote(newMark);
 			}
 		}
-		return true;		
+		return true;
 	}
 
 	@Override
@@ -219,7 +212,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		user.setLogin(createJuryResource.getLogin());
 		user.setMotdepasse(createJuryResource.getPassword());
 		user.setDroits(DroitsUtilisateur.JURY.toString());
-		user.setIsdeleted(false);		
+		user.setIsdeleted(false);
 		userService.addUser(user);
 	}
 
@@ -249,18 +242,18 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		jury.setEvenement(event);
 		juryService.addJuryToEvent(jury);
 		return true;
-	}	
-	
+	}
+
 	@Override
 	public boolean changePassword(PasswordModify passwordModify) {
 		String login = passwordModify.getLogin();
 		if (!userService.userExist(login)) {
 			return false;
 		}
-		Utilisateur user = userService.findByLogin(login);		
+		Utilisateur user = userService.findByLogin(login);
 		if (user.getDroits().equals(DroitsUtilisateur.ANONYME.toString())) {
 			return false;
-		}		
+		}
 		if (!user.getMotdepasse().equals(passwordModify.getOldPassword())) {
 			return false;
 		}
@@ -268,7 +261,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		userService.updateUserInfos(user);
 		return true;
 	}
-	
+
 	/* associated jurys and candidates for an event */
 	private List<JuryResource> associatedJurysCandidates(List<Jury> jurys, Integer idEvent) {
 		HashMap<Jury, List<Candidat>> map = new HashMap<>();
@@ -283,7 +276,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 				if (candidate.getEvenement().getIdevent() != idEvent) {
 					continue;
 				}
-				List<Candidat> candidates = map.get(jury);				
+				List<Candidat> candidates = map.get(jury);
 				candidates.add(candidate);
 				map.put(jury, candidates);
 			}
@@ -312,5 +305,21 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			}
 		}
 		return evaluations;
+	}
+	
+	private boolean eventIsEligible(Evenement event) {
+		// check if evenement is deleted
+		if (event.getIsdeleted()) {
+			return false;
+		}
+		// check if evenement is opened
+		if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
+			return false;
+		}
+		// check if end date of event > date today (status stopped)
+		if ((event.getDatestop().getTime() < new Date().getTime())) {
+			return false;
+		}
+		return true;
 	}
 }

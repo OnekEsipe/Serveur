@@ -46,8 +46,8 @@ public class JuryServiceImpl implements JuryService, Serializable{
 		return userDao.getAllUsers();
 	}
 	@Override
-	public void supprimerUtilisateur(int iduser) {
-		juryDao.supprimerUtilisateur(iduser);
+	public void supprimerUtilisateur(int iduser, int idevent) {
+		juryDao.supprimerUtilisateur(iduser,idevent);
 	}
 	@Override
 	public void addJuryToEvent(Jury jury) {
@@ -61,7 +61,12 @@ public class JuryServiceImpl implements JuryService, Serializable{
 	public List<Jury> findAnonymousByIdEvent(int idEvent) {
 		return juryDao.findAnonymousByIdEvent(idEvent);
 	}
+	@Override
 	public void addListJurys(List<Jury> jurys) {
 		juryDao.addListJurys(jurys);
+	}
+	@Override
+	public Utilisateur findById(int id) {
+		return juryDao.findById(id);
 	}
 }

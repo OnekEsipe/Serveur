@@ -15,7 +15,6 @@ import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
 import com.onek.service.EvenementService;
-import com.onek.service.EventAccueilService;
 import com.onek.service.JuryService;
 import com.onek.service.UserService;
 import com.onek.utils.Navigation;
@@ -25,8 +24,6 @@ import com.onek.utils.Password;
 public class AddJuryBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Autowired
-	private EventAccueilService eventAccueilservice;
 	
 	@Autowired
 	private JuryService juryService;
@@ -153,13 +150,10 @@ public class AddJuryBean implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		int iduser = Integer.valueOf(params.get("iduser"));
-
-		juryService.supprimerUtilisateur(iduser);
-		utilisateurs = juryService.listJurysByEvent(idEvent);
-		utilisateursAll = userService.findAllJurys();
-		for (Utilisateur utilisateur : utilisateurs) {
-			utilisateursAll.remove(utilisateur);
-		}
+		Utilisateur jury = juryService.findById(iduser);
+		juryService.supprimerUtilisateur(iduser,idEvent);
+		utilisateurs.remove(jury);
+		utilisateursAll.add(jury);
 	}
 
 	public void buttonAdd() {
@@ -169,13 +163,10 @@ public class AddJuryBean implements Serializable {
 			newjuryEvent.setEvenement(event);
 			newjuryEvent.setUtilisateur(utilisateur);
 			juryService.addJuryToEvent(newjuryEvent);
-		}
-		utilisateurs = juryService.listJurysByEvent(idEvent);
-		utilisateursAll = juryService.findAllJurys();
-		for (Utilisateur utilisateur : utilisateurs) {
+			utilisateurs.add(utilisateur);
 			utilisateursAll.remove(utilisateur);
 		}
-		
+		selectedutilisateurs.clear();
 	}
 	
 	public void buttonActionValider() {
@@ -213,7 +204,7 @@ public class AddJuryBean implements Serializable {
 				anonymousJurys.add(anonymousJury);
 			}
 			userService.addJurysAnonymes(anonymousJurys, event);
-			utilisateurs = eventAccueilservice.listJurysByEvent(idEvent);
+			utilisateurs = juryService.listJurysByEvent(idEvent);
 
 			// On met à jour la liste des jurys anonymes
 			anonymousJurys.forEach(jury -> utilisateursAnos.add(jury));

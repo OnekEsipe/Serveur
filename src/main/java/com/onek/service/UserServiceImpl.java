@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import com.onek.utils.Encode;
 @Service
 public class UserServiceImpl implements UserService, Serializable {
 	private static final long serialVersionUID = 1L;
+	private final static Logger logger = Logger.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private UserDao userDao;
@@ -67,8 +69,8 @@ public class UserServiceImpl implements UserService, Serializable {
 	}
 
 	@Override
-	public List<Utilisateur> getAllUsersExceptDeleted() {
-		return userDao.getAllUsersExceptDeleted();
+	public List<Utilisateur> getAllUsersExceptCurrent(int idcurrentUser) {
+		return userDao.getAllUsersExceptCurrent(idcurrentUser);
 	}
 	
 	@Override
@@ -85,7 +87,7 @@ public class UserServiceImpl implements UserService, Serializable {
 			try {
 				hash = Encode.sha1(user.getMotdepasse());
 			} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {				
-				e.printStackTrace();
+				logger.error(this.getClass().getName(), e);
 				throw new IllegalStateException();
 			}
 			return hash.equals(password);
@@ -99,7 +101,7 @@ public class UserServiceImpl implements UserService, Serializable {
 		try {
 			hash = Encode.sha1(password);
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {				
-			e.printStackTrace();
+			logger.error(this.getClass().getName(), e);
 			return false;
 		}
 		if (!userExistAndCorrectPassword(login, hash)) {
@@ -121,5 +123,13 @@ public class UserServiceImpl implements UserService, Serializable {
 	@Override
 	public Utilisateur findByMail(String mail) {
 		return userDao.findByMail(mail);
+	}
+	@Override
+	public void editUser(Utilisateur user) {
+		userDao.editUser(user);
+	}
+	@Override
+	public Utilisateur findUserById(int iduser) {
+		return userDao.findUserById(iduser);
 	}
 }

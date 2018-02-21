@@ -19,21 +19,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
-import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
+import com.onek.service.CandidateService;
 import com.onek.service.EvaluationService;
 import com.onek.service.EvenementService;
-import com.onek.service.EventAccueilService;
 import com.onek.service.JuryService;
 import com.onek.utils.Navigation;
 
 @Component("attributionjc")
 public class AttributionJCBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Autowired
-	private EventAccueilService eventAccueilservice;
 
 	@Autowired
 	private JuryService juryservice;
@@ -43,6 +39,9 @@ public class AttributionJCBean implements Serializable {
 	
 	@Autowired
 	private EvenementService evenement;
+	
+	@Autowired
+	private CandidateService candidatservice;
 
 	private int idEvent;
 
@@ -105,8 +104,8 @@ public class AttributionJCBean implements Serializable {
 			if(!status.equals("Brouillon")) {
 				avertissementMessage = "Status de l'événement: " + status + ". Les suppressions d'attributions ne seront pas prises en compte ";
 			}
-			candidatsJurys = eventAccueilservice.listCandidatsByEvent(idEvent);
-			utilisateursJurys = eventAccueilservice.listJurysByEvent(idEvent);
+			candidatsJurys = candidatservice.findCandidatesByEvent(idEvent);
+			utilisateursJurys = juryservice.listJurysByEvent(idEvent);
 			juryList = juryservice.findJurysByIdevent(idEvent);
 			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 

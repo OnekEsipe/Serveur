@@ -142,6 +142,12 @@
 			<version>4.3.10.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Log -->
+		<dependency>
+		    <groupId>log4j</groupId>
+		    <artifactId>log4j</artifactId>
+		    <version>1.2.17</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
