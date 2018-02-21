@@ -248,14 +248,11 @@ public class EventAccueilBean implements Serializable {
 		}
 		eventAccueilservice.editEvenement(event);
 		Navigation.redirect("eventAccueil.xhtml");
-
 	}
 	
 	public void supprimerEvent() {
-
 		evenementService.supprimerEvent(event.getIdevent());
 		Navigation.redirect("accueil.xhtml");
-
 	}
 
 	public void buttonRecuperer() {

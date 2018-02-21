@@ -160,6 +160,7 @@ public class GrilleBean {
 		texte4 = "";
 		texte5 = "";
 		texte6 = "";
+		nbDescripteur = 2;
 	}
 
 	public void supprimerCritere() {
