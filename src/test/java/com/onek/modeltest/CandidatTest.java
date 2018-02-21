@@ -2,13 +2,11 @@ package com.onek.modeltest;
 
 import static org.junit.Assert.*;
 
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
-import com.onek.dao.CandidatesDao;
-import com.onek.dao.CandidatesDaoImpl;
 import com.onek.model.Candidat;
 import com.onek.model.Evenement;
 
@@ -16,11 +14,9 @@ import com.onek.model.Evenement;
 public class CandidatTest {
 
 
-	CandidatesDao candidatedao;
 	@Before
 	public void setUp() {
 	    MockitoAnnotations.initMocks(this);
-	    candidatedao = new CandidatesDaoImpl();
 	}
 	
 	@Test
@@ -66,7 +62,6 @@ public class CandidatTest {
 	@Test
 	public void getEvenementTest() {
 		Candidat candidat = Mockito.mock(Candidat.class);		 
-		candidat.setNom("Tamela");
 		Mockito.when(candidat.getEvenement()).thenCallRealMethod();
 		
 		assertEquals(null, candidat.getEvenement());

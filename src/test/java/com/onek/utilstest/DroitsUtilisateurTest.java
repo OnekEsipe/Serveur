@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.onek.utils.DroitsUtilisateur;
 
-public class DroitsUtilisateurTests {
+public class DroitsUtilisateurTest {
 
 	@Test
 	public void testCorrespondingValuesAndString() {
