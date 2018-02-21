@@ -87,18 +87,9 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		}
 		try {
 			Evenement event = eventDao.findById(id);
-			// check if evenement is deleted
-			if (event.getIsdeleted()) {
+			if (!eventIsEligible(event)) {
 				return Optional.empty();
-			}
-			// check if evenement is opened
-			if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
-				return Optional.empty();
-			}
-			// check if end date of event > date today (status stopped)
-			if ((event.getDatestop().getTime() < new Date().getTime())) {
-				return Optional.empty();
-			}
+			}			
 			EvenementResource eventResource = new EvenementResource(event);
 			List<Jury> jurys = juryDao.findJuryAndAnonymousByIdEvent(id, login);
 			List<EvaluationResource> evaluations = createEvaluationList(jurys);
@@ -120,7 +111,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		List<Integer> idEvents = new ArrayList<>();
 		for (Jury jury : jurys) {
 			Evenement event = jury.getEvenement();
-			if (!event.getIsdeleted()) {
+			if (eventIsEligible(event)) {
 				idEvents.add(event.getIdevent());
 			}
 		}
@@ -129,7 +120,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		// search anonymous for all events affected at login
 		for (Jury jury : jurys) {
 			Evenement event = jury.getEvenement();
-			if (event.getIsdeleted()) {
+			if (!eventIsEligible(event)) {
 				continue;
 			}
 			Integer idEvent = event.getIdevent();
@@ -314,5 +305,21 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			}
 		}
 		return evaluations;
+	}
+	
+	private boolean eventIsEligible(Evenement event) {
+		// check if evenement is deleted
+		if (event.getIsdeleted()) {
+			return false;
+		}
+		// check if evenement is opened
+		if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
+			return false;
+		}
+		// check if end date of event > date today (status stopped)
+		if ((event.getDatestop().getTime() < new Date().getTime())) {
+			return false;
+		}
+		return true;
 	}
 }
