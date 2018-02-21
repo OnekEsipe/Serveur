@@ -125,18 +125,28 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 	@Override
 	public void deleteEvaluation(int idJury, int idCandidat) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		Evaluation evaluationToDelete = (Evaluation) session
-				.createQuery("FROM Evaluation WHERE idjuryeval = :idJury AND idcandidat = :idCandidat")
-				.setParameter("idJury", idJury).setParameter("idCandidat", idCandidat).getSingleResult();
-		List<Note> notesToDelete = (List<Note>) session.createQuery("FROM Note WHERE idevaluation = :idevaluation")
-				.setParameter("idevaluation", evaluationToDelete.getIdevaluation()).getResultList();
-		for (Note note : notesToDelete) {
-			session.delete(note);
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			Evaluation evaluationToDelete = (Evaluation) session
+					.createQuery("FROM Evaluation WHERE idjuryeval = :idJury AND idcandidat = :idCandidat")
+					.setParameter("idJury", idJury).setParameter("idCandidat", idCandidat).getSingleResult();
+			List<Note> notesToDelete = (List<Note>) session.createQuery("FROM Note WHERE idevaluation = :idevaluation")
+					.setParameter("idevaluation", evaluationToDelete.getIdevaluation()).getResultList();
+			for (Note note : notesToDelete) {
+				session.delete(note);
+			}
+			session.delete(evaluationToDelete);
+			transaction.commit();
+			logger.info("Delete evaluation done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		} finally {
+			session.close();
 		}
-		session.delete(evaluationToDelete);
-		session.getTransaction().commit();
-		session.close();
 	}
 
 	@SuppressWarnings("unchecked")

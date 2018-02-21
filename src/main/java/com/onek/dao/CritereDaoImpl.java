@@ -35,7 +35,7 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 				}
 			}
 			transaction.commit();
-			logger.info("Add criteria and descriptors done !");
+			logger.info("Add criterias and descriptors done !");
 		}
 		catch(RuntimeException e) {
 			if (transaction != null) {
@@ -77,30 +77,51 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 	@Override
 	public void addCritere(Critere critere) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.save(critere);
-		for (Descripteur descripteur : critere.getDescripteurs()) {
-			session.save(descripteur);
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.save(critere);
+			for (Descripteur descripteur : critere.getDescripteurs()) {
+				session.save(descripteur);
+			}
+			transaction.commit();
+			logger.info("Add criteria and descriptors done !");
 		}
-		session.getTransaction().commit();
-		session.close();
+		catch(RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}
 	}
 
 	@Override
 	public void supprimerCritere(int id) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		Critere critere = findById(id);
-		System.out.println(critere.getTexte()+" "+critere.getIdcritere());
-		System.out.println(critere.getDescripteurs().size());
-		for (Descripteur descripteur : critere.getDescripteurs()) {
-			System.out.println("Descripteur : "+descripteur.getIddescripteur());
-			session.createQuery("delete from Descripteur where iddescripteur = :iddescripteur")
-			.setParameter("iddescripteur", descripteur.getIddescripteur()).executeUpdate();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			Critere critere = findById(id);		
+			for (Descripteur descripteur : critere.getDescripteurs()) {			
+				session.createQuery("delete from Descripteur where iddescripteur = :iddescripteur")
+				.setParameter("iddescripteur", descripteur.getIddescripteur()).executeUpdate();
+			}
+			session.createQuery("delete from Critere where idcritere = :idcritere")
+			.setParameter("idcritere", id).executeUpdate();
+			transaction.commit();
+			logger.info("Delete criteria and descriptors done !");
 		}
-		session.createQuery("delete from Critere where idcritere = :idcritere")
-		.setParameter("idcritere", id).executeUpdate();
-		session.getTransaction().commit();
-		session.close();
+		catch(RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}
 	}
 }
