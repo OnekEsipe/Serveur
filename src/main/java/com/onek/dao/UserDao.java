@@ -13,8 +13,9 @@ public interface UserDao {
 	public void addJurysAnonymes(List<Utilisateur> utilisateurs, Evenement event);
 	public Utilisateur findByLogin(String login);
 	public List<Utilisateur> getAllUsers();
-	public List<Utilisateur> getAllUsersExceptDeleted();
+	public List<Utilisateur> getAllUsersExceptCurrent(int idcurrentUser);
 	public boolean mailExist(String mail);
 	public Utilisateur findByMail(String mail);
-
+	public void EditUser(Utilisateur user);
+	public Utilisateur findUserById(int iduser);
 }

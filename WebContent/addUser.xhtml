@@ -76,8 +76,7 @@
 	<div class="ui-g">
 		<h:form>
 			<p:dataTable var="utilisateur" value="#{user.users}"
-				widgetVar="utilisateurTable" scrollable="true" scrollHeight="400"
-				rowKey="#{utilisateur.nom}">
+				scrollable="true" scrollHeight="400">
 
 				<!-- barre de recherche -->
 				<f:facet name="header">
@@ -86,11 +85,11 @@
 				<!-- ********fin*********** -->
 
 
-				<p:column headerText="nom">
+				<p:column headerText="nom" sortBy="#{utilisateur.nom}">
 					<h:outputText value="#{utilisateur.nom}" />
 				</p:column>
 
-				<p:column headerText="prénom">
+				<p:column headerText="prénom" sortBy="#{utilisateur.prenom}">
 					<h:outputText value="#{utilisateur.prenom}" />
 				</p:column>
 
@@ -101,23 +100,27 @@
 
 				<!-- ********la colonne supprimer*********** -->
 				<p:column style="width:32px;text-align: center">
-					<p:growl id="message" showDetail="true" />
-					<p:commandButton id="iconOnly" icon="ui-icon-trash"
-						actionListener="#{user.deleteUser}" ajax="true" update="@(form)">
-						<p:confirm header="Confirmation"
-							message="vous voulez vraiment supprimer l'utilisateur"
-							icon="ui-icon-trash" />
+					
+					<p:commandButton id="supprimer"  icon="ui-icon-locked"
+						actionListener="#{user.deleteUser}" ajax="true"
+						disabled="#{utilisateur.isdeleted}" update="@(form)">
 						<f:param name="iduser" value="#{utilisateur.iduser}" />
 					</p:commandButton>
-
-					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-						<p:commandButton value="Yes" type="button"
-							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-						<p:commandButton value="No" type="button"
-							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-					</p:confirmDialog>
+					<p:tooltip for="supprimer" value="désactiver l'utilisateur"
+					position="left" />
 				</p:column>
 				<!-- ********fin*********** -->
+
+				<p:column style="width:32px;text-align: center">
+					
+					<p:commandButton id="reactiver" icon="ui-icon-unlocked"
+						actionListener="#{user.reactiverUser}" ajax="true"
+						disabled="#{not utilisateur.isdeleted}" update="@(form)">
+						<f:param name="iduser" value="#{utilisateur.iduser}" />
+					</p:commandButton>
+					<p:tooltip for="reactiver" value="réactiver l'utilisateur"
+					position="left" />
+				</p:column>
 			</p:dataTable>
 		</h:form>
 	</div>
