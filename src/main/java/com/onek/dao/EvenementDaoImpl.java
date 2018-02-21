@@ -3,6 +3,7 @@ package com.onek.dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
@@ -25,6 +26,7 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 
 	@Override
 	public void addEvenement(Evenement event) {
+		Objects.requireNonNull(event);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -46,6 +48,9 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 
 	@Override
 	public Evenement findById(int id) {
+		if(id < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		Evenement event = null;
@@ -78,6 +83,9 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Evenement> findByIdUser(int idUser) {
+		if(idUser < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		List<Evenement> events = new ArrayList<>();
@@ -103,6 +111,7 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 
 	@Override
 	public Evenement findByCode(String code) {
+		Objects.requireNonNull(code);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		Evenement event = null;
@@ -127,8 +136,10 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 
 	@Override
 	public void editEvenement(Evenement event) {
+		Objects.requireNonNull(event);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
+		
 		try {
 			transaction = session.beginTransaction();
 			session.update(event);
@@ -170,6 +181,9 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 	}
 	
 	public void supprimerEvent(int idevent) {
+		if(idevent < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -191,6 +205,7 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 		}		
 	}
 	public Evenement addDuplicatedEvent(Evenement event) {
+		Objects.requireNonNull(event);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
