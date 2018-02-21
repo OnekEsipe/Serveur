@@ -1,20 +1,92 @@
 @charset "ISO-8859-1";
 
-
-h2{
-	letter-spacing: 0.3cm;
-	front-size: 5px;
-	text-align: center;
-	font-weight: bold;
-	
+header {
+	height: 25px;
+	background: #2399e5;
+	color: #fff;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	padding-bottom: 50px;
 }
 
+body {
+	margin: 0;
+	padding: 0;
+}
 
-.panelGrid{
+h1 {
+	margin: 0;
+	margin-top: 8px;
+	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+.login_div {
+	position: absolute;
+	width: 300px;
+	height: 300px;
+	top: 39%;
+	left: 40%;
+	margin-top: -150px;
+	margin-left: -150px;
+	text-align: center;
+}
+
+.login_form {
+	width: 650px;
+	height: 490px;
+	border-radius: 10px;
+	background-color: #f2f2f2;
+	margin: 0;
+	padding: 0;
+}
+
+.panelGrid {
 	margin-left: auto;
 	margin-right: auto;
 }
-.form{
-	text-align: center;
 
-	}
+.fa {
+	font-size: 23px !important;
+}
+
+.ui-button {
+	width: 350px;
+	height: 40px;
+}
+
+.ui-inputfield {
+	width: 500px;
+	height: 35px;
+}
+
+.div_bot {
+	font-size: 18px;
+	margin-right: 313px;
+}
+
+.ui-widget {
+	font-size: 1.1em;
+}
+
+.footerURL {
+	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: white;
+	margin-top: 0px;
+	margin-right: 385px;
+	margin-left: 20px;
+}
+
+.mdpForgot {
+	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+footer {
+	height: 40px;
+	background: #2399e5;
+	color: #fff;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	padding-top: 30px;
+}

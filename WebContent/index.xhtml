@@ -6,45 +6,77 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Onek team</title>
+	<title>Application web ONEK</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
+	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
+
 <f:metadata>
 	<f:event type="preRenderView" listener="#{login.before}" />
 </f:metadata>
+
 <h:body>
-	<h:outputStylesheet library="css" name="style.css" />
-
-	<h2>ONEK'</h2>
-
-	<h:form class="form">
-		<h:panelGrid columns="2" cellpadding="5" class="panelGrid">
-			<div class="ui-inputgroup">
-				<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-				<p:inputText placeholder="login" value="#{login.login}" required="true"/>
+	<header>
+		<div class="ui-g">
+			<div class="ui-g-1">
+				<p:graphicImage name="/image/logo.png" width="50" />
 			</div>
+			<div class="ui-g-11">
+				<h1>ONEK'</h1>
+			</div>
+		</div>
+	</header>
 
-
-			<div class="ui-inputgroup">
+	<div class="login_div">
+		<h:form class="login_form">
+			<br />
+			<br />
+			<h1>Se connecter</h1>
+			<br />
+			<br />
+			<h:panelGrid columns="2" cellpadding="5" class="panelGrid">
 				<div class="ui-inputgroup">
-					<span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
-					<p:password value="#{login.motDePasse}" placeholder="mot de passe" required="true"/>
+					<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+					<p:inputText placeholder="Identifiant" value="#{login.login}"
+						required="true" />
 				</div>
+
+				<div class="ui-inputgroup">
+					<div class="ui-inputgroup">
+						<span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
+						<p:password value="#{login.motDePasse}" placeholder="Mot de passe"
+							required="true" />
+					</div>
+				</div>
+			</h:panelGrid>
+			<br />
+			<div class="div_bot">
+				<p:selectBooleanCheckbox value="#{login.checkbox}" />
+				<h:outputText
+					style="margin-left:10px;font-family:latoregular,Trebuchet MS,Arial,Helvetica,sans-serif;"
+					value="Se souvenir de moi" />
 			</div>
-		</h:panelGrid>
-		<p:spacer height="5" />
-		<p:selectBooleanCheckbox value="#{login.checkbox}" />
-		<h:outputText value="Se souvenir de moi" />
-		<br />
-		<a href="url">Mot de passe oublié</a>
-		<br />
-		<br />
-
-		<p:commandButton value="Connexion" action="#{login.buttonAction}" ajax="false"/>
-
-	</h:form>
-	<h2>#{login.message}</h2>
+			<br />
+			<br />
+			<br />
+			<br />
+			<p:commandButton value="Se connecter" action="#{login.buttonAction}"
+				ajax="false" />
+			<br />
+			<br />
+			<a href="url" class="mdpForgot">Mot de passe oublié ?</a>
+		</h:form>
+		<h2>#{login.message}</h2>
+	</div>
+	<footer>
+		<div>
+			<a href="url" class="footerURL">Qui sommes nous ?</a> 
+			<a href="url" class="footerURL">L'Esipe</a> 
+			<a href="url" class="footerURL">Contact</a> 
+			<a href="https://github.com/OnekEsipe" class="footerURL">Github</a>
+		</div>
+	</footer>
 </h:body>
 </html>
