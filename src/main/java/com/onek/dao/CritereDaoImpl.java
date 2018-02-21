@@ -2,6 +2,7 @@ package com.onek.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -21,6 +22,10 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 
 	@Override
 	public void addCriteres(List<Critere> criteres) {
+		Objects.requireNonNull(criteres);
+		if(criteres.isEmpty()) {
+			throw new IllegalArgumentException("list must not be empty");
+		}
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		for (Critere critere : criteres) {
@@ -35,6 +40,9 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 
 	@Override
 	public Critere findById(Integer id) {
+		if(id < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Critere critere = (Critere) session.createQuery("FROM Critere WHERE idcritere = :id").setParameter("id", id)
@@ -47,6 +55,7 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 
 	@Override
 	public void addCritere(Critere critere) {
+		Objects.requireNonNull(critere);
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.save(critere);
@@ -59,6 +68,9 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 
 	@Override
 	public void supprimerCritere(int id) {
+		if(id < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Critere critere = findById(id);

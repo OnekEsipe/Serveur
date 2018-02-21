@@ -11,7 +11,8 @@
 	</listener>
 	<listener>
 		<listener-class>
-			org.springframework.web.context.request.RequestContextListener</listener-class>
+			org.springframework.web.context.request.RequestContextListener
+		</listener-class>
 	</listener>
 
 	<!-- JSF mapping -->
@@ -24,18 +25,18 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
-	   <servlet-name>dispatcher</servlet-name>
-	   <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>     
-	   <load-on-startup>1</load-on-startup>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
-	   <servlet-name>dispatcher</servlet-name>
-	   <url-pattern>/api/*</url-pattern>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>omega</param-value>
@@ -44,5 +45,5 @@
 	<!-- welcome page -->
 	<welcome-file-list>
 		<welcome-file>index.xhtml</welcome-file>
-	</welcome-file-list>	
+	</welcome-file-list>
 </web-app>
