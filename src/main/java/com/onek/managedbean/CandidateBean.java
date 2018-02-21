@@ -1,15 +1,11 @@
 package com.onek.managedbean;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
@@ -24,8 +20,10 @@ import com.onek.service.CandidateService;
 import com.onek.service.EvenementService;
 import com.onek.utils.Navigation;
 
+import au.com.bytecode.opencsv.CSVReader;
+
 @Component("candidate")
-public class CandidateBean implements Serializable{
+public class CandidateBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
@@ -41,9 +39,9 @@ public class CandidateBean implements Serializable{
 	private int idEvent;
 	private Evenement event;
 
-	private  List<Candidat> candidats;
+	private List<Candidat> candidats;
 	private Candidat candidat;
-	//Gestion import
+	// Gestion import
 	private final List<Candidat> importedCandidates = new ArrayList<>();
 
 	private String logInfo;
@@ -56,7 +54,7 @@ public class CandidateBean implements Serializable{
 				Navigation.redirect("index.xhtml");
 				return;
 			}
-			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
 				Navigation.redirect("accueil.xhtml");
 				return;
 			}
@@ -81,7 +79,7 @@ public class CandidateBean implements Serializable{
 		this.logInfo = logInfo;
 	}
 
-	//Ajout de candidats via un import de fichier
+	// Ajout de candidats via un import de fichier
 	public void addCandidates(List<Candidat> candidates) {
 		candidateService.addCandidates(candidates);
 	}
@@ -89,18 +87,23 @@ public class CandidateBean implements Serializable{
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
 	public int getIdEvent() {
 		return idEvent;
 	}
+
 	public void setIdEvent(int idevent) {
 		this.idEvent = idevent;
 	}
@@ -133,7 +136,6 @@ public class CandidateBean implements Serializable{
 		return importedCandidates;
 	}
 
-
 	public String getImportLog() {
 		return importLog;
 	}
@@ -151,11 +153,11 @@ public class CandidateBean implements Serializable{
 	}
 
 	public void click() {
-		if(lastName.isEmpty()) {
+		if (lastName.isEmpty()) {
 			logInfo = "Merci de remplir tous les champs du formulaire";
 			return;
 		}
-		if(firstName.isEmpty()) {
+		if (firstName.isEmpty()) {
 			firstName = "";
 		}
 		Candidat newCandidat = new Candidat();
@@ -168,90 +170,83 @@ public class CandidateBean implements Serializable{
 		lastName = "";
 	}
 
-	public void importFile(FileUploadEvent  event)   {
+	public void fileImportCsv(FileUploadEvent event) throws IOException {
+		
+		List<String[]> data = new ArrayList<String[]>();
+		List<Candidat> importedCandidats = new ArrayList<>();
 
-		InputStream input = null;
-		BufferedReader reader = null;
+		try (CSVReader reader = new CSVReader(new InputStreamReader(event.getFile().getInputstream()), ';')) {
+			String[] nextLine = null;
+			// récupération des données du fichier
 			try {
-				 input = event.getFile().getInputstream();
-				 reader = new BufferedReader(new InputStreamReader(input));
-				String line;
-				while((line = reader.readLine()) != null) {
-					String [] values = line.split(",|;");
-					
-					if(values.length > 1 && values[0].length() > 0 && values[1].length() > 0) {
-						// Création de l'objet candidat
-						if(values[0].contains("|,|;") || values[1].contains("|,|;")) {
-							importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
-							return;
-						}
-
-						addCandidate(values[0],values[1]);
-					}
-					else if(values.length == 1 && values[0].length() > 0) {
-						addCandidate(values[0],"");
-						
-					}else {
-						//On autorise les lignes vides (simplicité  le cas écheant pour l'utilisaliteur en terme de lisibilité)
+				while ((nextLine = reader.readNext()) != null) {
+					int size = nextLine.length;
+					// ligne vide
+					if (size == 0) {
 						continue;
 					}
-
+					String debut = nextLine[0].trim();
+					if (debut.length() == 0 && size == 1) {
+						continue;
+					}
+					// ligne de commentaire
+					if (debut.startsWith("#")) {
+						continue;
+					}
+					data.add(nextLine);
 				}
 			} catch (IOException e) {
 				importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
 				return;
-			}finally {
-				try {
-					input.close();
-					reader.close();
-				} catch (IOException e) {
-					return;
-				}
-				
 			}
-			//verification si doublon
-		if(!importedCandidates.isEmpty()) {
 
-			//Verification si doublon
-			Set<String> setCandidats = new HashSet<>();
-			importedCandidates.forEach(candidat -> {
-				System.out.println(candidat.getNom()+" "+candidat.getPrenom());
-				if(!setCandidats.add(candidat.getNom()+candidat.getPrenom())) {
-					String str  = "Votre fichier comporte des candidats homonymes, voulez vous envoyez?";
-					
-					//Mettre à jour le contenu du dialogue
-					setMessage(str);
-					return;
+			int indexnom = -1;
+			int indexprenom = -1;
+			int colonnesize = data.get(0).length;
+			for (int i = 0; i < colonnesize; i++) {
+				if (data.get(0)[i].equals("nom")) {
+					indexnom = i;
+				} else if (data.get(0)[i].equals("prenom")) {
+					indexprenom = i;
 				}
-			});
-			setCandidats.clear();
-		}else {
+			}
+			if (indexnom == -1) {
+				
+				importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
+				return;
+			}
+
+			if (indexprenom != -1) {
+				for (int i = 1; i < data.size(); i++) {
+					importedCandidats.add(creerCandidatImporte(data.get(i)[indexnom], data.get(i)[indexprenom]));
+				}
+			} else {
+				for (int i = 1; i < data.size(); i++) {
+					importedCandidats.add(creerCandidatImporte(data.get(i)[indexnom], ""));
+				}
+			}
+			if (!importedCandidats.isEmpty()) {
+				candidateService.addCandidates(importedCandidats);
+				candidats.addAll(importedCandidats);
+			}
+		} catch (IOException e) {
 			importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
 			return;
 		}
 
 	}
 
-	private void addCandidate(String nom, String prenom) {
+	private Candidat creerCandidatImporte(String nom, String prenom) {
 		Candidat candidat = new Candidat();
 		candidat.setNom(nom);
 		candidat.setPrenom(prenom);
 		candidat.setEvenement(event);
-		importedCandidates.add(candidat);
-		setMessage("Confirmer l'envoi du fichier ?");
-	}
-
-	public void sendFile() {
-
-		if(importedCandidates.isEmpty()) return;
-		addCandidates(importedCandidates);
-		importedCandidates.clear();
-		importLog = "Votre fichier a bien été envoyé";
+		return candidat;
 	}
 
 	public void supprimerCandidat() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		int idcandidat = Integer.valueOf(params.get("idcandidat"));
 		Candidat candidat = candidateService.findCandidatesById(idcandidat);
 		candidateService.supprimerCandidat(idcandidat);
