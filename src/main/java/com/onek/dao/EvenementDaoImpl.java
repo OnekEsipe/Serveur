@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +18,7 @@ import com.onek.model.Evenement;
 @Repository
 public class EvenementDaoImpl implements EvenementDao, Serializable {
 	private static final long serialVersionUID = 1L;
+	private final static Logger logger = Logger.getLogger(EvenementDaoImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -23,29 +26,52 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 	@Override
 	public void addEvenement(Evenement event) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.save(event);
-		session.getTransaction().commit();
-		session.close();
-		System.out.println("Add done !");
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.save(event);
+			transaction.commit();
+			logger.info("Add event done !");
+		}
+		catch(RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}				
 	}
 
 	@Override
 	public Evenement findById(int id) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		Evenement event = (Evenement) session.createQuery("FROM Evenement WHERE idevent = :id").setParameter("id", id)
-				.getSingleResult();
-		Hibernate.initialize(event.getCriteres());
-		Hibernate.initialize(event.getCandidats());
-		Hibernate.initialize(event.getJurys());
-		List<Critere> criteres = event.getCriteres();
-		for (Critere c : criteres) {
-			Hibernate.initialize(c.getDescripteurs());
+		Transaction transaction = null;
+		Evenement event = null;
+		try {
+			transaction = session.beginTransaction();
+			event = (Evenement) session.createQuery("FROM Evenement WHERE idevent = :id").setParameter("id", id)
+					.getSingleResult();
+			Hibernate.initialize(event.getCriteres());
+			Hibernate.initialize(event.getCandidats());
+			Hibernate.initialize(event.getJurys());
+			List<Critere> criteres = event.getCriteres();
+			for (Critere c : criteres) {
+				Hibernate.initialize(c.getDescripteurs());
+			}
+			transaction.commit();
+			logger.info("Find event done - Id: " + event.getIdevent());
 		}
-		session.getTransaction().commit();
-		session.close();
-		System.out.println("Find done - Id: " + event.getIdevent());
+		catch(RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}
 		return event;
 	}
 
@@ -53,33 +79,70 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 	@Override
 	public List<Evenement> findByIdUser(int idUser) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		List<Evenement> events = (List<Evenement>) session
-				.createQuery("FROM Evenement WHERE (isdeleted = :isDeleted AND iduser = :iduser)")
-				.setParameter("iduser", idUser).setParameter("isDeleted", false).list();
-		session.getTransaction().commit();
-		session.close();
+		Transaction transaction = null;
+		List<Evenement> events = new ArrayList<>();
+		try {
+			transaction = session.beginTransaction();
+			events = (List<Evenement>) session
+					.createQuery("FROM Evenement WHERE (isdeleted = :isDeleted AND iduser = :iduser)")
+					.setParameter("iduser", idUser).setParameter("isDeleted", false).list();
+			transaction.commit();
+			logger.info("Find event by id user done !");
+		}
+		catch(RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}
 		return events;
 	}
 
 	@Override
 	public Evenement findByCode(String code) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		Evenement event = (Evenement) session.createQuery("FROM Evenement WHERE code = :code")
-				.setParameter("code", code).getSingleResult();
-		session.getTransaction().commit();
-		session.close();
+		Transaction transaction = null;
+		Evenement event = null;
+		try {
+			transaction = session.beginTransaction();
+			event = (Evenement) session.createQuery("FROM Evenement WHERE code = :code")
+					.setParameter("code", code).getSingleResult();
+			transaction.commit();
+			logger.info("Find event by code done !");
+		}
+		catch(RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}
 		return event;
 	}
 
 	@Override
 	public void editEvenement(Evenement event) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.update(event);
-		session.getTransaction().commit();
-		session.close();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.update(event);
+			transaction.commit();
+		}
+		catch(RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -87,29 +150,64 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 	public List<Evenement> findAll() {
 		List<Evenement> events = new ArrayList<>();		
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();	
-		events = (List<Evenement>) session.createQuery("from Evenement").list();
-		session.getTransaction().commit();
-		session.close();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();	
+			events = (List<Evenement>) session.createQuery("from Evenement").list();
+			transaction.commit();
+			logger.info("Find all events done !");
+		}
+		catch(RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}		
 		return events;
 	}
 	
 	public void supprimerEvent(int idevent) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		Evenement event = (Evenement) session.createQuery("from Evenement where idevent = :idevent").setParameter("idevent", idevent).getSingleResult();
-		event.setIsdeleted(true);
-		session.update(event);
-		session.getTransaction().commit();
-		session.close();
-		System.out.println("Delete done (isDeleted = true) - Id: " + event.getIdevent());
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			Evenement event = (Evenement) session.createQuery("from Evenement where idevent = :idevent").setParameter("idevent", idevent).getSingleResult();
+			event.setIsdeleted(true);
+			session.update(event);
+			transaction.commit();
+			logger.info("Delete event done (isDeleted = true) - Id: " + event.getIdevent());
+		}
+		catch(RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}		
 	}
 	public Evenement addDuplicatedEvent(Evenement event) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.save(event);	
-		session.getTransaction().commit();
-		session.close();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.save(event);	
+			transaction.commit();
+			logger.info("Duplicate event done ! ");
+		}
+		catch(RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}
 		return event;
 	}
 }

@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +24,7 @@ import com.onek.utils.DroitsUtilisateur;
 @Repository
 public class JuryDaoImpl implements JuryDao, Serializable {
 	private static final long serialVersionUID = 1L;
+	private final static Logger logger = Logger.getLogger(JuryDaoImpl.class);
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -29,11 +32,22 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@Override
 	public boolean juryIsAssigned(int idUser, int idEvent) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		long result = (Long) session.createQuery("SELECT COUNT(j) FROM Jury j WHERE (iduser = :idu AND idevent = :ide)")
-				.setParameter("idu", idUser).setParameter("ide", idEvent).getSingleResult();
-		session.getTransaction().commit();
-		session.close();
+		Transaction transaction = null;
+		Long result = -1L;
+		try {
+			transaction = session.beginTransaction();
+			result = (Long) session.createQuery("SELECT COUNT(j) FROM Jury j WHERE (iduser = :idu AND idevent = :ide)")
+					.setParameter("idu", idUser).setParameter("ide", idEvent).getSingleResult();
+			transaction.commit();
+			logger.info("Check if jury is assigned done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		} finally {
+			session.close();
+		}
 		return result > 0;
 	}
 
@@ -41,25 +55,36 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Jury> findJuryAndAnonymousByIdEvent(int idEvent, String login) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		List<Jury> jurys = (List<Jury>) session.createQuery(
-				"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND (u.login = :login OR u.droits = 'A') AND u.isdeleted IS FALSE")
-				.setParameter("idEvent", idEvent).setParameter("login", login).list();
-		for (Jury jury : jurys) {
-			Hibernate.initialize(jury.getUtilisateur());
-			Hibernate.initialize(jury.getEvaluations());
-			List<Evaluation> evaluations = jury.getEvaluations();
-			for (Evaluation evaluation : evaluations) {
-				Hibernate.initialize(evaluation.getNotes());
-				List<Note> notes = evaluation.getNotes();
-				for (Note note : notes) {
-					Critere critere = note.getCritere();
-					Hibernate.initialize(critere.getDescripteurs());
+		Transaction transaction = null;
+		List<Jury> jurys = new ArrayList<>();
+		try {
+			transaction = session.beginTransaction();
+			jurys = (List<Jury>) session.createQuery(
+					"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND (u.login = :login OR u.droits = 'A') AND u.isdeleted IS FALSE")
+					.setParameter("idEvent", idEvent).setParameter("login", login).list();
+			for (Jury jury : jurys) {
+				Hibernate.initialize(jury.getUtilisateur());
+				Hibernate.initialize(jury.getEvaluations());
+				List<Evaluation> evaluations = jury.getEvaluations();
+				for (Evaluation evaluation : evaluations) {
+					Hibernate.initialize(evaluation.getNotes());
+					List<Note> notes = evaluation.getNotes();
+					for (Note note : notes) {
+						Critere critere = note.getCritere();
+						Hibernate.initialize(critere.getDescripteurs());
+					}
 				}
 			}
+			transaction.commit();
+			logger.info("Find jury and anonymous by id event done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		} finally {
+			session.close();
 		}
-		session.getTransaction().commit();
-		session.close();
 		return jurys;
 	}
 
@@ -67,15 +92,27 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Jury> findAnonymousByIdEvent(int idEvent) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		List<Jury> jurys = (List<Jury>) session.createQuery(
-				"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND u.droits = :droits AND u.isdeleted IS FALSE")
-				.setParameter("idEvent", idEvent).setParameter("droits", DroitsUtilisateur.ANONYME.toString()).list();
-		for (Jury jury : jurys) {
-			Hibernate.initialize(jury.getUtilisateur());
+		Transaction transaction = null;
+		List<Jury> jurys = new ArrayList<>();
+		try {
+			transaction = session.beginTransaction();
+			jurys = (List<Jury>) session.createQuery(
+					"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND u.droits = :droits AND u.isdeleted IS FALSE")
+					.setParameter("idEvent", idEvent).setParameter("droits", DroitsUtilisateur.ANONYME.toString())
+					.list();
+			for (Jury jury : jurys) {
+				Hibernate.initialize(jury.getUtilisateur());
+			}
+			transaction.commit();
+			logger.info("Find anonymous by id event done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		} finally {
+			session.close();
 		}
-		session.getTransaction().commit();
-		session.close();
 		return jurys;
 	}
 
@@ -83,15 +120,26 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Jury> findByUser(Utilisateur user) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		List<Jury> jurys = (List<Jury>) session.createQuery(
-				"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE j.utilisateur = :user AND u.isdeleted IS FALSE")
-				.setParameter("user", user).list();
-		for (Jury jury : jurys) {
-			Hibernate.initialize(jury.getEvenement());
+		Transaction transaction = null;
+		List<Jury> jurys = new ArrayList<>();
+		try {
+			transaction = session.beginTransaction();
+			jurys = (List<Jury>) session.createQuery(
+					"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE j.utilisateur = :user AND u.isdeleted IS FALSE")
+					.setParameter("user", user).list();
+			for (Jury jury : jurys) {
+				Hibernate.initialize(jury.getEvenement());
+			}
+			transaction.commit();
+			logger.info("Find jury by user done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		} finally {
+			session.close();
 		}
-		session.getTransaction().commit();
-		session.close();
 		return jurys;
 	}
 
@@ -99,14 +147,25 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@Override
 	public List<Jury> findJurysByIdevent(int idevent) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		List<Jury> jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent")
-				.setParameter("idevent", idevent).list();
-		for (Jury jury : jurys) {
-			Hibernate.initialize(jury.getEvaluations());
+		Transaction transaction = null;
+		List<Jury> jurys = new ArrayList<>();
+		try {
+			transaction = session.beginTransaction();
+			jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent")
+					.setParameter("idevent", idevent).list();
+			for (Jury jury : jurys) {
+				Hibernate.initialize(jury.getEvaluations());
+			}
+			transaction.commit();
+			logger.info("Find jury by id event done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		} finally {
+			session.close();
 		}
-		session.getTransaction().commit();
-		session.close();
 		return jurys;
 	}
 
@@ -136,16 +195,26 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		List<Utilisateur> utilisateurs = new ArrayList<>();
 		List<Jury> jurys = new ArrayList<>();
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent")
-				.setParameter("idevent", idevent).list();
-		for (Jury jury : jurys) {
-			Utilisateur u = (Utilisateur) session.createQuery("from Utilisateur where iduser = :iduser")
-					.setParameter("iduser", jury.getUtilisateur().getIduser()).getSingleResult();
-			utilisateurs.add(u);
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent")
+					.setParameter("idevent", idevent).list();
+			for (Jury jury : jurys) {
+				Utilisateur u = (Utilisateur) session.createQuery("from Utilisateur where iduser = :iduser")
+						.setParameter("iduser", jury.getUtilisateur().getIduser()).getSingleResult();
+				utilisateurs.add(u);
+			}
+			transaction.commit();
+			logger.info("Find jury by id event done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		} finally {
+			session.close();
 		}
-		session.getTransaction().commit();
-		session.close();
 		return utilisateurs;
 	}
 
@@ -156,21 +225,31 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		List<Jury> jurys = new ArrayList<>();
 		List<Utilisateur> utilisateursAnnonymes = new ArrayList<>();
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent")
-				.setParameter("idevent", idevent).list();
-		for (Jury jury : jurys) {
-			utilisateurs = (List<Utilisateur>) session.createQuery("from Utilisateur where iduser = :iduser")
-					.setParameter("iduser", jury.getUtilisateur().getIduser()).list();
-		}
-		for (Utilisateur utilisateur : utilisateurs) {
-			if ((utilisateur.getDroits().equals(DroitsUtilisateur.ANONYME.toString()))
-					&& (utilisateur.getIsdeleted() == false)) {
-				utilisateursAnnonymes.add(utilisateur);
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent")
+					.setParameter("idevent", idevent).list();
+			for (Jury jury : jurys) {
+				utilisateurs = (List<Utilisateur>) session.createQuery("from Utilisateur where iduser = :iduser")
+						.setParameter("iduser", jury.getUtilisateur().getIduser()).list();
 			}
+			for (Utilisateur utilisateur : utilisateurs) {
+				if ((utilisateur.getDroits().equals(DroitsUtilisateur.ANONYME.toString()))
+						&& (utilisateur.getIsdeleted() == false)) {
+					utilisateursAnnonymes.add(utilisateur);
+				}
+			}
+			transaction.commit();
+			logger.info("Find jurys and anonymous by id event done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		} finally {
+			session.close();
 		}
-		session.getTransaction().commit();
-		session.close();
 		return utilisateursAnnonymes;
 	}
 
@@ -181,28 +260,46 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		Utilisateur utilisateurSupprime = session.get(Utilisateur.class, iduser);
 		session.createQuery("delete from Jury where iduser = :iduser")
 				.setParameter("iduser", utilisateurSupprime.getIduser()).executeUpdate();
-		session.getTransaction().commit();
 		session.close();
 	}
 
 	@Override
 	public void addJuryToEvent(Jury jury) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.save(jury);
-		session.getTransaction().commit();
-		session.close();
-		System.out.println("Add done !");
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.save(jury);
+			transaction.commit();
+			logger.info("Add jury done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		} finally {
+			session.close();
+		}
 	}
+
 	@Override
 	public void addListJurys(List<Jury> jurys) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		jurys.forEach(jury -> session.save(jury));
-		session.getTransaction().commit();
-		session.close();
-		System.out.println("Add All done !");
-		
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			jurys.forEach(jury -> session.save(jury));
+			transaction.commit();
+			logger.info("Add all jurys done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}
 	}
 
 }

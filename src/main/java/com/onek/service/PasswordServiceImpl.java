@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import com.onek.utils.Encode;
 @Service
 public class PasswordServiceImpl implements PasswordService, Serializable {
 	private static final long serialVersionUID = 1L;
+	private final static Logger logger = Logger.getLogger(PasswordServiceImpl.class);
 
 	@Autowired
 	private UserService userService;
@@ -32,7 +34,7 @@ public class PasswordServiceImpl implements PasswordService, Serializable {
 		try {
 			token = generateToken(user);
 		} catch(NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			e.printStackTrace();
+			logger.error(this.getClass().getName(), e);
 			return false;
 		}		
 		
@@ -66,7 +68,7 @@ public class PasswordServiceImpl implements PasswordService, Serializable {
 					return Optional.of(user);
 				}
 			} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {				
-				e.printStackTrace();
+				logger.error(this.getClass().getName(), e);
 				return Optional.empty();
 			}
 		}
