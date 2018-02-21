@@ -90,6 +90,14 @@
 			<artifactId>spring-orm</artifactId>
 			<version>4.3.13.RELEASE</version>
 		</dependency>
+		<!-- Tests spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.3.13.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- Mockito -->
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -118,7 +126,7 @@
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.17</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
@@ -126,9 +134,9 @@
 		</dependency>
 		<!-- Mail -->
 		<dependency>
-		    <groupId>javax.mail</groupId>
-		    <artifactId>mail</artifactId>
-		    <version>1.4.7</version>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -137,9 +145,9 @@
 		</dependency>
 		<!-- Log -->
 		<dependency>
-		    <groupId>log4j</groupId>
-		    <artifactId>log4j</artifactId>
-		    <version>1.2.17</version>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 	</dependencies>
 	<build>
