@@ -9,4 +9,6 @@ public interface CandidateService {
 	public void addCandidate(Candidat candidat);
 	public void addCandidates(List<Candidat> candidates);
 	public void supprimerCandidat(int idcandidat);
+	public  Candidat findCandidatesById(int idcandidat);
+	
 }

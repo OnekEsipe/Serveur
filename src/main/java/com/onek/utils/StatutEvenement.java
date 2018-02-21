@@ -3,7 +3,7 @@ package com.onek.utils;
 public enum StatutEvenement {
 	BROUILLON("Brouillon"),
 	OUVERT("Ouvert"),
-	FERME("Fermé");
+	FERME("Ferme");
 	
 	private String name = "";
 	

@@ -254,12 +254,12 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	}
 
 	@Override
-	public void supprimerUtilisateur(int iduser) {
+	public void supprimerUtilisateur(int iduser, int idevent) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		Utilisateur utilisateurSupprime = session.get(Utilisateur.class, iduser);
-		session.createQuery("delete from Jury where iduser = :iduser")
-				.setParameter("iduser", utilisateurSupprime.getIduser()).executeUpdate();
+		session.beginTransaction();		
+		session.createQuery("delete from Jury where iduser = :iduser AND idevent = :idevent")
+				.setParameter("iduser", iduser).setParameter("idevent", idevent).executeUpdate();
+		session.getTransaction().commit();
 		session.close();
 	}
 
@@ -301,5 +301,14 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 			session.close();
 		}
 	}
-
+	@Override
+	public Utilisateur findById(int id) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Utilisateur jury = (Utilisateur) session.createQuery("FROM Utilisateur WHERE iduser = :id").setParameter("id", id)
+				.getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return jury;
+	}
 }

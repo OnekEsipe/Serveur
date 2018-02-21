@@ -16,7 +16,8 @@ public interface JuryDao {
 	public HashMap<Jury, List<Candidat>> associatedJurysCandidatesByEvent(List<Jury> jurys, int idevent);	
 	public List<Utilisateur> listJurysByEvent(int idevent);
 	public List<Utilisateur> findJurysAnnonymesByEvent(int idevent);
-	public void supprimerUtilisateur(int iduser);
+	public void supprimerUtilisateur(int iduser, int idevent);
 	public void addJuryToEvent(Jury jury);
 	public void addListJurys(List<Jury> jurys);
+	public Utilisateur findById(int id) ;
 }
