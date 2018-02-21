@@ -21,9 +21,13 @@ h1 {
 	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
+h2 {
+	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+
 .login_div {
 	position: absolute;
-	width: 300px;
 	height: 300px;
 	top: 39%;
 	left: 40%;
