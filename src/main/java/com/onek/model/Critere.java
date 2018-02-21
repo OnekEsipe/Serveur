@@ -137,4 +137,29 @@ public class Critere implements Serializable {
 		return sb.toString();
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idcritere == null) ? 0 : idcritere.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Critere other = (Critere) obj;
+		if (idcritere == null) {
+			if (other.idcritere != null)
+				return false;
+		} else if (!idcritere.equals(other.idcritere))
+			return false;
+		return true;
+	}
+
 }

@@ -253,8 +253,9 @@ public class CandidateBean implements Serializable{
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 		int idcandidat = Integer.valueOf(params.get("idcandidat"));
+		Candidat candidat = candidateService.findCandidatesById(idcandidat);
 		candidateService.supprimerCandidat(idcandidat);
-		candidats = candidateService.findCandidatesByEvent(idEvent);   
+		candidats.remove(candidat);
 	}
 
 	public void retour() {

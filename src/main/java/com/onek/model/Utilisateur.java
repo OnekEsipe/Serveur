@@ -151,7 +151,17 @@ public class Utilisateur implements Serializable {
 
 		return jury;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((iduser == null) ? 0 : iduser.hashCode());
+		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
+		result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -161,6 +171,11 @@ public class Utilisateur implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Utilisateur other = (Utilisateur) obj;
+		if (iduser == null) {
+			if (other.iduser != null)
+				return false;
+		} else if (!iduser.equals(other.iduser))
+			return false;
 		if (nom == null) {
 			if (other.nom != null)
 				return false;
@@ -173,4 +188,6 @@ public class Utilisateur implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 }
