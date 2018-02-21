@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import com.onek.utils.Navigation;
 
-public class NavigationTests {
+public class NavigationTest {
 
 	@Test(expected=NullPointerException.class)
 	public void testsNotNull() {
