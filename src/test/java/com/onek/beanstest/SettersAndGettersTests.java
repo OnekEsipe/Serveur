@@ -32,7 +32,7 @@ public class SettersAndGettersTests {
 	
 	@Test
 	public void validAddJuryBean() throws IntrospectionException {
-		JavaBeanTester.test(AddJuryBean.class,"utilisateurs","filteredutilisateurs","selectedutilisateurs","utilisateursAll");
+		JavaBeanTester.test(AddJuryBean.class,"utilisateurs","filteredutilisateurs","selectedutilisateurs","utilisateursAll","utilisateursAnos");
 	}
 	
 	@Test
