@@ -83,7 +83,7 @@
 				</p:column>
 
 				<p:column headerText="Supprimé" id="etatevent" rendered="#{accueil.visible}">
-					<h:outputText value="#{evenement.isdeleted}" />
+					<h:outputText value="#{evenement.isDeleted()}" />
 				</p:column>
 
 			</p:dataTable>

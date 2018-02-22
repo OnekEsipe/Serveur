@@ -193,15 +193,21 @@ public class Evenement implements Serializable {
 	public Jury addJury(Jury jury) {
 		getJurys().add(jury);
 		jury.setEvenement(this);
-
 		return jury;
 	}
 
 	public Jury removeJury(Jury jury) {
 		getJurys().remove(jury);
 		jury.setEvenement(null);
-
 		return jury;
+	}
+	
+	public String isDeleted() {
+		if (getIsdeleted()) {
+			return "Oui";
+		} else {
+			return "Non";
+		}
 	}
 
 }

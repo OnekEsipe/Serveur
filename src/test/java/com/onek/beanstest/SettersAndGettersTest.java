@@ -18,7 +18,7 @@ import com.onek.managedbean.ResetPasswordBean;
 import com.onek.managedbean.StatistiquesBean;
 import com.onek.managedbean.UserBean;
 
-public class SettersAndGettersTests {
+public class SettersAndGettersTest {
 
 	@Test
 	public void validAccountBean() throws IntrospectionException {

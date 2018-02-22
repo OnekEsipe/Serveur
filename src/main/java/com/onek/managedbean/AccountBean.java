@@ -46,6 +46,7 @@ public class AccountBean implements Serializable{
 			}
 			String name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
 			user = userService.findByLogin(name);
+			
 			this.lastEmail = user.getMail();
 			this.login = name;
 			emptyForm();

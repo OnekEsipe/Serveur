@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
@@ -28,7 +29,10 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public Evaluation findById(Integer id) {
+	public Evaluation findById(int id) {
+		if(id < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		Evaluation evaluation = null;
@@ -52,6 +56,7 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 
 	@Override
 	public void update(Evaluation evaluation) {
+		Objects.requireNonNull(evaluation);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -71,7 +76,10 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Evaluation> findByIdCandidate(Integer idCandidat) {
+	public List<Evaluation> findByIdCandidate(int idCandidat) {
+		if(idCandidat < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		List<Evaluation> evaluations = new ArrayList<>();
@@ -97,7 +105,10 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Evaluation> findByIdJury(Integer idJury) {
+	public List<Evaluation> findByIdJury(int idJury) {
+		if(idJury < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		List<Evaluation> evaluations = new ArrayList<>();
@@ -124,6 +135,9 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteEvaluation(int idJury, int idCandidat) {
+		if(idJury < 1 || idCandidat < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -152,6 +166,14 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void saveEvaluation(String nomCandidat, String prenomCandidat, int idevent, Jury jury, Date date) {
+		Objects.requireNonNull(nomCandidat);
+		Objects.requireNonNull(prenomCandidat);
+		Objects.requireNonNull(jury);
+		Objects.requireNonNull(date);
+		if(idevent < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
+		
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -192,10 +214,17 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 			session.close();
 		}
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void saveEvaluation(Candidat candidat, Jury jury, Date date, int idevent) {
+		Objects.requireNonNull(candidat);
+		Objects.requireNonNull(jury);
+		Objects.requireNonNull(date);
+		if(idevent < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
+
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -232,6 +261,5 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 		} finally {
 			session.close();
 		}
-
 	}
 }

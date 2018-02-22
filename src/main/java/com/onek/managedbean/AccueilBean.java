@@ -40,7 +40,7 @@ public class AccueilBean implements Serializable {
 	private Utilisateur user;
 	private String login;
 
-	private String visible = "false";
+	private boolean visible;
 
 	private int idevent;
 	private String typeMenu;
@@ -58,9 +58,10 @@ public class AccueilBean implements Serializable {
 			user = userService.findByLogin(login);
 			if (user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
 				typeMenu = "menu.xhtml";
-				setVisible("true");
+				setVisible(true);
 			} else {
 				typeMenu = "menuorg.xhtml";
+				setVisible(false);
 			}
 			FacesContext context = FacesContext.getCurrentInstance();
 			String viewId = context.getViewRoot().getViewId();
@@ -147,11 +148,11 @@ public class AccueilBean implements Serializable {
 		this.typeMenu = typeMenu;
 	}
 
-	public String getVisible() {
+	public boolean getVisible() {
 		return visible;
 	}
 
-	public void setVisible(String visible) {
+	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
 
@@ -174,4 +175,5 @@ public class AccueilBean implements Serializable {
 	public void buttonAction() {
 		Navigation.redirect("viewCreateEvent.xhtml");
 	}
+	
 }

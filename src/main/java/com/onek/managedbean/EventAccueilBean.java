@@ -155,7 +155,7 @@ public class EventAccueilBean implements Serializable {
 
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
-
+			this.nom = event.getNom();
 			disabledSiSupprime = event.getIsdeleted();
 			this.statut = event.getStatus();
 			if (statut.equals("Brouillon")) {
@@ -243,18 +243,16 @@ public class EventAccueilBean implements Serializable {
 		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
 		event.setStatus(statut);
-		event.setNom(nom);
-
+		if (!nom.isEmpty()) {
+			event.setNom(nom);
+		}
 		eventAccueilservice.editEvenement(event);
 		Navigation.redirect("eventAccueil.xhtml");
-
 	}
 	
 	public void supprimerEvent() {
-
 		evenementService.supprimerEvent(event.getIdevent());
 		Navigation.redirect("accueil.xhtml");
-
 	}
 
 	public void buttonRecuperer() {
