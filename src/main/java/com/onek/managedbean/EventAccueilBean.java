@@ -155,7 +155,7 @@ public class EventAccueilBean implements Serializable {
 
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
-
+			this.nom = event.getNom();
 			disabledSiSupprime = event.getIsdeleted();
 			this.statut = event.getStatus();
 			if (statut.equals("Brouillon")) {
