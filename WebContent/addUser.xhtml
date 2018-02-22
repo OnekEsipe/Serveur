@@ -6,36 +6,60 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Home Onek</title>
+	<title>ONEK' - Créer un utilisateur</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
-
+	<h:outputStylesheet library="css" name="user.css" />
+	<h:outputStylesheet library="css" name="header_footer.css" />
 </h:head>
 <f:metadata>
-	<f:event type="preRenderView" listener="#{user.before}" />
+	<f:event type="preRenderView" listener="#{addUser.before}" />
 </f:metadata>
 <h:body>
+	<header>
+		<div class="ui-g">
+			<div class="ui-g-1">
+				<p:graphicImage name="/image/logo.png" width="50" />
+			</div>
+			<div class="ui-g-11">
+				<h1 class="hf">ONEK'</h1>
+			</div>
+		</div>
+	</header>
 	<!-- Insertion du menu -->
-	<h:outputStylesheet library="css" name="user.css" />
 	<ui:include src="#{accueil.typeMenu}" />
 	<br />
-	<br />
+	<!-- bouton retour à la liste des utilisateurs -->
 	<div class="ui-g">
-		<h:form>
+		<!-- 		<div class="ui-g-12 ui-md-8"></div> -->
+		<div class="ui-g-12 ui-md-4">
+			<h:form style="margin-left: 3%;">
+				<p:growl id="growl" life="4000" />
+
+				<p:commandButton value="Retour à la liste des utilisateurs"
+					id="withIcon" icon="ui-icon-arrowthick-1-w"
+					actionListener="#{addUser.retour}" styleClass="bigbutton" />
+			</h:form>
+		</div>
+	</div>
+	<div class="ui-g">	
+		<h:form style="width: 30%; margin: auto;">
 			<p:growl id="msgs" showDetail="true" />
-			<p:panel header="Ajouter un Utilisateur">
+			<p:panel header="Créer un utilisateur">
 				<h:panelGrid columns="2" cellpadding="5">
 					<p:outputLabel for="lastnameUser" value="Nom :" />
 					<p:inputText id="lastnameUser" name="lastnameUser"
-						placeholder="Entrez le nom" size="20" value="#{user.lastName}"
+						placeholder="Entrez le nom" size="20" value="#{addUser.lastName}"
 						required="true" />
-					<p:outputLabel for="firstnameUser" value="Prénom (Optionnel) :" />
+					<p:outputLabel for="firstnameUser" value="Prénom :" />
 					<p:inputText id="firstnameUser" name="firstnameUser"
-						placeholder="Entrez le prénom" size="20" value="#{user.firstName}" />
+						placeholder="Entrez le prénom" size="20"
+						value="#{addUser.firstName}" required="true" />
 					<p:outputLabel for="mailUser" value="Mail :" />
 					<p:inputText id="mailUser" name="mailUser"
-						placeholder="Entrez l'adresse mail" size="20" value="#{user.mail}"
+						placeholder="Entrez l'adresse mail" size="20"
+						value="#{addUser.mail}"
 						validatorMessage="Format de l'adresse mail invalide"
 						required="true">
 						<f:validateRegex
@@ -45,21 +69,21 @@
 					<p:message for="mailUser" />
 					<p:outputLabel for="loginUser" value="Login :" />
 					<p:inputText id="loginUser" name="loginUser"
-						placeholder="Entrez le login" size="20" value="#{user.login}"
+						placeholder="Entrez le login" size="20" value="#{addUser.login}"
 						required="true" />
 					<p:outputLabel for="password" value="Mot de passe :" />
 					<p:password id="password" name="password"
 						placeholder="Entrez le mot de passe" size="30"
-						value="#{user.password}" required="true" />
+						value="#{addUser.password}" required="true" />
 					<p:outputLabel for="confirmationpassword" value="Confirmation :" />
 					<p:password id="confirmationpassword" name="confirmationpassword"
 						placeholder="Confirmez le mot de passe" size="30"
-						value="#{user.confirmationPassword}" required="true" />
+						value="#{addUser.confirmationPassword}" required="true" />
 					<br />
 					<div class="ui-g-6">
 						<div class="ui-g-2"></div>
 						<div class="ui-g-4">
-							<p:selectOneButton value="#{user.isAdmin}" required="true">
+							<p:selectOneButton value="#{addUser.isAdmin}" required="true">
 								<f:selectItem itemLabel="Administrateur" itemValue="#{true}" />
 								<f:selectItem itemLabel="Organisateur" itemValue="#{false}" />
 							</p:selectOneButton>
@@ -67,62 +91,19 @@
 					</div>
 
 				</h:panelGrid>
-				<p:commandButton value="Valider" action="#{user.onClickAdd}"
-					icon="ui-icon-check" ajax="false" />
-
+				<div style="text-align: center;">
+					<p:commandButton value="Créer" action="#{addUser.onClickAdd}"
+						icon="ui-icon-check" ajax="false"/>
+				</div>
 			</p:panel>
 		</h:form>
 	</div>
-	<div class="ui-g">
-		<h:form>
-			<p:dataTable var="utilisateur" value="#{user.users}"
-				scrollable="true" scrollHeight="400">
-
-				<!-- barre de recherche -->
-				<f:facet name="header">
-					Liste des utilisateurs
-				</f:facet>
-				<!-- ********fin*********** -->
-
-
-				<p:column headerText="nom" sortBy="#{utilisateur.nom}">
-					<h:outputText value="#{utilisateur.nom}" />
-				</p:column>
-
-				<p:column headerText="prénom" sortBy="#{utilisateur.prenom}">
-					<h:outputText value="#{utilisateur.prenom}" />
-				</p:column>
-
-				<p:column headerText="login">
-					<h:outputText value="#{utilisateur.login}" />
-				</p:column>
-
-
-				<!-- ********la colonne supprimer*********** -->
-				<p:column style="width:32px;text-align: center">
-					
-					<p:commandButton id="supprimer"  icon="ui-icon-locked"
-						actionListener="#{user.deleteUser}" ajax="true"
-						disabled="#{utilisateur.isdeleted}" update="@(form)">
-						<f:param name="iduser" value="#{utilisateur.iduser}" />
-					</p:commandButton>
-					<p:tooltip for="supprimer" value="désactiver l'utilisateur"
-					position="left" />
-				</p:column>
-				<!-- ********fin*********** -->
-
-				<p:column style="width:32px;text-align: center">
-					
-					<p:commandButton id="reactiver" icon="ui-icon-unlocked"
-						actionListener="#{user.reactiverUser}" ajax="true"
-						disabled="#{not utilisateur.isdeleted}" update="@(form)">
-						<f:param name="iduser" value="#{utilisateur.iduser}" />
-					</p:commandButton>
-					<p:tooltip for="reactiver" value="réactiver l'utilisateur"
-					position="left" />
-				</p:column>
-			</p:dataTable>
-		</h:form>
-	</div>
+	<footer>
+		<div>
+			<a href="url" class="footerURL">Qui sommes nous ?</a> <a href="url"
+				class="footerURL">L'Esipe</a> <a href="url" class="footerURL">Contact</a>
+			<a href="https://github.com/OnekEsipe" class="footerURL">Github</a>
+		</div>
+	</footer>
 </h:body>
 </html>

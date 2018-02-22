@@ -2,7 +2,6 @@ package com.onek.managedbean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -18,8 +17,8 @@ import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Navigation;
 import com.onek.utils.Password;
 
-@Component("user")
-public class UserBean {
+@Component("addUser")
+public class AddUserBean {
 
 	@Autowired
 	UserService userService;
@@ -38,9 +37,6 @@ public class UserBean {
 
 	private List<Utilisateur> users = new ArrayList<>();
 
-	private List<Utilisateur> filteredusers = new ArrayList<>();
-	private List<Utilisateur> selectedusers = new ArrayList<>();
-
 	private String logInfo;
 
 	public void before(ComponentSystemEvent e) {
@@ -48,11 +44,7 @@ public class UserBean {
 			Navigation.redirect("index.xhtml");
 			return;
 		}
-		String loginUtilisateur = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-		Utilisateur utilisateurPrincipal = userService.findByLogin(loginUtilisateur);
-		users = userService.getAllUsersExceptCurrent(utilisateurPrincipal.getIduser());
 		emptyForm();
-
 	}
 
 	private void emptyForm() {
@@ -63,7 +55,6 @@ public class UserBean {
 		setConfirmationPassword("");
 		setMail("");
 		setLogInfo("");
-
 	}
 
 	public boolean isIsdeleted() {
@@ -80,14 +71,6 @@ public class UserBean {
 
 	public void setOption(String option) {
 		this.option = option;
-	}
-
-	public List<Utilisateur> getSelectedusers() {
-		return selectedusers;
-	}
-
-	public void setSelectedusers(List<Utilisateur> selectedusers) {
-		this.selectedusers = selectedusers;
 	}
 
 	public int getIduser() {
@@ -170,24 +153,12 @@ public class UserBean {
 		this.isAdmin = isAdmin;
 	}
 
-	public List<Utilisateur> getFilteredusers() {
-		return filteredusers;
-	}
-
-	public void setFilteredusers(List<Utilisateur> filteredusers) {
-		this.filteredusers = filteredusers;
-	}
-
 	public String getLogInfo() {
 		return logInfo;
 	}
 
 	public void setLogInfo(String logInfo) {
 		this.logInfo = logInfo;
-	}
-
-	public void click() {
-		System.out.println("lol");
 	}
 
 	public void onClickAdd() {
@@ -229,29 +200,14 @@ public class UserBean {
 			showLogMessage();
 		}
 	}
-
-	public void deleteUser() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-		iduser = Integer.valueOf(params.get("iduser"));
-		String loginUtilisateur = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-		Utilisateur utilisateurPrincipal = userService.findByLogin(loginUtilisateur);
-		if(iduser != utilisateurPrincipal.getIduser()) {
-			userService.deleteUser(iduser);
-		}
-	}
-	public void reactiverUser() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-		iduser = Integer.valueOf(params.get("iduser"));
-		Utilisateur user = userService.findUserById(iduser);
-		user.setIsdeleted(false);
-		userService.editUser(user);		
-	}
 	
 	public void showLogMessage() {
 		RequestContext.getCurrentInstance().showMessageInDialog(
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Ajout d'un nouvel utilisateur", logInfo));
+	}
+	
+	public void retour() {
+		Navigation.redirect("users.xhtml?i=1");
 	}
 
 }

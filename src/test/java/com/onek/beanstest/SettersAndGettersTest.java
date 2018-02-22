@@ -16,7 +16,7 @@ import com.onek.managedbean.LoginBean;
 import com.onek.managedbean.MenuBean;
 import com.onek.managedbean.ResetPasswordBean;
 import com.onek.managedbean.StatistiquesBean;
-import com.onek.managedbean.UserBean;
+import com.onek.managedbean.UsersBean;
 
 public class SettersAndGettersTest {
 
@@ -86,9 +86,7 @@ public class SettersAndGettersTest {
 
 	@Test
 	public void validUserBean() throws IntrospectionException {
-		JavaBeanTester.test(UserBean.class,"users","filteredusers","selectedusers");
+		JavaBeanTester.test(UsersBean.class,"users","filteredusers","selectedusers");
 	}
-
-
 
 }
