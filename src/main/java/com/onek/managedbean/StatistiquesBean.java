@@ -189,8 +189,9 @@ public class StatistiquesBean implements Serializable {
 		}
 		if (total == 0) {
 			this.setTotalAvancement(100);
+		} else {
+			this.setTotalAvancement((totalNoteDone/total)*100);
 		}
-		this.setTotalAvancement((totalNoteDone/total)*100);
 	}
 	
 	public void InitStatByJury() {
