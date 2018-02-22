@@ -24,24 +24,27 @@ public class EvaluationDaoTest {
 	 */
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testIllegalId1() {
+	public void testfindById() {
 		evaluationDao.findById(-1);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testIllegalId2() {
+	public void testDeleteEvaluation1() {
 		evaluationDao.deleteEvaluation(-1, 10);
-		evaluationDao.deleteEvaluation(10, -1);
-		evaluationDao.deleteEvaluation(-1, -1);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testIllegalId3() {
+	public void testDeleteEvaluation2() {
+		evaluationDao.deleteEvaluation(10, -1);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testFindByIdCandidate() {
 		evaluationDao.findByIdCandidate(-1);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testIllegalId4() {
+	public void testfindByIdJury() {
 		evaluationDao.findByIdJury(-1);
 	}
 	
@@ -51,9 +54,17 @@ public class EvaluationDaoTest {
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void testNullPointerExceptionSaveEvaluation1() {
+	public void testNullPointerExceptionSaveEvaluation1_1() {
 		evaluationDao.saveEvaluation(null, new Jury(), new Date(), 10);
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void testNullPointerExceptionSaveEvaluation1_2() {
 		evaluationDao.saveEvaluation(new Candidat(), null, new Date(), 10);
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void testNullPointerExceptionSaveEvaluation1_3() {
 		evaluationDao.saveEvaluation(new Candidat(), new Jury(), null, 10);
 	}
 	
@@ -62,12 +73,21 @@ public class EvaluationDaoTest {
 		evaluationDao.saveEvaluation(new Candidat(),new Jury(),new Date(), -1);
 	}
 	
+	@Test(expected=NullPointerException.class)
+	public void testNullPointerExceptionSaveEvaluation2_1() {
+		evaluationDao.saveEvaluation(null, "prenom", 10, new Jury(), new Date());
+	}
 	
 	@Test(expected=NullPointerException.class)
-	public void testNullPointerExceptionSaveEvaluation2() {
-		evaluationDao.saveEvaluation(null, "prenom", 10, new Jury(), new Date());
+	public void testNullPointerExceptionSaveEvaluation2_2() {
 		evaluationDao.saveEvaluation("nom", null, 10, new Jury(), new Date());
+	}
+	@Test(expected=NullPointerException.class)
+	public void testNullPointerExceptionSaveEvaluation2_3() {
 		evaluationDao.saveEvaluation("nom", "prenom", 10,null, new Date());
+	}
+	@Test(expected=NullPointerException.class)
+	public void testNullPointerExceptionSaveEvaluation2_4() {
 		evaluationDao.saveEvaluation("nom", "prenom", 10,new Jury(), null);
 	}
 	

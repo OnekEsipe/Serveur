@@ -24,35 +24,30 @@ public class CritereDaoTest {
 	 */
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testIllegalId1() {
+	public void testFindById() {
 		critereDao.findById(-1);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testIllegalId2() {
+	public void testSupprimerCritere() {
 		critereDao.supprimerCritere(-1);
 	}
 
 	@Test(expected=NullPointerException.class)
-	public void testNullPointerExceptionaddCritere() {
+	public void testNullPointerExceptionAddCritere() {
 		critereDao.addCritere(null);
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void testNullPointerExceptionaddCriteres() {
+	public void testNullPointerExceptionAddCriteres() {
 		critereDao.addCriteres(null);
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
-	public void testNotEmptyList() {
+	@Test(expected=IllegalStateException.class)
+	public void testAddCriteres() {
 		List<Critere> emptyList = new ArrayList<>();
 		critereDao.addCriteres(emptyList);
 	}
-	
-	
-	
-	
-	
 	
 	/*
 	 * TESTS DE TRANSACTIONS ECHOUEES

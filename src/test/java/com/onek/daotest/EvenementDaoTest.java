@@ -19,17 +19,17 @@ public class EvenementDaoTest {
 	 * TESTS DES ARGUMENTS
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testIllegalId1() {
+	public void testFindById() {
 		evenementDao.findById(-1);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testIllegalId2() {
+	public void testFindByIdUser() {
 		evenementDao.findByIdUser(-1);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testIllegalId3() {
+	public void testSupprimerEvent() {
 		evenementDao.supprimerEvent(-1);
 	}
 
