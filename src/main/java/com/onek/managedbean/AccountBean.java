@@ -33,7 +33,7 @@ public class AccountBean implements Serializable{
 	private String newPassword;
 	private String confirmNewPassword;
 	private String newEmail;
-
+	
 	//Log
 	private String logPassword;
 	private String logEmail;
@@ -56,7 +56,7 @@ public class AccountBean implements Serializable{
 		setLastPassword("");
 		setNewPassword("");
 		setConfirmNewPassword("");
-		setLastEmail("");
+		setNewEmail("");
 	}
 	
 	public String getLogin() {
@@ -82,7 +82,6 @@ public class AccountBean implements Serializable{
 	public void setNewEmail(String newEmail) {
 		this.newEmail = newEmail;
 	}
-
 
 	public String getLastPassword() {
 		return lastPassword;
@@ -132,68 +131,62 @@ public class AccountBean implements Serializable{
 	public void setLastEmail(String lastEmail) {
 		this.lastEmail = lastEmail;
 	}
-
-	public void modify() {
-		boolean newModif = false;
-		if(updatePassword()) {
-			try {
-				String hash = Encode.sha1(newPassword);
-				user.setMotdepasse(hash);				
-				newModif = true;
-			}
-			catch(NoSuchAlgorithmException | UnsupportedEncodingException e) {
-				logger.error(this.getClass().getName(), e);
-				logPassword = "Une erreur est survenue.";
-			}			
-		}
-		if(updateEmail()) {
-			user.setMail(newEmail);
-			newModif = true;
-			newEmail="";
-		}
-
-		//On effectue la requête que s'il y a eu modification
-		if(newModif) {
-			userService.updateUserInfos(user);
-		}
-	}
-
-	public boolean updatePassword() {
+	
+	public void modifyPassword() {
+		logEmail = "";
 		if(lastPassword.isEmpty() || newPassword.isEmpty() || confirmNewPassword.isEmpty()) {
-			logPassword = "Merci de renseigner tous les champs";
-			return false;
+			logPassword = "Merci de renseigner tous les champs.";
+			return;
 		}
 		if(!newPassword.equals(confirmNewPassword)) {
 			logPassword = "Nouveau mot de passe différent du mot de passe de confirmation.";
-			return false;
+			return;
 		}		
 		try {
 			String hash = Encode.sha1(lastPassword);
 			if(!user.getMotdepasse().equals(hash)) {
 				logPassword = "Mot de passe incorrect, merci de réessayer.";
-				return false;
+				return;
 			}
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			logPassword = "Une erreur est survenue.";
 			logger.error(this.getClass().getName(), e);
-			return false;
+			return;
 		}
 		if(!Password.verifyPasswordRule(newPassword)) {
 			logPassword = "Le mot de passe doit être composé d'au moins 6 caractères et comporter au moins une majuscule.";
-			return false;
+			return;
 		}		 
 		logPassword = "Modification effectuée avec succès !";
-		return true;
+		try {
+			String hash = Encode.sha1(newPassword);
+			user.setMotdepasse(hash);			
+		}
+		catch(NoSuchAlgorithmException | UnsupportedEncodingException e) {
+			logger.error(this.getClass().getName(), e);
+			logPassword = "Une erreur est survenue.";
+			return;
+		}
+		userService.updateUserInfos(user);
 	}
-
-	public boolean updateEmail() {
-		if(newEmail == null) return false;
+	
+	public void modifyMail() {
+		logPassword = "";
+		if(newEmail == null) return;
 		if(newEmail.isEmpty()) {
-			logEmail = "Merci de saisir votre adresse mail";
-			return false;
+			logEmail = "Merci de saisir votre adresse mail.";
+			newEmail = "";
+			return;
+		}
+		if (userService.mailExist(newEmail)) {
+			logEmail = "L'adresse mail est déjà utilisée.";
+			newEmail = "";
+			return;
 		}
 		logEmail = "Modification effectuée avec succès !";
-		lastEmail = newEmail;
-		return true;
-	}
+		lastEmail = newEmail;		
+		user.setMail(newEmail);	
+		newEmail = "";
+		userService.updateUserInfos(user);
+	}	
 }

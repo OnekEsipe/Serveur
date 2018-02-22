@@ -46,7 +46,7 @@
 							placeholder="Confirmez votre nouveau mot de passe" size="30"
 							value="#{userInfo.confirmNewPassword}" required="true" />
 						<br />
-						<p:commandButton value="Valider" action="#{userInfo.modify}"
+						<p:commandButton value="Valider" action="#{userInfo.modifyPassword}"
 							icon="ui-icon-check" update="msgs" ajax="false" />
 						<h4>#{userInfo.logPassword}</h4>
 					</h:panelGrid>
@@ -73,7 +73,7 @@
 							value="Entrez la nouvelle adresse mail" />
 						<p:message for="nouveauemail" />
 						<br />
-						<p:commandButton value="Valider" action="#{userInfo.modify}"
+						<p:commandButton value="Valider" action="#{userInfo.modifyMail}"
 							icon="ui-icon-check" update="msgs2" ajax="false" />
 						<h4>#{userInfo.logEmail}</h4>
 					</h:panelGrid>
