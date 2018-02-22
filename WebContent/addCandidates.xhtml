@@ -29,13 +29,17 @@
 			<div class="ui-g-6">
 				<p:panel id="ImporterCandidat" header="Importer des candidats"
 					style="margin-bottom:20px">
-					<h:form enctype="multipart/form-data">
-						
+					<h:form id="log" enctype="multipart/form-data">
+						<h2 id="format">
+							le fichier doit être au format csv, le parseur accepté est ";". <br />
+							Le fichier doit obligatoirement contenir une colonne "nom", la
+							colonne "prenom" est facultative.
+						</h2>
 						<p:fileUpload fileUploadListener="#{candidate.fileImportCsv}"
 							dragDropSupport="true" multiple="false" mode="advanced"
-							id="upload" allowTypes="/(\.|\/)(csv)$/" update="tabCandidat" />
+							id="upload" allowTypes="/(\.|\/)(csv)$/" update="tabCandidat log" />
 
-						<h3 id="importLog">#{candidate.importLog}</h3>
+						<h3 id="erreur">#{candidate.importLog}</h3>
 					</h:form>
 				</p:panel>
 			</div>
@@ -68,8 +72,8 @@
 			<div>
 				<!-- ************Tableau des candidat**************** -->
 
-				<p:dataTable  var="candidat"
-					value="#{candidate.candidats}" scrollable="true" scrollHeight="300">
+				<p:dataTable var="candidat" value="#{candidate.candidats}"
+					scrollable="true" scrollHeight="300">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">

@@ -196,7 +196,7 @@ public class CandidateBean implements Serializable {
 					data.add(nextLine);
 				}
 			} catch (IOException e) {
-				importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
+				importLog = "Le contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
 				return;
 			}
 
@@ -204,9 +204,9 @@ public class CandidateBean implements Serializable {
 			int indexprenom = -1;
 			int colonnesize = data.get(0).length;
 			for (int i = 0; i < colonnesize; i++) {
-				if (data.get(0)[i].equals("nom")) {
+				if (data.get(0)[i].equalsIgnoreCase("nom")) {
 					indexnom = i;
-				} else if (data.get(0)[i].equals("prenom")) {
+				} else if (data.get(0)[i].equalsIgnoreCase("prenom")) {
 					indexprenom = i;
 				}
 			}
