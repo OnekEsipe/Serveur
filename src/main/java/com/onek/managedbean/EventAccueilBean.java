@@ -353,7 +353,7 @@ public class EventAccueilBean implements Serializable {
 		eventBis.setIsopened(false);
 		eventBis.setUtilisateur(utilisateur);
 		eventBis.setStatus("Brouillon");
-		eventBis.setIssigned(event.getIssigned());
+		eventBis.setSigningneeded(event.getSigningneeded());
 		eventBis.setCode(generateCode());
 		return eventBis;
 	}

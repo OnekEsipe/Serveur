@@ -4,18 +4,18 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-
 /**
- * The persistent class for the descripteur database table.
+ * The persistent class for the descripteurs database table.
  * 
  */
 @Entity
-@NamedQuery(name="Descripteur.findAll", query="SELECT d FROM Descripteur d")
+@Table(name = "descripteurs")
+@NamedQuery(name = "Descripteur.findAll", query = "SELECT d FROM Descripteur d")
 public class Descripteur implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer iddescripteur;
 
 	private String niveau;
@@ -24,9 +24,9 @@ public class Descripteur implements Serializable {
 
 	private String texte;
 
-	//bi-directional many-to-one association to Critere
+	// bi-directional many-to-one association to Critere
 	@ManyToOne
-	@JoinColumn(name="idcritere")
+	@JoinColumn(name = "idcritere")
 	private Critere critere;
 
 	public Descripteur() {
@@ -71,10 +71,10 @@ public class Descripteur implements Serializable {
 	public void setCritere(Critere critere) {
 		this.critere = critere;
 	}
-	
+
 	@Override
 	public String toString() {
-		return niveau + "\n" + "(Poids = "+poids+"\n ," + "Description = "+texte+")";
+		return niveau + "\n" + "(Poids = " + poids + "\n ," + "Description = " + texte + ")";
 	}
 
 }

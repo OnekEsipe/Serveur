@@ -188,7 +188,6 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 			evaluation.setCommentaire("");
 			evaluation.setDatedernieremodif(date);
 			evaluation.setJury(jury);
-			evaluation.setSignature(new byte[0]);
 			session.save(evaluation);
 
 			// Creation de notes (initialisé à -1) pour chaque criteres de l'evenement
@@ -236,7 +235,6 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 			evaluation.setCommentaire("");
 			evaluation.setDatedernieremodif(date);
 			evaluation.setJury(jury);
-			evaluation.setSignature(new byte[0]);
 			session.save(evaluation);
 
 			// Creation de notes (initialisé à -1) pour chaque criteres de l'evenement
