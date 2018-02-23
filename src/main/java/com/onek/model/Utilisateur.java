@@ -2,6 +2,9 @@ package com.onek.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.onek.utils.DroitsUtilisateur;
+
 import java.util.List;
 
 
@@ -150,6 +153,19 @@ public class Utilisateur implements Serializable {
 		jury.setUtilisateur(null);
 
 		return jury;
+	}
+	
+	public String getNomDroits() {
+		if (getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
+			return DroitsUtilisateur.ADMINISTRATEUR.getValue();
+		}
+		if (getDroits().equals(DroitsUtilisateur.ORGANISATEUR.toString())) {
+			return DroitsUtilisateur.ORGANISATEUR.getValue();
+		}
+		if (getDroits().equals(DroitsUtilisateur.JURY.toString())) {
+			return DroitsUtilisateur.JURY.getValue();
+		}		
+		return DroitsUtilisateur.ANONYME.getValue();
 	}
 
 	@Override

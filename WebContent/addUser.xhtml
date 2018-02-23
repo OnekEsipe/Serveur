@@ -17,37 +17,27 @@
 	<f:event type="preRenderView" listener="#{addUser.before}" />
 </f:metadata>
 <h:body>
-	<header>
-		<div class="ui-g">
-			<div class="ui-g-1">
-				<p:graphicImage name="/image/logo.png" width="50" />
-			</div>
-			<div class="ui-g-11">
-				<h1 class="hf">ONEK'</h1>
-			</div>
-		</div>
-	</header>
-	<!-- Insertion du menu -->
+	<!-- Insertion du header + menu -->
 	<ui:include src="#{accueil.typeMenu}" />
 	<br />
 	<!-- bouton retour à la liste des utilisateurs -->
 	<div class="ui-g">
-		<!-- 		<div class="ui-g-12 ui-md-8"></div> -->
 		<div class="ui-g-12 ui-md-4">
-			<h:form style="margin-left: 3%;">
-				<p:growl id="growl" life="4000" />
-
+			<h:form class="button-return">
 				<p:commandButton value="Retour à la liste des utilisateurs"
 					id="withIcon" icon="ui-icon-arrowthick-1-w"
 					actionListener="#{addUser.retour}" styleClass="bigbutton" />
 			</h:form>
 		</div>
 	</div>
-	<div class="ui-g">	
-		<h:form style="width: 30%; margin: auto;">
-			<p:growl id="msgs" showDetail="true" />
+	<div class="ui-g">
+		<h:form class="form-create-user">
 			<p:panel header="Créer un utilisateur">
 				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel for="loginUser" value="Login :" />
+					<p:inputText id="loginUser" name="loginUser"
+						placeholder="Entrez le login" size="20" value="#{addUser.login}"
+						required="true" />
 					<p:outputLabel for="lastnameUser" value="Nom :" />
 					<p:inputText id="lastnameUser" name="lastnameUser"
 						placeholder="Entrez le nom" size="20" value="#{addUser.lastName}"
@@ -67,10 +57,6 @@
 					</p:inputText>
 					<p:watermark for="mailUser" value="Entrer l'adresse mail" />
 					<p:message for="mailUser" />
-					<p:outputLabel for="loginUser" value="Login :" />
-					<p:inputText id="loginUser" name="loginUser"
-						placeholder="Entrez le login" size="20" value="#{addUser.login}"
-						required="true" />
 					<p:outputLabel for="password" value="Mot de passe :" />
 					<p:password id="password" name="password"
 						placeholder="Entrez le mot de passe" size="30"
@@ -93,17 +79,12 @@
 				</h:panelGrid>
 				<div style="text-align: center;">
 					<p:commandButton value="Créer" action="#{addUser.onClickAdd}"
-						icon="ui-icon-check" ajax="false"/>
+						icon="ui-icon-check" ajax="false" />
 				</div>
 			</p:panel>
 		</h:form>
 	</div>
-	<footer>
-		<div>
-			<a href="url" class="footerURL">Qui sommes nous ?</a> <a href="url"
-				class="footerURL">L'Esipe</a> <a href="url" class="footerURL">Contact</a>
-			<a href="https://github.com/OnekEsipe" class="footerURL">Github</a>
-		</div>
-	</footer>
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>

@@ -12,7 +12,7 @@ public interface UserService {
 	public Utilisateur findByLogin(String login);
 	public boolean userExist(String login);
 	public List<Utilisateur> getAllUsers();
-	public List<Utilisateur> getAllUsersExceptCurrent(int idcurrentUser);
+	public List<Utilisateur> getAllUsersExceptCurrentAndAnonymous(int idcurrentUser);
 	public List<Utilisateur> findAllJurys();
 	public void deleteUser(int idUser);
 	public void addUser(Utilisateur user);

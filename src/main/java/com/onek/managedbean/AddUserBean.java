@@ -38,13 +38,17 @@ public class AddUserBean {
 	private List<Utilisateur> users = new ArrayList<>();
 
 	private String logInfo;
+	private boolean error;
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
 			Navigation.redirect("index.xhtml");
 			return;
 		}
-		emptyForm();
+		if (!error) {
+			emptyForm();			
+		}
+		error = false;
 	}
 
 	private void emptyForm() {
@@ -164,17 +168,17 @@ public class AddUserBean {
 	public void onClickAdd() {
 		if (!password.equals(confirmationPassword)) {
 			logInfo = "Les mots de passe ne correspondent pas !";
-			showLogMessage();
+			showLogMessage(true);
 			return;
 		}
 		if (!Password.verifyPasswordRule(password)) {
 			logInfo = "Création impossible : Le mot de passe doit être composé d'au moins 6 caractères et comporter au moins une majuscule.";
-			showLogMessage();
+			showLogMessage(true);
 			return;
 		}
 		if (userService.mailExist(mail)) {
 			logInfo = "Création impossible : adresse mail déjà utilisée.";
-			showLogMessage();
+			showLogMessage(true);
 			return;
 		}
 		Utilisateur newUser = new Utilisateur();
@@ -194,14 +198,15 @@ public class AddUserBean {
 			userService.addUser(newUser);
 			users.add(newUser);
 			logInfo = "Ajout effectué avec succès !";
-			showLogMessage();
+			showLogMessage(false);
 		} catch (IllegalStateException e) { // login exist
 			logInfo = "Création impossible : le login est déjà utilisé.";
-			showLogMessage();
+			showLogMessage(true);
 		}
 	}
 	
-	public void showLogMessage() {
+	public void showLogMessage(boolean error) {
+		this.error = error;
 		RequestContext.getCurrentInstance().showMessageInDialog(
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Ajout d'un nouvel utilisateur", logInfo));
 	}

@@ -25,14 +25,16 @@ public class UsersBean {
 	private List<Utilisateur> filteredusers = new ArrayList<>();
 	private List<Utilisateur> selectedusers = new ArrayList<>();
 	
+	private Utilisateur utilisateurPrincipal;
+	
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
 			Navigation.redirect("index.xhtml");
 			return;
 		}
 		String loginUtilisateur = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-		Utilisateur utilisateurPrincipal = userService.findByLogin(loginUtilisateur);
-		users = userService.getAllUsersExceptCurrent(utilisateurPrincipal.getIduser());
+		utilisateurPrincipal = userService.findByLogin(loginUtilisateur);
+		users = userService.getAllUsersExceptCurrentAndAnonymous(utilisateurPrincipal.getIduser());
 	}
 	
 	public int getIduser() {
@@ -68,22 +70,22 @@ public class UsersBean {
 	}
 	
 	public void deleteUser() {
+		System.err.println("delete");
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		iduser = Integer.valueOf(params.get("iduser"));
-		String loginUtilisateur = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-		Utilisateur utilisateurPrincipal = userService.findByLogin(loginUtilisateur);
 		if(iduser != utilisateurPrincipal.getIduser()) {
 			userService.deleteUser(iduser);
-		}
+		}		
 	}
 	
 	public void reactiverUser() {
+		System.err.println("reactivation");
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		iduser = Integer.valueOf(params.get("iduser"));
 		Utilisateur user = userService.findUserById(iduser);
-		user.setIsdeleted(false);
+		user.setIsdeleted(false);		
 		userService.editUser(user);		
 	}
 	

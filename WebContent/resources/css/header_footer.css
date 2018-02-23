@@ -21,8 +21,8 @@ body {
 	padding: 0;
 }
 
-.fa {
-	font-size: 145% !important;
+.ui-inputfield {
+	width: 100%;
 }
 
 .footerURL {
@@ -37,8 +37,8 @@ footer {
 	height: 2.6em;
 	background: #2399e5;
 	color: #fff;
-	position: absolute;
 	bottom: 0;
 	width: 100%;
 	padding-top: 1.6em;
+	margin-top: 1em;
 }

@@ -2,3 +2,22 @@
 	padding-top: 20px;
 	padding-left: 20px;
 }
+
+.tab-users {
+	margin: auto; 
+	width: 90%;
+}
+
+.button-create {
+	margin-left: 75%;
+	padding-bottom: 1em;	
+}
+
+.button-return {
+	margin-left: 3%;
+}
+
+.form-create-user {
+	width: 35%; 
+	margin: auto;
+}
