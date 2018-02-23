@@ -46,8 +46,8 @@ public class EvenementResource implements Serializable {
 		idEvent = evenement.getIdevent();
 		dateStart = evenement.getDatestart();
 		dateStop = evenement.getDatestop();
-		isOpened = evenement.getIssigned();
-		isSigned = evenement.getIssigned();
+		isOpened = evenement.getSigningneeded();
+		isSigned = evenement.getSigningneeded();
 		nom = evenement.getNom();
 		for (Critere critere : evenement.getCriteres()) {
 			criteres.add(new CritereResource(critere));

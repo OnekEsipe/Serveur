@@ -4,33 +4,32 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
  * The persistent class for the jurys database table.
  * 
  */
 @Entity
-@Table(name="jurys")
-@NamedQuery(name="Jury.findAll", query="SELECT j FROM Jury j")
+@Table(name = "jurys")
+@NamedQuery(name = "Jury.findAll", query = "SELECT j FROM Jury j")
 public class Jury implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idjury;
 
-	//bi-directional many-to-one association to Evaluation
-	@OneToMany(mappedBy="jury")
+	// bi-directional many-to-one association to Evaluation
+	@OneToMany(mappedBy = "jury")
 	private List<Evaluation> evaluations;
 
-	//bi-directional many-to-one association to Evenement
+	// bi-directional many-to-one association to Evenement
 	@ManyToOne
-	@JoinColumn(name="idevent")
+	@JoinColumn(name = "idevent")
 	private Evenement evenement;
 
-	//bi-directional many-to-one association to Utilisateur
+	// bi-directional many-to-one association to Utilisateur
 	@ManyToOne
-	@JoinColumn(name="iduser")
+	@JoinColumn(name = "iduser")
 	private Utilisateur utilisateur;
 
 	public Jury() {
@@ -97,6 +96,6 @@ public class Jury implements Serializable {
 		}
 		Jury jury = (Jury) o;
 		return idjury == jury.idjury;
-	}	
+	}
 
 }

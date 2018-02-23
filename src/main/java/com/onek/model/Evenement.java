@@ -1,23 +1,33 @@
 package com.onek.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the evenements database table.
  * 
  */
 @Entity
-@Table(name="evenements")
-@NamedQuery(name="Evenement.findAll", query="SELECT e FROM Evenement e")
+@Table(name = "evenements")
+@NamedQuery(name = "Evenement.findAll", query = "SELECT e FROM Evenement e")
 public class Evenement implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idevent;
 
 	private String code;
@@ -32,27 +42,27 @@ public class Evenement implements Serializable {
 
 	private Boolean isopened;
 
-	private Boolean issigned;
-
 	private String nom;
+
+	private Boolean signingneeded;
 
 	private String status;
 
-	//bi-directional many-to-one association to Candidat
-	@OneToMany(mappedBy="evenement")
+	// bi-directional many-to-one association to Candidat
+	@OneToMany(mappedBy = "evenement")
 	private List<Candidat> candidats;
 
-	//bi-directional many-to-one association to Critere
-	@OneToMany(mappedBy="evenement")
+	// bi-directional many-to-one association to Critere
+	@OneToMany(mappedBy = "evenement")
 	private List<Critere> criteres;
 
-	//bi-directional many-to-one association to Utilisateur
+	// bi-directional many-to-one association to Utilisateur
 	@ManyToOne
-	@JoinColumn(name="iduser")
+	@JoinColumn(name = "iduser")
 	private Utilisateur utilisateur;
 
-	//bi-directional many-to-one association to Jury
-	@OneToMany(mappedBy="evenement")
+	// bi-directional many-to-one association to Jury
+	@OneToMany(mappedBy = "evenement")
 	private List<Jury> jurys;
 
 	public Evenement() {
@@ -106,20 +116,20 @@ public class Evenement implements Serializable {
 		this.isopened = isopened;
 	}
 
-	public Boolean getIssigned() {
-		return this.issigned;
-	}
-
-	public void setIssigned(Boolean issigned) {
-		this.issigned = issigned;
-	}
-
 	public String getNom() {
 		return this.nom;
 	}
 
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+
+	public Boolean getSigningneeded() {
+		return this.signingneeded;
+	}
+
+	public void setSigningneeded(Boolean signingneeded) {
+		this.signingneeded = signingneeded;
 	}
 
 	public String getStatus() {
@@ -193,15 +203,17 @@ public class Evenement implements Serializable {
 	public Jury addJury(Jury jury) {
 		getJurys().add(jury);
 		jury.setEvenement(this);
+
 		return jury;
 	}
 
 	public Jury removeJury(Jury jury) {
 		getJurys().remove(jury);
 		jury.setEvenement(null);
+
 		return jury;
 	}
-	
+
 	public String isDeleted() {
 		if (getIsdeleted()) {
 			return "Oui";

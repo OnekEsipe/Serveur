@@ -22,92 +22,101 @@
 	<ui:include src="menu.xhtml" />
 	<br />
 	<br />
- 	<p:outputLabel  id="evenementChoisi"  value="#{accueil.evenementChoisi}"/>
-
-	<!-- Attribution automatique -->
-	<h:form>
-		<div class="ui-g">
-			<div class="ui-g-6">
-				<p:outputLabel for="methode" value="Méthode:" />
-				<p:selectOneMenu id="methode" value="#{attributionjc.methode}"
-					style="width:125px">
-					<f:selectItem itemLabel="Nombre Jury/Candidat" itemValue="1" />
-					<f:selectItem itemLabel="Nombre Candidat/Jury" itemValue="2" />
-				</p:selectOneMenu>
-				<p:spinner value="#{attributionjc.randomX}" min="1" max="99"
-					size="1" />
-			</div>
-			<div class="ui-g-6">
-				<p:commandButton value="Atribuer automatiquement" id="withIcon"
-					icon="ui-icon-refresh"
-					actionListener="#{attributionjc.attributionAutomatique}" />
-			</div>
-		</div>
-	</h:form>
-
-	<br /> <p:separator /><br />
-	<!-- Attribution manuel -->
-	<h4>#{attributionjc.avertissementMessage}</h4>
+	<p:outputLabel id="evenementChoisi" value="#{accueil.evenementChoisi}" />
 	<div class="ui-g">
-		<h:form>
-			<table>
-				<thead>
-					<tr>
-						<th>Jurys/Candidats</th>
-						<ui:repeat value="#{attributionjc.candidats.values().toArray()}"
-							var="candidat">
-							<th>#{candidat.nom} #{candidat.prenom}</th>
-						</ui:repeat>
-					</tr>
-				</thead>
-				<tbody>
-					<ui:repeat value="#{attributionjc.jurys.entrySet().toArray()}"
-						var="jury">
+		<!-- Attribution automatique -->
+		<div class="ui-g-6">
+			<p:panel id="AttributionAutomatique" rendered="#{attributionjc.isopen}"
+				header="Attribuer des cadidats automatiquement" style="height:100px">
+				<h:form >
+					<div class="ui-g-2">
+					<p:outputLabel>Nombre de </p:outputLabel>
+					</div>
+
+					<div class="ui-g-4">
+						<p:selectOneMenu id="methode" value="#{attributionjc.methode}"
+							style="width:125px">
+							<f:selectItem itemLabel="Jury par Candidat" itemValue="1" />
+							<f:selectItem itemLabel="Candidat par Jury" itemValue="2" />
+						</p:selectOneMenu>
+					</div>
+					<div class="ui-g-2">
+						<p:spinner value="#{attributionjc.randomX}" min="1" max="99"
+							size="1" />
+					</div>
+					<div class="ui-g-4">
+						<p:commandButton value="Attribuer" id="withIcon"
+							icon="ui-icon-refresh" update="tableCheckBox"
+							actionListener="#{attributionjc.attributionAutomatique}" />
+					</div>
+
+				</h:form>
+			</p:panel>
+		</div>
+	</div>
+	<br />
+	<br />
+	<div class="ui-g-12">
+		<!-- Attribution manuel -->
+		<h4>#{attributionjc.avertissementMessage}</h4>
+		<div class="ui-g">
+			<h:form id="tableCheckBox">
+			<div style="max-height: 40em; width: 80em; overflow:auto;">
+				<table >
+					<thead>
 						<tr>
-							<td>#{jury.value.nom} #{jury.value.prenom}</td>
-							<ui:repeat value="#{attributionjc.candidats.keySet().toArray()}"
+							<th>Jurys/Candidats</th>
+							<ui:repeat value="#{attributionjc.candidats.values().toArray()}"
 								var="candidat">
-								<td align="center"><p:selectBooleanCheckbox
-										value="#{attributionjc.attribJC[jury.key][candidat]}" /></td>
+								<th >#{candidat.nom} #{candidat.prenom}</th>
 							</ui:repeat>
 						</tr>
-					</ui:repeat>
-				</tbody>
-			</table>
-			<br />
-			<br />
-			<div class="ui-g">
-				<div class="ui-g-12">
-					<p:commandButton value="Prévisualiser les attributions"
-						actionListener="#{attributionjc.previsualisationButton}"
-						update="@(form)" />
+					</thead>
+					<tbody>
+						<ui:repeat value="#{attributionjc.jurys.entrySet().toArray()}"
+							var="jury">
+							<tr>
+								<td>#{jury.value.nom} #{jury.value.prenom}</td>
+								<ui:repeat value="#{attributionjc.candidats.keySet().toArray()}"
+									var="candidat">
+									<td align="center"><p:selectBooleanCheckbox
+											value="#{attributionjc.attribJC[jury.key][candidat]}" /></td>
+								</ui:repeat>
+							</tr>
+						</ui:repeat>
+					</tbody>
+				</table>
 				</div>
-				<div class="ui-g-12">
-					<p:commandButton value="Valider les attributions"
+				<br />
+				<br />
+				<div class="ui-g">
+
+					<p:commandButton value="Enregistrer les attributions"
 						actionListener="#{attributionjc.validationButton}" />
+
 				</div>
-			</div>
-			<br />
-			<!-- Affichage -->
-			<p:dataTable id="attrib" var="attrib"
-				value="#{attributionjc.messageAttrib}">
-				<p:column headerText="Jury">
-					<h:outputText value="#{attrib.jury}" />
-				</p:column>
-				<p:column headerText="Candidats">
-					<h:outputText value="#{attrib.candidats}" />
-				</p:column>
-			</p:dataTable>
-			<h:commandLink>
-				<p:graphicImage name="/image/csv.png" width="30" />
-				<p:dataExporter type="csv" target="attrib"
-					fileName="Attribution_JuryCandidats"/>
-			</h:commandLink>
-			<div class="ui-g-12">
-				<p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
-					actionListener="#{attributionjc.retour}" />
-			</div>
-		</h:form>
+				<br />
+				<!-- Affichage -->
+				<p:dataTable id="attrib" var="attrib"
+					value="#{attributionjc.messageAttrib}">
+					<p:column headerText="Jury">
+						<h:outputText value="#{attrib.jury}" />
+					</p:column>
+					<p:column headerText="Candidats">
+						<h:outputText value="#{attrib.candidats}" />
+					</p:column>
+				</p:dataTable>
+				<h:commandLink>
+					<p:graphicImage name="/image/csv.png" width="30" />
+					<p:dataExporter type="csv" target="attrib"
+						fileName="Attribution_JuryCandidats" />
+				</h:commandLink>
+				<div class="ui-g-12">
+					<p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
+						actionListener="#{attributionjc.retour}" />
+				</div>
+			</h:form>
+		</div>
 	</div>
 </h:body>
 </html>
