@@ -30,7 +30,6 @@ public class UserServiceTest {
 	private Utilisateur user;
 	private List<Utilisateur> users = new ArrayList<>();
 	private String[] login = {"aa","bb","cc","dd","ee","ff","gg","hh"};
-	private String[] passwords = {"aa","bb","cc","dd","ee","ff","gg","hh"};
 	private String formatMail = "@gmail.com";
 	
 	@Before
@@ -90,7 +89,7 @@ public class UserServiceTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testgetAllUsersExceptCurrentInvalidId() {
-		userService.getAllUsersExceptCurrent(-1);
+		userService.getAllUsersExceptCurrentAndAnonymous(-1);
 	}
 	
 	@Test(expected=NullPointerException.class)
@@ -132,7 +131,7 @@ public class UserServiceTest {
 		userService.findUserById(-1);
 	}
 
-	
+
 	
 	/*
 	 * TESTS DE TRANSACTIONS ECHOUEES
@@ -216,14 +215,14 @@ public class UserServiceTest {
 
 	@Test
 	public void testgetAllUsersExceptCurrentOK() {
-		List<Utilisateur> usersExcepted0 = userService.getAllUsersExceptCurrent(Integer.MAX_VALUE);
+		List<Utilisateur> usersExcepted0 = userService.getAllUsersExceptCurrentAndAnonymous(Integer.MAX_VALUE);
 		assertNotNull(usersExcepted0);
-		assertEquals(users.size(), usersExcepted0.size());
+		assertTrue(usersExcepted0.size() > 1);
 	}
 
 	@Test
 	public void testuserExistAndCorrectPasswordOK() {
-		assertTrue(userService.userExistAndCorrectPassword("aa","aa"));
+		assertTrue(userService.userExistAndCorrectPassword(user.getLogin(),user.getMotdepasse()));
 	}
 	
 	@Test
