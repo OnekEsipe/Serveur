@@ -2,20 +2,21 @@ package com.onek.managedbean;
 
 import java.io.Serializable;
 
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import com.onek.service.UserService;
 import com.onek.utils.Navigation;
 
+@Configuration
 @Component("login")
 public class LoginBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+		
 	@Autowired
 	private UserService userService;
 
@@ -34,6 +35,11 @@ public class LoginBean implements Serializable {
 	}
 
 	
+	public UserService getUserService() {
+		return userService;
+	}
+
+
 	public String getLogin() {
 		return login;
 	}

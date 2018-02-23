@@ -264,9 +264,10 @@ public class UserDaoImpl implements UserDao, Serializable {
 		if(iduser < 1) {
 			throw new IllegalArgumentException("id must be positive"); 
 		}
+		Utilisateur user = null;
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where iduser = :iduser")
+		 user = (Utilisateur) session.createQuery("from Utilisateur where iduser = :iduser")
 				.setParameter("iduser", iduser).getSingleResult();
 		session.getTransaction().commit();
 		session.close();
