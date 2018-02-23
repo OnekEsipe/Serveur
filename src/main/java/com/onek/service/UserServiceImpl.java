@@ -69,8 +69,8 @@ public class UserServiceImpl implements UserService, Serializable {
 	}
 
 	@Override
-	public List<Utilisateur> getAllUsersExceptCurrent(int idcurrentUser) {
-		return userDao.getAllUsersExceptCurrent(idcurrentUser);
+	public List<Utilisateur> getAllUsersExceptCurrentAndAnonymous(int idcurrentUser) {
+		return userDao.getAllUsersExceptCurrentAndAnonymous(idcurrentUser);
 	}
 	
 	@Override

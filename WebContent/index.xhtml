@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Application web ONEK</title>
+	<title>ONEK' - Connexion</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
@@ -71,12 +71,7 @@
 			<h:outputText class="outputError" value="#{login.message}" />
 		</h:form>
 	</div>
-	<footer>
-		<div>
-			<a href="url" class="footerURL">Qui sommes nous ?</a> <a href="url"
-				class="footerURL">L'Esipe</a> <a href="url" class="footerURL">Contact</a>
-			<a href="https://github.com/OnekEsipe" class="footerURL">Github</a>
-		</div>
-	</footer>
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>

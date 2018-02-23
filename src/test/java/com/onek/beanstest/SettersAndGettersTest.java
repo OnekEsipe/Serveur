@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.onek.managedbean.AccountBean;
 import com.onek.managedbean.AccueilBean;
 import com.onek.managedbean.AddJuryBean;
+import com.onek.managedbean.AddUserBean;
 import com.onek.managedbean.AttributionJCBean;
 import com.onek.managedbean.CandidateBean;
 import com.onek.managedbean.EventAccueilBean;
@@ -16,7 +17,7 @@ import com.onek.managedbean.LoginBean;
 import com.onek.managedbean.MenuBean;
 import com.onek.managedbean.ResetPasswordBean;
 import com.onek.managedbean.StatistiquesBean;
-import com.onek.managedbean.UserBean;
+import com.onek.managedbean.UsersBean;
 
 public class SettersAndGettersTest {
 
@@ -85,10 +86,13 @@ public class SettersAndGettersTest {
 	}
 
 	@Test
-	public void validUserBean() throws IntrospectionException {
-		JavaBeanTester.test(UserBean.class,"users","filteredusers","selectedusers");
+	public void validUsersBean() throws IntrospectionException {
+		JavaBeanTester.test(UsersBean.class,"users","filteredusers","selectedusers");
 	}
-
-
+	
+	@Test
+	public void validAddUserBean() throws IntrospectionException {
+		JavaBeanTester.test(AddUserBean.class, "users");
+	}
 
 }

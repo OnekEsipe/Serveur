@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.onek.utils.DroitsUtilisateur;
+
 /**
  * The persistent class for the utilisateurs database table.
  * 
@@ -180,6 +182,19 @@ public class Utilisateur implements Serializable {
 		jury.setUtilisateur(null);
 
 		return jury;
+	}
+	
+	public String getNomDroits() {
+		if (getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
+			return DroitsUtilisateur.ADMINISTRATEUR.getValue();
+		}
+		if (getDroits().equals(DroitsUtilisateur.ORGANISATEUR.toString())) {
+			return DroitsUtilisateur.ORGANISATEUR.getValue();
+		}
+		if (getDroits().equals(DroitsUtilisateur.JURY.toString())) {
+			return DroitsUtilisateur.JURY.getValue();
+		}		
+		return DroitsUtilisateur.ANONYME.getValue();
 	}
 
 	@Override
