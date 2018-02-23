@@ -68,7 +68,7 @@ public class EventBean implements Serializable {
 		event.setDatestart(new Date(date1.getTime()+hour1.getTime() + ecartHour));
 		event.setDatestop(new Date(date2.getTime()+hour2.getTime() + ecartHour));
 		event.setIsopened(isOpened);
-		event.setIssigned(isSigned);
+		event.setSigningneeded(isSigned);
 		event.setStatus(status);
 		event.setUtilisateur(utilisateur);
 		event.setIsdeleted(false);

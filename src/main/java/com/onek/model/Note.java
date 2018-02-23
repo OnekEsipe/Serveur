@@ -1,22 +1,31 @@
 package com.onek.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the notes database table.
  * 
  */
 @Entity
-@Table(name="notes")
-@NamedQuery(name="Note.findAll", query="SELECT n FROM Note n")
+@Table(name = "notes")
+@NamedQuery(name = "Note.findAll", query = "SELECT n FROM Note n")
 public class Note implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idnote;
 
 	private String commentaire;
@@ -26,14 +35,14 @@ public class Note implements Serializable {
 
 	private Integer niveau;
 
-	//bi-directional many-to-one association to Critere
+	// bi-directional many-to-one association to Critere
 	@ManyToOne
-	@JoinColumn(name="idcritere")
+	@JoinColumn(name = "idcritere")
 	private Critere critere;
 
-	//bi-directional many-to-one association to Evaluation
+	// bi-directional many-to-one association to Evaluation
 	@ManyToOne
-	@JoinColumn(name="idevaluation")
+	@JoinColumn(name = "idevaluation")
 	private Evaluation evaluation;
 
 	public Note() {

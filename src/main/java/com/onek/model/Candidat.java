@@ -4,32 +4,31 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
  * The persistent class for the candidats database table.
  * 
  */
 @Entity
-@Table(name="candidats")
-@NamedQuery(name="Candidat.findAll", query="SELECT c FROM Candidat c")
+@Table(name = "candidats")
+@NamedQuery(name = "Candidat.findAll", query = "SELECT c FROM Candidat c")
 public class Candidat implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idcandidat;
 
 	private String nom;
 
 	private String prenom;
 
-	//bi-directional many-to-one association to Evenement
+	// bi-directional many-to-one association to Evenement
 	@ManyToOne
-	@JoinColumn(name="idevent")
+	@JoinColumn(name = "idevent")
 	private Evenement evenement;
 
-	//bi-directional many-to-one association to Evaluation
-	@OneToMany(mappedBy="candidat")
+	// bi-directional many-to-one association to Evaluation
+	@OneToMany(mappedBy = "candidat")
 	private List<Evaluation> evaluations;
 
 	public Candidat() {
@@ -125,6 +124,4 @@ public class Candidat implements Serializable {
 			return false;
 		return true;
 	}
-
-	
 }
