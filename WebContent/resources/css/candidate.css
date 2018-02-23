@@ -5,3 +5,11 @@ errorCreationCandidate{
 	font: bold;
 	font-size: medium;
 }
+#erreur{
+	color: red;
+}
+#format{
+	color: grey;
+	font-size: x-small;
+	font: small-caps;
+}

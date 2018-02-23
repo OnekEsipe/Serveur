@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import com.onek.utils.Password;
 
-public class PasswordTests {
+public class PasswordTest {
 
 	@Test(expected=IllegalArgumentException.class)
 	public void testsArguments() {

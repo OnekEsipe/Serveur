@@ -151,6 +151,10 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		if (event == null) {
 			return false;
 		}
+		// check if event if deleted
+		if (event.getIsdeleted()) {
+			return false;
+		}
 		// check if event if opened
 		if (!event.getStatus().equals(StatutEvenement.OUVERT.toString())) {
 			return false;

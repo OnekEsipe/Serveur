@@ -3,6 +3,7 @@ package com.onek.dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -25,6 +26,9 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public  List<Candidat> findCandidatesByEvent(int idevent) {
+		if(idevent < 1) {
+			throw new IllegalArgumentException("idevent must be positive");
+		}
 		List<Candidat> candidates = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
@@ -48,6 +52,7 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 
 	@Override
 	public void addCandidate(Candidat candidat) {
+		Objects.requireNonNull(candidat);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -69,6 +74,10 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 
 	@Override
 	public void addCandidates(List<Candidat> candidates) {
+		Objects.requireNonNull(candidates);
+		if(candidates.isEmpty()) {
+			throw new IllegalStateException("list must not be empty");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -90,6 +99,9 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 		
 	@Override
 	public void supprimerCandidat(int idcandidat) {
+		if(idcandidat < 1) {
+			throw new IllegalArgumentException("idcandidate must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {

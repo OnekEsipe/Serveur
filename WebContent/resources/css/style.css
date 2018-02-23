@@ -1,13 +1,13 @@
 @charset "ISO-8859-1";
 
 header {
-	height: 25px;
+	height: 1em;
 	background: #2399e5;
 	color: #fff;
 	position: absolute;
 	top: 0;
 	width: 100%;
-	padding-bottom: 50px;
+	padding-bottom: 3.2em;
 }
 
 body {
@@ -17,56 +17,61 @@ body {
 
 h1 {
 	margin: 0;
-	margin-top: 8px;
+	margin-top: 0.42%;
 	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
 h2 {
+	margin-left: 20%;
 	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
+.outputError {
+	font-family: latoregular, Trebuchet MS, Arial, Helvetica, sans-serif;
+	color: red;
+}
 
 .login_div {
+	width: 30%;
 	position: absolute;
-	height: 300px;
-	top: 39%;
-	left: 40%;
-	margin-top: -150px;
-	margin-left: -150px;
+	top: 13%;
+	left: 39.5%;
+	margin-left: -7.3%;
 	text-align: center;
 }
 
 .login_form {
-	width: 650px;
-	height: 490px;
-	border-radius: 10px;
+	width: 120%;
+	height: 28em;
+	border-radius: 2%;
 	background-color: #f2f2f2;
 	margin: 0;
 	padding: 0;
 }
 
 .panelGrid {
-	margin-left: auto;
-	margin-right: auto;
+	text-align: left;
+	margin-left: 9.3%;
+	width: 80%;
 }
 
 .fa {
-	font-size: 23px !important;
+	font-size: 145% !important;
 }
 
 .ui-button {
-	width: 350px;
-	height: 40px;
+	width: 60%;
+	height: 8%;
 }
 
 .ui-inputfield {
-	width: 500px;
-	height: 35px;
+	width: 100%;
+	height: 1.8em;
 }
 
 .div_bot {
-	font-size: 18px;
-	margin-right: 313px;
+	font-size: 110%;
+	margin-right: 35.5%;
 }
 
 .ui-widget {
@@ -76,9 +81,9 @@ h2 {
 .footerURL {
 	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color: white;
-	margin-top: 0px;
-	margin-right: 385px;
-	margin-left: 20px;
+	margin-top: 0;
+	margin-right: 0;
+	margin-left: 1em;
 }
 
 .mdpForgot {
@@ -86,11 +91,11 @@ h2 {
 }
 
 footer {
-	height: 40px;
+	height: 2.6em;
 	background: #2399e5;
 	color: #fff;
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	padding-top: 30px;
+	padding-top: 1.6em;
 }

@@ -2,6 +2,7 @@ package com.onek.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
@@ -24,6 +25,10 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 
 	@Override
 	public void addCriteres(List<Critere> criteres) {
+		Objects.requireNonNull(criteres);
+		if(criteres.isEmpty()) {
+			throw new IllegalStateException("list must not be empty");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -50,6 +55,9 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 
 	@Override
 	public Critere findById(Integer id) {
+		if(id < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		Critere critere = null;
@@ -76,6 +84,7 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 
 	@Override
 	public void addCritere(Critere critere) {
+		Objects.requireNonNull(critere);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -100,6 +109,9 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 
 	@Override
 	public void supprimerCritere(int id) {
+		if(id < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {

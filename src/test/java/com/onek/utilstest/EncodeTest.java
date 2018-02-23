@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.onek.utils.Encode;
 
-public class EncodeTests {
+public class EncodeTest {
 
 	@Test(expected=NullPointerException.class)
 	public void testSha1NotNull() throws NoSuchAlgorithmException, UnsupportedEncodingException {

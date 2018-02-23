@@ -25,60 +25,55 @@
 	<p:outputLabel id="evenementChoisi" value="#{accueil.evenementChoisi}" />
 
 	<div class="ui-g">
-		<div>
-			<h:form enctype="multipart/form-data">
-				<p:fileUpload fileUploadListener="#{candidate.importFile}"
-					auto="true" id="upload" allowTypes="/(\.|\/)(csv)$/" update="send" />
-				<p:tooltip for="upload" value="Format : 2 colonnes (nom,prenom)"
-					position="top" />
+		<div class="ui-g-12">
+			<div class="ui-g-6">
+				<p:panel id="ImporterCandidat" header="Importer des candidats"
+					style="margin-bottom:20px">
+					<h:form id="log" enctype="multipart/form-data">
+						<h2 id="format">
+							le fichier doit être au format csv, le parseur accepté est ";". <br />
+							Le fichier doit obligatoirement contenir une colonne "nom", la
+							colonne "prenom" est facultative.
+						</h2>
+						<p:fileUpload fileUploadListener="#{candidate.fileImportCsv}"
+							dragDropSupport="true" multiple="false" mode="advanced"
+							id="upload" allowTypes="/(\.|\/)(csv)$/" update="tabCandidat log" />
 
-				<!-- Dialogue de confirmation -->
-				<p:commandButton value="Envoyer" icon="ui-icon-check" id="send"
-					actionListener="#{candidate.sendFile}">
-					<p:confirm header="Confirmation" message="#{candidate.message}"
-						icon="ui-icon-check" />
-				</p:commandButton>
+						<h3 id="erreur">#{candidate.importLog}</h3>
+					</h:form>
+				</p:panel>
+			</div>
+			<div class="ui-g-6">
+				<p:panel id="addcandidat" header="Ajout de Candidat"
+					style="margin-bottom:20px">
+					<h:form>
+						<p:growl id="msgs" showDetail="true" />
+						<h:panelGrid columns="2" cellpadding="5">
 
-				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-					<p:commandButton value="Yes" type="button"
-						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-					<p:commandButton value="No" type="button"
-						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-				</p:confirmDialog>
+							<p:outputLabel for="lastnameCandidat" value="Nom:" />
+							<p:inputText id="lastnameCandidat" name="lastnameCandidat"
+								placeholder="Entrer le nom" size="20"
+								value="#{candidate.lastName}" required="true" />
 
 
-				<br />
-				<h3 id="importLog">#{candidate.importLog}</h3>
-			</h:form>
+							<p:outputLabel for="firstnameCandidat" value="Prénom" />
+							<p:inputText id="firstnameCandidat" name="firstnameCandidat"
+								placeholder="Entrer le prénom" size="20"
+								value="#{candidate.firstName}" />
+
+							<p:commandButton value="Valider" action="#{candidate.click}"
+								icon="ui-icon-check" update="tabCandidat" ajax="false" />
+						</h:panelGrid>
+					</h:form>
+				</p:panel>
+			</div>
 		</div>
-		<h:form>
-			<p:growl id="msgs" showDetail="true" />
-			<h:panelGrid columns="2" cellpadding="5">
-
-				<p:outputLabel for="lastnameCandidat" value="Nom:" />
-				<p:inputText id="lastnameCandidat" name="lastnameCandidat"
-					placeholder="Entrer le nom" size="20" value="#{candidate.lastName}"
-					required="true" />
-
-
-				<p:outputLabel for="firstnameCandidat" value="Prénom" />
-				<p:inputText id="firstnameCandidat" name="firstnameCandidat"
-					placeholder="Entrer le prénom" size="20"
-					value="#{candidate.firstName}" />
-
-				<p:commandButton value="Valider" action="#{candidate.click}"
-					icon="ui-icon-check" update="tabCandidat" ajax="false" />
-			</h:panelGrid>
-		</h:form>
-		<h:form>
+		<h:form id="tabCandidat">
 			<div>
 				<!-- ************Tableau des candidat**************** -->
-				<div class="ui-g">
-					<div class="ui-g-12 ui-md-8"></div>
-					<div class="ui-g-12 ui-md-4"></div>
-				</div>
-				<p:dataTable id="tabCandidat" var="candidat"
-					value="#{candidate.candidats}" scrollable="true" scrollHeight="100">
+
+				<p:dataTable var="candidat" value="#{candidate.candidats}"
+					scrollable="true" scrollHeight="300">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
@@ -121,7 +116,6 @@
 		</h:form>
 	</div>
 	<h:form>
-		<br />
 		<p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
 			actionListener="#{candidate.retour}" />
 	</h:form>
