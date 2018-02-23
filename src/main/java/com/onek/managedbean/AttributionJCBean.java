@@ -63,7 +63,6 @@ public class AttributionJCBean implements Serializable {
 	private List<MessageAttrib> messageAttrib;
 	private String avertissementMessage;
 
-	
 	public boolean isIsopen() {
 		return isopen;
 	}
@@ -99,7 +98,7 @@ public class AttributionJCBean implements Serializable {
 				return;
 			}
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
-			isopen =true;
+			isopen = true;
 			jurys = new LinkedHashMap<>();
 			candidats = new LinkedHashMap<>();
 			attribJC = new LinkedHashMap<>();
@@ -129,16 +128,15 @@ public class AttributionJCBean implements Serializable {
 				candidats.put(candidat.getNom() + " " + candidat.getPrenom(), candidat);
 			}
 
-			System.out.println("------------Print associations déja existantes--------------------");
-			for (Entry<Jury, List<Candidat>> entry8 : associatedJurysCandidates.entrySet()) {
-				List<Candidat> testt = entry8.getValue();
-				System.out.print(entry8.getKey().getUtilisateur().getNom() + ": ");
-				for (Candidat candidatt : testt) {
-					System.out.print(candidatt.getNom() + " ");
-				}
-				System.out.println("");
-			}
-
+			/*
+			 * System.out.
+			 * println("------------Print associations déja existantes--------------------"
+			 * ); for (Entry<Jury, List<Candidat>> entry8 :
+			 * associatedJurysCandidates.entrySet()) { List<Candidat> testt =
+			 * entry8.getValue(); System.out.print(entry8.getKey().getUtilisateur().getNom()
+			 * + ": "); for (Candidat candidatt : testt) {
+			 * System.out.print(candidatt.getNom() + " "); } System.out.println(""); }
+			 */
 			for (Entry<Jury, List<Candidat>> entryAssociation : associatedJurysCandidates.entrySet()) {
 				List<Candidat> candidatesList = entryAssociation.getValue();
 				LinkedHashMap<String, Boolean> candidatesPreChecked = new LinkedHashMap<String, Boolean>();
@@ -298,7 +296,7 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	private void JuryParCandidat(int randomX) {
-		
+
 		if (randomX > jurys.size()) {
 			System.out.println("attribution impossible");
 			return;
@@ -315,7 +313,7 @@ public class AttributionJCBean implements Serializable {
 		int sizeList = 0;
 
 		clearAttribution();
-		
+
 		while (indexCandidat < candidatsJurys.size()) {
 			List<Jury> juryParCandidat = new ArrayList<>();
 			int i = 0;
@@ -340,9 +338,10 @@ public class AttributionJCBean implements Serializable {
 
 			}
 			attribution.put(candidatsJurys.get(indexCandidat), juryParCandidat);
-			String namecandidat = candidatsJurys.get(indexCandidat).getNom()+" "+candidatsJurys.get(indexCandidat).getPrenom();
+			String namecandidat = candidatsJurys.get(indexCandidat).getNom() + " "
+					+ candidatsJurys.get(indexCandidat).getPrenom();
 			for (Jury jury : juryParCandidat) {
-				String namejury = jury.getUtilisateur().getNom()+" "+jury.getUtilisateur().getPrenom();
+				String namejury = jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom();
 				attribJC.get(namejury).put(namecandidat, true);
 			}
 			indexCandidat++;
@@ -394,14 +393,13 @@ public class AttributionJCBean implements Serializable {
 			indexJury++;
 		}
 
-		
 		clearAttribution();
-		
+
 		for (Jury jury : attribution.keySet()) {
-			String namejury = jury.getUtilisateur().getNom()+" "+jury.getUtilisateur().getPrenom();	
+			String namejury = jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom();
 			for (Candidat candidat : attribution.get(jury)) {
-				String namecandidat = candidat.getNom()+" "+candidat.getPrenom();
-				attribJC.get(namejury).put(namecandidat, true);				
+				String namecandidat = candidat.getNom() + " " + candidat.getPrenom();
+				attribJC.get(namejury).put(namecandidat, true);
 			}
 		}
 	}
@@ -413,7 +411,7 @@ public class AttributionJCBean implements Serializable {
 				candidatsCheckbox.replace(ligne, false);
 			}
 			attribJC.put(jury, candidatsCheckbox);
-			
+
 		}
 		candidatsJurys = candidatservice.findCandidatesByEvent(idEvent);
 		juryList = juryservice.findJurysByIdevent(idEvent);
