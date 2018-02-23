@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,10 +76,12 @@ public class UserServiceImpl implements UserService, Serializable {
 	
 	@Override
 	public boolean userExistAndCorrectPassword(String login, String password) {
+		Objects.requireNonNull(login);
+		Objects.requireNonNull(password);
 		if (!userExist(login)) {
 			return false;
 		}
-		if (password == null || password.isEmpty()) {
+		if ( password.isEmpty()) {
 			return false;
 		}
 		Utilisateur user = findByLogin(login);

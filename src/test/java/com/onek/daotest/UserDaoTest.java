@@ -1,6 +1,9 @@
 package com.onek.daotest;
 
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +37,7 @@ public class UserDaoTest {
 	public void testFindByLogin() {
 		userDao.findByLogin(null);
 	}
-	
+
 	@Test(expected=NullPointerException.class)
 	public void testAddJurysAnonymes1() {
 		userDao.addJurysAnonymes(null, new Evenement());
@@ -92,18 +95,20 @@ public class UserDaoTest {
 	}
 	
 	
-
-
-	
-	
 	/*
 	 * TESTS DE TRANSACTIONS ECHOUEES
-	 * TODO
 	 */	
+	@Test
+	public void testFindByLoginFail() {
+		assertFalse(userDao.userExist("a"));
+	}
 	
 	/*
 	 * TESTS DE TRANSACTIONS REUSSIES
-	 * TODO
 	 */
+	@Test
+	public void testFindByLoginOK() {
+		assertTrue(userDao.userExist("aa"));
+	}
 
 }
