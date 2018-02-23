@@ -2,7 +2,6 @@ package com.onek.managedbean;
 
 import java.io.Serializable;
 
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
