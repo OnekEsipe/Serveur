@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
+import com.onek.utils.DroitsUtilisateur;
 
 @Repository
 public class UserDaoImpl implements UserDao, Serializable {
@@ -166,8 +167,8 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Utilisateur> getAllUsersExceptCurrent(int idcurrentUser) {
-		if(idcurrentUser < 1) {
+	public List<Utilisateur> getAllUsersExceptCurrentAndAnonymous(int idcurrentUser) {
+		if (idcurrentUser < 1) {
 			throw new IllegalArgumentException("id must be positive"); 
 		}
 		List<Utilisateur> users = new ArrayList<>();
@@ -175,10 +176,10 @@ public class UserDaoImpl implements UserDao, Serializable {
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			users = (List<Utilisateur>) session.createQuery("from Utilisateur where iduser != :iduser")
-					.setParameter("iduser", idcurrentUser).list();
+			users = (List<Utilisateur>) session.createQuery("from Utilisateur where (iduser != :iduser AND droits != :droits)" )
+					.setParameter("iduser", idcurrentUser).setParameter("droits", DroitsUtilisateur.ANONYME.toString()).list();
 			transaction.commit();
-			logger.info("Find all users except current done !");
+			logger.info("Find all users except current and anonymous done !");
 		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();

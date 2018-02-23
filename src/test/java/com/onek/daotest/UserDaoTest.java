@@ -66,7 +66,7 @@ public class UserDaoTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testGetAllUsersExceptCurrent() {
-		userDao.getAllUsersExceptCurrent(-1);
+		userDao.getAllUsersExceptCurrentAndAnonymous(-1);
 	}
 
 	@Test(expected=NullPointerException.class)
