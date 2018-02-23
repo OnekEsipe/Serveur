@@ -26,19 +26,23 @@ h2 {
 	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
+.outputError {
+	font-family: latoregular, Trebuchet MS, Arial, Helvetica, sans-serif;
+	color: red;
+}
+
 .login_div {
 	width: 30%;
 	position: absolute;
-	top: 39%;
+	top: 13%;
 	left: 39.5%;
-	margin-top: -7.3%;
 	margin-left: -7.3%;
 	text-align: center;
 }
 
 .login_form {
 	width: 120%;
-	height: 30em;
+	height: 28em;
 	border-radius: 2%;
 	background-color: #f2f2f2;
 	margin: 0;
@@ -46,7 +50,7 @@ h2 {
 }
 
 .panelGrid {
-	text-align:left;
+	text-align: left;
 	margin-left: 9.3%;
 	width: 80%;
 }
