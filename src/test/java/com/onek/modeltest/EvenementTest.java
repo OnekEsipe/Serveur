@@ -54,14 +54,14 @@ public class EvenementTest {
 	@Test
 	public void issignedTest() {
 		Evenement evenement = Mockito.mock(Evenement.class);
-		Mockito.when(evenement.getIssigned()).thenCallRealMethod();
+		Mockito.when(evenement.getSigningneeded()).thenCallRealMethod();
 
-		assertEquals(null, evenement.getIssigned());
+		assertEquals(null, evenement.getSigningneeded());
 
-		Mockito.doCallRealMethod().when(evenement).setIssigned(Mockito.anyBoolean());
+		Mockito.doCallRealMethod().when(evenement).setSigningneeded(Mockito.anyBoolean());
 
-		evenement.setIssigned(true);
-		assertEquals(true , evenement.getIssigned());
+		evenement.setSigningneeded(true);
+		assertEquals(true , evenement.getSigningneeded());
 	}
 	
 	@Test

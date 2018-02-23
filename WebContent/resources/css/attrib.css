@@ -1,6 +1,6 @@
 @charset "ISO-8859-1";
 
-table, td, th {    
+table, td{    
     border: 1px solid #ddd;
     text-align: left;
 }
@@ -12,4 +12,14 @@ table {
 
 th, td {
     padding: 15px;
+}
+th{
+	word-spacing: 5px;
+}
+table thead{
+	display: block;
+	position: fixed;
+}
+table tbody {
+	display: block;
 }

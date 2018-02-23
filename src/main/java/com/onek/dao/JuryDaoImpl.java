@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
@@ -31,6 +32,9 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 
 	@Override
 	public boolean juryIsAssigned(int idUser, int idEvent) {
+		if(idUser < 1 || idEvent < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		Long result = -1L;
@@ -54,6 +58,10 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Jury> findJuryAndAnonymousByIdEvent(int idEvent, String login) {
+		Objects.requireNonNull(login);
+		if(idEvent < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		List<Jury> jurys = new ArrayList<>();
@@ -91,6 +99,9 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Jury> findAnonymousByIdEvent(int idEvent) {
+		if(idEvent < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		List<Jury> jurys = new ArrayList<>();
@@ -119,6 +130,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Jury> findByUser(Utilisateur user) {
+		Objects.requireNonNull(user);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		List<Jury> jurys = new ArrayList<>();
@@ -146,6 +158,9 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Jury> findJurysByIdevent(int idevent) {
+		if(idevent < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		List<Jury> jurys = new ArrayList<>();
@@ -172,6 +187,13 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	/* associated jurys and candidates for an event */
 	@Override
 	public HashMap<Jury, List<Candidat>> associatedJurysCandidatesByEvent(List<Jury> jurys, int idevent) {
+		Objects.requireNonNull(jurys);
+		if(idevent < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
+		if(jurys.isEmpty()) {
+			throw new IllegalStateException("List must not be empty");
+		}
 		HashMap<Jury, List<Candidat>> map = new HashMap<>();
 		for (Jury jury : jurys) {
 			if (!map.containsKey(jury)) {
@@ -192,6 +214,9 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> listJurysByEvent(int idevent) {
+		if(idevent < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		List<Utilisateur> utilisateurs = new ArrayList<>();
 		List<Jury> jurys = new ArrayList<>();
 		Session session = sessionFactory.openSession();
@@ -221,6 +246,9 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> findJurysAnnonymesByEvent(int idevent) {
+		if(idevent < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		List<Utilisateur> utilisateurs = new ArrayList<>();
 		List<Jury> jurys = new ArrayList<>();
 		List<Utilisateur> utilisateursAnnonymes = new ArrayList<>();
@@ -255,6 +283,9 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 
 	@Override
 	public void supprimerUtilisateur(int iduser, int idevent) {
+		if(iduser < 1 || idevent < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -276,6 +307,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 
 	@Override
 	public void addJuryToEvent(Jury jury) {
+		Objects.requireNonNull(jury);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -295,6 +327,10 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 
 	@Override
 	public void addListJurys(List<Jury> jurys) {
+		Objects.requireNonNull(jurys);
+		if(jurys.isEmpty()) {
+			throw new IllegalStateException("List must not be empty");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -314,6 +350,9 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	}
 	@Override
 	public Utilisateur findById(int id) {
+		if(id < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Utilisateur jury = (Utilisateur) session.createQuery("FROM Utilisateur WHERE iduser = :id").setParameter("id", id)

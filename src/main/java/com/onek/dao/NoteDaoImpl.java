@@ -1,6 +1,7 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -21,6 +22,7 @@ public class NoteDaoImpl implements NoteDao, Serializable {
 	
 	@Override
 	public Note addNote(Note note) {
+		Objects.requireNonNull(note);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -42,6 +44,7 @@ public class NoteDaoImpl implements NoteDao, Serializable {
 
 	@Override
 	public void update(Note note) {
+		Objects.requireNonNull(note);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {

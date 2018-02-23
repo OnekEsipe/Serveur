@@ -72,11 +72,10 @@ public class EventAccueilBean implements Serializable {
 	private List<String> selectedoptions;
 	private boolean disabledSiBrouillon;
 	private boolean disabledSiSupprime;
-	
+
 	private String visibleB = "false";
 	private String visibleO = "false";
 	private String visibleF = "false";
-	
 
 	public boolean isDisabledSiSupprime() {
 		return disabledSiSupprime;
@@ -249,7 +248,7 @@ public class EventAccueilBean implements Serializable {
 		eventAccueilservice.editEvenement(event);
 		Navigation.redirect("eventAccueil.xhtml");
 	}
-	
+
 	public void supprimerEvent() {
 		evenementService.supprimerEvent(event.getIdevent());
 		Navigation.redirect("accueil.xhtml");
@@ -301,45 +300,54 @@ public class EventAccueilBean implements Serializable {
 
 	private List<Critere> duplicateCritere(Evenement eventbis) {
 		List<Critere> criteres = new ArrayList<>();
-		for (Critere critere : event.getCriteres()) {
-			Critere c = new Critere();
-			c.setDescripteurs(new ArrayList<>());
-			c.setEvenement(eventbis);
-			c.setCategorie(critere.getCategorie());
-			c.setCoefficient(critere.getCoefficient());
-			c.setTexte(critere.getTexte());
-			for (Descripteur descripteur : critere.getDescripteurs()) {
-				Descripteur d = new Descripteur();
-				d.setNiveau(descripteur.getNiveau());
-				d.setPoids(descripteur.getPoids());
-				d.setTexte(descripteur.getTexte());
-				d.setCritere(c);
-				c.addDescripteur(d);
+		if (!event.getCriteres().isEmpty()) {
+
+			for (Critere critere : event.getCriteres()) {
+				Critere c = new Critere();
+				c.setDescripteurs(new ArrayList<>());
+				c.setEvenement(eventbis);
+				c.setCategorie(critere.getCategorie());
+				c.setCoefficient(critere.getCoefficient());
+				c.setTexte(critere.getTexte());
+				if (!critere.getDescripteurs().isEmpty()) {
+					for (Descripteur descripteur : critere.getDescripteurs()) {
+						Descripteur d = new Descripteur();
+						d.setNiveau(descripteur.getNiveau());
+						d.setPoids(descripteur.getPoids());
+						d.setTexte(descripteur.getTexte());
+						d.setCritere(c);
+						c.addDescripteur(d);
+					}
+					criteres.add(c);
+				}
 			}
-			criteres.add(c);
 		}
 		return criteres;
 	}
 
 	private List<Jury> duplicateJury(Evenement eventbis) {
 		List<Jury> jurysBis = new ArrayList<>();
-		for (Jury jury : event.getJurys()) {
-			Jury jurybis = new Jury();
-			jurybis.setEvenement(eventbis);
-			jurybis.setUtilisateur(jury.getUtilisateur());
-			jurysBis.add(jurybis);
+		if (!event.getJurys().isEmpty()) {
+			for (Jury jury : event.getJurys()) {
+				Jury jurybis = new Jury();
+				jurybis.setEvenement(eventbis);
+				jurybis.setUtilisateur(jury.getUtilisateur());
+				jurysBis.add(jurybis);
+			}
 		}
 		return jurysBis;
 	}
 
 	private List<Candidat> duplicateCandidat(Evenement eventbis) {
 		List<Candidat> candidatsBis = new ArrayList<>();
-		for (Candidat candidat : event.getCandidats()) {
-			Candidat candidatbis = new Candidat();
-			candidatbis.setNom(candidat.getNom());
-			candidatbis.setPrenom(candidat.getPrenom());
-			candidatbis.setEvenement(eventbis);
-			candidatsBis.add(candidatbis);
+		if (!event.getCandidats().isEmpty()) {
+			for (Candidat candidat : event.getCandidats()) {
+				Candidat candidatbis = new Candidat();
+				candidatbis.setNom(candidat.getNom());
+				candidatbis.setPrenom(candidat.getPrenom());
+				candidatbis.setEvenement(eventbis);
+				candidatsBis.add(candidatbis);
+			}
 		}
 		return candidatsBis;
 	}
@@ -353,7 +361,7 @@ public class EventAccueilBean implements Serializable {
 		eventBis.setIsopened(false);
 		eventBis.setUtilisateur(utilisateur);
 		eventBis.setStatus("Brouillon");
-		eventBis.setIssigned(event.getIssigned());
+		eventBis.setSigningneeded(event.getSigningneeded());
 		eventBis.setCode(generateCode());
 		return eventBis;
 	}
@@ -365,4 +373,5 @@ public class EventAccueilBean implements Serializable {
 		String codeEvent = id + pass.generateCode(10 - length);
 		return codeEvent;
 	}
+	
 }

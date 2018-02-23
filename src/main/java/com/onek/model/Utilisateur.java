@@ -1,26 +1,37 @@
 package com.onek.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import com.onek.utils.DroitsUtilisateur;
-
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.onek.utils.DroitsUtilisateur;
 
 /**
  * The persistent class for the utilisateurs database table.
  * 
  */
 @Entity
-@Table(name="utilisateurs")
-@NamedQuery(name="Utilisateur.findAll", query="SELECT u FROM Utilisateur u")
+@Table(name = "utilisateurs")
+@NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u")
 public class Utilisateur implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer iduser;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date datetoken;
 
 	private String droits;
 
@@ -36,12 +47,14 @@ public class Utilisateur implements Serializable {
 
 	private String prenom;
 
-	//bi-directional many-to-one association to Evenement
-	@OneToMany(mappedBy="utilisateur")
+	private String token;
+
+	// bi-directional many-to-one association to Evenement
+	@OneToMany(mappedBy = "utilisateur")
 	private List<Evenement> evenements;
 
-	//bi-directional many-to-one association to Jury
-	@OneToMany(mappedBy="utilisateur")
+	// bi-directional many-to-one association to Jury
+	@OneToMany(mappedBy = "utilisateur")
 	private List<Jury> jurys;
 
 	public Utilisateur() {
@@ -53,6 +66,14 @@ public class Utilisateur implements Serializable {
 
 	public void setIduser(Integer iduser) {
 		this.iduser = iduser;
+	}
+
+	public Date getDatetoken() {
+		return datetoken;
+	}
+
+	public void setDatetoken(Date datetoken) {
+		this.datetoken = datetoken;
 	}
 
 	public String getDroits() {
@@ -109,6 +130,14 @@ public class Utilisateur implements Serializable {
 
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
+	}
+
+	public String getToken() {
+		return this.token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public List<Evenement> getEvenements() {
@@ -204,6 +233,5 @@ public class Utilisateur implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }

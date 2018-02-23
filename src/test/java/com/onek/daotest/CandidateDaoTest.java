@@ -45,7 +45,7 @@ public class CandidateDaoTest {
 		candidateDao.addCandidates(null);;
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=IllegalStateException.class)
 	public void testNotEmptyList() {
 		List<Candidat> emptyList = new ArrayList<>();
 		candidateDao.addCandidates(emptyList);

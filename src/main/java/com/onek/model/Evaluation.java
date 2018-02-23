@@ -5,19 +5,18 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * The persistent class for the evaluations database table.
  * 
  */
 @Entity
-@Table(name="evaluations")
-@NamedQuery(name="Evaluation.findAll", query="SELECT e FROM Evaluation e")
+@Table(name = "evaluations")
+@NamedQuery(name = "Evaluation.findAll", query = "SELECT e FROM Evaluation e")
 public class Evaluation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idevaluation;
 
 	private String commentaire;
@@ -25,21 +24,25 @@ public class Evaluation implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datedernieremodif;
 
-	private byte[] signature;
+	private Boolean issigned;
 
-	//bi-directional many-to-one association to Candidat
+	// bi-directional many-to-one association to Candidat
 	@ManyToOne
-	@JoinColumn(name="idcandidat")
+	@JoinColumn(name = "idcandidat")
 	private Candidat candidat;
 
-	//bi-directional many-to-one association to Jury
+	// bi-directional many-to-one association to Jury
 	@ManyToOne
-	@JoinColumn(name="idjuryeval")
+	@JoinColumn(name = "idjuryeval")
 	private Jury jury;
 
-	//bi-directional many-to-one association to Note
-	@OneToMany(mappedBy="evaluation")
+	// bi-directional many-to-one association to Note
+	@OneToMany(mappedBy = "evaluation")
 	private List<Note> notes;
+
+	// bi-directional many-to-one association to Signature
+	@OneToMany(mappedBy = "evaluation")
+	private List<Signature> signatures;
 
 	public Evaluation() {
 	}
@@ -68,12 +71,12 @@ public class Evaluation implements Serializable {
 		this.datedernieremodif = datedernieremodif;
 	}
 
-	public byte[] getSignature() {
-		return this.signature;
+	public Boolean getIssigned() {
+		return this.issigned;
 	}
 
-	public void setSignature(byte[] signature) {
-		this.signature = signature;
+	public void setIssigned(Boolean issigned) {
+		this.issigned = issigned;
 	}
 
 	public Candidat getCandidat() {
@@ -112,6 +115,28 @@ public class Evaluation implements Serializable {
 		note.setEvaluation(null);
 
 		return note;
+	}
+
+	public List<Signature> getSignatures() {
+		return this.signatures;
+	}
+
+	public void setSignatures(List<Signature> signatures) {
+		this.signatures = signatures;
+	}
+
+	public Signature addSignature(Signature signature) {
+		getSignatures().add(signature);
+		signature.setEvaluation(this);
+
+		return signature;
+	}
+
+	public Signature removeSignature(Signature signature) {
+		getSignatures().remove(signature);
+		signature.setEvaluation(null);
+
+		return signature;
 	}
 
 }

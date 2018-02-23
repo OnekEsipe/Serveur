@@ -27,7 +27,7 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 	public void addCriteres(List<Critere> criteres) {
 		Objects.requireNonNull(criteres);
 		if(criteres.isEmpty()) {
-			throw new IllegalArgumentException("list must not be empty");
+			throw new IllegalStateException("list must not be empty");
 		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;

@@ -3,6 +3,7 @@ package com.onek.dao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -26,6 +27,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@Override
 	public void updateUserInfos(Utilisateur user) {
+		Objects.requireNonNull(user);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -45,6 +47,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@Override
 	public Utilisateur findByLogin(String login) {
+		Objects.requireNonNull(login);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		Utilisateur user = null;
@@ -67,6 +70,11 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@Override
 	public void addJurysAnonymes(List<Utilisateur> utilisateurs, Evenement event) {
+		Objects.requireNonNull(utilisateurs);
+		Objects.requireNonNull(event);
+		if(utilisateurs.isEmpty()) {
+			throw new IllegalStateException("List must not be empty");
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -114,6 +122,9 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@Override
 	public void deleteUser(int idUser) {
+		if(idUser < 1) {
+			throw new IllegalArgumentException("id must be positive"); 
+		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -136,6 +147,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@Override
 	public void addUser(Utilisateur user) {
+		Objects.requireNonNull(user);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -156,6 +168,9 @@ public class UserDaoImpl implements UserDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> getAllUsersExceptCurrentAndAnonymous(int idcurrentUser) {
+		if (idcurrentUser < 1) {
+			throw new IllegalArgumentException("id must be positive"); 
+		}
 		List<Utilisateur> users = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
@@ -178,6 +193,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@Override
 	public boolean mailExist(String mail) {
+		Objects.requireNonNull(mail);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		Long result = -1L;
@@ -200,6 +216,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@Override
 	public boolean userExist(String login) {
+		Objects.requireNonNull(login);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		Long result = -1L;
@@ -222,6 +239,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@Override
 	public Utilisateur findByMail(String mail) {
+		Objects.requireNonNull(mail);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		Utilisateur user = null;
@@ -244,6 +262,9 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@Override
 	public Utilisateur findUserById(int iduser) {
+		if(iduser < 1) {
+			throw new IllegalArgumentException("id must be positive"); 
+		}
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Utilisateur user = (Utilisateur) session.createQuery("from Utilisateur where iduser = :iduser")
@@ -255,6 +276,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 	@Override
 	public void editUser(Utilisateur user) {
+		Objects.requireNonNull(user);
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.update(user);
