@@ -36,10 +36,10 @@ public class AttributionJCBean implements Serializable {
 
 	@Autowired
 	private EvaluationService evaluationService;
-	
+
 	@Autowired
 	private EvenementService evenement;
-	
+
 	@Autowired
 	private CandidateService candidatservice;
 
@@ -50,8 +50,8 @@ public class AttributionJCBean implements Serializable {
 
 	private List<Utilisateur> utilisateursJurys;
 	private List<Candidat> candidatsJurys;
-	
-	private String status="";
+	private boolean isopen;
+	private String status = "";
 	private Map<String, Utilisateur> jurys;
 	private Map<String, Candidat> candidats;
 	private List<Jury> juryList;
@@ -62,6 +62,15 @@ public class AttributionJCBean implements Serializable {
 
 	private List<MessageAttrib> messageAttrib;
 	private String avertissementMessage;
+
+	
+	public boolean isIsopen() {
+		return isopen;
+	}
+
+	public void setIsopen(boolean isopen) {
+		this.isopen = isopen;
+	}
 
 	public int getMethode() {
 		return methode;
@@ -90,7 +99,7 @@ public class AttributionJCBean implements Serializable {
 				return;
 			}
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
-
+			isopen =true;
 			jurys = new LinkedHashMap<>();
 			candidats = new LinkedHashMap<>();
 			attribJC = new LinkedHashMap<>();
@@ -101,8 +110,10 @@ public class AttributionJCBean implements Serializable {
 			// l'attribution deja realisee + init du message d'avertissement
 			status = evenement.findById(idEvent).getStatus();
 			avertissementMessage = "";
-			if(!status.equals("Brouillon")) {
-				avertissementMessage = "Status de l'événement: " + status + ". Les suppressions d'attributions ne seront pas prises en compte ";
+			if (!status.equals("Brouillon")) {
+				isopen = false;
+				avertissementMessage = "Status de l'événement: " + status
+						+ ". Les suppressions d'attributions ne seront pas prises en compte ";
 			}
 			candidatsJurys = candidatservice.findCandidatesByEvent(idEvent);
 			utilisateursJurys = juryservice.listJurysByEvent(idEvent);
@@ -246,11 +257,11 @@ public class AttributionJCBean implements Serializable {
 					System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom()
 							+ " trouvé dans les 2 listes -> Attibution identique avant/aprés : pas d'action a faire sur l'evaluation");
 				} else if (!(candidatesEnd.contains(candidatBegin.getNom() + " " + candidatBegin.getPrenom()))) {
-					if(status.equals("Brouillon")) {
+					if (status.equals("Brouillon")) {
 						System.out.println(candidatBegin.getNom() + " " + candidatBegin.getPrenom()
-						+ " pas dans candidatEnd -> suppression de l'evaluation candidatBegin");
+								+ " pas dans candidatEnd -> suppression de l'evaluation candidatBegin");
 						evaluationService.deleteEvaluation(jury.getIdjury(), candidatBegin.getIdcandidat());
-					}				
+					}
 				}
 			}
 
@@ -287,7 +298,7 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	private void JuryParCandidat(int randomX) {
-		Date date = new Date();
+		
 		if (randomX > jurys.size()) {
 			System.out.println("attribution impossible");
 			return;
@@ -303,6 +314,8 @@ public class AttributionJCBean implements Serializable {
 		int x;
 		int sizeList = 0;
 
+		clearAttribution();
+		
 		while (indexCandidat < candidatsJurys.size()) {
 			List<Jury> juryParCandidat = new ArrayList<>();
 			int i = 0;
@@ -327,19 +340,17 @@ public class AttributionJCBean implements Serializable {
 
 			}
 			attribution.put(candidatsJurys.get(indexCandidat), juryParCandidat);
+			String namecandidat = candidatsJurys.get(indexCandidat).getNom()+" "+candidatsJurys.get(indexCandidat).getPrenom();
+			for (Jury jury : juryParCandidat) {
+				String namejury = jury.getUtilisateur().getNom()+" "+jury.getUtilisateur().getPrenom();
+				attribJC.get(namejury).put(namecandidat, true);
+			}
 			indexCandidat++;
 		}
-
-		for (Candidat candidat : attribution.keySet()) {
-			for (Jury jury : attribution.get(candidat)) {
-				evaluationService.saveEvaluation(candidat, jury, date, idEvent);
-			}
-		}
-		Navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
 	public void CandidatParJury(int randomX) {
-		Date date = new Date();
+
 		if (randomX > candidatsJurys.size()) {
 			System.out.println("attribution impossible");
 			return;
@@ -382,12 +393,30 @@ public class AttributionJCBean implements Serializable {
 			attribution.put(juryList.get(indexJury), candidatparJury);
 			indexJury++;
 		}
+
+		
+		clearAttribution();
+		
 		for (Jury jury : attribution.keySet()) {
+			String namejury = jury.getUtilisateur().getNom()+" "+jury.getUtilisateur().getPrenom();	
 			for (Candidat candidat : attribution.get(jury)) {
-				evaluationService.saveEvaluation(candidat, jury, date, idEvent);
+				String namecandidat = candidat.getNom()+" "+candidat.getPrenom();
+				attribJC.get(namejury).put(namecandidat, true);				
 			}
 		}
-		Navigation.redirect("attributionJuryCandidat.xhtml");
+	}
+
+	private void clearAttribution() {
+		for (String jury : attribJC.keySet()) {
+			Map<String, Boolean> candidatsCheckbox = attribJC.get(jury);
+			for (String ligne : candidatsCheckbox.keySet()) {
+				candidatsCheckbox.replace(ligne, false);
+			}
+			attribJC.put(jury, candidatsCheckbox);
+			
+		}
+		candidatsJurys = candidatservice.findCandidatesByEvent(idEvent);
+		juryList = juryservice.findJurysByIdevent(idEvent);
 	}
 
 	private void displayAttrib() {

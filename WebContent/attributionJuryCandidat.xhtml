@@ -22,10 +22,10 @@
 	<ui:include src="menu.xhtml" />
 	<br />
 	<br />
- 	<p:outputLabel  id="evenementChoisi"  value="#{accueil.evenementChoisi}"/>
+	<p:outputLabel id="evenementChoisi" value="#{accueil.evenementChoisi}" />
 
 	<!-- Attribution automatique -->
-	<h:form>
+	<h:form rendered="#{attributionjc.isopen}">
 		<div class="ui-g">
 			<div class="ui-g-6">
 				<p:outputLabel for="methode" value="Méthode:" />
@@ -39,17 +39,20 @@
 			</div>
 			<div class="ui-g-6">
 				<p:commandButton value="Atribuer automatiquement" id="withIcon"
-					icon="ui-icon-refresh"
+					icon="ui-icon-refresh" update="tableCheckBox"
 					actionListener="#{attributionjc.attributionAutomatique}" />
 			</div>
 		</div>
 	</h:form>
 
-	<br /> <p:separator /><br />
+	<br />
+	<p:separator />
+	<br />
+	
 	<!-- Attribution manuel -->
 	<h4>#{attributionjc.avertissementMessage}</h4>
 	<div class="ui-g">
-		<h:form>
+		<h:form id="tableCheckBox">
 			<table>
 				<thead>
 					<tr>
@@ -77,15 +80,10 @@
 			<br />
 			<br />
 			<div class="ui-g">
-				<div class="ui-g-12">
-					<p:commandButton value="Prévisualiser les attributions"
-						actionListener="#{attributionjc.previsualisationButton}"
-						update="@(form)" />
-				</div>
-				<div class="ui-g-12">
-					<p:commandButton value="Valider les attributions"
-						actionListener="#{attributionjc.validationButton}" />
-				</div>
+
+				<p:commandButton value="Enregistrer les attributions"
+					actionListener="#{attributionjc.validationButton}" />
+
 			</div>
 			<br />
 			<!-- Affichage -->
@@ -101,7 +99,7 @@
 			<h:commandLink>
 				<p:graphicImage name="/image/csv.png" width="30" />
 				<p:dataExporter type="csv" target="attrib"
-					fileName="Attribution_JuryCandidats"/>
+					fileName="Attribution_JuryCandidats" />
 			</h:commandLink>
 			<div class="ui-g-12">
 				<p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
