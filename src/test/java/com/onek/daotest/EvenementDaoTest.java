@@ -1,52 +1,56 @@
 package com.onek.daotest;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.onek.dao.CritereDao;
-import com.onek.model.Critere;
+import com.onek.dao.EvenementDao;
 
 @ContextConfiguration(locations = "classpath:application-test-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
-public class CritereDaoTest {
-
-	@Autowired
-	private CritereDao critereDao;
+public class EvenementDaoTest {
 	
+	@Autowired
+	private EvenementDao evenementDao;
+
 	/*
 	 * TESTS DES ARGUMENTS
 	 */
-	
 	@Test(expected=IllegalArgumentException.class)
 	public void testFindById() {
-		critereDao.findById(-1);
+		evenementDao.findById(-1);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testSupprimerCritere() {
-		critereDao.supprimerCritere(-1);
+	public void testFindByIdUser() {
+		evenementDao.findByIdUser(-1);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSupprimerEvent() {
+		evenementDao.supprimerEvent(-1);
 	}
 
 	@Test(expected=NullPointerException.class)
-	public void testNullPointerExceptionAddCritere() {
-		critereDao.addCritere(null);
+	public void testNullPointerExceptionAddEvenement() {
+		evenementDao.addEvenement(null);
+	}
+
+	@Test(expected=NullPointerException.class)
+	public void testNullPointerExceptionEditEvenement() {
+		evenementDao.editEvenement(null);
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void testNullPointerExceptionAddCriteres() {
-		critereDao.addCriteres(null);
+	public void testNullPointerExceptionAddDuplicatedEvent() {
+		evenementDao.addDuplicatedEvent(null);
 	}
 	
-	@Test(expected=IllegalStateException.class)
-	public void testAddCriteres() {
-		List<Critere> emptyList = new ArrayList<>();
-		critereDao.addCriteres(emptyList);
+	@Test(expected=NullPointerException.class)
+	public void testNullPointerExceptionFindByCode() {
+		evenementDao.findByCode(null);
 	}
 	
 	/*
@@ -54,12 +58,9 @@ public class CritereDaoTest {
 	 * TODO
 	 */
 	
-
 	
 	/*
 	 * TESTS DE TRANSACTIONS REUSSIES
 	 * TODO
 	 */
-
-
 }

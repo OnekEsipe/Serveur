@@ -76,7 +76,7 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 	public void addCandidates(List<Candidat> candidates) {
 		Objects.requireNonNull(candidates);
 		if(candidates.isEmpty()) {
-			throw new IllegalArgumentException("list must not be empty");
+			throw new IllegalStateException("list must not be empty");
 		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
