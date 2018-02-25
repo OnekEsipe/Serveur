@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Onek team</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+	<h:outputStylesheet library="css" name="menuevent.css" />
+</h:head>
+<h:body>
+	<div id="volet">
+		<p:menu toggleable="true">
+			<p:submenu label="Gestion de l'événement">
+				<p:menuitem value="Consulter l'événement" icon="ui-icon-zoomin" url="eventAccueil.xhtml" />
+				<p:menuitem value="Dupliquer l'événement" icon="ui-icon-copy" url="eventAccueil.xhtml" />
+				<p:menuitem value="Supprimer l'événement" icon="ui-icon-trash" url="eventAccueil.xhtml" />
+			</p:submenu>
+			<p:submenu label="Gestion de la grille">
+				<p:menuitem value="Consulter la grille" icon="ui-icon-zoomin" url="grille.xhtml" />
+				<p:menuitem value="Modifier la grille" icon="ui-icon-pencil" url="grille.xhtml" />
+			</p:submenu>
+			<p:submenu label="Gestion des candidats">
+				<p:menuitem value="Consulter la liste de candidats" icon="ui-icon-zoomin" url="addCandidates.xhtml" />
+				<p:menuitem value="Ajouter des candidats" icon="ui-icon-pencil" url="addCandidates.xhtml" />
+			</p:submenu>
+			<p:submenu label="Gestion des jurys">
+				<p:menuitem value="Consulter la liste de jurys" icon="ui-icon-zoomin" url="addJury.xhtml" />
+				<p:menuitem value="Ajouter des jurys" icon="ui-icon-pencil" url="addJury.xhtml" />
+			</p:submenu>
+			<p:submenu label="Gestion des Attributions">
+				<p:menuitem value="Exporter les attributions" icon="ui-icon-document" url="exporterAttribution.xhtml" />
+				<p:menuitem value="gérer les atributions" icon="ui-icon-pencil" url="attributionJuryCandidat.xhtml" />
+			</p:submenu>
+			<p:submenu label="Les statistiques" >
+			<p:menuitem value="exporter les statistiques" icon="ui-icon-document" url="statistiques.xhtml" />
+			</p:submenu>
+		</p:menu>
+		<a href="#volet" class="ouvrir">+</a>
+		<a href="#volet_clos" class="fermer">|</a>
+	</div>
+</h:body>
+</html>
