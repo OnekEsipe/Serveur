@@ -10,7 +10,7 @@
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
-	
+
 </h:head>
 <f:metadata>
 	<f:viewParam name="event" value="#{attributionjc.idEvent}" />
@@ -27,11 +27,12 @@
 	<div class="ui-g">
 		<!-- Attribution automatique -->
 		<div class="ui-g-6">
-			<p:panel id="AttributionAutomatique" rendered="#{attributionjc.isopen}"
+			<p:panel id="AttributionAutomatique"
+				rendered="#{attributionjc.isopen}"
 				header="Attribuer des cadidats automatiquement" style="height:100px">
-				<h:form >
+				<h:form>
 					<div class="ui-g-2">
-					<p:outputLabel>Nombre de </p:outputLabel>
+						<p:outputLabel>Nombre de </p:outputLabel>
 					</div>
 
 					<div class="ui-g-4">
@@ -62,31 +63,34 @@
 		<h4>#{attributionjc.avertissementMessage}</h4>
 		<div class="ui-g">
 			<h:form id="tableCheckBox">
-			<div style="max-height: 40em; width: 80em; overflow:auto;">
-				<table >
-					<thead>
-						<tr>
-							<th>Jurys/Candidats</th>
-							<ui:repeat value="#{attributionjc.candidats.values().toArray()}"
-								var="candidat">
-								<th >#{candidat.nom} #{candidat.prenom}</th>
-							</ui:repeat>
-						</tr>
-					</thead>
-					<tbody>
-						<ui:repeat value="#{attributionjc.jurys.entrySet().toArray()}"
-							var="jury">
-							<tr>
-								<td>#{jury.value.nom} #{jury.value.prenom}</td>
-								<ui:repeat value="#{attributionjc.candidats.keySet().toArray()}"
+				<div style="max-height: 40em; width: 80em; overflow: auto;">
+					<table>
+						<thead >
+							<tr >
+								<th>Jurys/Candidats</th>
+								<ui:repeat value="#{attributionjc.candidats.values().toArray()}"
 									var="candidat">
-									<td align="center"><p:selectBooleanCheckbox
-											value="#{attributionjc.attribJC[jury.key][candidat]}" /></td>
+									<th 
+										style=" -ms-transform: rotate(270deg); -moz-transform: rotate(270deg); -webkit-transform: rotate(270deg); transform: rotate(270deg);">#{candidat.nom}
+										#{candidat.prenom}</th>
 								</ui:repeat>
 							</tr>
-						</ui:repeat>
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							<ui:repeat value="#{attributionjc.jurys.entrySet().toArray()}"
+								var="jury">
+								<tr>
+									<td>#{jury.value.nom} #{jury.value.prenom}</td>
+									<ui:repeat
+										value="#{attributionjc.candidats.keySet().toArray()}"
+										var="candidat">
+										<td align="center"><p:selectBooleanCheckbox
+												value="#{attributionjc.attribJC[jury.key][candidat]}" /></td>
+									</ui:repeat>
+								</tr>
+							</ui:repeat>
+						</tbody>
+					</table>
 				</div>
 				<br />
 				<br />
@@ -97,25 +101,7 @@
 
 				</div>
 				<br />
-				<!-- Affichage -->
-				<p:dataTable id="attrib" var="attrib"
-					value="#{attributionjc.messageAttrib}">
-					<p:column headerText="Jury">
-						<h:outputText value="#{attrib.jury}" />
-					</p:column>
-					<p:column headerText="Candidats">
-						<h:outputText value="#{attrib.candidats}" />
-					</p:column>
-				</p:dataTable>
-				<h:commandLink>
-					<p:graphicImage name="/image/csv.png" width="30" />
-					<p:dataExporter type="csv" target="attrib"
-						fileName="Attribution_JuryCandidats" />
-				</h:commandLink>
-				<div class="ui-g-12">
-					<p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
-						actionListener="#{attributionjc.retour}" />
-				</div>
+				
 			</h:form>
 		</div>
 	</div>
