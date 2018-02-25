@@ -18,7 +18,7 @@ public class Signature implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idsignature;
 
-	private String non;
+	private String nom;
 
 	private byte[] signature;
 
@@ -38,12 +38,12 @@ public class Signature implements Serializable {
 		this.idsignature = idsignature;
 	}
 
-	public String getNon() {
-		return this.non;
+	public String getNom() {
+		return this.nom;
 	}
 
-	public void setNon(String non) {
-		this.non = non;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
 	public byte[] getSignature() {

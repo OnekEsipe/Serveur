@@ -3,6 +3,7 @@ package com.onek.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +29,7 @@ public class Note implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idnote;
 
+	@Column(length = 500)
 	private String commentaire;
 
 	@Temporal(TemporalType.TIMESTAMP)

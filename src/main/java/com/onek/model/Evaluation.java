@@ -19,6 +19,7 @@ public class Evaluation implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idevaluation;
 
+	@Column(length = 500)
 	private String commentaire;
 
 	@Temporal(TemporalType.TIMESTAMP)

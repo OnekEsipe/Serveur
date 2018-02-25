@@ -28,7 +28,7 @@ public class SignatureResource implements Serializable {
 	
 	public SignatureResource(Signature signature) {
 		this.idSignature = signature.getIdsignature();
-		this.name = signature.getNon();
+		this.name = signature.getNom();
 		this.idEvaluation = signature.getEvaluation().getIdevaluation();
 		this.signatureData = signature.getSignature();
 	}
@@ -42,7 +42,7 @@ public class SignatureResource implements Serializable {
 	public Signature createSignature() {
 		Signature signature = new Signature();
 		signature.setIdsignature(idSignature);
-		signature.setNon(name);
+		signature.setNom(name);
 		signature.setSignature(signatureData);
 		return signature;
 	}	

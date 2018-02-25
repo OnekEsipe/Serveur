@@ -33,6 +33,9 @@ public class EvaluationResource implements Serializable {
 	@JsonProperty("Comment")
 	private String comment;
 	
+	@JsonProperty("IsSigned")
+	private Boolean isSigned;
+	
 	@JsonIgnore
 	private Date lastUpdatedDate;
 	
@@ -51,6 +54,7 @@ public class EvaluationResource implements Serializable {
 		idCandidate = evaluation.getCandidat().getIdcandidat();
 		comment = evaluation.getCommentaire();	
 		lastUpdatedDate = evaluation.getDatedernieremodif();
+		isSigned = evaluation.getIssigned();
 		for(Note note : evaluation.getNotes()) {
 			notes.add(new NoteResource(note));
 		}
