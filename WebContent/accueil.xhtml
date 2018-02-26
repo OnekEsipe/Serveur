@@ -6,41 +6,37 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Home Onek</title>
+	<title>ONEK' - Mes événements</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
 	<h:outputStylesheet library="css" name="accueil.css" />
 	<h:outputStylesheet library="css" name="user.css" />
+	<h:outputStylesheet library="css" name="header_footer.css" />
 </h:head>
 <f:metadata>
 	<f:event type="preRenderView" listener="#{accueil.before}" />
 </f:metadata>
 <h:body>
-	<!-- Insertion du menu -->
-	<div id="menu">
-		<ui:include src="#{accueil.typeMenu}" />
-	</div>
-	<br />
+	<!-- Insertion du header + menu -->
+	<ui:include src="#{accueil.typeMenu}" />
 	<br />
 	<!-- bouton création d'un événement -->
 	<div class="ui-g button-create">
-		<h:form>
-			<p:growl id="growl" life="4000" />
+		<h:form>			
 			<p:commandButton value="Ajouter un événement" id="withIcon"
 				icon="ui-icon-plusthick" actionListener="#{accueil.buttonAction}"
 				styleClass="bigbutton" />
 		</h:form>
 	</div>
-	<!-- ********fin*********** -->
 	<!--  Tableau des événements -->
 	<div class="ui-g tab-users">
 		<h:form>
 			<p:dataTable var="evenement" value="#{accueil.events}"
 				widgetVar="eventTable"
-				emptyMessage="aucun événement trouvé avec ce nom"
+				emptyMessage="Aucun événement trouvé avec ce nom."
 				filteredValue="#{accueil.filteredevents}" scrollable="true"
-				scrollHeight="400" selectionMode="single"
+				scrollHeight="300" selectionMode="single"
 				selection="#{accueil.selectedevent}" rowKey="#{evenement.nom}">
 				<!-- barre de recherche -->
 				<f:facet name="header">
@@ -57,27 +53,29 @@
 				<!-- des lignes cliquables dans le tableau -->
 				<p:ajax event="rowSelect" listener="#{accueil.onRowSelect}" />
 				<!-- ********fin*********** -->
-				<p:column headerText="Titre événement" filterBy="#{evenement.nom}"
+				<p:column headerText="Nom" filterBy="#{evenement.nom}"
 					filterMatchMode="startsWith" filterStyle="display:none">
 					<h:outputText value="#{evenement.nom}" />
 				</p:column>
 				<p:column headerText="Statut">
 					<h:outputText value="#{evenement.status}" />
 				</p:column>
-				<p:column headerText="Date début">
+				<p:column headerText="Date de début">
 					<h:outputText value="#{evenement.datestart}"
 						converter="javax.faces.DateTime" />
 				</p:column>
-				<p:column headerText="Date fin">
+				<p:column headerText="Date de fin">
 					<h:outputText value="#{evenement.datestop}"
 						converter="javax.faces.DateTime" />
 				</p:column>
 				<p:column headerText="Supprimé" id="etatevent"
 					rendered="#{accueil.visible}">
-					<h:outputText value="#{evenement.isDeleted()}" />
+					<h:outputText value="#{evenement.isdeleted}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>
 	</div>
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>
