@@ -125,7 +125,10 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 	
 	@Override
 	public Candidat findCandidatesById(int idcandidat) {
-		Candidat candidat = new Candidat();
+		if(idcandidat < 1) {
+			throw new IllegalArgumentException("idcandidate must be positive");
+		}
+		Candidat candidat = null;
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
