@@ -55,6 +55,7 @@ public class EmailServiceImpl implements EmailService, Serializable {
 			logger.error("Error occurred while a sent mail !", e);			
 			return false;
 		}
+		logger.info("Mail send !");
 		return true;
 	}
 	
