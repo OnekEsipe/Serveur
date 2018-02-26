@@ -3,26 +3,24 @@
 table, td{    
     border: 1px solid #ddd;
     text-align: left;
+    
 }
 
 table {
     border-collapse: collapse;
     width: 100%;
+    border-radius: 25px;
 }
 
 th, td {
-    padding: 15px;
+    padding: 10px;
 }
 th{
 	background: #f1f1f1; 
-	
-	
-    width: 20%;
-	 z-index: 1;
-	overflow-x: hidden;
-
-	
+	border: 1px solid #ddd;
 }
+
 .tableau{
 	max-height: 40em; max-width: 68em; overflow: auto;
+	
 }
