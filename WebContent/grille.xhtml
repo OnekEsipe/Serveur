@@ -18,13 +18,12 @@
 	<!-- Insertion du menu -->
 	<ui:include src="#{accueil.typeMenu}" />
 	<ui:include src="menuGauche.xhtml"></ui:include>
-	<br />
-	<p:outputLabel id="evenementChoisi" value="#{accueil.evenementChoisi}" />
+	<br/><br/>
 	<div class="ui-g">
 		<div class="ui-g-2"></div>
 		<div class="ui-g-9">
 			<h:form>
-				<div>
+				<div class="button-create">
 					<p:commandButton value="Ajouter un critère"
 						action="#{grille.onClicAddCritere}" ajax="false" />
 				</div>
