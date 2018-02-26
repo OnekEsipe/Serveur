@@ -61,8 +61,20 @@
 			<h4>#{attributionjc.avertissementMessage}</h4>
 			<div class="ui-g">
 
+
 				<h:form id="tableCheckBox">
 					<div class="tableau">
+						<div class="ui-g">
+							<div class="ui-g-10"></div>
+							<div class="ui-g-2">
+								<h:commandLink>
+									<p:graphicImage name="/image/csv.png" width="30" />
+									<p:dataExporter type="csv" target="attrib"
+										fileName="Attribution_JuryCandidats" />
+								</h:commandLink>
+							</div>
+						</div>
+
 						<table>
 							<thead>
 								<tr>
@@ -92,7 +104,8 @@
 						<div class="ui-g-6"></div>
 						<div class="ui-g-6">
 							<p:commandButton value="Enregistrer les attributions"
-								actionListener="#{attributionjc.validationButton}" />
+								actionListener="#{attributionjc.validationButton}"
+								update="attrib" />
 							<p:commandButton value="Vider les attributions"
 								actionListener="#{attributionjc.clearButton}"
 								update="tableCheckBox" />
@@ -110,6 +123,16 @@
 						actionListener="#{attributionjc.clearButton}"
 						update="tableCheckBox" rendered="#{attributionjc.juryexist}"/>
 				</div>
+
+					<p:dataTable id="attrib" var="attrib"
+						value="#{attributionjc.messageAttrib}" style="display:none;">
+						<p:column headerText="Jury">
+							<h:outputText value="#{attrib.jury}" />
+						</p:column>
+						<p:column headerText="Candidats">
+							<h:outputText value="#{attrib.candidats}" />
+						</p:column>
+					</p:dataTable>
 
 				</h:form>
 			</div>
