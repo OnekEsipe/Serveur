@@ -42,6 +42,9 @@ public class EvaluationResource implements Serializable {
 	@JsonProperty("Criterias")
 	private final List<NoteResource> notes = new ArrayList<>();
 	
+	@JsonProperty("Signatures")
+	private List<SignatureResource> signatures;
+	
 	/* empty constructor */
 	public EvaluationResource() {
 		
@@ -100,6 +103,16 @@ public class EvaluationResource implements Serializable {
 	@JsonIgnore
 	public Integer getIdEvent() {
 		return idEvent;
+	}
+	
+	@JsonIgnore
+	public List<SignatureResource> getSignatures() {
+		return signatures;
+	}
+	
+	@JsonIgnore
+	public Boolean getIsSigned() {
+		return isSigned;
 	}
 	
 }

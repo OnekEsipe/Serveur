@@ -9,16 +9,10 @@ import com.onek.model.Signature;
 public class SignatureResource implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@JsonProperty("IdSignature")
-	private Integer idSignature;
-	
 	@JsonProperty("Name")
 	private String name;
 	
-	@JsonProperty("IdEvaluation")
-	private Integer idEvaluation;
-	
-	@JsonProperty("Signature")
+	@JsonProperty("Bitmap")
 	private byte[] signatureData;
 	
 	/* empty constructor */
@@ -26,22 +20,9 @@ public class SignatureResource implements Serializable {
 		
 	}
 	
-	public SignatureResource(Signature signature) {
-		this.idSignature = signature.getIdsignature();
-		this.name = signature.getNom();
-		this.idEvaluation = signature.getEvaluation().getIdevaluation();
-		this.signatureData = signature.getSignature();
-	}
-	
-	@JsonIgnore
-	public Integer getIdEvaluation() {
-		return idEvaluation;
-	}
-	
 	@JsonIgnore
 	public Signature createSignature() {
 		Signature signature = new Signature();
-		signature.setIdsignature(idSignature);
 		signature.setNom(name);
 		signature.setSignature(signatureData);
 		return signature;
