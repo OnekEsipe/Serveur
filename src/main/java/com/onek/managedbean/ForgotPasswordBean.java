@@ -36,11 +36,14 @@ public class ForgotPasswordBean {
 	}
 
 	public void send() {
-		if (userService.mailExist(mail)) {
-			passwordService.reset(mail);
-			logInfo = "Un mail contenant un lien pour redéfinir votre mot de passe à été envoyé.";
-		} else {
+		if (!userService.mailExist(mail)) {
 			logInfo = "L'adresse mail saisie ne correspond à aucun utilisateur.";
+			return;
+		}		
+		if (passwordService.reset(mail)) {			
+			logInfo = "Un mail contenant un lien pour redéfinir votre mot de passe a été envoyé.";
+		} else {
+			logInfo = "Une erreur interne a empêché la réinitialisation du mot de passe.";
 		}
 	}
 	

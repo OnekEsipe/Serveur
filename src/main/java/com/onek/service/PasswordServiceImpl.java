@@ -3,7 +3,7 @@ package com.onek.service;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
+import java.util.Date;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
@@ -36,7 +36,10 @@ public class PasswordServiceImpl implements PasswordService, Serializable {
 		} catch(NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			logger.error(this.getClass().getName(), e);
 			return false;
-		}		
+		}
+		user.setToken(token);
+		user.setDatetoken(new Date());
+		userService.updateUserInfos(user);
 		
 		String url = emailService.getMailBean().getUrl();
 		String message;		
@@ -60,23 +63,33 @@ public class PasswordServiceImpl implements PasswordService, Serializable {
 	}
 	
 	@Override
-	public Optional<Utilisateur> findToken(String token) {
-		List<Utilisateur> users = userService.getAllUsers();
-		for(Utilisateur user : users) {
-			try {
-				if (token.equals(generateToken(user))) {
-					return Optional.of(user);
-				}
-			} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {				
-				logger.error(this.getClass().getName(), e);
-				return Optional.empty();
-			}
+	public Optional<Utilisateur> tokenIsValid(String token) {
+		if (token == null || token.isEmpty()) {
+			return Optional.empty();
 		}
-		return Optional.empty();
+		Utilisateur user = userService.findByToken(token);
+		if (user == null) {
+			return Optional.empty();
+		}		
+		Long dateValidToken = user.getDatetoken().getTime() + 1_600_000; // 30 minutes
+		Long currentDate = new Date().getTime();	
+		if (dateValidToken < currentDate) {
+			return Optional.empty();
+		}
+		return Optional.of(user);		
+	}
+	
+	@Override
+	public void updatePassword(Utilisateur user, String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		user.setMotdepasse(Encode.sha1(password));
+		Date date = new Date();
+		date.setTime(new Date().getTime() - 1_585_000); // token valid while 15 seconds
+		user.setDatetoken(date);
+		userService.updateUserInfos(user);		
 	}
 	
 	private String generateToken(Utilisateur user) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		return Encode.sha256(user.getLogin() + user.getMail());
+		return Encode.sha256(user.getLogin() + user.getMail() + new Date().toString());
 	}
 
 }
