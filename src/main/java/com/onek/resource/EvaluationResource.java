@@ -42,7 +42,7 @@ public class EvaluationResource implements Serializable {
 	@JsonProperty("Criterias")
 	private final List<NoteResource> notes = new ArrayList<>();
 	
-	@JsonProperty("Signatures")
+	@JsonSetter("Signatures")
 	private List<SignatureResource> signatures;
 	
 	/* empty constructor */
