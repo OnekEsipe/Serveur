@@ -332,6 +332,9 @@ public class AttributionJCBean implements Serializable {
 		}
 	}
 
+	public void clearButton(ActionEvent actionEvent) {
+		clearAttribution();
+	}
 	private void clearAttribution() {
 		for (Jury jury : attribJC.keySet()) {
 			Map<Candidat, Boolean> candidatsCheckbox = attribJC.get(jury);

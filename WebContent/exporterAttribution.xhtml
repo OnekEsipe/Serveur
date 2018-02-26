@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Onek team</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+	
+</h:head>
+<f:metadata>
+	<f:viewParam name="event" value="#{attributionjc.idEvent}" />
+	<f:event type="preRenderView" listener="#{attributionjc.before}" />
+</f:metadata>
+<h:body>
+	<!-- Insertion du menu -->
+	<h:outputStylesheet library="css" name="accueil.css" />
+	<ui:include src="#{accueil.typeMenu}" />
+	<ui:include src="menuGauche.xhtml" />
+
+
+	<h:form>
+		<p:dataTable id="attrib" var="attrib"
+			value="#{attributionjc.messageAttrib}">
+			<p:column headerText="Jury">
+				<h:outputText value="#{attrib.jury}" />
+			</p:column>
+			<p:column headerText="Candidats">
+				<h:outputText value="#{attrib.candidats}" />
+			</p:column>
+		</p:dataTable>
+		<h:commandLink>
+			<p:graphicImage name="/image/csv.png" width="30" />
+			<p:dataExporter type="csv" target="attrib"
+				fileName="Attribution_JuryCandidats" />
+		</h:commandLink>
+	</h:form>
+
+</h:body>
+</html>
