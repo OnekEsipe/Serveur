@@ -2,11 +2,15 @@ package com.onek.managedbean;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
@@ -171,7 +175,7 @@ public class CandidateBean implements Serializable {
 	}
 
 	public void fileImportCsv(FileUploadEvent event) throws IOException {
-		
+
 		List<String[]> data = new ArrayList<String[]>();
 		List<Candidat> importedCandidats = new ArrayList<>();
 
@@ -211,7 +215,7 @@ public class CandidateBean implements Serializable {
 				}
 			}
 			if (indexnom == -1) {
-				
+
 				importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
 				return;
 			}
@@ -251,6 +255,27 @@ public class CandidateBean implements Serializable {
 		Candidat candidat = candidateService.findCandidatesById(idcandidat);
 		candidateService.supprimerCandidat(idcandidat);
 		candidats.remove(candidat);
+	}
+
+	public void telechargerModele() throws IOException {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+	    ExternalContext externalContext = facesContext.getExternalContext();
+	    externalContext.setResponseContentType("text/csv");
+	    externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"modeleCandidat.csv\"");
+
+	    OutputStream out = externalContext.getResponseOutputStream();
+	    Writer writer = new OutputStreamWriter(out);
+
+	    try {
+	        writer.write("nom;prenom\n");
+	        writer.write("exempleNom;exemplePrenom");
+	    } finally {
+	        if (writer != null) {
+	            writer.close();
+	        }
+	    }
+
+	    facesContext.responseComplete();
 	}
 
 	public void retour() {

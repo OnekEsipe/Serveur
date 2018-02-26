@@ -40,7 +40,10 @@
 						<p:fileUpload fileUploadListener="#{candidate.fileImportCsv}"
 							dragDropSupport="true" multiple="false" mode="advanced"
 							id="upload" allowTypes="/(\.|\/)(csv)$/" update="tabCandidat log" />
-
+						<p:commandButton value="Télécharger un modèle"
+							action="#{candidate.telechargerModele}" ajax="false"
+							icon="ui-icon-arrowthick-1-s">
+						</p:commandButton>
 						<h3 id="erreur">#{candidate.importLog}</h3>
 					</h:form>
 				</p:panel>
