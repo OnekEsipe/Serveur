@@ -26,7 +26,8 @@ public class UserServiceImpl implements UserService, Serializable {
 
 	@Override
 	public Utilisateur findByLogin(String login) {
-		return userDao.findByLogin(login);
+		
+		return userDao.findByLogin(Objects.requireNonNull(login));
 	}
 
 	@Override

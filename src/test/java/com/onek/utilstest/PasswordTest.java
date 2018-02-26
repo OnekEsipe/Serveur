@@ -11,6 +11,10 @@ public class PasswordTest {
 	public void testsArguments() {
 		Password passwordGenerator = new Password();
 		passwordGenerator.generateCode(-1);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testsArguments2() {
+		Password passwordGenerator = new Password();
 		passwordGenerator.generatePassword(-1);
 	}
 	

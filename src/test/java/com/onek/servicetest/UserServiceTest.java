@@ -36,7 +36,7 @@ public class UserServiceTest {
 
 	private Utilisateur user;
 	private List<Utilisateur> users = new ArrayList<>();
-	private String[] login = {"aa","bb","cc","dd","ee","ff","gg","hh"};
+	private String[] login = {"aa","bb","cc","dd","ee"};
 	private String formatMail = "@gmail.com";
 	
 	@Before
