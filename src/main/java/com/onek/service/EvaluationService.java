@@ -12,6 +12,5 @@ public interface EvaluationService {
 	List<Evaluation> findByIdCandidate(Integer idCandidat);
 	List<Evaluation> findByIdJury(Integer idJury);
 	void deleteEvaluation(int idJury, int idCandidat);
-	void saveEvaluation(String nomCandidat, String prenomCandidat, int idevent, Jury jury, Date date);
 	public void saveEvaluation(Candidat candidat, Jury jury, Date date, int idevent);
 }

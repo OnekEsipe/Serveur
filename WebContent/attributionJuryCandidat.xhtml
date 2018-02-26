@@ -63,16 +63,26 @@
 		<h4>#{attributionjc.avertissementMessage}</h4>
 		<div class="ui-g">
 			<h:form id="tableCheckBox">
-				<div style="max-height: 40em; width: 80em; overflow: auto;">
-					<table>
-						<thead >
-							<tr >
-								<th>Jurys/Candidats</th>
-								<ui:repeat value="#{attributionjc.candidats.values().toArray()}"
+			<div style="max-height: 40em; width: 80em; overflow:auto;">
+				<table >
+					<thead>
+						<tr>
+							<th>Jurys/Candidats</th>
+							<ui:repeat value="#{attributionjc.candidatsJurys}"
+								var="candidat">
+								<th >#{candidat}</th>
+							</ui:repeat>
+						</tr>
+					</thead>
+					<tbody>
+						<ui:repeat value="#{attributionjc.juryList}"
+							var="jury">
+							<tr>
+								<td>#{jury.utilisateur}</td>
+								<ui:repeat value="#{attributionjc.candidatsJurys}"
 									var="candidat">
-									<th 
-										style=" -ms-transform: rotate(270deg); -moz-transform: rotate(270deg); -webkit-transform: rotate(270deg); transform: rotate(270deg);">#{candidat.nom}
-										#{candidat.prenom}</th>
+									<td align="center"><p:selectBooleanCheckbox
+											value="#{attributionjc.attribJC[jury][candidat]}" /></td>
 								</ui:repeat>
 							</tr>
 						</thead>
