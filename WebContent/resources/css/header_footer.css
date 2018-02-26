@@ -21,10 +21,6 @@ body {
 	padding: 0;
 }
 
-.ui-inputfield {
-	width: 100%;
-}
-
 .footerURL {
 	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color: white;
@@ -37,7 +33,6 @@ footer {
 	height: 2.6em;
 	background: #2399e5;
 	color: #fff;
-	bottom: 0;
 	width: 100%;
 	padding-top: 1.6em;
 	margin-top: 1em;

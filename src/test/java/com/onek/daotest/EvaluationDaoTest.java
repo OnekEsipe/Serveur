@@ -73,29 +73,6 @@ public class EvaluationDaoTest {
 		evaluationDao.saveEvaluation(new Candidat(),new Jury(),new Date(), -1);
 	}
 	
-	@Test(expected=NullPointerException.class)
-	public void testNullPointerExceptionSaveEvaluation2_1() {
-		evaluationDao.saveEvaluation(null, "prenom", 10, new Jury(), new Date());
-	}
-	
-	@Test(expected=NullPointerException.class)
-	public void testNullPointerExceptionSaveEvaluation2_2() {
-		evaluationDao.saveEvaluation("nom", null, 10, new Jury(), new Date());
-	}
-	@Test(expected=NullPointerException.class)
-	public void testNullPointerExceptionSaveEvaluation2_3() {
-		evaluationDao.saveEvaluation("nom", "prenom", 10,null, new Date());
-	}
-	@Test(expected=NullPointerException.class)
-	public void testNullPointerExceptionSaveEvaluation2_4() {
-		evaluationDao.saveEvaluation("nom", "prenom", 10,new Jury(), null);
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void testIllegalIdSaveEvaluation2() {
-		evaluationDao.saveEvaluation("nom", "prenom", -1,new Jury(), new Date());
-	}
-	
 	/*
 	 * TESTS DE TRANSACTIONS ECHOUEES
 	 * TODO
