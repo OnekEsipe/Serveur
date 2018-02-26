@@ -242,20 +242,21 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			return false;
 		}
 		Utilisateur user = userService.findByLogin(eventCode.getLogin());
-		Evenement event;
-		try {
-			event = eventDao.findByCode(eventCode.getEventCode());
-		} catch (NoResultException rse) {
-			throw new IllegalArgumentException();
+		Evenement event = eventDao.findByCode(eventCode.getEventCode());
+		if (event == null) {
+			throw new IllegalStateException("Le code événement est incorrect.");
 		}
 		if (!event.getIsopened()) {
-			return false;
+			throw new IllegalStateException("L'événement n'est pas ouvert à l'inscription.");
 		}
 		if (event.getIsdeleted()) {
 			return false;
 		}
 		if (event.getStatus().equals(StatutEvenement.FERME.toString())) {
 			return false;
+		}
+		if (juryDao.juryIsAssigned(user.getIduser(), event.getIdevent())) {
+			throw new IllegalStateException("Vous êtes déjà inscrit.");
 		}
 		Jury jury = new Jury();
 		jury.setUtilisateur(user);
