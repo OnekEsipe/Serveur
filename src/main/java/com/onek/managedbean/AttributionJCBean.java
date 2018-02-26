@@ -113,7 +113,7 @@ public class AttributionJCBean implements Serializable {
 			// l'attribution deja realisee + init du message d'avertissement
 			status = evenement.findById(idEvent).getStatus();
 			avertissementMessage = "";
-			
+
 			if (!status.equals("Brouillon")) {
 				isopen = false;
 				avertissementMessage = "Status de l'événement: " + status
@@ -121,18 +121,19 @@ public class AttributionJCBean implements Serializable {
 			}
 			candidatsJurys = candidatservice.findCandidatesByEvent(idEvent);
 			juryList = juryservice.findJurysByIdevent(idEvent);
+			if (!juryList.isEmpty()) {
+				associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 
-			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
-
-			for (Entry<Jury, List<Candidat>> entryAssociation : associatedJurysCandidates.entrySet()) {
-				List<Candidat> candidatesList = entryAssociation.getValue();
-				LinkedHashMap<Candidat, Boolean> candidatesPreChecked = new LinkedHashMap<>();
-				for (Candidat candidatAttributed : candidatesList) {
-					candidatesPreChecked.put(candidatAttributed, true);
+				for (Entry<Jury, List<Candidat>> entryAssociation : associatedJurysCandidates.entrySet()) {
+					List<Candidat> candidatesList = entryAssociation.getValue();
+					LinkedHashMap<Candidat, Boolean> candidatesPreChecked = new LinkedHashMap<>();
+					for (Candidat candidatAttributed : candidatesList) {
+						candidatesPreChecked.put(candidatAttributed, true);
+					}
+					attribJC.put(entryAssociation.getKey(), candidatesPreChecked);
 				}
-				attribJC.put(entryAssociation.getKey(), candidatesPreChecked);
+				displayAttrib();
 			}
-			displayAttrib();
 		}
 	}
 
