@@ -127,4 +127,9 @@ public class UserServiceImpl implements UserService, Serializable {
 	public Utilisateur findUserById(int iduser) {
 		return userDao.findUserById(iduser);
 	}
+
+	@Override
+	public Utilisateur findByToken(String token) {
+		return userDao.findByToken(token);
+	}
 }

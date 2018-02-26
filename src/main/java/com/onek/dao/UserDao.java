@@ -18,4 +18,5 @@ public interface UserDao {
 	public Utilisateur findByMail(String mail);
 	public void editUser(Utilisateur user);
 	public Utilisateur findUserById(int iduser);
+	public Utilisateur findByToken(String token);
 }

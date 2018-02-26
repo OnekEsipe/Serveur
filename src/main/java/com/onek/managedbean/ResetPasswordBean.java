@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.onek.model.Utilisateur;
 import com.onek.service.PasswordService;
-import com.onek.service.UserService;
-import com.onek.utils.Encode;
 import com.onek.utils.Navigation;
 import com.onek.utils.Password;
 
@@ -23,9 +21,6 @@ public class ResetPasswordBean implements Serializable {
 
 	@Autowired
 	private PasswordService passwordService;
-	
-	@Autowired
-	private UserService userService;
 
 	private Utilisateur user;
 	private boolean tokenIsValid;
@@ -42,7 +37,8 @@ public class ResetPasswordBean implements Serializable {
 		}
 		token = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
 				.get("token");
-		Optional<Utilisateur> optionalUser = passwordService.findToken(token);
+		
+		Optional<Utilisateur> optionalUser = passwordService.tokenIsValid(token);
 		if (!optionalUser.isPresent()) {
 			tokenIsValid = false;
 			token = "";
@@ -88,21 +84,23 @@ public class ResetPasswordBean implements Serializable {
 		logInfo = "Votre mot de passe a été réinitialisé avec succès !";
 		if (newPassword.isEmpty() || confirmNewPassword.isEmpty()) {
 			logInfo = "Merci de renseigner tous les champs.";	
+			Navigation.redirect("resetpassword.xhtml?token=" + token);
 			return;
 		}
 		else if (!newPassword.equals(confirmNewPassword)) {
 			logInfo = "Nouveau mot de passe différent du mot de passe de confirmation.";	
+			Navigation.redirect("resetpassword.xhtml?token=" + token);
 			return;
 		}
 		if (!Password.verifyPasswordRule(newPassword)) {
 			logInfo = "Le mot de passe doit être composé d'au moins 6 caractères et comporter au moins une majuscule.";
+			Navigation.redirect("resetpassword.xhtml?token=" + token);
 			return;
 		}
 		try {
-			user.setMotdepasse(Encode.sha1(newPassword));
-			userService.updateUserInfos(user);
+			passwordService.updatePassword(user, newPassword);
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			logInfo = "Une erreur interne a empêché la réinitilisation du mot de passe.";
+			logInfo = "Une erreur interne a empêché la réinitialisation du mot de passe.";
 		}		
 		Navigation.redirect("resetpassword.xhtml?token=" + token);
 	}
