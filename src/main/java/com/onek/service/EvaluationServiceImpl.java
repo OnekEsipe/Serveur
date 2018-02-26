@@ -29,11 +29,6 @@ public class EvaluationServiceImpl implements EvaluationService, Serializable {
 	public void deleteEvaluation(int idJury, int idCandidat) {
 		evaluationDao.deleteEvaluation(idJury, idCandidat);
 	}
-	
-	@Override
-	public void saveEvaluation(String nomCandidat, String prenomCandidat, int idevent, Jury jury, Date date) {
-		evaluationDao.saveEvaluation(nomCandidat, prenomCandidat, idevent, jury, date);
-	}
 
 	@Override
 	public void saveEvaluation(Candidat candidat, Jury jury, Date date, int idevent) {

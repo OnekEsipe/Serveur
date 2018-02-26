@@ -198,6 +198,11 @@ public class Utilisateur implements Serializable {
 	}
 
 	@Override
+	public String toString() {
+		return nom + " " + prenom;
+	}
+	
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
