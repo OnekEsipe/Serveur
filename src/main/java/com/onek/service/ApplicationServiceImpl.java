@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.persistence.NoResultException;
@@ -75,6 +76,8 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 
 	@Override
 	public Optional<EvenementResource> export(String idEvent, String login) {
+		Objects.requireNonNull(idEvent);
+		Objects.requireNonNull(login);
 		// check if idEvent is an integer
 		Integer id;
 		try {
@@ -110,6 +113,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	/* account */
 	@Override
 	public List<AccountResource> account(String login) {
+		Objects.requireNonNull(login);
 		Utilisateur user = userService.findByLogin(login);
 		List<Jury> jurys = juryDao.findByUser(user);
 		List<AccountResource> accounts = new ArrayList<>();
@@ -149,6 +153,9 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 
 	@Override
 	public boolean importEvaluation(EvaluationResource evaluationResource) {
+		if(evaluationResource == null) {
+			return false;
+		}
 		Evaluation evaluation = evaluationDao.findById(evaluationResource.getIdEvaluation());
 		if (evaluation == null) {
 			return false;
@@ -225,6 +232,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 
 	@Override
 	public void createJury(CreateJuryResource createJuryResource) {
+		Objects.requireNonNull(createJuryResource);
 		Utilisateur user = new Utilisateur();
 		user.setPrenom(createJuryResource.getFirstname());
 		user.setNom(createJuryResource.getLastname());
@@ -267,6 +275,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 
 	@Override
 	public boolean changePassword(PasswordModify passwordModify) {
+		Objects.requireNonNull(passwordModify);
 		String login = passwordModify.getLogin();
 		if (!userService.userExist(login)) {
 			return false;
