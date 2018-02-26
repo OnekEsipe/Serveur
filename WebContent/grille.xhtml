@@ -17,202 +17,74 @@
 <h:body>
 	<!-- Insertion du menu -->
 	<ui:include src="#{accueil.typeMenu}" />
-	<br />
-	<br />
-	<p:outputLabel id="evenementChoisi" value="#{accueil.evenementChoisi}" />
+	<ui:include src="menuGauche.xhtml"></ui:include>
+	<br/><br/>
+	<div class="ui-g">
+		<div class="ui-g-2"></div>
+		<div class="ui-g-9">
+			<h:form>
+				<div class="button-create">
+					<p:commandButton value="Ajouter un critère"
+						action="#{grille.onClicAddCritere}" ajax="false" />
+				</div>
+				<div id="displayCriteres">
+					<p:dataTable var="critere" value="#{grille.criteres}">
+						<p:column headerText="Nom">
+							<h:outputText value="#{critere.texte}" />
+						</p:column>
 
-	<h:form>
-		<div title="addCritère">
-			<p:outputPanel>
-				<p:panel header="Ajouter un critère">
-					<h:panelGrid id="grid" columns="4" cellpadding="5">
-						<h:outputLabel value="Nom :" style="font-weight:bold" />
-						<p:inputText value="#{grille.nom}" required="true" />
+						<p:column headerText="Coef">
+							<h:outputText value="#{critere.coefficient}" />
+						</p:column>
 
-						<h:outputLabel value="Coefficient :" style="font-weight:bold" />
-						<p:inputNumber id="coef" value="#{grille.coefficient}"
-							minValue="0" decimalPlaces="2" required="true" />
+						<p:column headerText="Catégorie">
+							<h:outputText value="#{critere.categorie}" />
+						</p:column>
 
-						<h:outputLabel value="Catégorie (Optionnel) :"
-							style="font-weight:bold" />
-						<p:inputText value="#{grille.categorie}" />
+						<p:column headerText="Descripteur">
+							<p:commandButton id="DescBtn" value="Afficher les descripteurs"
+								type="button" />
+							<p:overlayPanel id="DescPanel" for="DescBtn" hideEffect="fade"
+								dynamic="true" style="width:600px">
+								<p:dataTable var="descripteur" value="#{critere.descripteurs}">
+									<p:column headerText="Niveau">
+										<h:outputText value="#{descripteur.niveau}" />
+									</p:column>
+									<p:column headerText="Poids">
+										<h:outputText value="#{descripteur.poids}" />
+									</p:column>
+									<p:column headerText="Description" style='width:400px'>
+										<h:outputText value="#{descripteur.texte}" />
+									</p:column>
+								</p:dataTable>
+							</p:overlayPanel>
+						</p:column>
+						<!-- ********la colonne supprimée*********** -->
+						<p:column style="width:32px;text-align:center"
+							rendered="#{not eventAccueil.disabledSiBrouillon}">
+							<p:growl id="message" showDetail="true" />
+							<p:commandButton id="iconOnly" icon="ui-icon-trash"
+								actionListener="#{grille.supprimerCritere}" ajax="true"
+								update="@(form)">
+								<p:confirm header="Confirmation"
+									message="Voulez-vous vraiment supprimer le critère ?"
+									icon="ui-icon-trash" />
+								<f:param name="idcritere" value="#{critere.idcritere}" />
+							</p:commandButton>
 
-						<h:outputLabel value="Nombre de niveau :" style="font-weight:bold" />
-						<p:selectOneMenu id="nbNiveau" value="#{grille.nbDescripteur}"
-							style="width:125px">
-							<f:selectItems value="#{grille.numbers}" />
-							<p:ajax update="toUpdate" />
-						</p:selectOneMenu>
-					</h:panelGrid>
-				</p:panel>
-			</p:outputPanel>
-			<br />
-			<div class="ui-g">
-				<p:outputPanel id="toUpdate">
-					<div class="ui-g-12 ui-md-6 ui-lg-4">
-						<p:panel header="A" style="width:300px; height:250px;">
-							<h:panelGrid columns="1" cellpadding="3">
-								<h:outputLabel value="Poids :" style="font-weight:bold" />
-								<p:inputNumber value="#{grille.poids1}" decimalPlaces="0"
-									label="Poids" />
-
-								<h:outputLabel value="Description :" style="font-weight:bold" />
-								<p:inputTextarea counter="display"
-									maxlength="255" counterTemplate="{0} caractères restants."
-									autoResize="false" value="#{grille.texte1}" label="Description"/>
-								<h:outputText id="display" />
-								<!--  <p:inputText value="#{grille.texte1}" label="Description" /> -->
-							</h:panelGrid>
-						</p:panel>
-					</div>
-					<div class="ui-g-12 ui-md-6 ui-lg-4">
-						<p:panel header="B" style="width:300px; height:250px;">
-							<h:panelGrid columns="1" cellpadding="3">
-								<h:outputLabel value="Poids :" style="font-weight:bold" />
-								<p:inputNumber value="#{grille.poids2}" decimalPlaces="0"
-									label="Poids" />
-
-								<h:outputLabel value="Description :" style="font-weight:bold" />
-								<p:inputTextarea counter="display2"
-									maxlength="255" counterTemplate="{0} caractères restants."
-									autoResize="false" value="#{grille.texte2}" label="Description"/>
-								<h:outputText id="display2" />
-							</h:panelGrid>
-						</p:panel>
-					</div>
-					<div class="ui-g-12 ui-lg-4">
-						<p:panel header="C" style="width:300px; height:250px;"
-							rendered="#{grille.nbDescripteur > 2}">
-							<h:panelGrid columns="1" cellpadding="3">
-								<h:outputLabel value="Poids :" style="font-weight:bold" />
-								<p:inputNumber value="#{grille.poids3}" decimalPlaces="0"
-									label="Poids" />
-
-								<h:outputLabel value="Description :" style="font-weight:bold" />
-								<p:inputTextarea counter="display3"
-									maxlength="255" counterTemplate="{0} caractères restants."
-									autoResize="false" value="#{grille.texte3}" label="Description"/>
-								<h:outputText id="display3" />
-							</h:panelGrid>
-						</p:panel>
-					</div>
-					<div class="ui-g-12 ui-md-6 ui-lg-4">
-						<p:panel header="D" style="width:300px; height:250px;"
-							rendered="#{grille.nbDescripteur > 3}">
-							<h:panelGrid columns="1" cellpadding="3">
-								<h:outputLabel value="Poids :" style="font-weight:bold" />
-								<p:inputNumber value="#{grille.poids4}" decimalPlaces="0"
-									label="Poids" />
-
-								<h:outputLabel value="Description :" style="font-weight:bold" />
-								<p:inputTextarea counter="display4"
-									maxlength="255" counterTemplate="{0} caractères restants."
-									autoResize="false" value="#{grille.texte4}" label="Description"/>
-								<h:outputText id="display4" />
-							</h:panelGrid>
-						</p:panel>
-					</div>
-					<div class="ui-g-12 ui-md-6 ui-lg-4">
-						<p:panel header="E" style="width:300px; height:250px;"
-							rendered="#{grille.nbDescripteur > 4}">
-							<h:panelGrid columns="1" cellpadding="3">
-								<h:outputLabel value="Poids :" style="font-weight:bold" />
-								<p:inputNumber value="#{grille.poids5}" decimalPlaces="0"
-									label="Poids" />
-
-								<h:outputLabel value="Description :" style="font-weight:bold" />
-								<p:inputTextarea counter="display5"
-									maxlength="255" counterTemplate="{0} caractères restants."
-									autoResize="false" value="#{grille.texte5}" label="Description"/>
-								<h:outputText id="display5" />
-							</h:panelGrid>
-						</p:panel>
-					</div>
-					<div class="ui-g-12 ui-lg-4">
-						<p:panel header="F" style="width:300px; height:250px;"
-							rendered="#{grille.nbDescripteur > 5}">
-							<h:panelGrid columns="1" cellpadding="3">
-								<h:outputLabel value="Poids :" style="font-weight:bold" />
-								<p:inputNumber value="#{grille.poids6}" decimalPlaces="0"
-									label="Poids" />
-
-								<h:outputLabel value="Description :" style="font-weight:bold" />
-								<p:inputTextarea counter="display6"
-									maxlength="255" counterTemplate="{0} caractères restants."
-									autoResize="false" value="#{grille.texte6}" label="Description"/>
-								<h:outputText id="display6" />
-							</h:panelGrid>
-						</p:panel>
-					</div>
-				</p:outputPanel>
-			</div>
-			<div>
-				<p:commandButton value="Ajouter" action="#{grille.onClicAdd}"
-					update="displayCriteres" icon="ui-icon-check" ajax="false" />
-			</div>
-			<br />
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Yes" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="No" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+						</p:column>
+					</p:dataTable>
+				</div>
+			</h:form>
 		</div>
-	</h:form>
-	<h:form>
-		<div id="displayCriteres">
-			<p:dataTable var="critere" value="#{grille.criteres}">
-				<p:column headerText="Nom">
-					<h:outputText value="#{critere.texte}" />
-				</p:column>
-
-				<p:column headerText="Coef">
-					<h:outputText value="#{critere.coefficient}" />
-				</p:column>
-
-				<p:column headerText="Catégorie">
-					<h:outputText value="#{critere.categorie}" />
-				</p:column>
-
-				<p:column headerText="Descripteur">
-					<p:commandButton id="DescBtn" value="Afficher les descripteurs"
-						type="button" />
-					<p:overlayPanel id="DescPanel" for="DescBtn" hideEffect="fade"
-						dynamic="true" style="width:600px">
-						<p:dataTable var="descripteur" value="#{critere.descripteurs}">
-							<p:column headerText="Niveau">
-								<h:outputText value="#{descripteur.niveau}" />
-							</p:column>
-							<p:column headerText="Poids">
-								<h:outputText value="#{descripteur.poids}" />
-							</p:column>
-							<p:column headerText="Description" style='width:400px'>
-								<h:outputText value="#{descripteur.texte}" />
-							</p:column>
-						</p:dataTable>
-					</p:overlayPanel>
-				</p:column>
-				<!-- ********la colonne supprimée*********** -->
-				<p:column style="width:32px;text-align:center"
-					rendered="#{not eventAccueil.disabledSiBrouillon}">
-					<p:growl id="message" showDetail="true" />
-					<p:commandButton id="iconOnly" icon="ui-icon-trash"
-						actionListener="#{grille.supprimerCritere}" ajax="true"
-						update="@(form)">
-						<p:confirm header="Confirmation"
-							message="Voulez-vous vraiment supprimer le critère ?"
-							icon="ui-icon-trash" />
-						<f:param name="idcritere" value="#{critere.idcritere}" />
-					</p:commandButton>
-
-					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-						<p:commandButton value="Yes" type="button"
-							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-						<p:commandButton value="No" type="button"
-							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-					</p:confirmDialog>
-				</p:column>
-			</p:dataTable>
-		</div>
-		<div>
-			<p:commandButton value="Enregistrer" action="#{grille.onClicSave}"
-				ajax="false" />
-		</div>
-	</h:form>
+	</div>
 </h:body>
 
 </html>

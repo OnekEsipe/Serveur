@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Onek team</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+	<h:outputStylesheet library="css" name="menuevent.css" />
+</h:head>
+<h:body>
+	<div id="volet">
+		<p:menu style="background: #f1f1f1; color: #fff; border:none">
+			<p:submenu label="#{accueil.evenementChoisi}" style="text-align: center;">
+				<p:menuitem value="Accueil de l'événement" url="eventAccueil.xhtml" />
+				<p:menuitem value="Gestion de la grille" url="grille.xhtml" />
+				<p:menuitem value="Gestion des candidats" url="addCandidates.xhtml" />
+				<p:menuitem value="Gestion des jurys" url="addJury.xhtml" />
+				<p:menuitem value="Gestion des attributions"
+					url="attributionJuryCandidat.xhtml" />
+				<p:menuitem value="Statistiques" url="statistiques.xhtml" />
+				<p:menuitem value="Dupliquer l'événement" url="statistiques.xhtml" />
+				<p:menuitem value="Supprimer l'événement" url="statistiques.xhtml" />
+			</p:submenu>
+		</p:menu>
+	</div>
+</h:body>
+</html>

@@ -14,6 +14,5 @@ public interface EvaluationDao {
 	List<Evaluation> findByIdCandidate(int idCandidat);
 	List<Evaluation> findByIdJury(int idJury);
 	void deleteEvaluation(int idJury, int idCandidat);
-	void saveEvaluation(String nomCandidat, String prenomCandidat, int idevent, Jury jury, Date date);
 	public void saveEvaluation(Candidat candidat, Jury jury, Date date, int idevent);
 }

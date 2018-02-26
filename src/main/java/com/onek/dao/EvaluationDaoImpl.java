@@ -162,57 +162,6 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 			session.close();
 		}
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void saveEvaluation(String nomCandidat, String prenomCandidat, int idevent, Jury jury, Date date) {
-		Objects.requireNonNull(nomCandidat);
-		Objects.requireNonNull(prenomCandidat);
-		Objects.requireNonNull(jury);
-		Objects.requireNonNull(date);
-		if(idevent < 1) {
-			throw new IllegalArgumentException("id must be positive");
-		}
-		
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-		try {
-			transaction = session.beginTransaction();
-			// Creation de l'evaluation
-			Candidat candidat = (Candidat) session.createQuery(
-					"FROM Candidat WHERE idevent = :idevent AND nom = :nomCandidat AND prenom = :prenomCandidat")
-					.setParameter("idevent", idevent).setParameter("nomCandidat", nomCandidat)
-					.setParameter("prenomCandidat", prenomCandidat).getSingleResult();
-			Evaluation evaluation = new Evaluation();
-			evaluation.setCandidat(candidat);
-			evaluation.setCommentaire("");
-			evaluation.setDatedernieremodif(date);
-			evaluation.setJury(jury);
-			session.save(evaluation);
-
-			// Creation de notes (initialisé à -1) pour chaque criteres de l'evenement
-			List<Critere> criteres = (List<Critere>) session.createQuery("FROM Critere WHERE idevent = :idevent")
-					.setParameter("idevent", idevent).getResultList();
-			for (Critere critere : criteres) {
-				Note note = new Note();
-				note.setCommentaire("");
-				note.setCritere(critere);
-				note.setDate(date);
-				note.setEvaluation(evaluation);
-				note.setNiveau(-1);
-				session.save(note);
-			}
-			transaction.commit();
-			logger.info("Add evaluation done !");
-		} catch (RuntimeException e) {
-			if (transaction != null) {
-				transaction.rollback();
-			}
-			logger.error(this.getClass().getName(), e);
-		} finally {
-			session.close();
-		}
-	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -235,6 +184,7 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 			evaluation.setCommentaire("");
 			evaluation.setDatedernieremodif(date);
 			evaluation.setJury(jury);
+			evaluation.setIssigned(false);
 			session.save(evaluation);
 
 			// Creation de notes (initialisé à -1) pour chaque criteres de l'evenement

@@ -22,6 +22,7 @@ public class Descripteur implements Serializable {
 
 	private BigDecimal poids;
 
+	@Column(length = 500)
 	private String texte;
 
 	// bi-directional many-to-one association to Critere

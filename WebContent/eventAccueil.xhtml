@@ -25,22 +25,11 @@
 
 		<div class="ui-g">
 			<div class="ui-g-2">
-				<ul class="menu">
-					<li><a href="eventAccueil.xhtml">Accueil</a></li>
-					<li><a href="grille.xhtml">Gestion de la grille</a></li>
-					<li><a class="active" href="addCandidates.xhtml">Gestion
-							des Candidats</a></li>
-					<li><a href="addJury.xhtml">Gestion des Jurys</a></li>
-					<li><a href="attributionJuryCandidat.xhtml">Gestion des
-							Attributions</a></li>
-					<li></li>
-					<li><a href="statistiques.xhtml">Statistiques</a></li>
-
-				</ul>
+				<ui:include src="menuGauche.xhtml"></ui:include>
 			</div>
 			<br />
 			<div class="ui-g-9">
-				<div class="ui-g-7" style="padding-left:50px">
+				<div class="ui-g-7" style="padding-left: 50px">
 					<p:panel id="infoEvt" header="Infos evenements"
 						style="margin-bottom:20px">
 						<h:form style="width:1000px !important">
@@ -70,7 +59,7 @@
 									<f:selectItem itemLabel="Ouvert" itemValue="Ouvert" />
 									<f:selectItem itemLabel="Fermé" itemValue="Fermé" />
 								</p:selectOneMenu>
-								
+
 								<p:selectOneMenu value="#{eventAccueil.statut}"
 									style="width:125px" rendered="#{eventAccueil.visibleF}">
 									<f:selectItem itemLabel="Fermé" itemValue="Fermé" />
@@ -94,22 +83,22 @@
 
 								<p:commandButton value="Supprimer l'événement"
 									actionListener="#{eventAccueil.supprimerEvent}"
-									disabled="#{eventAccueil.disabledSiSupprime}" rendered="#{not eventAccueil.disabledSiSupprime}">
+									disabled="#{eventAccueil.disabledSiSupprime}"
+									rendered="#{not eventAccueil.disabledSiSupprime}">
 									<p:confirm header="Confirmation"
-										message="vous voulez vraiment supprimer l'événement"
+										message="Voulez-vous vraiment supprimer l'événement"
 										icon="ui-icon-trash" />
 								</p:commandButton>
-
-								<p:confirmDialog global="true" showEffect="fade"
-									hideEffect="fade">
-									<p:commandButton value="Yes" type="button"
+								<p:confirmDialog global="true">
+									<p:commandButton value="Oui" type="button"
 										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-									<p:commandButton value="No" type="button"
+									<p:commandButton value="Non" type="button"
 										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 								</p:confirmDialog>
 								<p:commandButton value="Réactiver"
 									actionListener="#{eventAccueil.buttonRecuperer}"
-									disabled="#{not eventAccueil.disabledSiSupprime}" ajax="false" rendered="#{eventAccueil.disabledSiSupprime}"/>
+									disabled="#{not eventAccueil.disabledSiSupprime}" ajax="false"
+									rendered="#{eventAccueil.disabledSiSupprime}" />
 							</h:panelGrid>
 						</h:form>
 					</p:panel>

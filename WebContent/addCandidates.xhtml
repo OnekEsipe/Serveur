@@ -10,7 +10,6 @@
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
-
 </h:head>
 <f:metadata>
 	<f:event type="preRenderView" listener="#{candidate.before}" />
@@ -20,12 +19,15 @@
 	<h:outputStylesheet library="css" name="candidate.css" />
 	<h:outputStylesheet library="css" name="accueil.css" />
 	<ui:include src="#{accueil.typeMenu}" />
+
+
+	<ui:include src="menuGauche.xhtml"></ui:include>
 	<br />
 	<br />
-	<p:outputLabel id="evenementChoisi" value="#{accueil.evenementChoisi}" />
 
 	<div class="ui-g">
-		<div class="ui-g-12">
+		<div class="ui-g-2"></div>
+		<div class="ui-g-9">
 			<div class="ui-g-6">
 				<p:panel id="ImporterCandidat" header="Importer des candidats"
 					style="margin-bottom:20px">
@@ -44,7 +46,7 @@
 				</p:panel>
 			</div>
 			<div class="ui-g-6">
-				<p:panel id="addcandidat" header="Ajout de Candidat"
+				<p:panel id="addcandidat" header="Ajouter un Candidat"
 					style="margin-bottom:20px">
 					<h:form>
 						<p:growl id="msgs" showDetail="true" />
@@ -61,69 +63,75 @@
 								placeholder="Entrer le prénom" size="20"
 								value="#{candidate.firstName}" />
 
-							<p:commandButton value="Valider" action="#{candidate.click}"
-								icon="ui-icon-check" update="tabCandidat" ajax="false" />
+							<p:commandButton value="Ajouter le candidat"
+								action="#{candidate.click}" icon="ui-icon-check"
+								update="tabCandidat" ajax="false" style="margin-top:7%;" />
 						</h:panelGrid>
 					</h:form>
 				</p:panel>
 			</div>
 		</div>
-		<h:form id="tabCandidat">
-			<div>
-				<!-- ************Tableau des candidat**************** -->
+		<div class="ui-g-2"></div>
+		<div class="ui-g">
+			<div class="ui-g-2"></div>
+			<div class="ui-g-9">
+				<h:form id="tabCandidat">
+					<!-- ************Tableau des candidats**************** -->
 
-				<p:dataTable var="candidat" value="#{candidate.candidats}"
-					scrollable="true" scrollHeight="300">
+					<p:dataTable var="candidat" value="#{candidate.candidats}"
+						scrollable="true" scrollHeight="300">
 
-					<!-- barre de recherche -->
-					<f:facet name="header">
+						<!-- barre de recherche -->
+						<f:facet name="header">
 						Liste des candidats de l'événement
 					</f:facet>
 
-					<p:column headerText="Nom" sortBy="#{candidat.nom}">
-						<h:outputText value="#{candidat.nom}" />
-					</p:column>
+						<p:column headerText="Nom" sortBy="#{candidat.nom}">
+							<h:outputText value="#{candidat.nom}" />
+						</p:column>
 
-					<p:column headerText="prénom" sortBy="#{candidat.prenom}">
-						<h:outputText value="#{candidat.prenom}" />
-					</p:column>
+						<p:column headerText="prénom" sortBy="#{candidat.prenom}">
+							<h:outputText value="#{candidat.prenom}" />
+						</p:column>
 
-					<!-- ********la colonne supprimée*********** -->
-					<p:column style="width:32px;text-align: center"
-						rendered="#{not eventAccueil.disabledSiBrouillon}">
-						<p:growl id="message" showDetail="true" />
-						<p:commandButton id="iconOnly" icon="ui-icon-trash"
-							actionListener="#{candidate.supprimerCandidat}" ajax="true"
-							update="@(form)">
-							<p:confirm header="Confirmation"
-								message="vous voulez vraiment supprimer le candidat"
-								icon="ui-icon-trash" />
+						<!-- ********la colonne supprimée*********** -->
+						<p:column style="width:32px;text-align: center"
+							rendered="#{not eventAccueil.disabledSiBrouillon}">
+							<p:growl id="message" showDetail="true" />
+							<p:commandButton id="iconOnly" icon="ui-icon-trash"
+								actionListener="#{candidate.supprimerCandidat}" ajax="true"
+								update="@(form)">
+								<p:confirm header="Confirmation"
+									message="Voulez-vous vraiment supprimer le candidat"
+									icon="ui-icon-trash" />
 
-							<f:param name="idcandidat" value="#{candidat.idcandidat}" />
-						</p:commandButton>
-
-						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-							<p:commandButton value="Yes" type="button"
-								styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+								<f:param name="idcandidat" value="#{candidat.idcandidat}" />
 							</p:commandButton>
-							<p:commandButton value="No" type="button"
-								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-						</p:confirmDialog>
-					</p:column>
-					<!-- ********fin*********** -->
-				</p:dataTable>
-			</div>
-		</h:form>
-	</div>
-	<h:form>
-		<p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
-			actionListener="#{candidate.retour}" />
-	</h:form>
 
-	<br />
-	<br />
-	<div id="errorCreationCandidate">
-		<h:outputText value="#{candidate.logInfo}" />
+							<p:confirmDialog global="true">
+								<p:commandButton value="Oui" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+								</p:commandButton>
+								<p:commandButton value="Non" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+						</p:column>
+						<!-- ********fin*********** -->
+					</p:dataTable>
+				</h:form>
+			</div>
+			<div class="ui-g-2"></div>
+		</div>
+		<div class="ui-g-2"></div>
+		<h:form>
+			<p:commandButton value="Retour" icon="ui-icon-arrowreturnthick-1-w"
+				actionListener="#{candidate.retour}" />
+		</h:form>
+
+		<br /> <br />
+		<div id="errorCreationCandidate">
+			<h:outputText value="#{candidate.logInfo}" />
+		</div>
 	</div>
 </h:body>
 </html>

@@ -23,11 +23,13 @@ import com.onek.dao.EvaluationDao;
 import com.onek.dao.EvenementDao;
 import com.onek.dao.JuryDao;
 import com.onek.dao.NoteDao;
+import com.onek.dao.SignatureDao;
 import com.onek.model.Candidat;
 import com.onek.model.Evaluation;
 import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Note;
+import com.onek.model.Signature;
 import com.onek.model.Utilisateur;
 import com.onek.resource.AccountResource;
 import com.onek.resource.CandidatResource;
@@ -38,6 +40,7 @@ import com.onek.resource.EvenementResource;
 import com.onek.resource.JuryResource;
 import com.onek.resource.NoteResource;
 import com.onek.resource.PasswordModify;
+import com.onek.resource.SignatureResource;
 import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Encode;
 import com.onek.utils.StatutEvenement;
@@ -67,6 +70,9 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 
 	@Autowired
 	private JuryService juryService;
+	
+	@Autowired
+	private SignatureDao signatureDao;
 
 	@Override
 	public Optional<EvenementResource> export(String idEvent, String login) {
@@ -178,9 +184,19 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			checkDate = true;
 		}
 		evaluation.setCommentaire(evaluationResource.getComment());
-		evaluation.setDatedernieremodif(evaluationResource.getDateLastChange());
-		// evaluation.setSignature(evaluationResource.getSignature()); // TODO
-		evaluationDao.update(evaluation);
+		evaluation.setDatedernieremodif(evaluationResource.getDateLastChange());		
+		
+		// add signature
+		if (evaluationResource.getIsSigned() && !evaluation.getIssigned()) {
+			evaluation.setIssigned(true);
+			for(SignatureResource signatureResource : evaluationResource.getSignatures()) {
+				Signature signature = signatureResource.createSignature();
+				signature.setEvaluation(evaluation);
+				signatureDao.addSignature(signature);
+			}	
+		}
+		evaluationDao.update(evaluation);		
+		
 		List<NoteResource> noteResources = evaluationResource.getNotes();
 		List<Note> newMarks = new ArrayList<>();
 		List<Note> marksDB = evaluation.getNotes();
@@ -234,20 +250,21 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			return false;
 		}
 		Utilisateur user = userService.findByLogin(eventCode.getLogin());
-		Evenement event;
-		try {
-			event = eventDao.findByCode(eventCode.getEventCode());
-		} catch (NoResultException rse) {
-			throw new IllegalArgumentException();
+		Evenement event = eventDao.findByCode(eventCode.getEventCode());
+		if (event == null) {
+			throw new IllegalStateException("Le code événement est incorrect.");
 		}
 		if (!event.getIsopened()) {
-			return false;
+			throw new IllegalStateException("L'événement n'est pas ouvert à l'inscription.");
 		}
 		if (event.getIsdeleted()) {
 			return false;
 		}
 		if (event.getStatus().equals(StatutEvenement.FERME.toString())) {
 			return false;
+		}
+		if (juryDao.juryIsAssigned(user.getIduser(), event.getIdevent())) {
+			throw new IllegalStateException("Vous êtes déjà inscrit.");
 		}
 		Jury jury = new Jury();
 		jury.setUtilisateur(user);

@@ -18,11 +18,13 @@
 	<!-- Insertion du menu -->
 	<h:outputStylesheet library="css" name="accueil.css" />
 	<ui:include src="#{accueil.typeMenu}" />
+	<ui:include src="menuGauche.xhtml"></ui:include>
 	<br />
 	<br />
 	<p:outputLabel id="evenementChoisi" value="#{accueil.evenementChoisi}" />
 	<div class="ui-g">
-		<div class="ui-g-6">
+		<div class="ui-g-2"></div>
+		<div class="ui-g-4">
 			<h:form id="source">
 				<p:dataTable id="checkboxDT" var="utilisateur"
 					value="#{addjury.utilisateursAll}"
@@ -32,18 +34,15 @@
 					rowKey="#{utilisateur.nom}" style="margin-bottom:0"
 					scrollable="true" scrollHeight="400"
 					widgetVar="utilisateurallTable">
-
 					<f:facet name="header">
 						<p:outputPanel>
 							<div>
 								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
-
 								<p:inputText id="globalFilter"
 									onkeyup="PF('utilisateurallTable').filter()"
 									style="width:150px" placeholder="nom jury" />
 							</div>
 						</p:outputPanel>
-
 					</f:facet>
 					<p:column selectionMode="multiple"
 						style="width:16px;text-align:center" />
@@ -60,41 +59,31 @@
 					<p:commandButton process="checkboxDT"
 						actionListener="#{addjury.buttonAdd}" update="@(form)"
 						icon="ui-icon-circle-arrow-e" title="Icon Only" />
-
 				</div>
-
 			</h:form>
 		</div>
-
-
-		<div class="ui-g-6">
-		<h:form>
-						<!-- Debut liste jurys anonymes -->
-						<p:dataTable id="tabJurysAnos" var="utilisateursAno"
-							style="display:none;" value="#{addjury.utilisateursAnos}"
-							widgetVar="utilisateurTable2" scrollable="true"
-							scrollHeight="300" rowKey="#{utilisateursAno.nom}">
-
-							<!-- ********fin*********** -->
-							<p:column headerText="Nom">
-								<h:outputText value="#{utilisateursAno.nom}" />
-							</p:column>
-
-							<p:column headerText="Mot de passe">
-								<h:outputText value="#{utilisateursAno.motdepasse}" />
-							</p:column>
-						</p:dataTable>
-
-						<!-- Fin liste jurys anonymes -->
-
-
-			
+		<div class="ui-g-4">
+			<h:form>
+				<!-- Debut liste jurys anonymes -->
+				<p:dataTable id="tabJurysAnos" var="utilisateursAno"
+					style="display:none;" value="#{addjury.utilisateursAnos}"
+					widgetVar="utilisateurTable2" scrollable="true" scrollHeight="300"
+					rowKey="#{utilisateursAno.nom}">
+					<!-- ********fin*********** -->
+					<p:column headerText="Nom">
+						<h:outputText value="#{utilisateursAno.nom}" />
+					</p:column>
+					<p:column headerText="Mot de passe">
+						<h:outputText value="#{utilisateursAno.motdepasse}" />
+					</p:column>
+				</p:dataTable>
+				<!-- Fin liste jurys anonymes -->
 				<div class="ui-g">
 					<div class="ui-g-6">
 						<h:outputLabel for="juryAnonyme"
 							value="Ajouter des jurys anonymes : " />
-						<p:spinner id="juryAnonyme" value="#{addjury.juryAnonyme}"
-							min="0" max="999" size="1" />
+						<p:spinner id="juryAnonyme" value="#{addjury.juryAnonyme}" min="0"
+							max="999" size="1" />
 					</div>
 					<div class="ui-g-2">
 						<p:commandButton value="Ajouter" ajax="false"
@@ -106,7 +95,8 @@
 							<p:graphicImage id="icon" name="/image/csv.png" width="30" />
 							<p:dataExporter type="csv" target="tabJurysAnos"
 								fileName="liste_jurys" pageOnly="true" />
-							<p:tooltip for="icon" value="exporter la liste des jurys annonymes" position="top"/>
+							<p:tooltip for="icon"
+								value="exporter la liste des jurys annonymes" position="top" />
 						</h:commandLink>
 					</div>
 				</div>
@@ -120,15 +110,12 @@
 						Listes des jurys de l'événement
 					</f:facet>
 					<!-- ********fin*********** -->
-
 					<p:column headerText="Nom" sortBy="#{utilisateur.nom}">
 						<h:outputText value="#{utilisateur.nom}" />
 					</p:column>
-
 					<p:column headerText="prénom" sortBy="#{utilisateur.prenom}">
 						<h:outputText value="#{utilisateur.prenom}" />
 					</p:column>
-
 					<!-- ********la colonne supprimée*********** -->
 					<p:column style="width:32px;text-align:center"
 						rendered="#{not eventAccueil.disabledSiBrouillon}">
@@ -141,7 +128,6 @@
 								icon="ui-icon-trash" />
 							<f:param name="iduser" value="#{utilisateur.iduser}" />
 						</p:commandButton>
-
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 							<p:commandButton value="Yes" type="button"
 								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
