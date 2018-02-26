@@ -33,11 +33,17 @@ public class EvaluationResource implements Serializable {
 	@JsonProperty("Comment")
 	private String comment;
 	
+	@JsonProperty("IsSigned")
+	private Boolean isSigned;
+	
 	@JsonIgnore
 	private Date lastUpdatedDate;
 	
 	@JsonProperty("Criterias")
 	private final List<NoteResource> notes = new ArrayList<>();
+	
+	@JsonSetter("Signatures")
+	private List<SignatureResource> signatures;
 	
 	/* empty constructor */
 	public EvaluationResource() {
@@ -51,6 +57,7 @@ public class EvaluationResource implements Serializable {
 		idCandidate = evaluation.getCandidat().getIdcandidat();
 		comment = evaluation.getCommentaire();	
 		lastUpdatedDate = evaluation.getDatedernieremodif();
+		isSigned = evaluation.getIssigned();
 		for(Note note : evaluation.getNotes()) {
 			notes.add(new NoteResource(note));
 		}
@@ -96,6 +103,16 @@ public class EvaluationResource implements Serializable {
 	@JsonIgnore
 	public Integer getIdEvent() {
 		return idEvent;
+	}
+	
+	@JsonIgnore
+	public List<SignatureResource> getSignatures() {
+		return signatures;
+	}
+	
+	@JsonIgnore
+	public Boolean getIsSigned() {
+		return isSigned;
 	}
 	
 }

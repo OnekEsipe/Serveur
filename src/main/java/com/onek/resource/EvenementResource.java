@@ -24,11 +24,8 @@ public class EvenementResource implements Serializable {
 	@JsonIgnore
 	private final Date dateStop;
 
-	@JsonProperty("IsOpened")
-	private final Boolean isOpened;
-
-	@JsonProperty("IsSigned")
-	private final Boolean isSigned;
+	@JsonProperty("SigningNeeded")
+	private final Boolean signingNeeded;
 
 	@JsonProperty("Name")
 	private final String nom;
@@ -45,9 +42,8 @@ public class EvenementResource implements Serializable {
 	public EvenementResource(Evenement evenement) {
 		idEvent = evenement.getIdevent();
 		dateStart = evenement.getDatestart();
-		dateStop = evenement.getDatestop();
-		isOpened = evenement.getSigningneeded();
-		isSigned = evenement.getSigningneeded();
+		dateStop = evenement.getDatestop();	
+		signingNeeded = evenement.getSigningneeded();
 		nom = evenement.getNom();
 		for (Critere critere : evenement.getCriteres()) {
 			criteres.add(new CritereResource(critere));
