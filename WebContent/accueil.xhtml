@@ -41,53 +41,59 @@
 	<!-- ********fin*********** -->
 	<!--  Tableau des événements -->
 	<div class="ui-g">
-		<h:form>
-			<p:dataTable var="evenement" value="#{accueil.events}"
-				widgetVar="eventTable"
-				emptyMessage="aucun événement trouvé avec ce nom"
-				filteredValue="#{accueil.filteredevents}" scrollable="true"
-				scrollHeight="400" selectionMode="single"
-				selection="#{accueil.selectedevent}" rowKey="#{evenement.nom}">
+		<div class="ui-g-1"></div>
+		<div class="ui-g-10">
+			<h:form>
+				<p:dataTable var="evenement" value="#{accueil.events}"
+					widgetVar="eventTable"
+					emptyMessage="aucun événement trouvé avec ce nom"
+					filteredValue="#{accueil.filteredevents}" scrollable="true"
+					scrollHeight="400" selectionMode="single"
+					selection="#{accueil.selectedevent}" rowKey="#{evenement.nom}">
 
-				<!-- barre de recherche -->
-				<f:facet name="header">
-					<p:outputPanel>
-						<div>
-							<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
-							<p:inputText id="globalFilter"
-								onkeyup="PF('eventTable').filter()" style="width:150px"
-								placeholder="Filtrer titre" />
-						</div>
-					</p:outputPanel>
-				</f:facet>
-				<!-- ********fin*********** -->
-				<!-- des lignes cliquables dans le tableau -->
-				<p:ajax event="rowSelect" listener="#{accueil.onRowSelect}" />
-				<!-- ********fin*********** -->
+					<!-- barre de recherche -->
+					<f:facet name="header">
+						<p:outputPanel>
+							<div>
+								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+								<p:inputText id="globalFilter"
+									onkeyup="PF('eventTable').filter()" style="width:150px"
+									placeholder="Filtrer titre" />
+							</div>
+						</p:outputPanel>
+					</f:facet>
+					<!-- ********fin*********** -->
+					<!-- des lignes cliquables dans le tableau -->
+					<p:ajax event="rowSelect" listener="#{accueil.onRowSelect}" />
+					<!-- ********fin*********** -->
 
-				<p:column headerText="Titre événement" filterBy="#{evenement.nom}"
-					filterMatchMode="startsWith" filterStyle="display:none">
-					<h:outputText value="#{evenement.nom}" />
-				</p:column>
+					<p:column headerText="Titre événement" filterBy="#{evenement.nom}"
+						filterMatchMode="startsWith" filterStyle="display:none">
+						<h:outputText value="#{evenement.nom}" />
+					</p:column>
 
-				<p:column headerText="Statut">
-					<h:outputText value="#{evenement.status}" />
-				</p:column>
+					<p:column headerText="Statut">
+						<h:outputText value="#{evenement.status}" />
+					</p:column>
 
-				<p:column headerText="Date début">
-					<h:outputText value="#{evenement.datestart}" converter="javax.faces.DateTime"/>
-				</p:column>
+					<p:column headerText="Date début">
+						<h:outputText value="#{evenement.datestart}"
+							converter="javax.faces.DateTime" />
+					</p:column>
 
-				<p:column headerText="Date fin">
-					<h:outputText value="#{evenement.datestop}" converter="javax.faces.DateTime"/>
-				</p:column>
+					<p:column headerText="Date fin">
+						<h:outputText value="#{evenement.datestop}"
+							converter="javax.faces.DateTime" />
+					</p:column>
 
-				<p:column headerText="Supprimé" id="etatevent" rendered="#{accueil.visible}">
-					<h:outputText value="#{evenement.isDeleted()}" />
-				</p:column>
+					<p:column headerText="Supprimé" id="etatevent"
+						rendered="#{accueil.visible}">
+						<h:outputText value="#{evenement.isDeleted()}" />
+					</p:column>
 
-			</p:dataTable>
-		</h:form>
+				</p:dataTable>
+			</h:form>
+		</div>
 	</div>
 </h:body>
 </html>

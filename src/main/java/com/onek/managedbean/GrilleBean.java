@@ -172,10 +172,14 @@ public class GrilleBean {
 		criteres.remove(critere);
 	}
 
-	public void onClicSave() {
-		Navigation.redirect("eventAccueil.xhtml");
+	public void onClicAddCritere() {
+		Navigation.redirect("addCritere.xhtml");
 	}
 
+	public void onClicReturn() {
+		Navigation.redirect("grille.xhtml");
+	}
+	
 	public String getNom() {
 		return nom;
 	}
