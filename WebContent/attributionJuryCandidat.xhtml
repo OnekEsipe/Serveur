@@ -24,8 +24,7 @@
 	<div class="ui-g">
 		<div class="ui-g-2"></div>
 		<div class="ui-g-10">
-			<p:outputLabel id="evenementChoisi"
-				value="#{accueil.evenementChoisi}" />
+
 			<div class="ui-g">
 				<div class="ui-g-8">
 					<p:panel id="AttributionAutomatique"
@@ -61,7 +60,9 @@
 			<!-- Attribution manuel -->
 			<h4>#{attributionjc.avertissementMessage}</h4>
 			<div class="ui-g">
-				<h:form id="tableCheckBox">
+			<h4>#{attributionjc.avertMessage}</h4>
+			<br />
+				<h:form id="tableCheckBox" rendered="#{attributionjc.juryexist}">
 					<div class="tableau">
 						<table>
 							<thead>
@@ -89,17 +90,19 @@
 					</div>
 					<br />
 
-					<div class="ui-g">
-						<div class="ui-g-6"></div>
-						<div class="ui-g-6">
-							<p:commandButton value="Enregistrer les attributions"
-								actionListener="#{attributionjc.validationButton}" />
-							<p:commandButton value="Vider les attributions"
-								actionListener="#{attributionjc.clearButton}"
-								update="tableCheckBox" />
-						</div>
-					</div>
-				</h:form>
+
+				</h:form>				
+			</div>
+			
+			<div class="ui-g">
+				<div class="ui-g-6"></div>
+				<div class="ui-g-6">
+					<p:commandButton value="Enregistrer les attributions"
+						actionListener="#{attributionjc.validationButton}" />
+					<p:commandButton value="Vider les attributions"
+						actionListener="#{attributionjc.clearButton}"
+						update="tableCheckBox" />
+				</div>
 			</div>
 		</div>
 	</div>

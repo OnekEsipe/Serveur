@@ -145,7 +145,6 @@ public class EventBean implements Serializable {
 	}	
 
 	public void click() {
-
 		if(name.isEmpty() || !validDate(date1, date2) || !validHour(hour1, hour2) ) {
 			logInfo = "Formulaire invalide, merci de vérifier vos saisies "+name.isEmpty()+" "+validDate(date1, date2)+" "+validHour(hour1, hour2)+
 					" "+date1.getTime()+" "+date2.getTime();
@@ -154,7 +153,7 @@ public class EventBean implements Serializable {
 		addEvent();
 		addEvenementCode();
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", event.getIdevent());
-		Navigation.redirect("grille.xhtml");
+		Navigation.redirect("accueil.xhtml");
 	}
 
 	private void addEvenementCode() {
