@@ -98,8 +98,8 @@ public class ApplicationController {
 			if (!applicationService.subscribe(eventCode)) {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		} catch (IllegalStateException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
