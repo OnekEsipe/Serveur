@@ -86,7 +86,7 @@ public class UsersBean {
 		iduser = Integer.valueOf(params.get("iduser"));
 		Utilisateur user = userService.findUserById(iduser);
 		user.setIsdeleted(false);		
-		userService.editUser(user);		
+		userService.updateUserInfos(user);		
 	}
 	
 	public void createUser() {

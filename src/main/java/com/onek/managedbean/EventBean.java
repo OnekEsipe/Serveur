@@ -1,6 +1,7 @@
 package com.onek.managedbean;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.faces.context.FacesContext;
@@ -50,11 +51,15 @@ public class EventBean implements Serializable {
 	}
 
 	private void emptyForm() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0, 1);
+		setHour1(cal.getTime());
 		setName("");
-		setDate1(null);
-		setDate2(null);
-		setHour1(null);
-		setHour2(null);
+		setDate1(new Date());
+		setDate2(new Date());
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 23, 59);
+		setHour2(cal.getTime());
 		setIsOpened(false);
 		setIsSigned(false);
 	}
@@ -140,7 +145,6 @@ public class EventBean implements Serializable {
 	}	
 
 	public void click() {
-
 		if(name.isEmpty() || !validDate(date1, date2) || !validHour(hour1, hour2) ) {
 			logInfo = "Formulaire invalide, merci de vérifier vos saisies "+name.isEmpty()+" "+validDate(date1, date2)+" "+validHour(hour1, hour2)+
 					" "+date1.getTime()+" "+date2.getTime();
@@ -149,7 +153,7 @@ public class EventBean implements Serializable {
 		addEvent();
 		addEvenementCode();
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", event.getIdevent());
-		Navigation.redirect("grille.xhtml");
+		Navigation.redirect("accueil.xhtml");
 	}
 
 	private void addEvenementCode() {

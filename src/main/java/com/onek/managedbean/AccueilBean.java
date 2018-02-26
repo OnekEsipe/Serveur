@@ -168,7 +168,7 @@ public class AccueilBean implements Serializable {
 	public void onRowSelect(SelectEvent event) {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent",
 				selectedevent.getIdevent());
-		setEvenementChoisi("Nom de l'évènement selectionné : " + selectedevent.getNom());
+		setEvenementChoisi(selectedevent.getNom());
 		Navigation.redirect("eventAccueil.xhtml");
 	}
 

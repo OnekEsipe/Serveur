@@ -47,11 +47,6 @@ public class UserServiceImpl implements UserService, Serializable {
 	public List<Utilisateur> getAllUsers() {
 		return userDao.getAllUsers();
 	}
-	
-	@Override
-	public List<Utilisateur> findAllJurys() {
-		return userDao.getAllUsers();
-	}
  
 	@Override
 	public void deleteUser(int idUser) {
@@ -127,10 +122,7 @@ public class UserServiceImpl implements UserService, Serializable {
 	public Utilisateur findByMail(String mail) {
 		return userDao.findByMail(mail);
 	}
-	@Override
-	public void editUser(Utilisateur user) {
-		userDao.editUser(user);
-	}
+
 	@Override
 	public Utilisateur findUserById(int iduser) {
 		return userDao.findUserById(iduser);
