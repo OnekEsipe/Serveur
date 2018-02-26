@@ -8,12 +8,12 @@
         <property name="port" value="587"/> 						<!-- mail.smtp.port -->
         <property name="auth" value="true"/>						<!-- mail.smtp.auth -->
         <property name="starttlsEnable" value="true"/>				<!-- mail.smtp.starttls.enable -->
-        <property name="host" value="smtp.mail.yahoo.com"/>				<!-- mail.smtp.host -->
-        <property name="user" value="onek2018esipse@yahoo.com"/>		<!-- mail.smtp.user -->
+        <property name="host" value="smtp.mail.yahoo.com"/>			<!-- mail.smtp.host -->
+        <property name="user" value="onek2018esipe@yahoo.com"/>		<!-- mail.smtp.user -->
         <property name="password" value="o_nek2018'"/>				<!-- mail.smtp.password -->
-        <property name="from" value="onek2018esipse@yahoo.com"/>		<!-- mail.from -->
+        <property name="from" value="onek2018esipe@yahoo.com"/>		<!-- mail.from -->
         <!-- Par défaut : http://localhost:8080/serveur/resetpassword.xhtml -->
-        <property name="url" value="http://localhost:8080/serveur/resetpassword.xhtml"/>
+        <property name="url" value="https://173.249.25.49/serveur/resetpassword.xhtml"/>
 	</bean>	 
 	
 </beans>
