@@ -46,7 +46,7 @@ public class AttributionJCBean implements Serializable {
 
 	private int methode;
 	private int randomX;
-	private boolean juryexist;
+
 	private List<Candidat> candidatsJurys;
 	private boolean isopen;
 	private String status = "";
@@ -59,7 +59,7 @@ public class AttributionJCBean implements Serializable {
 	private List<MessageAttrib> messageAttrib;
 	private String avertissementMessage;
 	private String avertMessage;
-	
+
 	public String getAvertMessage() {
 		return avertMessage;
 	}
@@ -69,14 +69,6 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	
-	public boolean isJuryexist() {
-		return juryexist;
-	}
-
-	public void setJuryexist(boolean juryexist) {
-		this.juryexist = juryexist;
-	}
-
 	public boolean isIsopen() {
 		return isopen;
 	}
@@ -102,7 +94,7 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	public void before(ComponentSystemEvent e) {
-		juryexist=false;
+		
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
 				Navigation.redirect("index.xhtml");
@@ -122,7 +114,7 @@ public class AttributionJCBean implements Serializable {
 			// l'attribution deja realisee + init du message d'avertissement
 			status = evenement.findById(idEvent).getStatus();
 			avertissementMessage = "";
-			avertMessage="";
+			avertMessage = "";
 			if (!status.equals("Brouillon")) {
 				isopen = false;
 				avertissementMessage = "Status de l'événement: " + status
@@ -130,8 +122,9 @@ public class AttributionJCBean implements Serializable {
 			}
 			candidatsJurys = candidatservice.findCandidatesByEvent(idEvent);
 			juryList = juryservice.findJurysByIdevent(idEvent);
+
 			if (!juryList.isEmpty()) {
-				juryexist=true;
+				
 				associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 
 				for (Entry<Jury, List<Candidat>> entryAssociation : associatedJurysCandidates.entrySet()) {
@@ -144,7 +137,7 @@ public class AttributionJCBean implements Serializable {
 				}
 				displayAttrib();
 			}else {
-				avertMessage = "Aucun jury n'est affecté à cet événement";
+				avertMessage="Aucun jury n'est attribué à cet événement";
 			}
 		}
 	}
