@@ -10,7 +10,7 @@
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
-
+	<h:outputStylesheet library="css" name="attrib.css" />
 </h:head>
 <f:metadata>
 	<f:viewParam name="event" value="#{attributionjc.idEvent}" />
@@ -19,20 +19,18 @@
 <h:body>
 	<!-- Insertion du menu -->
 	<h:outputStylesheet library="css" name="accueil.css" />
-	<ui:include src="#{accueil.typeMenu}" />
-	<ui:include src="menuGauche.xhtml" />
+	<ui:include src="menu.xhtml" />
 	<br />
 	<br />
 	<p:outputLabel id="evenementChoisi" value="#{accueil.evenementChoisi}" />
 	<div class="ui-g">
 		<!-- Attribution automatique -->
 		<div class="ui-g-6">
-			<p:panel id="AttributionAutomatique"
-				rendered="#{attributionjc.isopen}"
+			<p:panel id="AttributionAutomatique" rendered="#{attributionjc.isopen}"
 				header="Attribuer des cadidats automatiquement" style="height:100px">
-				<h:form>
+				<h:form >
 					<div class="ui-g-2">
-						<p:outputLabel>Nombre de </p:outputLabel>
+					<p:outputLabel>Nombre de </p:outputLabel>
 					</div>
 
 					<div class="ui-g-4">
@@ -85,33 +83,16 @@
 											value="#{attributionjc.attribJC[jury][candidat]}" /></td>
 								</ui:repeat>
 							</tr>
-						</thead>
-						<tbody>
-							<ui:repeat value="#{attributionjc.jurys.entrySet().toArray()}"
-								var="jury">
-								<tr>
-									<td>#{jury.value.nom} #{jury.value.prenom}</td>
-									<ui:repeat
-										value="#{attributionjc.candidats.keySet().toArray()}"
-										var="candidat">
-										<td align="center"><p:selectBooleanCheckbox
-												value="#{attributionjc.attribJC[jury.key][candidat]}" /></td>
-									</ui:repeat>
-								</tr>
-							</ui:repeat>
-						</tbody>
-					</table>
+						</ui:repeat>
+					</tbody>
+				</table>
 				</div>
 				<br />
 				<br />
 				<div class="ui-g">
-
 					<p:commandButton value="Enregistrer les attributions"
 						actionListener="#{attributionjc.validationButton}" />
-
 				</div>
-				<br />
-				
 			</h:form>
 		</div>
 	</div>
