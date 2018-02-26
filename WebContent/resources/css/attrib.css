@@ -13,13 +13,3 @@ table {
 th, td {
     padding: 15px;
 }
-th{
-	word-spacing: 5px;
-}
-table thead{
-	display: block;
-	position: fixed;
-}
-table tbody {
-	display: block;
-}
