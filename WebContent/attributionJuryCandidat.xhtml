@@ -26,31 +26,37 @@
 		<div class="ui-g-10">
 			<p:outputLabel id="evenementChoisi"
 				value="#{accueil.evenementChoisi}" />
-			<p:panel id="AttributionAutomatique"
-				rendered="#{attributionjc.isopen}"
-				header="Attribuer des cadidats automatiquement" style="height:100px">
-				<h:form>
-					<div class="ui-g-2">
-						<p:outputLabel>Nombre de </p:outputLabel>
-					</div>
-					<div class="ui-g-4">
-						<p:selectOneMenu id="methode" value="#{attributionjc.methode}"
-							style="width:125px">
-							<f:selectItem itemLabel="Jury par Candidat" itemValue="1" />
-							<f:selectItem itemLabel="Candidat par Jury" itemValue="2" />
-						</p:selectOneMenu>
-					</div>
-					<div class="ui-g-2">
-						<p:spinner value="#{attributionjc.randomX}" min="1" max="99"
-							size="1" />
-					</div>
-					<div class="ui-g-4">
-						<p:commandButton value="Attribuer" id="withIcon"
-							icon="ui-icon-refresh" update="tableCheckBox"
-							actionListener="#{attributionjc.attributionAutomatique}" />
-					</div>
-				</h:form>
-			</p:panel>
+			<div class="ui-g">
+				<div class="ui-g-8">
+					<p:panel id="AttributionAutomatique"
+						rendered="#{attributionjc.isopen}"
+						header="Attribuer des cadidats automatiquement"
+						style="height:100px">
+						<h:form>
+							<div class="ui-g-2">
+								<p:outputLabel>Nombre de </p:outputLabel>
+							</div>
+							<div class="ui-g-4">
+								<p:selectOneMenu id="methode" value="#{attributionjc.methode}"
+									style="width:125px">
+									<f:selectItem itemLabel="Jury par Candidat" itemValue="1" />
+									<f:selectItem itemLabel="Candidat par Jury" itemValue="2" />
+								</p:selectOneMenu>
+							</div>
+							<div class="ui-g-2">
+								<p:spinner value="#{attributionjc.randomX}" min="1" max="99"
+									size="1" />
+							</div>
+							<div class="ui-g-4">
+								<p:commandButton value="Attribuer" id="withIcon"
+									icon="ui-icon-refresh" update="tableCheckBox"
+									actionListener="#{attributionjc.attributionAutomatique}" />
+							</div>
+						</h:form>
+					</p:panel>
+				</div>
+			</div>
+
 			<br />
 			<!-- Attribution manuel -->
 			<h4>#{attributionjc.avertissementMessage}</h4>
@@ -82,10 +88,16 @@
 						</table>
 					</div>
 					<br />
-					<br />
+
 					<div class="ui-g">
-						<p:commandButton value="Enregistrer les attributions"
-							actionListener="#{attributionjc.validationButton}" />
+						<div class="ui-g-6"></div>
+						<div class="ui-g-6">
+							<p:commandButton value="Enregistrer les attributions"
+								actionListener="#{attributionjc.validationButton}" />
+							<p:commandButton value="Vider les attributions"
+								actionListener="#{attributionjc.clearButton}"
+								update="tableCheckBox" />
+						</div>
 					</div>
 				</h:form>
 			</div>
