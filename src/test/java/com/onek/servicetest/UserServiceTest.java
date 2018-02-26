@@ -2,6 +2,8 @@ package com.onek.servicetest;
 
 import static org.junit.Assert.*;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +20,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.onek.model.Evenement;
 import com.onek.model.Utilisateur;
+import com.onek.service.EvenementService;
 import com.onek.service.UserService;
+import com.onek.utils.Encode;
 
 @ContextConfiguration(locations = "classpath:application-test-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,6 +30,9 @@ public class UserServiceTest {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private EvenementService eventService;
 
 	private Utilisateur user;
 	private List<Utilisateur> users = new ArrayList<>();
@@ -87,6 +94,16 @@ public class UserServiceTest {
 		userService.addUser(null);
 	}
 	
+	@Test(expected=IllegalStateException.class)
+	public void testaddUserLoginExist() {
+		userService.addUser(user);
+	}
+	
+	@Test(expected=IllegalStateException.class)
+	public void testaddUserMailExist() {
+		userService.addUser(user);
+	}
+	
 	@Test(expected=IllegalArgumentException.class)
 	public void testgetAllUsersExceptCurrentInvalidId() {
 		userService.getAllUsersExceptCurrentAndAnonymous(-1);
@@ -122,10 +139,6 @@ public class UserServiceTest {
 		userService.findByMail(null);
 	}
 	
-	@Test(expected=NullPointerException.class)
-	public void testeditUserNull() {
-		userService.editUser(null);
-	}
 	@Test(expected=IllegalArgumentException.class)
 	public void testfindUserByIdInvalidId() {
 		userService.findUserById(-1);
@@ -162,6 +175,11 @@ public class UserServiceTest {
 	}
 	
 	@Test
+	public void testuserExistAndCorrectPasswordKO4() {
+		assertFalse(userService.userExistAndCorrectPassword("aa",""));
+	}
+	
+	@Test
 	public void testauthentificationKO1() {
 		assertFalse(userService.authentification("a","a"));
 	}
@@ -188,12 +206,12 @@ public class UserServiceTest {
 
 	@Test(expected=NoResultException.class)
 	public void testfindUserByIdKO() {
-		assertNull(userService.findUserById(Integer.MAX_VALUE));
+		userService.findUserById(Integer.MAX_VALUE);
 	}
 	
 	/*
 	 * TESTS DE TRANSACTIONS REUSSIES
-	 * TODO
+	 * 
 	 */
 
 	@Test
@@ -222,7 +240,18 @@ public class UserServiceTest {
 
 	@Test
 	public void testuserExistAndCorrectPasswordOK() {
+		Utilisateur user = userService.findByLogin("bb");
 		assertTrue(userService.userExistAndCorrectPassword(user.getLogin(),user.getMotdepasse()));
+	}
+	
+	@Test
+	public void testuserExistAndCorrectPasswordOK2() throws NoSuchAlgorithmException, UnsupportedEncodingException {
+
+		user.setDroits("A");
+		user.setMotdepasse("a");
+		userService.updateUserInfos(user);
+		user = userService.findByLogin(user.getLogin());
+		assertTrue(userService.userExistAndCorrectPassword(user.getLogin(),Encode.sha1("a")));
 	}
 	
 	@Test
@@ -248,6 +277,68 @@ public class UserServiceTest {
 		assertNotNull(user);
 		assertEquals(user.getIduser(), users.get(0).getIduser());
 	}
-
+	
+	@Test
+	public void testupdateUserInfos() {
+		String login = user.getLogin();
+		user.setMail((login+login.charAt(0)+formatMail));
+		user.setLogin(login+login.charAt(0));
+		userService.updateUserInfos(user);
+		Utilisateur userupdated = userService.findUserById(user.getIduser()); //On recupère le nouvel objet mis a jour
+		
+		assertEquals(user.getIduser(), userupdated.getIduser());
+		assertEquals(userupdated.getMail(), login+login.charAt(0)+formatMail);
+		assertEquals(userupdated.getLogin(), login+login.charAt(0));	
+		
+		//On remet l'objet dans son etat initial
+		user.setLogin(login);
+		user.setMail(login+formatMail);
+		userService.updateUserInfos(user);
+	}
+	
+	@Test
+	public void testaddJurysAnonymes() {
+		
+		List<Utilisateur> jurysAnonymes = new ArrayList<>();
+		
+		int debut = users.size();
+		int intervalle = 10;
+		int nb = debut + intervalle ;
+		for(int i = debut; i < nb; i++) {
+			Utilisateur user = new Utilisateur();
+			user.setDroits("A");
+			user.setLogin("jury"+i);
+			user.setNom("jury"+i);
+			user.setIsdeleted(false);
+			jurysAnonymes.add(user);
+		}
+		
+		//Faudra au moins un evenement de créé (de id=1) pour que ce test fonctionne 
+		Evenement event = eventService.findById(1);
+		userService.addJurysAnonymes(jurysAnonymes, event);
+		assertEquals(users.size() + intervalle, userService.getAllUsers().size());
+	}
+	
+	@Test
+	public void testdeleteUser() {
+		int iddeleted = user.getIduser();
+		userService.deleteUser(iddeleted);
+		assertTrue(userService.findUserById(iddeleted).getIsdeleted());
+		
+	}
+	
+	@Test
+	public void testaddUser() {
+		Utilisateur adduser = new Utilisateur();
+		String label = "azerty"+users.size();
+		adduser.setLogin(label);
+		adduser.setMail(label+formatMail);
+		adduser.setNom(label);
+		adduser.setMotdepasse(label);
+		userService.addUser(adduser);
+		Utilisateur us = userService.findByLogin(label);
+		assertNotNull(us);
+		assertEquals(us.getLogin(), label);
+	}
 
 }

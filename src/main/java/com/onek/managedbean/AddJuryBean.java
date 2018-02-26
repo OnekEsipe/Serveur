@@ -135,7 +135,7 @@ public class AddJuryBean implements Serializable {
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			utilisateurs = juryService.listJurysByEvent(idEvent);
-			utilisateursAll = userService.findAllJurys();
+			utilisateursAll = userService.getAllUsers();
 			for (Utilisateur utilisateur : utilisateurs) {
 				utilisateursAll.remove(utilisateur);
 			}
