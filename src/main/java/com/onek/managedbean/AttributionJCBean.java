@@ -68,7 +68,6 @@ public class AttributionJCBean implements Serializable {
 		this.avertMessage = avertMessage;
 	}
 
-	
 	public boolean isIsopen() {
 		return isopen;
 	}
@@ -94,7 +93,7 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	public void before(ComponentSystemEvent e) {
-		
+
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
 				Navigation.redirect("index.xhtml");
@@ -114,7 +113,7 @@ public class AttributionJCBean implements Serializable {
 			// l'attribution deja realisee + init du message d'avertissement
 			status = evenement.findById(idEvent).getStatus();
 			avertissementMessage = "";
-			avertMessage = "";
+			
 			if (!status.equals("Brouillon")) {
 				isopen = false;
 				avertissementMessage = "Status de l'événement: " + status
@@ -123,22 +122,17 @@ public class AttributionJCBean implements Serializable {
 			candidatsJurys = candidatservice.findCandidatesByEvent(idEvent);
 			juryList = juryservice.findJurysByIdevent(idEvent);
 
-			if (!juryList.isEmpty()) {
-				
-				associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
+			associatedJurysCandidates = juryservice.associatedJurysCandidatesByEvent(juryList, idEvent);
 
-				for (Entry<Jury, List<Candidat>> entryAssociation : associatedJurysCandidates.entrySet()) {
-					List<Candidat> candidatesList = entryAssociation.getValue();
-					LinkedHashMap<Candidat, Boolean> candidatesPreChecked = new LinkedHashMap<>();
-					for (Candidat candidatAttributed : candidatesList) {
-						candidatesPreChecked.put(candidatAttributed, true);
-					}
-					attribJC.put(entryAssociation.getKey(), candidatesPreChecked);
+			for (Entry<Jury, List<Candidat>> entryAssociation : associatedJurysCandidates.entrySet()) {
+				List<Candidat> candidatesList = entryAssociation.getValue();
+				LinkedHashMap<Candidat, Boolean> candidatesPreChecked = new LinkedHashMap<>();
+				for (Candidat candidatAttributed : candidatesList) {
+					candidatesPreChecked.put(candidatAttributed, true);
 				}
-				displayAttrib();
-			}else {
-				avertMessage="Aucun jury n'est attribué à cet événement";
+				attribJC.put(entryAssociation.getKey(), candidatesPreChecked);
 			}
+			displayAttrib();
 		}
 	}
 

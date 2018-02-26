@@ -60,11 +60,10 @@
 			<!-- Attribution manuel -->
 			<h4>#{attributionjc.avertissementMessage}</h4>
 			<div class="ui-g">
-				<h4>#{attributionjc.avertMessage}</h4>
-				<br />
-				<h:form id="tableCheckBox" >
+
+				<h:form id="tableCheckBox">
 					<div class="tableau">
-						<table >
+						<table>
 							<thead>
 								<tr>
 									<th>Jurys/Candidats</th>
@@ -89,23 +88,20 @@
 						</table>
 					</div>
 					<br />
-
+					<div class="ui-g">
+						<div class="ui-g-6"></div>
+						<div class="ui-g-6">
+							<p:commandButton value="Enregistrer les attributions"
+								actionListener="#{attributionjc.validationButton}" />
+							<p:commandButton value="Vider les attributions"
+								actionListener="#{attributionjc.clearButton}"
+								update="tableCheckBox" />
+						</div>
+					</div>
 
 				</h:form>
 			</div>
-
-			<div class="ui-g">
-				<div class="ui-g-6"></div>
-				<div class="ui-g-6">
-					<p:commandButton value="Enregistrer les attributions"
-						actionListener="#{attributionjc.validationButton}" />
-					<p:commandButton value="Vider les attributions"
-						actionListener="#{attributionjc.clearButton}"
-						update="tableCheckBox" />
-				</div>
-			</div>
 		</div>
 	</div>
-
 </h:body>
 </html>
