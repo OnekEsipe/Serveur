@@ -60,9 +60,8 @@
 			<!-- Attribution manuel -->
 			<h4>#{attributionjc.avertissementMessage}</h4>
 			<div class="ui-g">
-			<h4>#{attributionjc.avertMessage}</h4>
-			<br />
-				<h:form id="tableCheckBox" rendered="#{attributionjc.juryexist}">
+
+				<h:form id="tableCheckBox">
 					<div class="tableau">
 						<table>
 							<thead>
@@ -89,8 +88,16 @@
 						</table>
 					</div>
 					<br />
-
-
+					<div class="ui-g">
+						<div class="ui-g-6"></div>
+						<div class="ui-g-6">
+							<p:commandButton value="Enregistrer les attributions"
+								actionListener="#{attributionjc.validationButton}" />
+							<p:commandButton value="Vider les attributions"
+								actionListener="#{attributionjc.clearButton}"
+								update="tableCheckBox" />
+						</div>
+					</div>
 				</h:form>				
 			</div>
 			
@@ -103,9 +110,10 @@
 						actionListener="#{attributionjc.clearButton}"
 						update="tableCheckBox" rendered="#{attributionjc.juryexist}"/>
 				</div>
+
+				</h:form>
 			</div>
 		</div>
 	</div>
-
 </h:body>
 </html>

@@ -19,4 +19,5 @@ public interface UserService {
 	public boolean mailExist(String mail);
 	public Utilisateur findByMail(String mail);
 	public Utilisateur findUserById(int iduser);
+	public Utilisateur findByToken(String token);
 }

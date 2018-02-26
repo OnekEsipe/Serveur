@@ -284,4 +284,27 @@ public class UserDaoImpl implements UserDao, Serializable {
 		session.getTransaction().commit();
 		session.close();
 	}
+
+	@Override
+	public Utilisateur findByToken(String token) {
+		Objects.requireNonNull(token);
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		Utilisateur user = null;
+		try {
+			transaction = session.beginTransaction();
+			user = (Utilisateur) session.createQuery("from Utilisateur where token = :token").setParameter("token", token)
+					.getSingleResult();
+			transaction.commit();
+			logger.info("Find user by token done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		} finally {
+			session.close();
+		}
+		return user;
+	}
 }
