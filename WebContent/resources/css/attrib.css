@@ -13,3 +13,12 @@ table {
 th, td {
     padding: 15px;
 }
+th{
+	background: #f1f1f1; 
+	
+	overflow: auto;
+	
+}
+.tableau{
+	max-height: 40em; max-width: 68em; overflow: auto;
+}
