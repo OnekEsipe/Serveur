@@ -34,7 +34,7 @@ public class GrilleBean {
 	private List<Critere> criteres = new ArrayList<>();
 	private List<Integer> numbers = new ArrayList<>();
 	private final BigDecimal ref = new BigDecimal(1);
-	
+
 	private int nbDescripteur;
 
 	private String nom;
@@ -81,8 +81,6 @@ public class GrilleBean {
 		}
 	}
 
-
-
 	public void onClicAdd() {
 		Critere c = new Critere();
 		c.setDescripteurs(new ArrayList<>());
@@ -91,23 +89,19 @@ public class GrilleBean {
 		c.setCoefficient(coefficient);
 		c.setTexte(nom);
 		Descripteur d;
-		if (texte1 != null && !texte1.isEmpty() && poids1 != null && poids1.compareTo(ref) >= 0) {
-			d = new Descripteur();
-			d.setNiveau("A");
-			d.setPoids(poids1);
-			d.setTexte(texte1);
-			d.setCritere(c);
-			c.addDescripteur(d);
-		}
-		if (texte2 != null && !texte2.isEmpty() && poids2 != null && poids2.compareTo(ref) >= 0) {
-			d = new Descripteur();
-			d.setNiveau("B");
-			d.setPoids(poids2);
-			d.setTexte(texte2);
-			d.setCritere(c);
-			c.addDescripteur(d);
-		}
-		if (texte3 != null && !texte3.isEmpty() && poids3 != null && poids3.compareTo(ref) >= 0) {
+		d = new Descripteur();
+		d.setNiveau("A");
+		d.setPoids(poids1);
+		d.setTexte(texte1);
+		d.setCritere(c);
+		c.addDescripteur(d);
+		d = new Descripteur();
+		d.setNiveau("B");
+		d.setPoids(poids2);
+		d.setTexte(texte2);
+		d.setCritere(c);
+		c.addDescripteur(d);
+		if (nbDescripteur > 2) {
 			d = new Descripteur();
 			d.setNiveau("C");
 			d.setPoids(poids3);
@@ -115,7 +109,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (texte4 != null && !texte4.isEmpty() && poids4 != null && poids4.compareTo(ref) >= 0) {
+		if (nbDescripteur > 3) {
 			d = new Descripteur();
 			d.setNiveau("D");
 			d.setPoids(poids4);
@@ -123,7 +117,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (texte5 != null && !texte5.isEmpty() && poids5 != null && poids5.compareTo(ref) >= 0) {
+		if (nbDescripteur > 4) {
 			d = new Descripteur();
 			d.setNiveau("E");
 			d.setPoids(poids5);
@@ -131,7 +125,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (texte6 != null && !texte6.isEmpty() && poids6 != null && poids6.compareTo(ref) >= 0) {
+		if (nbDescripteur > 5) {
 			d = new Descripteur();
 			d.setNiveau("F");
 			d.setPoids(poids5);
@@ -172,8 +166,12 @@ public class GrilleBean {
 		criteres.remove(critere);
 	}
 
-	public void onClicSave() {
-		Navigation.redirect("eventAccueil.xhtml");
+	public void onClicAddCritere() {
+		Navigation.redirect("addCritere.xhtml");
+	}
+
+	public void onClicReturn() {
+		Navigation.redirect("grille.xhtml");
 	}
 
 	public String getNom() {
