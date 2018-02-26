@@ -111,18 +111,6 @@
 								update="tableCheckBox" />
 						</div>
 					</div>
-				</h:form>				
-			</div>
-			
-			<div class="ui-g">
-				<div class="ui-g-6"></div>
-				<div class="ui-g-6">
-					<p:commandButton value="Enregistrer les attributions"
-						actionListener="#{attributionjc.validationButton}" rendered="#{attributionjc.juryexist}"/>
-					<p:commandButton value="Vider les attributions"
-						actionListener="#{attributionjc.clearButton}"
-						update="tableCheckBox" rendered="#{attributionjc.juryexist}"/>
-				</div>
 
 					<p:dataTable id="attrib" var="attrib"
 						value="#{attributionjc.messageAttrib}" style="display:none;">
