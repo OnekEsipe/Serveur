@@ -21,7 +21,7 @@ public class EvaluationServiceImpl implements EvaluationService, Serializable {
   
 
 	@Override
-	public List<Evaluation> findByIdCandidate(Integer idCandidat) {
+	public List<Evaluation> findByIdCandidate(int idCandidat) {
 		return evaluationDao.findByIdCandidate(idCandidat);
 	}
   
@@ -36,7 +36,7 @@ public class EvaluationServiceImpl implements EvaluationService, Serializable {
 	}
 
 	@Override
-	public List<Evaluation> findByIdJury(Integer idJury) {
+	public List<Evaluation> findByIdJury(int idJury) {
 		return evaluationDao.findByIdJury(idJury);
 	}
 }
