@@ -20,4 +20,5 @@ public interface UserService {
 	public Utilisateur findByMail(String mail);
 	public Utilisateur findUserById(int iduser);
 	public Utilisateur findByToken(String token);
+	public List<Utilisateur> getAllUsersExceptDeleted();
 }

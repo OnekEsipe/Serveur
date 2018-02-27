@@ -280,7 +280,29 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		}
 		return utilisateursAnnonymes;
 	}
-
+	@Override
+	public void supprimerUtilisateurAnonyme(int iduser) {
+		if(iduser < 1 ) {
+			throw new IllegalArgumentException("id must be positive");
+		}
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();		
+			session.createQuery("delete from Utilisateur where iduser = :iduser")
+					.setParameter("iduser", iduser).executeUpdate();
+			transaction.commit();
+			logger.info("Delete jury done !");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}
+	}
 	@Override
 	public void supprimerUtilisateur(int iduser, int idevent) {
 		if(iduser < 1 || idevent < 1) {
