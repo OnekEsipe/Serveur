@@ -40,7 +40,11 @@
 						<p:fileUpload fileUploadListener="#{candidate.fileImportCsv}"
 							dragDropSupport="true" multiple="false" mode="advanced"
 							id="upload" allowTypes="/(\.|\/)(csv)$/" update="tabCandidat log" />
-
+						<br />
+						<p:commandButton value="Télécharger un modèle"
+							action="#{candidate.telechargerModele}" ajax="false"
+							icon="ui-icon-arrowthick-1-s">
+						</p:commandButton>
 						<h3 id="erreur">#{candidate.importLog}</h3>
 					</h:form>
 				</p:panel>
@@ -65,7 +69,7 @@
 
 							<p:commandButton value="Ajouter le candidat"
 								action="#{candidate.click}" icon="ui-icon-check"
-								update="tabCandidat" ajax="false" style="margin-top:7%;" />
+								update="tabCandidat" ajax="false" style="margin-top:32%;" />
 						</h:panelGrid>
 					</h:form>
 				</p:panel>
@@ -90,7 +94,7 @@
 							<h:outputText value="#{candidat.nom}" />
 						</p:column>
 
-						<p:column headerText="prénom" sortBy="#{candidat.prenom}">
+						<p:column headerText="Prénom" sortBy="#{candidat.prenom}">
 							<h:outputText value="#{candidat.prenom}" />
 						</p:column>
 
@@ -122,12 +126,12 @@
 			</div>
 			<div class="ui-g-2"></div>
 		</div>
-		<div class="ui-g-2"></div>
-		<h:form>
-			<p:commandButton value="Retour" icon="ui-icon-arrowreturnthick-1-w"
-				actionListener="#{candidate.retour}" />
+		<div class="ui-g-10"></div>
+		<h:form style="margin-left:-4.5%" rendered="#{not eventAccueil.disabledSiBrouillon}">
+			<p:commandButton value="Supprimer tous les candidats"
+				action="#{candidate.suppressAllCandidates}" ajax="false">
+			</p:commandButton>
 		</h:form>
-
 		<br /> <br />
 		<div id="errorCreationCandidate">
 			<h:outputText value="#{candidate.logInfo}" />
