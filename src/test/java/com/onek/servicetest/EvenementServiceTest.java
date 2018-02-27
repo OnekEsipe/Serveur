@@ -105,6 +105,12 @@ public class EvenementServiceTest {
 		evenementService.editEvenement(event);
 		assertEquals(datestart.getTime(),evenementService.findById(1).getDatestart().getTime());
 	}
+	
+	@Test
+	public void testsupprimerEventOK() {
+		evenementService.supprimerEvent(1);
+		assertTrue(evenementService.findById(1).getIsdeleted());
+	}
 
 
 }
