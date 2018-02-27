@@ -52,7 +52,7 @@
 			<div class="ui-g-6">
 				<p:panel id="addcandidat" header="Ajouter un Candidat"
 					style="margin-bottom:20px">
-					<h:form>
+					<h:form style="margin-top:3.5%">
 						<p:growl id="msgs" showDetail="true" />
 						<h:panelGrid columns="2" cellpadding="5">
 
@@ -69,7 +69,7 @@
 
 							<p:commandButton value="Ajouter le candidat"
 								action="#{candidate.click}" icon="ui-icon-check"
-								update="tabCandidat" ajax="false" style="margin-top:32%;" />
+								update="tabCandidat" ajax="false" style="margin-top:20%;" />
 						</h:panelGrid>
 					</h:form>
 				</p:panel>
@@ -83,7 +83,7 @@
 					<!-- ************Tableau des candidats**************** -->
 
 					<p:dataTable var="candidat" value="#{candidate.candidats}"
-						scrollable="true" scrollHeight="300">
+						scrollable="true" scrollHeight="250">
 
 						<!-- barre de recherche -->
 						<f:facet name="header">

@@ -268,7 +268,7 @@ public class CandidateBean implements Serializable {
 
 	    try {
 	        writer.write("nom;prenom\n");
-	        writer.write("exempleNom;exemplePrénom");
+	        writer.write("exempleNom;exemplePrenom");
 	    } finally {
 	        if (writer != null) {
 	            writer.close();
