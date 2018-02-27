@@ -21,42 +21,47 @@
 	<ui:include src="menuGauche.xhtml"></ui:include>
 	<br />
 	<br />
-	<p:outputLabel id="evenementChoisi" value="#{accueil.evenementChoisi}" />
+
 	<div class="ui-g">
 		<div class="ui-g-2"></div>
-		<div class="ui-g-4">
+		<div class="ui-g-5">
 			<h:form id="source">
-				<p:dataTable id="checkboxDT" var="utilisateur"
-					value="#{addjury.utilisateursAll}"
-					emptyMessage="Le jury n'existe pas"
-					filteredValue="#{addjury.filteredutilisateurs}"
-					selection="#{addjury.selectedutilisateurs}"
-					rowKey="#{utilisateur.nom}" style="margin-bottom:0"
-					scrollable="true" scrollHeight="400"
-					widgetVar="utilisateurallTable">
-					<f:facet name="header">
-						<p:outputPanel>
-							<div>
-								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
-								<p:inputText id="globalFilter"
-									onkeyup="PF('utilisateurallTable').filter()"
-									style="width:150px" placeholder="nom jury" />
-							</div>
-						</p:outputPanel>
-					</f:facet>
-					<p:column selectionMode="multiple"
-						style="width:16px;text-align:center" />
-					<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
-						filterMatchMode="contains" filterStyle="display:none">
-						<h:outputText value="#{utilisateur.nom}" />
-					</p:column>
-					<p:column headerText="prénom">
-						<h:outputText value="#{utilisateur.prenom}" />
-					</p:column>
-				</p:dataTable>
-
-				<div class="ui-g-1">
-					<p:commandButton process="checkboxDT"
+				<div class="ui-g-10">
+					<p:dataTable id="checkboxDT" var="utilisateur"
+						value="#{addjury.utilisateursAll}"
+						emptyMessage="Le jury n'existe pas"
+						filteredValue="#{addjury.filteredutilisateurs}"
+						selection="#{addjury.selectedutilisateurs}"
+						rowKey="#{utilisateur.nom}" style="margin-bottom:0 ;"
+						scrollable="true" scrollHeight="600"
+						widgetVar="utilisateurallTable">
+						<f:facet name="header">
+							<p:outputPanel>
+								<div>
+									<span class="ui-inputgroup-addon"><i
+										class="fa fa-search"></i></span>
+									<p:inputText id="globalFilter"
+										onkeyup="PF('utilisateurallTable').filter()"
+										style="width:150px" placeholder="nom jury" />
+								</div>
+							</p:outputPanel>
+						</f:facet>
+						<p:column selectionMode="multiple"
+							style="width:16px;text-align:center" />
+						<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
+							filterMatchMode="contains" filterStyle="display:none">
+							<h:outputText value="#{utilisateur.nom}" />
+						</p:column>
+						<p:column headerText="prénom">
+							<h:outputText value="#{utilisateur.prenom}" />
+						</p:column>
+					</p:dataTable>
+				</div>
+				
+				
+				<div class="ui-g-2">
+				<br /><br /><br /><br /><br /><br /><br /><br />
+					<p:commandButton style="width:90%;" process="checkboxDT"
 						actionListener="#{addjury.buttonAdd}" update="@(form)"
 						icon="ui-icon-circle-arrow-e" title="Icon Only" />
 				</div>
@@ -65,7 +70,7 @@
 		<div class="ui-g-4">
 			<h:form>
 				<!-- Debut liste jurys anonymes -->
-				<p:dataTable id="tabJurysAnos" var="utilisateursAno"
+				<p:dataTable  id="tabJurysAnos" var="utilisateursAno"
 					style="display:none;" value="#{addjury.utilisateursAnos}"
 					widgetVar="utilisateurTable2" scrollable="true" scrollHeight="300"
 					rowKey="#{utilisateursAno.nom}">
@@ -78,32 +83,35 @@
 					</p:column>
 				</p:dataTable>
 				<!-- Fin liste jurys anonymes -->
-				<div class="ui-g">
-					<div class="ui-g-6">
-						<h:outputLabel for="juryAnonyme"
-							value="Ajouter des jurys anonymes : " />
-						<p:spinner id="juryAnonyme" value="#{addjury.juryAnonyme}" min="0"
-							max="999" size="1" />
+
+				<p:panel id="addjuryano" header="Ajouter des jurys anonymes"
+					style="margin-bottom:20px">
+					<div class="ui-g">
+						<div class="ui-g-4">
+							<p:spinner id="juryAnonyme" value="#{addjury.juryAnonyme}"
+								min="0" max="999" size="1" />
+						</div>
+						<div class="ui-g-4">
+							<p:commandButton value="Ajouter" ajax="false"
+								actionListener="#{addjury.addJuryAnonymeButton}"
+								update="@(form) tabJurysAnos" />
+						</div>
+						<div class="ui-g-4">
+							<h:commandLink>
+								<p:graphicImage id="icon" name="/image/csv.png" width="30" />
+								<p:dataExporter type="csv" target="tabJurysAnos"
+									fileName="liste_jurys" pageOnly="true" />
+								<p:tooltip for="icon"
+									value="exporter la liste des jurys annonymes" position="top" />
+							</h:commandLink>
+						</div>
 					</div>
-					<div class="ui-g-2">
-						<p:commandButton value="Ajouter" ajax="false"
-							actionListener="#{addjury.addJuryAnonymeButton}"
-							update="@(form) tabJurysAnos" />
-					</div>
-					<div class="ui-g-1">
-						<h:commandLink>
-							<p:graphicImage id="icon" name="/image/csv.png" width="30" />
-							<p:dataExporter type="csv" target="tabJurysAnos"
-								fileName="liste_jurys" pageOnly="true" />
-							<p:tooltip for="icon"
-								value="exporter la liste des jurys annonymes" position="top" />
-						</h:commandLink>
-					</div>
-				</div>
+				</p:panel>
+
 			</h:form>
 			<h:form>
-				<p:dataTable var="utilisateur" value="#{addjury.utilisateurs}"
-					scrollable="true" scrollHeight="350">
+				<p:dataTable  var="utilisateur" value="#{addjury.utilisateurs}"
+					scrollable="true" scrollHeight="500">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
@@ -138,13 +146,8 @@
 					<!-- ********fin*********** -->
 				</p:dataTable>
 			</h:form>
-			<h:form>
-				<p:commandButton value="Retour" icon="ui-icon-arrowthick-1-w"
-					actionListener="#{addjury.retour}" />
-				<p:commandButton value="Valider"
-					actionListener="#{addjury.buttonActionValider}" ajax="false" />
-			</h:form>
 		</div>
+		<div class="ui-g-1"></div>
 	</div>
 </h:body>
 </html>

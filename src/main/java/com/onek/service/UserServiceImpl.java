@@ -133,4 +133,8 @@ public class UserServiceImpl implements UserService, Serializable {
 	public Utilisateur findByToken(String token) {
 		return userDao.findByToken(token);
 	}
+	@Override
+	public List<Utilisateur> getAllUsersExceptDeleted(){
+		return userDao.getAllUsersExceptDeleted();
+	}
 }
