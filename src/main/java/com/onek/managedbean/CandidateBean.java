@@ -262,10 +262,9 @@ public class CandidateBean implements Serializable {
 	    externalContext.setResponseCharacterEncoding("UTF-8");
 	    externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"modeleCandidat.csv\"");
 	    Writer writer = externalContext.getResponseOutputWriter();
-	    //writer.write('\ufeff');
 	    try {
 	        writer.write("nom;prenom\n");
-	        writer.write("exempleNom;exemplePrenom");
+	        writer.write("Smith;James");
 	    } finally {
 	        if (writer != null) {
 	            writer.close();
