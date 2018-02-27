@@ -69,4 +69,9 @@ public class JuryServiceImpl implements JuryService, Serializable{
 	public Utilisateur findById(int id) {
 		return juryDao.findById(id);
 	}
+
+	@Override
+	public Jury findJuryById(int id) {
+		return juryDao.findJuryById(id);
+	}
 }

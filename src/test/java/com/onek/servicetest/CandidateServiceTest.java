@@ -117,8 +117,8 @@ public class CandidateServiceTest {
 	
 	@Test
 	public void testsupprimerCandidatOK() {
-		candidateService.supprimerCandidat(2);
-		assertEquals(null, candidateService.findCandidatesById(2));
+		candidateService.supprimerCandidat(3);
+		assertEquals(null, candidateService.findCandidatesById(3));
 	}
 	
 	

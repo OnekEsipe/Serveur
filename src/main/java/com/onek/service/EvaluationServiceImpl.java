@@ -39,4 +39,15 @@ public class EvaluationServiceImpl implements EvaluationService, Serializable {
 	public List<Evaluation> findByIdJury(int idJury) {
 		return evaluationDao.findByIdJury(idJury);
 	}
+
+	@Override
+	public Evaluation findById(int id) {
+		return evaluationDao.findById(id);
+	}
+
+	@Override
+	public void update(Evaluation evaluation) {
+		evaluationDao.update(evaluation);
+		
+	}
 }
