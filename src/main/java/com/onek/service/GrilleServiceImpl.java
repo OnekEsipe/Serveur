@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onek.dao.CritereDao;
+import com.onek.dao.DescripteurDao;
 import com.onek.model.Critere;
+import com.onek.model.Descripteur;
 
 @Service
 public class GrilleServiceImpl implements GrilleService, Serializable{
@@ -15,6 +17,9 @@ public class GrilleServiceImpl implements GrilleService, Serializable{
 	
 	@Autowired
 	private CritereDao critereDao;
+	
+	@Autowired
+	private DescripteurDao descripteurDao;
 	
 	@Override
 	public void addCriteres(List<Critere> criteres) {
@@ -34,6 +39,16 @@ public class GrilleServiceImpl implements GrilleService, Serializable{
 	@Override
 	public void supprimerCritere(int id) {
 		critereDao.supprimerCritere(id);
+	}
+
+	@Override
+	public void updateCritere(Critere critere) {
+		critereDao.updateCritere(critere);
+	}
+
+	@Override
+	public void supprimerDescripteur(Descripteur descripteur) {
+		descripteurDao.supprimerDescripteur(descripteur);
 	}
 	
 }
