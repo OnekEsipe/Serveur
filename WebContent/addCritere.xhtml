@@ -11,20 +11,16 @@
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
 </h:head>
-<f:metadata>
-	<f:event type="preRenderView" listener="#{grille.before}" />
-</f:metadata>
 <h:body>
 	<!-- Insertion du menu -->
 	<ui:include src="#{accueil.typeMenu}" />
 	<ui:include src="menuGauche.xhtml"></ui:include>
 	<br />
-	<p:outputLabel id="evenementChoisi" value="#{accueil.evenementChoisi}" />
 
 	<div class="ui-g">
 		<div class="ui-g-2"></div>
 		<div class="ui-g-9">
-			<h:form>
+			<h:form rendered="#{not eventAccueil.disabledSiBrouillon}">
 				<div title="addCritère">
 					<p:outputPanel>
 						<p:panel header="Ajouter un critère">
@@ -152,7 +148,9 @@
 					</div>
 					<div>
 						<p:commandButton value="Ajouter" action="#{grille.onClicAdd}"
-							update="displayCriteres" icon="ui-icon-check" ajax="false" />
+							icon="ui-icon-check" rendered="#{not grille.modification}"/>
+						<p:commandButton value="Enregistrer les modifications" action="#{grille.onClicAdd}"
+							icon="ui-icon-check" rendered="#{grille.modification}"/>
 					</div>
 					<br />
 				</div>
@@ -161,7 +159,7 @@
 				<div>
 					<p:commandButton value="Retour aux critères"
 						action="#{grille.onClicReturn}" update="displayCriteres"
-						icon="ui-icon-check" ajax="false" />
+						icon="ui-icon-arrowreturnthick-1-w" ajax="false" />
 				</div>
 			</h:form>
 		</div>

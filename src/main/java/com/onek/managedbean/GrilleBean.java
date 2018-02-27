@@ -53,6 +53,9 @@ public class GrilleBean {
 	private String texte4;
 	private String texte5;
 	private String texte6;
+	
+	private boolean modification;
+	private Critere critereModif;
 
 	@PostConstruct
 	public void postInit() {
@@ -78,11 +81,20 @@ public class GrilleBean {
 				criteres.add(critere);
 			}
 			resetValues();
+			this.modification = false;
 		}
 	}
 
 	public void onClicAdd() {
-		Critere c = new Critere();
+		Critere c;
+		if (modification) {
+			c = critereModif;
+			for (Descripteur descripteur : c.getDescripteurs()) {
+				grille.supprimerDescripteur(descripteur);
+			}
+		} else {
+		    c = new Critere();
+		}
 		c.setDescripteurs(new ArrayList<>());
 		c.setEvenement(event);
 		c.setCategorie(categorie);
@@ -133,9 +145,13 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		grille.addCritere(c);
-		criteres.add(c);
-		resetValues();
+		if (modification ) {
+			grille.updateCritere(c);
+		} else {
+			grille.addCritere(c);
+			criteres.add(c);
+		}
+		Navigation.redirect("grille.xhtml");
 	}
 
 	private void resetValues() {
@@ -164,6 +180,51 @@ public class GrilleBean {
 		Critere critere = grille.getCritereById(id);
 		grille.supprimerCritere(id);
 		criteres.remove(critere);
+	}
+
+	public void modifierCritere() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+		int id = Integer.valueOf(params.get("idcritere"));
+		Critere critere = grille.getCritereById(id);
+		nom = critere.getTexte();
+		coefficient = critere.getCoefficient();
+		categorie = critere.getCategorie();
+		List<Descripteur> descripteurs = critere.getDescripteurs();
+		nbDescripteur = descripteurs.size();
+		for (Descripteur descripteur : descripteurs) {
+			switch (descripteur.getNiveau()) {
+			case "A":
+				texte1 = descripteur.getTexte();
+				poids1 = descripteur.getPoids();
+				break;
+			case "B":
+				texte2 = descripteur.getTexte();
+				poids2 = descripteur.getPoids();
+				break;
+			case "C":
+				texte3 = descripteur.getTexte();
+				poids3 = descripteur.getPoids();
+				break;
+			case "D":
+				texte4 = descripteur.getTexte();
+				poids4 = descripteur.getPoids();
+				break;
+			case "E":
+				texte5 = descripteur.getTexte();
+				poids5 = descripteur.getPoids();
+				break;
+			case "F":
+				texte6 = descripteur.getTexte();
+				poids6 = descripteur.getPoids();
+				break;
+			default :
+				break;
+			}
+		}
+		modification = true;
+		critereModif = critere;
+		Navigation.redirect("addCritere.xhtml");
 	}
 
 	public void onClicAddCritere() {
@@ -316,6 +377,14 @@ public class GrilleBean {
 
 	public void setIdEvent(int id) {
 		this.idEvent = id;
+	}
+
+	public boolean isModification() {
+		return modification;
+	}
+
+	public void setModification(boolean modification) {
+		this.modification = modification;
 	}
 
 }
