@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>ONEK' - Mon événement</title>
+	<title>ONEK' - Gestion de l'événement</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
@@ -28,7 +28,7 @@
 			<br />
 			<div class="ui-g-9">
 				<div class="ui-g-7" style="padding-left: 50px">
-					<p:panel id="infoEvt" header="Information de l'événement"
+					<p:panel id="infoEvt" header="Modifier l'événement"
 						style="margin-bottom:20px">
 						<h:form style="width:1000px !important">
 							<h:panelGrid columns="2" cellpadding="10">
@@ -75,34 +75,16 @@
 								<p:outputLabel for="timeEnd" value="Heure de fin : " />
 								<p:calendar id="timeEnd" value="#{eventAccueil.timeEnd}"
 									pattern="HH:mm" timeOnly="true" />
-
-								<p:commandButton value="Enregistrer" ajax="false"
-									actionListener="#{eventAccueil.eventUpdateButton}" />
-
-								<p:commandButton value="Supprimer l'événement"
-									actionListener="#{eventAccueil.supprimerEvent}"
-									disabled="#{eventAccueil.disabledSiSupprime}"
-									rendered="#{not eventAccueil.disabledSiSupprime}">
-									<p:confirm header="Confirmation"
-										message="Voulez-vous vraiment supprimer l'événement ?"
-										icon="ui-icon-trash" />
-								</p:commandButton>
-								<p:confirmDialog global="true">
-									<p:commandButton value="Oui" type="button"
-										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-									<p:commandButton value="Non" type="button"
-										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-								</p:confirmDialog>
-								<p:commandButton value="Réactiver"
-									actionListener="#{eventAccueil.buttonRecuperer}"
-									disabled="#{not eventAccueil.disabledSiSupprime}" ajax="false"
-									rendered="#{eventAccueil.disabledSiSupprime}" />
+								<div style="margin: auto">
+									<p:commandButton value="Enregistrer les modifications"
+										ajax="false"
+										actionListener="#{eventAccueil.eventUpdateButton}" />
+								</div>
 							</h:panelGrid>
 						</h:form>
 					</p:panel>
 				</div>
-				<!-- ************Tableau des Jurys**************** -->
-				<div class="ui-g-1"></div>
+				<!-- ************Dupliquer l'événement **************** -->				
 				<div class="ui-g-5">
 					<p:panel id="dupliquerEvent" header="Dupliquer l'événement"
 						style="margin-bottom:20px">
@@ -114,9 +96,54 @@
 									itemValue="candidats" />
 								<f:selectItem itemLabel="Liste des Jurys" itemValue="jurys" />
 							</p:selectManyCheckbox>
-							<br/>
-							<p:commandButton value="Dupliquer"
-								actionListener="#{eventAccueil.buttonDupliquer}" ajax="false" />
+							<br />
+							<div style="text-align: center;">
+								<p:commandButton value="Dupliquer"
+									actionListener="#{eventAccueil.buttonDupliquer}" ajax="false" />
+							</div>
+						</h:form>
+					</p:panel>
+				</div>
+				<!-- ************Supprimer ou réactiver l'événement **************** -->
+				<div class="ui-g-5">
+					<p:panel id="supprimerEvent" header="Supprimer l'événement"
+						style="margin-bottom:20px"
+						rendered="#{not eventAccueil.disabledSiSupprime}">
+						<h:form>
+							<div>Attention : Vous ne pourrez plus accéder à un
+								événement supprimé. Seul un administrateur peut réactiver un
+								événement supprimé.</div>
+							<br />
+							<div style="text-align: center;">
+								<p:commandButton value="Supprimer l'événement"
+									actionListener="#{eventAccueil.supprimerEvent}"
+									disabled="#{eventAccueil.disabledSiSupprime}"
+									rendered="#{not eventAccueil.disabledSiSupprime}"
+									style="background-color: #B40404; border-color: #8A0808;"
+									icon="ui-icon-trash">
+									<p:confirm header="Confirmation"
+										message="Voulez-vous vraiment supprimer l'événement ?"
+										icon="ui-icon-trash" />
+								</p:commandButton>
+								<p:confirmDialog global="true">
+									<p:commandButton value="Oui" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="Non" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</div>
+						</h:form>
+					</p:panel>
+					<p:panel id="reactiverEvent" header="Réactiver l'événement"
+						style="margin-bottom:20px"
+						rendered="#{eventAccueil.disabledSiSupprime}">
+						<h:form>
+							<div style="text-align: center;">
+								<p:commandButton value="Réactiver"
+									actionListener="#{eventAccueil.buttonRecuperer}"
+									disabled="#{not eventAccueil.disabledSiSupprime}" ajax="false"
+									rendered="#{eventAccueil.disabledSiSupprime}" />
+							</div>
 						</h:form>
 					</p:panel>
 				</div>

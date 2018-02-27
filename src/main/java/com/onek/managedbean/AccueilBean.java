@@ -169,7 +169,7 @@ public class AccueilBean implements Serializable {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent",
 				selectedevent.getIdevent());
 		setEvenementChoisi(selectedevent.getNom());
-		Navigation.redirect("eventAccueil.xhtml");
+		Navigation.redirect("eventManager.xhtml");
 	}
 
 	public void buttonAction() {

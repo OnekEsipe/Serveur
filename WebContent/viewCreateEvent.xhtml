@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Onek team</title>
+	<title>ONEK' - Créer un événement</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
@@ -49,10 +49,12 @@
 					<h:outputText value="Ouvert a l'inscription : " />
 					<p:selectBooleanCheckbox value="#{event.isOpened}" />
 				</h:panelGrid>
-			</p:panel>
-			<br />
-			<p:commandButton value="Suivant" update="msgs"
-				action="#{event.click}" icon="ui-icon-check" ajax="false" />
+				<br />
+				<div style="text-align: center;">
+				<p:commandButton value="Créer" update="msgs" action="#{event.click}"
+					icon="ui-icon-check" ajax="false" />
+				</div>
+			</p:panel>			
 		</h:form>
 		<!-- 
 				<h:outputText id="errorCreationEvent" value="#{event.logInfo}" />
