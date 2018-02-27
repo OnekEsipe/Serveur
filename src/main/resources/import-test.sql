@@ -25,4 +25,5 @@ INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdelete
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Kevin', 'Karin', 'kk', 'kk@gmail.com', 'O', '2ed45186c72f9319dc64338cdf16ab76b44cf3d1', false);
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Lucie', 'Lion', 'll', 'll@gmail.com', 'A', '110c8a30c16070bf2813480d9492a1a170a7d80a', false);
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Manon', 'Mint', 'mm', 'mm@gmail.com', 'R', 'b8d09b4d8580aacbd9efc4540a9b88d2feb9d7e5', true);
+INSERT INTO candidats (nom, prenom, idevent) VALUES ('Tamela', 'Hamed', '1',);
 INSERT INTO evenements (nom) VALUES ('event 1');
