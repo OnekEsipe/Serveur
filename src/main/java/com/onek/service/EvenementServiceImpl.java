@@ -22,11 +22,6 @@ public class EvenementServiceImpl implements EvenementService, Serializable{
 	}
 
 	@Override
-	public boolean isValid(Evenement event) {
-		return true; // TODO
-	}
-
-	@Override
 	public Evenement findById(int id) {
 		return eventDao.findById(id);
 	}
