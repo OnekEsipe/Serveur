@@ -21,59 +21,61 @@
 	<!-- Insertion du header + menu -->
 	<ui:include src="#{accueil.typeMenu}" />
 	<br />
-	<!-- bouton création d'un événement -->
-	<div class="ui-g button-create">
-		<h:form>			
-			<p:commandButton value="Ajouter un événement" id="withIcon"
-				icon="ui-icon-plusthick" actionListener="#{accueil.buttonAction}"
-				styleClass="bigbutton" />
-		</h:form>
-	</div>
-	<!--  Tableau des événements -->
-	<div class="ui-g tab-users">
-		<h:form>
-			<p:dataTable var="evenement" value="#{accueil.events}"
-				widgetVar="eventTable"
-				emptyMessage="Aucun événement trouvé avec ce nom."
-				filteredValue="#{accueil.filteredevents}" scrollable="true"
-				scrollHeight="300" selectionMode="single"
-				selection="#{accueil.selectedevent}" rowKey="#{evenement.nom}">
-				<!-- barre de recherche -->
-				<f:facet name="header">
-					<p:outputPanel>
-						<div>
-							<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
-							<p:inputText id="globalFilter"
-								onkeyup="PF('eventTable').filter()" style="width:150px"
-								placeholder="Filtrer titre" />
-						</div>
-					</p:outputPanel>
-				</f:facet>
-				<!-- ********fin*********** -->
-				<!-- des lignes cliquables dans le tableau -->
-				<p:ajax event="rowSelect" listener="#{accueil.onRowSelect}" />
-				<!-- ********fin*********** -->
-				<p:column headerText="Nom" filterBy="#{evenement.nom}"
-					filterMatchMode="startsWith" filterStyle="display:none">
-					<h:outputText value="#{evenement.nom}" />
-				</p:column>
-				<p:column headerText="Statut">
-					<h:outputText value="#{evenement.status}" />
-				</p:column>
-				<p:column headerText="Date de début">
-					<h:outputText value="#{evenement.datestart}"
-						converter="javax.faces.DateTime" />
-				</p:column>
-				<p:column headerText="Date de fin">
-					<h:outputText value="#{evenement.datestop}"
-						converter="javax.faces.DateTime" />
-				</p:column>
-				<p:column headerText="Supprimé" id="etatevent"
-					rendered="#{accueil.visible}">
-					<h:outputText value="#{evenement.isDeleted()}" />
-				</p:column>
-			</p:dataTable>
-		</h:form>
+	<div class="page-wrap">
+		<!-- bouton création d'un événement -->
+		<div class="ui-g button-create">
+			<h:form>
+				<p:commandButton value="Ajouter un événement" id="withIcon"
+					icon="ui-icon-plusthick" actionListener="#{accueil.buttonAction}"
+					styleClass="bigbutton" />
+			</h:form>
+		</div>
+		<!--  Tableau des événements -->
+		<div class="ui-g tab-users">
+			<h:form>
+				<p:dataTable var="evenement" value="#{accueil.events}"
+					widgetVar="eventTable"
+					emptyMessage="Aucun événement trouvé avec ce nom."
+					filteredValue="#{accueil.filteredevents}" scrollable="true"
+					scrollHeight="500" selectionMode="single"
+					selection="#{accueil.selectedevent}" rowKey="#{evenement.idevent}">
+					<!-- barre de recherche -->
+					<f:facet name="header">
+						<p:outputPanel>
+							<div>
+								<span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+								<p:inputText id="globalFilter"
+									onkeyup="PF('eventTable').filter()" style="width:150px"
+									placeholder="Filtrer titre" />
+							</div>
+						</p:outputPanel>
+					</f:facet>
+					<!-- ********fin*********** -->
+					<!-- des lignes cliquables dans le tableau -->
+					<p:ajax event="rowSelect" listener="#{accueil.onRowSelect}" />
+					<!-- ********fin*********** -->
+					<p:column headerText="Nom" filterBy="#{evenement.nom}"
+						filterMatchMode="startsWith" filterStyle="display:none">
+						<h:outputText value="#{evenement.nom}" />
+					</p:column>
+					<p:column headerText="Statut">
+						<h:outputText value="#{evenement.status}" />
+					</p:column>
+					<p:column headerText="Date de début">
+						<h:outputText value="#{evenement.datestart}"
+							converter="javax.faces.DateTime" />
+					</p:column>
+					<p:column headerText="Date de fin">
+						<h:outputText value="#{evenement.datestop}"
+							converter="javax.faces.DateTime" />
+					</p:column>
+					<p:column headerText="Supprimé" id="etatevent"
+						rendered="#{accueil.visible}">
+						<h:outputText value="#{evenement.isDeleted()}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
 	</div>
 	<!-- Insertion du footer -->
 	<ui:include src="footer.xhtml" />

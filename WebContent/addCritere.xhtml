@@ -15,9 +15,8 @@
 	<!-- Insertion du menu -->
 	<ui:include src="#{accueil.typeMenu}" />
 	<ui:include src="menuGauche.xhtml"></ui:include>
-	<br />
-
-	<div class="ui-g">
+	<br />	
+	<div class="ui-g page-wrap">
 		<div class="ui-g-2"></div>
 		<div class="ui-g-9">
 			<h:form rendered="#{not eventAccueil.disabledSiBrouillon}">
@@ -164,5 +163,7 @@
 			</h:form>
 		</div>
 	</div>
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>

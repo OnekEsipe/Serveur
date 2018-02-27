@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Onek team</title>
+	<title>ONEK' - Gestion des critères</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
@@ -20,81 +20,82 @@
 	<ui:include src="#{accueil.typeMenu}" />
 	<ui:include src="menuGauche.xhtml"></ui:include>
 	<br />
-	<br />
-	<div class="ui-g button-create">
-		<h:form rendered="#{not eventAccueil.disabledSiBrouillon}">
-			<p:commandButton icon="ui-icon-plusthick" value="Ajouter un critère"
-				action="#{grille.onClicAddCritere}" ajax="false" />
-		</h:form>
-	</div>
-	<div class="ui-g">
-		<div class="ui-g-2"></div>
-		<div class="ui-g-9">
-			<h:form>
-				<div id="displayCriteres">
-					<p:dataTable var="critere" value="#{grille.criteres}">
-						<p:column headerText="Nom">
-							<h:outputText value="#{critere.texte}" />
-						</p:column>
-
-						<p:column headerText="Coef">
-							<h:outputText value="#{critere.coefficient}" />
-						</p:column>
-
-						<p:column headerText="Catégorie">
-							<h:outputText value="#{critere.categorie}" />
-						</p:column>
-
-						<p:column headerText="Descripteur">
-							<p:commandButton id="DescBtn" value="Afficher" type="button" />
-							<p:overlayPanel id="DescPanel" for="DescBtn" hideEffect="fade"
-								dynamic="true" style="width:600px">
-								<p:dataTable var="descripteur" value="#{critere.descripteurs}">
-									<p:column headerText="Niveau">
-										<h:outputText value="#{descripteur.niveau}" />
-									</p:column>
-									<p:column headerText="Poids">
-										<h:outputText value="#{descripteur.poids}" />
-									</p:column>
-									<p:column headerText="Description" style='width:400px'>
-										<h:outputText value="#{descripteur.texte}" />
-									</p:column>
-								</p:dataTable>
-							</p:overlayPanel>
-						</p:column>
-						<!-- ********la colonne supprimée*********** -->
-						<p:column style="width:32px;text-align:center"
-							rendered="#{not eventAccueil.disabledSiBrouillon}">
-							<p:growl id="message" showDetail="true" />
-							<p:commandButton id="iconOnly" icon="ui-icon-trash"
-								actionListener="#{grille.supprimerCritere}" ajax="true"
-								update="@(form)"
-								style="background-color: #B40404; border-color: #8A0808;">
-								<p:confirm header="Confirmation"
-									message="Voulez-vous vraiment supprimer le critère ?"
-									icon="ui-icon-trash" />
-								<f:param name="idcritere" value="#{critere.idcritere}" />
-							</p:commandButton>
-
-							<p:confirmDialog global="true" showEffect="fade"
-								hideEffect="fade">
-								<p:commandButton value="Yes" type="button"
-									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-								<p:commandButton value="No" type="button"
-									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-							</p:confirmDialog>
-						</p:column>
-						<!--  *********la colonne modifier********** -->
-						<p:column style="width:32px;text-align:center"
-							rendered="#{not eventAccueil.disabledSiBrouillon}">
-							<p:commandButton icon=" ui-icon-pencil"
-								actionListener="#{grille.modifierCritere}" ajax="false">
-								<f:param name="idcritere" value="#{critere.idcritere}" />
-							</p:commandButton>
-						</p:column>
-					</p:dataTable>
-				</div>
+	<div class="page-wrap">
+		<div class="ui-g button-create">
+			<h:form rendered="#{not eventAccueil.disabledSiBrouillon}">
+				<p:commandButton icon="ui-icon-plusthick" value="Ajouter un critère"
+					action="#{grille.onClicAddCritere}" ajax="false" />
 			</h:form>
+		</div>
+		<div class="ui-g">
+			<div class="ui-g-2"></div>
+			<div class="ui-g-9">
+				<h:form>
+					<div id="displayCriteres">
+						<p:dataTable var="critere" value="#{grille.criteres}">
+							<p:column headerText="Nom">
+								<h:outputText value="#{critere.texte}" />
+							</p:column>
+
+							<p:column headerText="Coef">
+								<h:outputText value="#{critere.coefficient}" />
+							</p:column>
+
+							<p:column headerText="Catégorie">
+								<h:outputText value="#{critere.categorie}" />
+							</p:column>
+
+							<p:column headerText="Descripteur">
+								<p:commandButton id="DescBtn" value="Afficher" type="button" />
+								<p:overlayPanel id="DescPanel" for="DescBtn" hideEffect="fade"
+									dynamic="true" style="width:600px">
+									<p:dataTable var="descripteur" value="#{critere.descripteurs}">
+										<p:column headerText="Niveau">
+											<h:outputText value="#{descripteur.niveau}" />
+										</p:column>
+										<p:column headerText="Poids">
+											<h:outputText value="#{descripteur.poids}" />
+										</p:column>
+										<p:column headerText="Description" style='width:400px'>
+											<h:outputText value="#{descripteur.texte}" />
+										</p:column>
+									</p:dataTable>
+								</p:overlayPanel>
+							</p:column>
+							<!-- ********la colonne supprimée*********** -->
+							<p:column style="width:32px;text-align:center"
+								rendered="#{not eventAccueil.disabledSiBrouillon}">
+								<p:growl id="message" showDetail="true" />
+								<p:commandButton id="iconOnly" icon="ui-icon-trash"
+									actionListener="#{grille.supprimerCritere}" ajax="true"
+									update="@(form)"
+									style="background-color: #B40404; border-color: #8A0808;">
+									<p:confirm header="Confirmation"
+										message="Voulez-vous vraiment supprimer le critère ?"
+										icon="ui-icon-trash" />
+									<f:param name="idcritere" value="#{critere.idcritere}" />
+								</p:commandButton>
+
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="Yes" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="No" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+							</p:column>
+							<!--  *********la colonne modifier********** -->
+							<p:column style="width:32px;text-align:center"
+								rendered="#{not eventAccueil.disabledSiBrouillon}">
+								<p:commandButton icon=" ui-icon-pencil"
+									actionListener="#{grille.modifierCritere}" ajax="false">
+									<f:param name="idcritere" value="#{critere.idcritere}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</h:form>
+			</div>
 		</div>
 	</div>
 	<!-- Insertion du footer -->

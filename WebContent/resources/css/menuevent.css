@@ -1,11 +1,17 @@
 
 #volet {
-	min-height: 70%;
+	/*min-height: 70%;*/
+	height:100%;
     width: auto;
-    position: absolute;
-    z-index: 1;
-    top: 18%;
+    position: absolute;    
+    margin-top: -5px;
     left: 0;
     background-color: #f1f1f1;
     overflow-x: hidden;  
+    z-index: 1;
+}
+
+#volet:after {
+  content: "";
+  display: block;
 }
