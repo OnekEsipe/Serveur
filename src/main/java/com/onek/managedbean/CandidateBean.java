@@ -268,7 +268,7 @@ public class CandidateBean implements Serializable {
 
 	    try {
 	        writer.write("nom;prenom\n");
-	        writer.write("exempleNom;exemplePrenom");
+	        writer.write("exempleNom;exemplePrénom");
 	    } finally {
 	        if (writer != null) {
 	            writer.close();
@@ -277,8 +277,13 @@ public class CandidateBean implements Serializable {
 
 	    facesContext.responseComplete();
 	}
-
-	public void retour() {
-		Navigation.redirect("eventAccueil.xhtml");
+	
+	public void suppressAllCandidates() {
+		if(candidats.size() > 0) {
+			for(Candidat candidat : candidats) {
+				candidateService.supprimerCandidat(candidat.getIdcandidat());
+			}
+		}
+		Navigation.redirect("addCandidates.xhtml");
 	}
 }

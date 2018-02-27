@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.onek.model.Candidat;
+import com.onek.model.Evaluation;
+import com.onek.model.Note;
 
 @Repository
 public class CandidatesDaoImpl implements CandidatesDao, Serializable {
@@ -97,6 +99,7 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 		}			
 	}
 		
+	@SuppressWarnings("unchecked")
 	@Override
 	public void supprimerCandidat(int idcandidat) {
 		if(idcandidat < 1) {
@@ -106,9 +109,19 @@ public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			Candidat candidatSupprime = session.get(Candidat.class, idcandidat);
-			session.createQuery("delete from Candidat where idcandidat = :idcandidat")
-					.setParameter("idcandidat", candidatSupprime.getIdcandidat()).executeUpdate();
+			
+			List<Evaluation> evaluationToDelete = (List<Evaluation>) session.createQuery("FROM Evaluation WHERE idcandidat = :idcandidat").setParameter("idcandidat", idcandidat).getResultList();
+			for(Evaluation evaluation : evaluationToDelete) {
+				List<Note> notesToDelete = (List<Note>) session.createQuery("FROM Note WHERE idevaluation = :idevaluation").setParameter("idevaluation", evaluation.getIdevaluation()).getResultList();
+				for (Note note : notesToDelete) {
+					session.delete(note);
+				}
+				session.delete(evaluation);
+			}
+			
+			Candidat candidatSupprime = (Candidat) session.createQuery("FROM Candidat WHERE idcandidat = :idcandidat").setParameter("idcandidat", idcandidat).getSingleResult();
+			session.delete(candidatSupprime);
+			
 			transaction.commit();
 			logger.info("Delete candidate done !");
 		}
