@@ -103,6 +103,20 @@ public class ApplicationController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
+	
+	/* ids event */
+	@RequestMapping(value = "jury/events/id", method = RequestMethod.POST)
+	public ResponseEntity<? extends Object> idsEvents(@RequestBody LoginResource login) {
+		try {
+			if (!userService.userExistAndCorrectPassword(login.getLogin(), login.getPassword())) {
+				return new ResponseEntity<LoginResource>(login, HttpStatus.FORBIDDEN);
+			}
+		} catch (IllegalStateException e) {
+			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		List<AccountResource> accounts = applicationService.account(login.getLogin());
+		return new ResponseEntity<AccountResource>(accounts.get(0), HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/password/modify", method = RequestMethod.POST)
 	public ResponseEntity<? extends Object> passwordModify(@RequestBody PasswordModify passwordModify) {
