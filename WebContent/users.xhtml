@@ -16,67 +16,69 @@
 <f:metadata>
 	<f:event type="preRenderView" listener="#{users.before}" />
 </f:metadata>
-<h:body>	
+<h:body>
 	<!-- Insertion du header + menu -->
 	<ui:include src="#{accueil.typeMenu}" />
 	<br />
-	<!-- bouton création d'un utilisateur -->
-	<div class="ui-g button-create">
-		<h:form>
-			<p:commandButton value="Créer un utilisateur" id="withIcon"
-				icon="ui-icon-plusthick" actionListener="#{users.createUser}"
-				styleClass="bigbutton" />
-		</h:form>
-	</div>
-	<!-- Tableau des utilisateurs -->
-	<div class="ui-g tab-users">
-		<h:form>
-			<p:dataTable id="tab-users" var="utilisateur" value="#{users.users}"
-				scrollable="true" scrollHeight="300" sortBy="#{utilisateur.login}">				
-				<f:facet name="header">
-					Liste des utilisateurs
-				</f:facet>
-				
-				<p:column headerText="Login" sortBy="#{utilisateur.login}">
-					<h:outputText value="#{utilisateur.login}" />
-				</p:column>
+	<div class="page-wrap">
+		<!-- bouton création d'un utilisateur -->
+		<div class="ui-g button-create">
+			<h:form>
+				<p:commandButton value="Créer un utilisateur" id="withIcon"
+					icon="ui-icon-plusthick" actionListener="#{users.createUser}"
+					styleClass="bigbutton" />
+			</h:form>
+		</div>
+		<!-- Tableau des utilisateurs -->
+		<div class="ui-g tab-users">
+			<h:form>
+				<p:dataTable id="tab-users" var="utilisateur" value="#{users.users}"
+					scrollable="true" scrollHeight="300" sortBy="#{utilisateur.login}">
+					<f:facet name="header">
+						Liste des utilisateurs
+					</f:facet>
 
-				<p:column headerText="Nom" sortBy="#{utilisateur.nom}">
-					<h:outputText value="#{utilisateur.nom}" />
-				</p:column>
+					<p:column headerText="Login" sortBy="#{utilisateur.login}">
+						<h:outputText value="#{utilisateur.login}" />
+					</p:column>
 
-				<p:column headerText="Prénom" sortBy="#{utilisateur.prenom}">
-					<h:outputText value="#{utilisateur.prenom}" />
-				</p:column>
+					<p:column headerText="Nom" sortBy="#{utilisateur.nom}">
+						<h:outputText value="#{utilisateur.nom}" />
+					</p:column>
 
-				<p:column headerText="Type" sortBy="#{utilisateur.nomDroits}">
-					<h:outputText value="#{utilisateur.nomDroits}" />
-				</p:column>
+					<p:column headerText="Prénom" sortBy="#{utilisateur.prenom}">
+						<h:outputText value="#{utilisateur.prenom}" />
+					</p:column>
 
-				<p:column style="width:32px;text-align: center">
-					<!-- Désactiver l'utilisateur -->
-					<p:commandButton id="supprimer" icon="ui-icon-locked"
-						actionListener="#{users.deleteUser}" ajax="true"
-						update="tab-users" rendered="#{not utilisateur.isdeleted}"
-						style="background-color: #B40404; border-color: #8A0808;">
-						<f:param name="iduser" value="#{utilisateur.iduser}" />
-					</p:commandButton>
-					
-					<!-- Réactiver l'utilisateur -->
-					<p:commandButton id="reactiver" icon="ui-icon-unlocked"
-						actionListener="#{users.reactiverUser}" ajax="true"
-						update="tab-users" rendered="#{utilisateur.isdeleted}">
-						<f:param name="iduser" value="#{utilisateur.iduser}" />
-					</p:commandButton>
-					
-					<p:tooltip for="reactiver" value="Réactiver l'utilisateur"
-						position="left" />
-					<p:tooltip for="supprimer" value="Désactiver l'utilisateur"
-						position="left" />
-				</p:column>
+					<p:column headerText="Type" sortBy="#{utilisateur.nomDroits}">
+						<h:outputText value="#{utilisateur.nomDroits}" />
+					</p:column>
 
-			</p:dataTable>
-		</h:form>
+					<p:column style="width:32px;text-align: center">
+						<!-- Désactiver l'utilisateur -->
+						<p:commandButton id="supprimer" icon="ui-icon-locked"
+							actionListener="#{users.deleteUser}" ajax="true"
+							update="tab-users" rendered="#{not utilisateur.isdeleted}"
+							style="background-color: #B40404; border-color: #8A0808;">
+							<f:param name="iduser" value="#{utilisateur.iduser}" />
+						</p:commandButton>
+
+						<!-- Réactiver l'utilisateur -->
+						<p:commandButton id="reactiver" icon="ui-icon-unlocked"
+							actionListener="#{users.reactiverUser}" ajax="true"
+							update="tab-users" rendered="#{utilisateur.isdeleted}">
+							<f:param name="iduser" value="#{utilisateur.iduser}" />
+						</p:commandButton>
+
+						<p:tooltip for="reactiver" value="Réactiver l'utilisateur"
+							position="left" />
+						<p:tooltip for="supprimer" value="Désactiver l'utilisateur"
+							position="left" />
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</div>
 	</div>
 	<!-- Insertion du footer -->
 	<ui:include src="footer.xhtml" />
