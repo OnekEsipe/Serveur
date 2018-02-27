@@ -69,4 +69,8 @@ public class JuryServiceImpl implements JuryService, Serializable{
 	public Utilisateur findById(int id) {
 		return juryDao.findById(id);
 	}
+	@Override
+	public void supprimerUtilisateurAnonyme(int iduser) {
+		juryDao.supprimerUtilisateurAnonyme(iduser);
+	}
 }

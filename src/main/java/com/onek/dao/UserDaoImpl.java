@@ -307,4 +307,25 @@ public class UserDaoImpl implements UserDao, Serializable {
 		}
 		return user;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Utilisateur> getAllUsersExceptDeleted() {
+		List<Utilisateur> users = new ArrayList<>();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			users = (List<Utilisateur>) session.createQuery("from Utilisateur where isdeleted = :isdeleted").setParameter("isdeleted", false).list();
+			transaction.commit();
+			logger.info("Find all users done except deleted!");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		} finally {
+			session.close();
+		}
+		return users;
+	}
 }
