@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,15 +44,12 @@ public class CandidateBean implements Serializable {
 	private int idEvent;
 	private Evenement event;
 	private String messagedoublon;
-	private String homonymeimport;
 	private List<Candidat> candidats;
 	private Candidat candidat;
 	// Gestion import
 	private final List<Candidat> importedCandidates = new ArrayList<>();
 
 	private String logInfo;
-	private String importLog;
-	private String message = "Confirmer l'envoi du fichier ?";
 
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
@@ -66,18 +65,9 @@ public class CandidateBean implements Serializable {
 			this.event = evenement.findById(idEvent);
 			candidats = candidateService.findCandidatesByEvent(idEvent);
 			messagedoublon = "";
-			homonymeimport = "";
 			homonyme = false;
 			emptyForm();
 		}
-	}
-
-	public String getHomonymeimport() {
-		return homonymeimport;
-	}
-
-	public void setHomonymeimport(String homonymeimport) {
-		this.homonymeimport = homonymeimport;
 	}
 
 	public boolean isHomonyme() {
@@ -99,7 +89,6 @@ public class CandidateBean implements Serializable {
 	private void emptyForm() {
 		setFirstName("");
 		setLastName("");
-		setImportLog("");
 	}
 
 	public String getLogInfo() {
@@ -167,22 +156,6 @@ public class CandidateBean implements Serializable {
 		return importedCandidates;
 	}
 
-	public String getImportLog() {
-		return importLog;
-	}
-
-	public void setImportLog(String importLog) {
-		this.importLog = importLog;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
 	public void click() {
 		if (lastName.isEmpty()) {
 			logInfo = "Merci de remplir tous les champs du formulaire";
@@ -198,8 +171,12 @@ public class CandidateBean implements Serializable {
 		newCandidat.setEvenement(event);
 		for (Candidat candidat : candidats) {
 			if (candidat.getNom().equals(lastName) && candidat.getPrenom().equals(firstName)) {
-				messagedoublon = "le candidat " + lastName + " " + firstName
-						+ " existe déja. Voulez vous l'ajouter quand même?";
+				if (firstName.isEmpty()) {
+					messagedoublon = "Le candidat " + lastName + " " + firstName
+							+ " existe déja. Voulez-vous l'ajouter ?";
+				} else {
+					messagedoublon = "Le candidat " + lastName + " existe déja. Voulez-vous l'ajouter ?";
+				}
 				homonyme = true;
 				return;
 			}
@@ -215,7 +192,7 @@ public class CandidateBean implements Serializable {
 
 	public void addCandidat() {
 		if (lastName.isEmpty()) {
-			logInfo = "Merci de remplir tous les champs du formulaire";
+			showMessageAddCandidate("Merci de remplir tous les champs du formulaire");
 			return;
 		}
 		if (firstName.isEmpty()) {
@@ -228,7 +205,6 @@ public class CandidateBean implements Serializable {
 		candidateService.addCandidate(newCandidat);
 		candidats.add(newCandidat);
 		clearPanel();
-
 	}
 
 	public void clearPanel() {
@@ -242,8 +218,8 @@ public class CandidateBean implements Serializable {
 
 		List<String[]> data = new ArrayList<String[]>();
 		List<Candidat> importedCandidats = new ArrayList<>();
-		homonymeimport="";
-		importLog="";
+		boolean homonymeDetected = false;
+
 		try (CSVReader reader = new CSVReader(new InputStreamReader(event.getFile().getInputstream()), ';')) {
 			String[] nextLine = null;
 			// récupération des données du fichier
@@ -265,7 +241,7 @@ public class CandidateBean implements Serializable {
 					data.add(nextLine);
 				}
 			} catch (IOException e) {
-				importLog = "Le contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
+				showMessageImport("Le contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.");
 				return;
 			}
 
@@ -280,7 +256,7 @@ public class CandidateBean implements Serializable {
 				}
 			}
 			if (indexnom == -1) {
-				importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
+				showMessageImport("Le contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.");
 				return;
 			}
 
@@ -293,12 +269,16 @@ public class CandidateBean implements Serializable {
 					importedCandidats.add(creerCandidatImporte(data.get(i)[indexnom], ""));
 				}
 			}
+
 			if (!importedCandidats.isEmpty()) {
 				for (Candidat importedcandidat : importedCandidats) {
 					for (Candidat candidat : candidats) {
 						if (candidat.getNom().equals(importedcandidat.getNom())
 								&& candidat.getPrenom().equals(importedcandidat.getPrenom())) {
-							homonymeimport = "Vous avez ajouté des candidats homonymes";
+							showMessageImport(
+									"La liste des candidats a été importée avec succès,<br/>mais des candidats homonymes ont été détectés.");
+							homonymeDetected = true;
+							break;
 						}
 					}
 					candidats.add(importedcandidat);
@@ -306,10 +286,12 @@ public class CandidateBean implements Serializable {
 				candidateService.addCandidates(importedCandidats);
 			}
 		} catch (IOException e) {
-			importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
+			showMessageImport("Le contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.");
 			return;
 		}
-
+		if (!homonymeDetected) {
+			showMessageImport("La liste des candidats a été importée avec succès !");
+		}
 	}
 
 	private Candidat creerCandidatImporte(String nom, String prenom) {
@@ -344,7 +326,6 @@ public class CandidateBean implements Serializable {
 				writer.close();
 			}
 		}
-
 		facesContext.responseComplete();
 	}
 
@@ -354,6 +335,16 @@ public class CandidateBean implements Serializable {
 				candidateService.supprimerCandidat(candidat.getIdcandidat());
 			}
 		}
-		Navigation.redirect("addCandidates.xhtml");
+		candidats.clear();		
+	}
+
+	public void showMessageImport(String importLog) {
+		RequestContext.getCurrentInstance()
+				.showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Importer des candidats", importLog));
+	}
+
+	public void showMessageAddCandidate(String addCandidateLog) {
+		RequestContext.getCurrentInstance().showMessageInDialog(
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Ajouter un candidat", addCandidateLog));
 	}
 }
