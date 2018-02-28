@@ -24,19 +24,18 @@ import com.onek.utils.Password;
 public class AddJuryBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	
 	@Autowired
 	private JuryService juryService;
-	
+
 	@Autowired
 	private EvenementService evenement;
-	
+
 	@Autowired
 	private UserService userService;
 
 	private int idEvent;
 	private Evenement event;
-	
+
 	private Jury newjuryEvent;
 
 	private List<Utilisateur> utilisateurs;
@@ -45,11 +44,10 @@ public class AddJuryBean implements Serializable {
 	private List<Utilisateur> selectedutilisateurs;
 	private List<Utilisateur> utilisateursAll;
 	private List<Utilisateur> utilisateursAnos;
-	
+
 	private Password passwordGenerator;
 	private int juryAnonyme;
-	
-	
+
 	public List<Utilisateur> getUtilisateursAnos() {
 		return utilisateursAnos;
 	}
@@ -128,14 +126,14 @@ public class AddJuryBean implements Serializable {
 				Navigation.redirect("index.xhtml");
 				return;
 			}
-			if(!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
+			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("idEvent")) {
 				Navigation.redirect("accueil.xhtml");
 				return;
 			}
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			utilisateurs = juryService.listJurysByEvent(idEvent);
-			utilisateursAll = userService.getAllUsers();
+			utilisateursAll = userService.getAllUsersExceptDeleted();
 			for (Utilisateur utilisateur : utilisateurs) {
 				utilisateursAll.remove(utilisateur);
 			}
@@ -151,13 +149,19 @@ public class AddJuryBean implements Serializable {
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		int iduser = Integer.valueOf(params.get("iduser"));
 		Utilisateur jury = juryService.findById(iduser);
-		juryService.supprimerUtilisateur(iduser,idEvent);
+		juryService.supprimerUtilisateur(iduser, idEvent);
 		utilisateurs.remove(jury);
-		utilisateursAll.add(jury);
+		if(jury.getDroits().equals("A")) {
+			utilisateursAnos.remove(jury);
+			juryService.supprimerUtilisateurAnonyme(iduser);
+		}
+		else {
+			utilisateursAll.add(jury);
+		}
 	}
 
 	public void buttonAdd() {
-		
+
 		for (Utilisateur utilisateur : selectedutilisateurs) {
 			newjuryEvent = new Jury();
 			newjuryEvent.setEvenement(event);
@@ -168,7 +172,7 @@ public class AddJuryBean implements Serializable {
 		}
 		selectedutilisateurs.clear();
 	}
-	
+
 	public void buttonActionValider() {
 		Navigation.redirect("eventAccueil.xhtml");
 	}
@@ -176,6 +180,7 @@ public class AddJuryBean implements Serializable {
 	public void retour() {
 		Navigation.redirect("eventAccueil.xhtml");
 	}
+
 	public void addJuryAnonymeButton() {
 		passwordGenerator = new Password();
 		List<Utilisateur> anonymousJurys = new ArrayList<>();

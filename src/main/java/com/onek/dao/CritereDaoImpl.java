@@ -136,4 +136,29 @@ public class CritereDaoImpl implements CritereDao, Serializable {
 			session.close();
 		}
 	}
+
+	@Override
+	public void updateCritere(Critere critere) {
+		Objects.requireNonNull(critere);
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.update(critere);
+			for (Descripteur descripteur : critere.getDescripteurs()) {
+				session.save(descripteur);
+			}
+			transaction.commit();
+			logger.info("Update criteria and descriptors done !");
+		}
+		catch(RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}
+	}
 }

@@ -16,17 +16,7 @@
 <f:metadata>
 	<f:event type="preRenderView" listener="#{users.before}" />
 </f:metadata>
-<h:body>
-	<header>
-		<div class="ui-g">
-			<div class="ui-g-1">
-				<p:graphicImage name="/image/logo.png" width="50" />
-			</div>
-			<div class="ui-g-11">
-				<h1 class="hf">ONEK'</h1>
-			</div>
-		</div>
-	</header>
+<h:body>	
 	<!-- Insertion du header + menu -->
 	<ui:include src="#{accueil.typeMenu}" />
 	<br />
@@ -42,12 +32,11 @@
 	<div class="ui-g tab-users">
 		<h:form>
 			<p:dataTable id="tab-users" var="utilisateur" value="#{users.users}"
-				scrollable="true" scrollHeight="600" sortBy="#{utilisateur.login}">
-				<!-- barre de recherche -->
+				scrollable="true" scrollHeight="300" sortBy="#{utilisateur.login}">				
 				<f:facet name="header">
 					Liste des utilisateurs
 				</f:facet>
-				<!-- ********fin*********** -->
+				
 				<p:column headerText="Login" sortBy="#{utilisateur.login}">
 					<h:outputText value="#{utilisateur.login}" />
 				</p:column>

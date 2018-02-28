@@ -3,10 +3,12 @@ package com.onek.managedbean;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
@@ -171,7 +173,7 @@ public class CandidateBean implements Serializable {
 	}
 
 	public void fileImportCsv(FileUploadEvent event) throws IOException {
-		
+
 		List<String[]> data = new ArrayList<String[]>();
 		List<Candidat> importedCandidats = new ArrayList<>();
 
@@ -211,7 +213,7 @@ public class CandidateBean implements Serializable {
 				}
 			}
 			if (indexnom == -1) {
-				
+
 				importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
 				return;
 			}
@@ -253,7 +255,31 @@ public class CandidateBean implements Serializable {
 		candidats.remove(candidat);
 	}
 
-	public void retour() {
-		Navigation.redirect("eventAccueil.xhtml");
+	public void telechargerModele() throws IOException {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+	    ExternalContext externalContext = facesContext.getExternalContext();
+	    externalContext.setResponseContentType("text/csv; charset=UTF-8");
+	    externalContext.setResponseCharacterEncoding("UTF-8");
+	    externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"modeleCandidat.csv\"");
+	    Writer writer = externalContext.getResponseOutputWriter();
+	    try {
+	        writer.write("nom;prenom\n");
+	        writer.write("Smith;James");
+	    } finally {
+	        if (writer != null) {
+	            writer.close();
+	        }
+	    }
+
+	    facesContext.responseComplete();
+	}
+	
+	public void suppressAllCandidates() {
+		if(candidats.size() > 0) {
+			for(Candidat candidat : candidats) {
+				candidateService.supprimerCandidat(candidat.getIdcandidat());
+			}
+		}
+		Navigation.redirect("addCandidates.xhtml");
 	}
 }

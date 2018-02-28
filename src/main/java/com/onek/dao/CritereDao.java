@@ -9,4 +9,5 @@ public interface CritereDao {
 	Critere findById(Integer id);
 	void addCritere(Critere critere);
 	void supprimerCritere(int id);
+	void updateCritere(Critere critere);
 }

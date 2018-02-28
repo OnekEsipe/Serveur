@@ -267,41 +267,46 @@ public class EventAccueilBean implements Serializable {
 		Evenement eventbis = evenementService.addEvenement(createEventDuplique(utilisateur));
 		List<Critere> criteresbis = new ArrayList<>();
 		criteresbis = duplicateCritere(eventbis);
-		grilleservice.addCriteres(criteresbis);
-		eventbis.setCriteres(new ArrayList<>());
-		for (Critere critere : criteresbis) {
-			eventbis.addCritere(critere);
+		if (!criteresbis.isEmpty()) {
+			grilleservice.addCriteres(criteresbis);
+			eventbis.setCriteres(new ArrayList<>());
+			for (Critere critere : criteresbis) {
+				eventbis.addCritere(critere);
+			}
 		}
 		if (!selectedoptions.isEmpty()) {
 			for (String option : selectedoptions) {
 				if (option.equals("candidats")) {
 					List<Candidat> candidatsBis = new ArrayList<>();
 					candidatsBis = duplicateCandidat(eventbis);
-					candidatService.addCandidates(candidatsBis);
-					eventbis.setCandidats(new ArrayList<>());
-					for (Candidat candidat : candidatsBis) {
-						eventbis.addCandidat(candidat);
+					if (!candidatsBis.isEmpty()) {
+						candidatService.addCandidates(candidatsBis);
+						eventbis.setCandidats(new ArrayList<>());
+						for (Candidat candidat : candidatsBis) {
+							eventbis.addCandidat(candidat);
+						}
 					}
 				}
 				if (option.equals("jurys")) {
 					List<Jury> jurysBis = new ArrayList<>();
 					jurysBis = duplicateJury(eventbis);
-					eventbis.setJurys(new ArrayList<>());
-					for (Jury jury : jurysBis) {
-						eventbis.addJury(jury);
+					if (!jurysBis.isEmpty()) {
+						eventbis.setJurys(new ArrayList<>());
+						for (Jury jury : jurysBis) {
+							eventbis.addJury(jury);
+						}
+						juryService.addListJurys(jurysBis);
 					}
-					juryService.addListJurys(jurysBis);
 				}
 			}
 		}
 		selectedoptions.clear();
-
+		Navigation.redirect("accueil.xhtml");
 	}
 
 	private List<Critere> duplicateCritere(Evenement eventbis) {
 		List<Critere> criteres = new ArrayList<>();
 		if (!event.getCriteres().isEmpty()) {
-
 			for (Critere critere : event.getCriteres()) {
 				Critere c = new Critere();
 				c.setDescripteurs(new ArrayList<>());
@@ -373,5 +378,5 @@ public class EventAccueilBean implements Serializable {
 		String codeEvent = id + pass.generateCode(10 - length);
 		return codeEvent;
 	}
-	
+
 }
