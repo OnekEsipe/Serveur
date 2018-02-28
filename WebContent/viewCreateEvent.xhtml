@@ -12,6 +12,7 @@
 	</link>
 	<h:outputStylesheet library="css" name="createEvent.css" />
 	<h:outputStylesheet library="css" name="user.css" />
+	<h:outputStylesheet library="css" name="header_footer.css" />
 </h:head>
 <f:metadata>
 	<f:event type="preRenderView" listener="#{event.before}" />
@@ -20,9 +21,8 @@
 	<!-- Insertion du menu -->
 	<ui:include src="#{accueil.typeMenu}" />
 	<br />
-	<br />
-	<div class="ui-g tab-users">
-		<h:form>
+	<div class="ui-g tab-users page-wrap">
+		<h:form class="form-create">
 			<!-- Inputs of date -->
 			<p:growl id="msgs" showDetail="true" />
 			<p:panel header="Créer un nouvel événement">
@@ -56,10 +56,8 @@
 				</div>
 			</p:panel>			
 		</h:form>
-		<!-- 
-				<h:outputText id="errorCreationEvent" value="#{event.logInfo}" />
-		 -->
-		<!-- <h2 id="debug">#{event.debug}</h2> -->
 	</div>
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>

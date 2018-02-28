@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>ONEK' - Gestion des critères</title>
+	<title>ONEK' - Gestion de la grille</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
@@ -23,7 +23,7 @@
 	<div class="page-wrap">
 		<div class="ui-g button-create">
 			<h:form rendered="#{not eventAccueil.disabledSiBrouillon}">
-				<p:commandButton icon="ui-icon-plusthick" value="Ajouter un critère"
+				<p:commandButton icon="ui-icon-plusthick" value="Ajouter des critères"
 					action="#{grille.onClicAddCritere}" ajax="false" />
 			</h:form>
 		</div>
