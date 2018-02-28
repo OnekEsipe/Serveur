@@ -55,8 +55,13 @@ public class StatistiquesBean implements Serializable {
 	
 	private double totalAvancement;
 	
+	private String totalString;
+	
 	private List<StatsCandidate> notesByCandidats;
 	private List<StatsJury> notesByJurys;
+	
+	private List<StatsCandidate> filteredNotesByCandidats;
+	private List<StatsJury> filteredNotesByJurys;
 	
 	private List<Candidat> candidats;
 	private List<Jury> jurys;
@@ -64,10 +69,12 @@ public class StatistiquesBean implements Serializable {
 	public class StatsJury {
 		String name;
 		double value;
+		String notation;
 		
-		public StatsJury(String name, double value) {
+		public StatsJury(String name, double value, int nbNoted, int nbNotes) {
 			this.name = name;
 			this.value = value;
+			this.notation = nbNoted+"/"+nbNotes;
 		}
 
 		public String getName() {
@@ -76,16 +83,22 @@ public class StatistiquesBean implements Serializable {
 
 		public double getValue() {
 			return value;
+		}
+
+		public String getNotation() {
+			return notation;
 		}
 	}
 	
 	public class StatsCandidate {
 		String name;
 		double value;
+		String notation;
 		
-		public StatsCandidate(String name, double value) {
+		public StatsCandidate(String name, double value, int nbNoted, int nbNotes) {
 			this.name = name;
 			this.value = value;
+			this.notation = nbNoted+"/"+nbNotes;
 		}
 
 		public String getName() {
@@ -94,6 +107,10 @@ public class StatistiquesBean implements Serializable {
 
 		public double getValue() {
 			return value;
+		}
+
+		public String getNotation() {
+			return notation;
 		}
 	}
 
@@ -124,10 +141,6 @@ public class StatistiquesBean implements Serializable {
 	
 	public void buttonResultByJurys() {
 		buildXlsx("jury");
-	}
-	
-	public void buttonRetour() {
-		Navigation.redirect("eventAccueil.xhtml");
 	}
 
 	public int getIdEvent() {
@@ -181,16 +194,16 @@ public class StatistiquesBean implements Serializable {
 				}
 			}
 			if(totalNotes == 0) {
-				notesByCandidats.add(new StatsCandidate(candidat.getNom()+" "+candidat.getPrenom(), 100));
+				notesByCandidats.add(new StatsCandidate(candidat.getNom()+" "+candidat.getPrenom(), 100, 0, 0));
 			} else {
-				notesByCandidats.add(new StatsCandidate(candidat.getNom()+" "+candidat.getPrenom(), (double) ((nbNoted/totalNotes)*100)));
-				
+				notesByCandidats.add(new StatsCandidate(candidat.getNom()+" "+candidat.getPrenom(), (double) ((nbNoted/totalNotes)*100), nbNoted, totalNotes));
 			}
 		}
 		if (total == 0) {
 			this.setTotalAvancement(100);
 		} else {
 			this.setTotalAvancement((totalNoteDone/total)*100);
+			this.setTotalString(totalNoteDone+"/"+total);
 		}
 	}
 	
@@ -210,9 +223,9 @@ public class StatistiquesBean implements Serializable {
 			}
 			Utilisateur user = jury.getUtilisateur();
 			if(totalNotes == 0) {
-				notesByJurys.add(new StatsJury(user.getNom()+" "+user.getPrenom(), (double) 100));
+				notesByJurys.add(new StatsJury(user.getNom()+" "+user.getPrenom(), (double) 100, 0, 0));
 			} else {
-				notesByJurys.add(new StatsJury(user.getNom()+" "+user.getPrenom(), (double) ((nbNoted/totalNotes)*100)));
+				notesByJurys.add(new StatsJury(user.getNom()+" "+user.getPrenom(), (double) ((nbNoted/totalNotes)*100), nbNoted, totalNotes));
 			}
 		}
 	}
@@ -641,6 +654,30 @@ public class StatistiquesBean implements Serializable {
 				}
 			}
 		}
+	}
+
+	public String getTotalString() {
+		return totalString;
+	}
+
+	public void setTotalString(String totalString) {
+		this.totalString = totalString;
+	}
+
+	public List<StatsJury> getFilteredNotesByJurys() {
+		return filteredNotesByJurys;
+	}
+
+	public void setFilteredNotesByJurys(List<StatsJury> filteredNotesByJurys) {
+		this.filteredNotesByJurys = filteredNotesByJurys;
+	}
+
+	public List<StatsCandidate> getFilteredNotesByCandidats() {
+		return filteredNotesByCandidats;
+	}
+
+	public void setFilteredNotesByCandidats(List<StatsCandidate> filteredNotesByCandidats) {
+		this.filteredNotesByCandidats = filteredNotesByCandidats;
 	}
 
 }
