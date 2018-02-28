@@ -2,8 +2,6 @@ package com.onek.managedbean;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -260,15 +258,13 @@ public class CandidateBean implements Serializable {
 	public void telechargerModele() throws IOException {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 	    ExternalContext externalContext = facesContext.getExternalContext();
-	    externalContext.setResponseContentType("text/csv");
+	    externalContext.setResponseContentType("text/csv; charset=UTF-8");
+	    externalContext.setResponseCharacterEncoding("UTF-8");
 	    externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"modeleCandidat.csv\"");
-
-	    OutputStream out = externalContext.getResponseOutputStream();
-	    Writer writer = new OutputStreamWriter(out);
-
+	    Writer writer = externalContext.getResponseOutputWriter();
 	    try {
 	        writer.write("nom;prenom\n");
-	        writer.write("exempleNom;exemplePrenom");
+	        writer.write("Smith;James");
 	    } finally {
 	        if (writer != null) {
 	            writer.close();
