@@ -33,13 +33,16 @@
 					style="margin-bottom:20px; height: 50%;">
 					<h:form id="log" enctype="multipart/form-data">
 						<h2 id="format">
-							le fichier doit être au format csv, le parseur accepté est ";". <br />
+							Le fichier doit être au format csv, le parseur accepté est ";". <br />
 							Le fichier doit obligatoirement contenir une colonne "nom", la
 							colonne "prenom" est facultative.
 						</h2>
+						<br />
 						<p:fileUpload fileUploadListener="#{candidate.fileImportCsv}"
 							dragDropSupport="true" multiple="false" mode="advanced"
-							id="upload" allowTypes="/(\.|\/)(csv)$/" update="tabCandidat log"/>
+							id="upload" allowTypes="/(\.|\/)(csv)$/" update="tabCandidat log"
+							label="Choisir un fichier" uploadLabel="Envoyer"
+							cancelLabel="Annuler" />
 						<br />
 						<p:commandButton value="Télécharger un modèle"
 							action="#{candidate.telechargerModele}" ajax="false"
@@ -156,5 +159,11 @@
 			<h:outputText value="#{candidate.logInfo}" />
 		</div>
 	</div>
+	<br />
+	<br />
+	<br />
+	<br />
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>

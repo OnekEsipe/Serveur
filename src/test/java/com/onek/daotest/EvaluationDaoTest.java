@@ -73,16 +73,5 @@ public class EvaluationDaoTest {
 		evaluationDao.saveEvaluation(new Candidat(),new Jury(),new Date(), -1);
 	}
 	
-	/*
-	 * TESTS DE TRANSACTIONS ECHOUEES
-	 * TODO
-	 */
-	
-	
-	/*
-	 * TESTS DE TRANSACTIONS REUSSIES
-	 * TODO
-	 */
-
 
 }

@@ -9,10 +9,10 @@ import com.onek.model.Jury;
 
 public interface EvaluationDao {
 
-	Evaluation findById(int id);
-	void update(Evaluation evaluation);
-	List<Evaluation> findByIdCandidate(int idCandidat);
-	List<Evaluation> findByIdJury(int idJury);
-	void deleteEvaluation(int idJury, int idCandidat);
+	public Evaluation findById(int id);
+	public void update(Evaluation evaluation);
+	public List<Evaluation> findByIdCandidate(int idCandidat);
+	public List<Evaluation> findByIdJury(int idJury);
+	public void deleteEvaluation(int idJury, int idCandidat);
 	public void saveEvaluation(Candidat candidat, Jury jury, Date date, int idevent);
 }

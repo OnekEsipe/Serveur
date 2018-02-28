@@ -383,4 +383,18 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		session.close();
 		return jury;
 	}
+	
+	@Override
+	public Jury findJuryById(int id) {
+		if(id < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Jury jury = (Jury) session.createQuery("FROM Jury WHERE idjury = :id").setParameter("id", id)
+				.getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return jury;
+	}
 }

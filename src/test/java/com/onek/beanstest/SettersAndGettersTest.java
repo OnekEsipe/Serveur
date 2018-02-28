@@ -82,7 +82,7 @@ public class SettersAndGettersTest {
 
 	@Test
 	public void validStatistiquesBean() throws IntrospectionException {
-		JavaBeanTester.test(StatistiquesBean.class,"notesByCandidats","notesByJurys","candidats","jurys");
+		JavaBeanTester.test(StatistiquesBean.class,"notesByCandidats","notesByJurys","candidats","jurys","filteredNotesByCandidats","filteredNotesByJurys");
 	}
 
 	@Test

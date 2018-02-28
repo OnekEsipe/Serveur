@@ -20,5 +20,7 @@ public interface JuryDao {
 	public void addJuryToEvent(Jury jury);
 	public void addListJurys(List<Jury> jurys);
 	public Utilisateur findById(int id) ;
+	public Jury findJuryById(int id);
 	public void supprimerUtilisateurAnonyme(int iduser);
+
 }

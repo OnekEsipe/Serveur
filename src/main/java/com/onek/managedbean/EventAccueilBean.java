@@ -69,6 +69,8 @@ public class EventAccueilBean implements Serializable {
 	private Date dateEnd;
 	private Date timeStart;
 	private Date timeEnd;
+	private boolean signingNeeded;
+	private boolean isOpened;
 	private List<String> selectedoptions;
 	private boolean disabledSiBrouillon;
 	private boolean disabledSiSupprime;
@@ -175,7 +177,9 @@ public class EventAccueilBean implements Serializable {
 			}
 			this.dateStart = event.getDatestart();
 			this.dateEnd = event.getDatestop();
-
+			this.signingNeeded = event.getSigningneeded();
+			this.isOpened = event.getIsopened();
+			
 			DateFormat dfTime = new SimpleDateFormat("HH:mm");
 			String sTimeStart = dfTime.format(event.getDatestart().getTime());
 			String sTimeEnd = dfTime.format(event.getDatestop().getTime());
@@ -237,6 +241,22 @@ public class EventAccueilBean implements Serializable {
 	public void setIdEvent(int idEvent) {
 		this.idEvent = idEvent;
 	}
+	
+	public boolean getSigningNeeded() {
+		return signingNeeded;
+	}
+	
+	public void setSigningNeeded(boolean signingNeed) {
+		this.signingNeeded = signingNeed;
+	}
+	
+	public boolean getIsOpened() {
+		return isOpened;
+	}
+	
+	public void setIsOpened(boolean isOpened) {
+		this.isOpened = isOpened;
+	}
 
 	public void eventUpdateButton() {
 		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
@@ -245,6 +265,8 @@ public class EventAccueilBean implements Serializable {
 		if (!nom.isEmpty()) {
 			event.setNom(nom);
 		}
+		event.setIsopened(isOpened);
+		event.setSigningneeded(signingNeeded);
 		eventAccueilservice.editEvenement(event);
 		Navigation.redirect("eventAccueil.xhtml");
 	}
@@ -264,7 +286,7 @@ public class EventAccueilBean implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		String login = (String) fc.getExternalContext().getSessionMap().get("user");
 		Utilisateur utilisateur = userService.findByLogin(login);
-		Evenement eventbis = evenementService.addDuplicatedEvent(createEventDuplique(utilisateur));
+		Evenement eventbis = evenementService.addEvenement(createEventDuplique(utilisateur));
 		List<Critere> criteresbis = new ArrayList<>();
 		criteresbis = duplicateCritere(eventbis);
 		if (!criteresbis.isEmpty()) {
@@ -372,10 +394,9 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	private String generateCode() {
-		Password pass = new Password();
 		Integer id = event.getIdevent();
 		int length = (int) (Math.log10(id) + 1);
-		String codeEvent = id + pass.generateCode(10 - length);
+		String codeEvent = id + Password.generateCode(10 - length);
 		return codeEvent;
 	}
 
