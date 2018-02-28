@@ -27,6 +27,7 @@
 				<p:panel header="Avancement de la notation de l'événement">
 					<p:progressBar value="#{statistiques.totalAvancement}"
 						labelTemplate="{value}%" displayOnly="true" />
+					<h:inputText value="#{statistiques.totalString}"></h:inputText>
 				</p:panel>
 				<br />
 				<br />
@@ -37,6 +38,9 @@
 					<p:column headerText="Avancement">
 						<p:progressBar value="#{juryStat.value}" labelTemplate="{value}%"
 							displayOnly="true" />
+					</p:column>
+					<p:column headerText="Notes">
+						<h:outputText value="#{juryStat.notation}"></h:outputText>
 					</p:column>
 				</p:dataTable>
 				<br />
@@ -50,21 +54,20 @@
 						<p:progressBar value="#{candiStat.value}" labelTemplate="{value}%"
 							displayOnly="true" />
 					</p:column>
+					<p:column headerText="Notes">
+						<h:outputText value="#{candiStat.notation}"></h:outputText>
+					</p:column>
 				</p:dataTable>
 				<br />
 				<br />
 				<p:commandButton
-					value="Exporter les résultats par candidat de l'événement"
+					value="Exporter les résultats par candidat"
 					actionListener="#{statistiques.buttonResult}" ajax="false" />
 				<br />
 				<br />
 				<p:commandButton
-					value="Exporter les résultats par jury de l'événement"
+					value="Exporter les résultats par jury"
 					actionListener="#{statistiques.buttonResultByJurys}" ajax="false" />
-				<br />
-				<br />
-				<p:commandButton value="Retour"
-					actionListener="#{statistiques.buttonRetour}" ajax="false" />
 			</h:form>
 		</div>
 	</div>
