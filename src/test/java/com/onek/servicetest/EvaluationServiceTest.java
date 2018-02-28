@@ -112,9 +112,9 @@ public class EvaluationServiceTest {
 
 	@Test
 	public void testdeleteEvaluationOK() {
-		assertTrue(evaluationService.findByIdCandidate(3).size() > 0);
-		evaluationService.deleteEvaluation(1,3);
-		assertTrue(evaluationService.findByIdCandidate(3).isEmpty());
+		assertTrue(evaluationService.findByIdCandidate(2).size() > 0);
+		evaluationService.deleteEvaluation(3,2);
+		assertTrue(evaluationService.findByIdCandidate(2).isEmpty());
 	}
 
 	@Test
