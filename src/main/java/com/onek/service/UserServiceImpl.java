@@ -135,6 +135,6 @@ public class UserServiceImpl implements UserService, Serializable {
 	}
 	@Override
 	public List<Utilisateur> getAllUsersExceptDeleted(){
-		return userDao.getAllUsersExceptDeleted();
+		return userDao.getAllUsersExceptDeletedansAno();
 	}
 }

@@ -4,14 +4,14 @@ import java.security.SecureRandom;
 
 public class Password {
 	
-	private final SecureRandom random = new SecureRandom();
+	private final static SecureRandom random = new SecureRandom();
 
 	/** different dictionaries used */
-	private final String ALPHA_CAPS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	private final String ALPHA = "abcdefghijklmnopqrstuvwxyz";
-	private final String NUMERIC = "0123456789";
+	private final static String ALPHA_CAPS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private final static String ALPHA = "abcdefghijklmnopqrstuvwxyz";
+	private static final String NUMERIC = "0123456789";
 
-	private String initGeneratePassword(int len, String dic) {
+	private static String initGeneratePassword(int len, String dic) {
 		String result = "";
 		for (int i = 0; i < len; i++) {
 			int index = random.nextInt(dic.length());
@@ -20,7 +20,7 @@ public class Password {
 		return result;
 	}
 
-	public String generatePassword(int length) {
+	public static String generatePassword(int length) {
 		if(length < 1 || length > Integer.MAX_VALUE) {
 			throw new IllegalArgumentException("length must be positive and inf Integer.MAX_VALUE");
 		}
@@ -28,7 +28,7 @@ public class Password {
 		return password;
 	}
 	
-	public String generateCode(int length) {
+	public static String generateCode(int length) {
 		if(length < 1 || length > Integer.MAX_VALUE) {
 			throw new IllegalArgumentException("length must be positive and inf Integer.MAX_VALUE");
 		}

@@ -229,6 +229,7 @@ public class StatistiquesBean implements Serializable {
 		}
 		if (total == 0) {
 			this.setTotalAvancement(100);
+			this.setTotalString((int) totalNoteDone + "/" + (int) total);
 		} else {
 			this.setTotalAvancement(((double) totalNoteDone / (double) total) * 100);
 			this.setTotalString((int) totalNoteDone + "/" + (int) total);
