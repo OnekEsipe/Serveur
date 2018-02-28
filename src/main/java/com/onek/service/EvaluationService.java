@@ -8,9 +8,10 @@ import com.onek.model.Evaluation;
 import com.onek.model.Candidat;
 
 public interface EvaluationService {
-
-	List<Evaluation> findByIdCandidate(Integer idCandidat);
-	List<Evaluation> findByIdJury(Integer idJury);
-	void deleteEvaluation(int idJury, int idCandidat);
+	public Evaluation findById(int id);
+	public void update(Evaluation evaluation);
+	public List<Evaluation> findByIdCandidate(int idCandidat);
+	public List<Evaluation> findByIdJury(int idJury);
+	public void deleteEvaluation(int idJury, int idCandidat);
 	public void saveEvaluation(Candidat candidat, Jury jury, Date date, int idevent);
 }

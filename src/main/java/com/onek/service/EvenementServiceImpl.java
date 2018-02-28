@@ -17,13 +17,8 @@ public class EvenementServiceImpl implements EvenementService, Serializable{
 	private EvenementDao eventDao;
 	
 	@Override
-	public void addEvenement(Evenement event) {
-		eventDao.addEvenement(event);		
-	}
-
-	@Override
-	public boolean isValid(Evenement event) {
-		return true; // TODO
+	public Evenement addEvenement(Evenement event) {
+		return eventDao.addEvenement(event);		
 	}
 
 	@Override
@@ -50,7 +45,9 @@ public class EvenementServiceImpl implements EvenementService, Serializable{
 	public List<Evenement> myListEvents(int iduser) {		
 		return eventDao.findByIdUser(iduser);
 	}
-	public Evenement addDuplicatedEvent(Evenement event) {
-		return eventDao.addDuplicatedEvent(event);
+
+	@Override
+	public Evenement findByCode(String code) {
+		return eventDao.findByCode(code);
 	}
 }

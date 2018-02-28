@@ -28,19 +28,5 @@ public class NoteDaoTest {
 		noteDao.update(null);
 	}
 	
-	/*
-	 * TESTS DES ARGUMENTS
-	 */
-	
-	/*
-	 * TESTS DE TRANSACTIONS ECHOUEES
-	 * TODO
-	 */
-	
-	
-	/*
-	 * TESTS DE TRANSACTIONS REUSSIES
-	 * TODO
-	 */
 
 }
