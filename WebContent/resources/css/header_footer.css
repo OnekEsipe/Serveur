@@ -4,9 +4,9 @@
   margin: 0;
 }
 
-html, body {
+/*html, body {
   height: 100%;
-}
+}*/
 
 header {
 	height: 1em;
@@ -24,10 +24,14 @@ h1.hf {
 	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
+.menu-haut {
+	margin-top: 67px;
+}
+
 .page-wrap {
   min-height: 90%;
   /* equal to footer height */
-  /*margin-bottom: -2.6em; */
+  margin-bottom: 2.6em;
 }
 
 .page-wrap:after {
@@ -52,6 +56,8 @@ footer {
 	margin-top: 0.5em;
 	background: #2399e5;
 	z-index: 100;
-	position: relative; 
+	position: fixed; 
+	bottom: 0;
+	width: 100%;
 }
 
