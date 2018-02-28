@@ -394,10 +394,9 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	private String generateCode() {
-		Password pass = new Password();
 		Integer id = event.getIdevent();
 		int length = (int) (Math.log10(id) + 1);
-		String codeEvent = id + pass.generateCode(10 - length);
+		String codeEvent = id + Password.generateCode(10 - length);
 		return codeEvent;
 	}
 
