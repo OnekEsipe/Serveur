@@ -120,15 +120,4 @@ public class JuryDaoTest {
 		juryDao.addListJurys(null);
 	}	
 	
-	/*
-	 * TESTS DE TRANSACTIONS ECHOUEES
-	 * TODO
-	 */
-	
-	
-	/*
-	 * TESTS DE TRANSACTIONS REUSSIES
-	 * TODO
-	 */
-
 }

@@ -48,18 +48,5 @@ public class CritereDaoTest {
 		List<Critere> emptyList = new ArrayList<>();
 		critereDao.addCriteres(emptyList);
 	}
-	
-	/*
-	 * TESTS DE TRANSACTIONS ECHOUEES
-	 * TODO
-	 */
-	
-
-	
-	/*
-	 * TESTS DE TRANSACTIONS REUSSIES
-	 * TODO
-	 */
-
 
 }

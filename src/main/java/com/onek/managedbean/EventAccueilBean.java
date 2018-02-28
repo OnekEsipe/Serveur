@@ -264,7 +264,7 @@ public class EventAccueilBean implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		String login = (String) fc.getExternalContext().getSessionMap().get("user");
 		Utilisateur utilisateur = userService.findByLogin(login);
-		Evenement eventbis = evenementService.addDuplicatedEvent(createEventDuplique(utilisateur));
+		Evenement eventbis = evenementService.addEvenement(createEventDuplique(utilisateur));
 		List<Critere> criteresbis = new ArrayList<>();
 		criteresbis = duplicateCritere(eventbis);
 		grilleservice.addCriteres(criteresbis);
