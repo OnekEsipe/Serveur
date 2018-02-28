@@ -153,7 +153,7 @@ public class EventBean implements Serializable {
 		addEvent();
 		addEvenementCode();
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", event.getIdevent());
-		Navigation.redirect("accueil.xhtml");
+		Navigation.redirect("eventManager.xhtml");
 	}
 
 	private void addEvenementCode() {

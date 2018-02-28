@@ -6,18 +6,17 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Onek team</title>
+	<title>ONEK' - Ajouter des critères</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
 </h:head>
 <h:body>
 	<!-- Insertion du menu -->
-	<ui:include src="#{accueil.typeMenu}" />
-	<ui:include src="menuGauche.xhtml"></ui:include>
-	<br />
-
-	<div class="ui-g">
+	<ui:include src="#{accueil.typeMenu}" />	
+	<ui:include src="menuGauche.xhtml" style="height: 100%;"/>
+	<br />	
+	<div class="ui-g page-wrap">
 		<div class="ui-g-2"></div>
 		<div class="ui-g-9">
 			<h:form rendered="#{not eventAccueil.disabledSiBrouillon}">
@@ -164,5 +163,10 @@
 			</h:form>
 		</div>
 	</div>
+	<br/>
+	<br/>
+	<br/>
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>
