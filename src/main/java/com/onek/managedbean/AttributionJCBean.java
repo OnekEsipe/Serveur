@@ -56,9 +56,19 @@ public class AttributionJCBean implements Serializable {
 
 	private Map<Jury, Map<Candidat, Boolean>> attribJC;
 
+	private String messageerror;
 	private List<MessageAttrib> messageAttrib;
 	private String avertissementMessage;
 	private String avertMessage;
+
+	
+	public String getMessageerror() {
+		return messageerror;
+	}
+
+	public void setMessageerror(String messageerror) {
+		this.messageerror = messageerror;
+	}
 
 	public String getAvertMessage() {
 		return avertMessage;
@@ -108,7 +118,7 @@ public class AttributionJCBean implements Serializable {
 			attribJC = new LinkedHashMap<>();
 			attributionFinal = new LinkedHashMap<>();
 			messageAttrib = new ArrayList<>();
-
+			messageerror="";
 			// Initialisation-update de la liste des candidats, utilisateurs, jurys et de
 			// l'attribution deja realisee + init du message d'avertissement
 			status = evenement.findById(idEvent).getStatus();
@@ -236,17 +246,18 @@ public class AttributionJCBean implements Serializable {
 	}
 
 	public void attributionAutomatique() {
-
+		messageerror="";
 		if (methode == 2) {
 			CandidatParJury(randomX);
 		} else {
 			JuryParCandidat(randomX);
 		}
+		
 	}
 
 	private void JuryParCandidat(int randomX) {
 		if (randomX > juryList.size()) {
-			System.out.println("attribution impossible");
+			messageerror="le nombre de jury affecté à cet événement est insuffisant.";
 			return;
 		}
 		HashMap<Integer, List<Jury>> alljury = new HashMap<>();
@@ -295,7 +306,8 @@ public class AttributionJCBean implements Serializable {
 
 	public void CandidatParJury(int randomX) {
 		if (randomX > candidatsJurys.size()) {
-			System.out.println("attribution impossible");
+			
+			messageerror="le nombre de candidat affecté à cet événement est insuffisant.";
 			return;
 		}
 		HashMap<Integer, List<Candidat>> allcandidat = new HashMap<>();
