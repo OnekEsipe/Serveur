@@ -60,6 +60,9 @@ public class StatistiquesBean implements Serializable {
 	private List<StatsCandidate> notesByCandidats;
 	private List<StatsJury> notesByJurys;
 	
+	private List<StatsCandidate> filteredNotesByCandidats;
+	private List<StatsJury> filteredNotesByJurys;
+	
 	private List<Candidat> candidats;
 	private List<Jury> jurys;
 	
@@ -173,7 +176,6 @@ public class StatistiquesBean implements Serializable {
 	}
 
 	public void InitStatByCandidat() {
-		System.err.println("STATS CANDIDAT");
 		int total = 0;
 		int totalNoteDone = 0;
 		for (Candidat candidat : this.candidats) {
@@ -191,7 +193,6 @@ public class StatistiquesBean implements Serializable {
 					}
 				}
 			}
-			System.err.println("CANDIDAT : "+candidat.getNom()+" "+candidat.getPrenom()+" "+nbNoted+"/"+totalNotes);
 			if(totalNotes == 0) {
 				notesByCandidats.add(new StatsCandidate(candidat.getNom()+" "+candidat.getPrenom(), 100, 0, 0));
 			} else {
@@ -207,7 +208,6 @@ public class StatistiquesBean implements Serializable {
 	}
 	
 	public void InitStatByJury() {
-		System.err.println("STATS BY JURY");
 		for (Jury jury : this.jurys) {
 			int totalNotes = 0;
 			int nbNoted = 0;
@@ -222,7 +222,6 @@ public class StatistiquesBean implements Serializable {
 				}
 			}
 			Utilisateur user = jury.getUtilisateur();
-			System.err.println("JURY : "+user.getNom()+" "+user.getPrenom()+" "+nbNoted+"/"+totalNotes);
 			if(totalNotes == 0) {
 				notesByJurys.add(new StatsJury(user.getNom()+" "+user.getPrenom(), (double) 100, 0, 0));
 			} else {
@@ -663,6 +662,22 @@ public class StatistiquesBean implements Serializable {
 
 	public void setTotalString(String totalString) {
 		this.totalString = totalString;
+	}
+
+	public List<StatsJury> getFilteredNotesByJurys() {
+		return filteredNotesByJurys;
+	}
+
+	public void setFilteredNotesByJurys(List<StatsJury> filteredNotesByJurys) {
+		this.filteredNotesByJurys = filteredNotesByJurys;
+	}
+
+	public List<StatsCandidate> getFilteredNotesByCandidats() {
+		return filteredNotesByCandidats;
+	}
+
+	public void setFilteredNotesByCandidats(List<StatsCandidate> filteredNotesByCandidats) {
+		this.filteredNotesByCandidats = filteredNotesByCandidats;
 	}
 
 }
