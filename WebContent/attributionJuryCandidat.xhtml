@@ -30,33 +30,40 @@
 					<p:panel id="AttributionAutomatique"
 						rendered="#{attributionjc.isopen}"
 						header="Attribuer des cadidats automatiquement"
-						style="height:100px">
-						<h:form>
-							<div class="ui-g-2">
-								<p:outputLabel>Nombre de </p:outputLabel>
-							</div>
-							<div class="ui-g-4">
-								<p:selectOneMenu id="methode" value="#{attributionjc.methode}"
-									style="width:125px">
-									<f:selectItem itemLabel="Jury par Candidat" itemValue="1" />
-									<f:selectItem itemLabel="Candidat par Jury" itemValue="2" />
-								</p:selectOneMenu>
-							</div>
-							<div class="ui-g-2">
-								<p:spinner value="#{attributionjc.randomX}" min="1" max="99"
-									size="3" />
-							</div>
-							<div class="ui-g-4">
-								<p:commandButton value="Attribuer" id="withIcon"
-									icon="ui-icon-refresh" update="tableCheckBox"
-									actionListener="#{attributionjc.attributionAutomatique}" />
-							</div>
-						</h:form>
+						style="height:150px">
+						<div class="ui-g">
+							<h:form>
+								<div class="ui-g-2">
+									<p:outputLabel>Nombre de </p:outputLabel>
+								</div>
+								<div class="ui-g-4">
+									<p:selectOneMenu id="methode" value="#{attributionjc.methode}"
+										style="width:125px">
+										<f:selectItem itemLabel="Jury par Candidat" itemValue="1" />
+										<f:selectItem itemLabel="Candidat par Jury" itemValue="2" />
+									</p:selectOneMenu>
+								</div>
+								<div class="ui-g-2">
+									<p:spinner value="#{attributionjc.randomX}" min="1" max="99"
+										size="3" />
+								</div>
+								<div class="ui-g-4">
+									<p:commandButton value="Attribuer" id="withIcon"
+										icon="ui-icon-refresh"
+										update="tableCheckBox AttributionAutomatique"
+										actionListener="#{attributionjc.attributionAutomatique}" />
+								</div>
+							</h:form>
+						</div>
+						<div class="ui-g">
+							<h4>#{attributionjc.messageerror}</h4>
+						</div>
 					</p:panel>
 				</div>
 				<div class="ui-g-3">
-					<p:panel header="Exporter les attributions" style="height:100px">
+					<p:panel header="Exporter les attributions" style="height:150px">
 						<h:form id="exporter">
+							
 							<div class="ui-g-5"></div>
 							<h:commandLink>
 								<p:graphicImage name="/image/csv.png" width="30" />
