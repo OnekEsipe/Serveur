@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Home Onek</title>
+	<title>Mon compte</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
@@ -25,8 +25,7 @@
 	<div class="ui-g" style="width:80%; margin:auto;">
 		<div class="ui-g-6">
 			<!-- Modification du mot de passe -->
-			<h:form>
-				<p:growl id="msgs" showDetail="true" />
+			<h:form id="changepassword">				
 				<p:panel header="Modifier mon mot de passe">
 					<h:panelGrid columns="2" cellpadding="5">
 						<p:outputLabel for="motdepasseactuel" value="Mot de passe actuel:" />
@@ -47,7 +46,7 @@
 							value="#{userInfo.confirmNewPassword}" required="true" />
 						<br />
 						<p:commandButton value="Valider" action="#{userInfo.modifyPassword}"
-							icon="ui-icon-check" update="msgs" ajax="false"/>
+							icon="ui-icon-check" update="changepassword" ajax="true"/>
 						<h4>#{userInfo.logPassword}</h4>
 					</h:panelGrid>
 				</p:panel>
@@ -56,8 +55,7 @@
 
 		<div class="ui-g-6">
 			<!-- Modification addresse e-mail  -->
-			<h:form>
-				<p:growl id="msgs2" showDetail="true" />
+			<h:form id="changemail">				
 				<p:panel header="Modifier mon adresse mail">
 					<h:panelGrid columns="2" cellpadding="5">
 						<p:outputLabel value="Adresse mail actuelle :" />
@@ -74,7 +72,7 @@
 						<p:message for="nouveauemail" />
 						<br />
 						<p:commandButton value="Valider" action="#{userInfo.modifyMail}"
-							icon="ui-icon-check" update="msgs2" ajax="false" style="margin-top:14.6%;"/>
+							icon="ui-icon-check" update="changemail" ajax="true" style="margin-top:14.6%;"/>
 						<h4>#{userInfo.logEmail}</h4>
 					</h:panelGrid>
 				</p:panel>

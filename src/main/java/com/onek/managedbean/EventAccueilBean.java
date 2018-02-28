@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -179,7 +181,7 @@ public class EventAccueilBean implements Serializable {
 			this.dateEnd = event.getDatestop();
 			this.signingNeeded = event.getSigningneeded();
 			this.isOpened = event.getIsopened();
-			
+
 			DateFormat dfTime = new SimpleDateFormat("HH:mm");
 			String sTimeStart = dfTime.format(event.getDatestart().getTime());
 			String sTimeEnd = dfTime.format(event.getDatestop().getTime());
@@ -241,19 +243,19 @@ public class EventAccueilBean implements Serializable {
 	public void setIdEvent(int idEvent) {
 		this.idEvent = idEvent;
 	}
-	
+
 	public boolean getSigningNeeded() {
 		return signingNeeded;
 	}
-	
+
 	public void setSigningNeeded(boolean signingNeed) {
 		this.signingNeeded = signingNeed;
 	}
-	
+
 	public boolean getIsOpened() {
 		return isOpened;
 	}
-	
+
 	public void setIsOpened(boolean isOpened) {
 		this.isOpened = isOpened;
 	}
@@ -268,7 +270,8 @@ public class EventAccueilBean implements Serializable {
 		event.setIsopened(isOpened);
 		event.setSigningneeded(signingNeeded);
 		eventAccueilservice.editEvenement(event);
-		Navigation.redirect("eventAccueil.xhtml");
+		RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Modifier un événement", "Les modifications ont été enregistrées avec succès !"));
 	}
 
 	public void supprimerEvent() {

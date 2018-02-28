@@ -32,7 +32,7 @@
 			</div>
 		</div>
 		<div class="ui-g">
-			<h:form class="form-create">
+			<h:form id="adduser" class="form-create">				
 				<p:panel header="Créer un utilisateur">
 					<h:panelGrid columns="2" cellpadding="5">
 						<p:outputLabel for="loginUser" value="Login :" />
@@ -80,7 +80,7 @@
 					</h:panelGrid>
 					<div style="text-align: center;">
 						<p:commandButton value="Créer" action="#{addUser.onClickAdd}"
-							icon="ui-icon-check" ajax="false" />
+							icon="ui-icon-check" ajax="true" update="adduser"/>
 					</div>
 				</p:panel>
 			</h:form>

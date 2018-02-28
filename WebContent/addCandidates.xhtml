@@ -28,7 +28,7 @@
 	<div class="ui-g">
 		<div class="ui-g-2"></div>
 		<div class="ui-g-9">
-			<div class="ui-g-6">
+			<div class="ui-g-8">
 				<p:panel id="ImporterCandidat" header="Importer des candidats"
 					style="margin-bottom:20px">
 					<h:form id="log" enctype="multipart/form-data">
@@ -52,11 +52,9 @@
 					</h:form>
 				</p:panel>
 			</div>
-			<div class="ui-g-6">
-				<p:panel id="addcandidat" header="Ajouter un candidat"
-					style="margin-bottom:20px">
-					<h:form style="margin-top:3.5%">
-						<p:growl id="msgs" showDetail="true" />
+			<div class="ui-g-4">
+				<p:panel header="Ajouter un candidat" style="margin-bottom:20px">
+					<h:form id="addcandidat">
 						<h:panelGrid columns="2" cellpadding="5">
 
 							<p:outputLabel for="lastnameCandidat" value="Nom:" />
@@ -69,10 +67,13 @@
 							<p:inputText id="firstnameCandidat" name="firstnameCandidat"
 								placeholder="Entrer le prénom" size="20"
 								value="#{candidate.firstName}" />
-							
+
+							<div style="text-align: center;">
 								<p:commandButton value="Ajouter le candidat"
 									action="#{candidate.click}" icon="ui-icon-check"
-									update="tabCandidat" ajax="false" style="margin-top:20%;" />
+									update="tabCandidat addcandidat" ajax="true"
+									style="margin-top:20%;" />
+							</div>
 						</h:panelGrid>
 					</h:form>
 				</p:panel>

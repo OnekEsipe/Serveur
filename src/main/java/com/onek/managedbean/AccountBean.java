@@ -5,10 +5,12 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +21,7 @@ import com.onek.utils.Navigation;
 import com.onek.utils.Password;
 
 @Component("userInfo")
-public class AccountBean implements Serializable{
+public class AccountBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = Logger.getLogger(AccountBean.class);
 
@@ -34,8 +36,8 @@ public class AccountBean implements Serializable{
 	private String newPassword;
 	private String confirmNewPassword;
 	private String newEmail;
-	
-	//Log
+
+	// Log
 	private String logPassword;
 	private String logEmail;
 
@@ -47,7 +49,7 @@ public class AccountBean implements Serializable{
 			}
 			String name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
 			user = userService.findByLogin(name);
-			
+
 			this.lastEmail = user.getMail();
 			this.login = name;
 			emptyForm();
@@ -60,7 +62,7 @@ public class AccountBean implements Serializable{
 		setConfirmNewPassword("");
 		setNewEmail("");
 	}
-	
+
 	public String getLogin() {
 		return login;
 	}
@@ -125,7 +127,6 @@ public class AccountBean implements Serializable{
 		this.user = user;
 	}
 
-
 	public String getLastEmail() {
 		return lastEmail;
 	}
@@ -133,62 +134,72 @@ public class AccountBean implements Serializable{
 	public void setLastEmail(String lastEmail) {
 		this.lastEmail = lastEmail;
 	}
-	
+
 	public void modifyPassword() {
 		logEmail = "";
-		if(lastPassword.isEmpty() || newPassword.isEmpty() || confirmNewPassword.isEmpty()) {
-			logPassword = "Merci de renseigner tous les champs.";
+		if (lastPassword.isEmpty() || newPassword.isEmpty() || confirmNewPassword.isEmpty()) {
+			showMessagePassword("Merci de renseigner tous les champs.");
 			return;
 		}
-		if(!newPassword.equals(confirmNewPassword)) {
-			logPassword = "Nouveau mot de passe différent du mot de passe de confirmation.";
+		if (!newPassword.equals(confirmNewPassword)) {
+			showMessagePassword("Nouveau mot de passe différent du mot de passe de confirmation.");
 			return;
-		}		
+		}
 		try {
 			String hash = Encode.sha1(lastPassword);
-			if(!user.getMotdepasse().equals(hash)) {
-				logPassword = "Mot de passe incorrect, merci de réessayer.";
+			if (!user.getMotdepasse().equals(hash)) {
+				showMessagePassword("Mot de passe incorrect, merci de réessayer.");
 				return;
 			}
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			logPassword = "Une erreur est survenue.";
+			showMessagePassword("Une erreur est survenue.");
 			logger.error(this.getClass().getName(), e);
 			return;
 		}
-		if(!Password.verifyPasswordRule(newPassword)) {
-			logPassword = "Le mot de passe doit être composé d'au moins 6 caractères et comporter au moins une majuscule.";
+		if (!Password.verifyPasswordRule(newPassword)) {
+			showMessagePassword("Le mot de passe doit être composé d'au moins 6 caractères et comporter au moins une majuscule.");
 			return;
-		}		 
-		logPassword = "Modification effectuée avec succès !";
+		}		
 		try {
 			String hash = Encode.sha1(newPassword);
-			user.setMotdepasse(hash);			
-		}
-		catch(NoSuchAlgorithmException | UnsupportedEncodingException e) {
+			user.setMotdepasse(hash);
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			logger.error(this.getClass().getName(), e);
-			logPassword = "Une erreur est survenue.";
+			showMessagePassword("Une erreur est survenue.");
 			return;
 		}
 		userService.updateUserInfos(user);
+		showMessagePassword("Modification effectuée avec succès !");
 	}
-	
+
 	public void modifyMail() {
 		logPassword = "";
-		if(newEmail == null) return;
-		if(newEmail.isEmpty()) {
-			logEmail = "Merci de saisir votre adresse mail.";
+		if (newEmail == null)
+			return;
+		if (newEmail.isEmpty()) {			
 			newEmail = "";
+			showMessageMail("Merci de saisir votre adresse mail.");
 			return;
 		}
-		if (userService.mailExist(newEmail)) {
-			logEmail = "L'adresse mail est déjà utilisée.";
+		if (userService.mailExist(newEmail)) {			
 			newEmail = "";
+			showMessageMail("L'adresse mail est déjà utilisée.");
 			return;
 		}
-		logEmail = "Modification effectuée avec succès !";
-		lastEmail = newEmail;		
-		user.setMail(newEmail);	
+		lastEmail = newEmail;
+		user.setMail(newEmail);
 		newEmail = "";
 		userService.updateUserInfos(user);
-	}	
+		showMessageMail("Modification effectuée avec succès !");
+	}
+	
+	public void showMessagePassword(String logPassword) {
+		RequestContext.getCurrentInstance().showMessageInDialog(
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification du mot de passe", logPassword));
+	}
+	
+	public void showMessageMail(String logMail) {
+		RequestContext.getCurrentInstance().showMessageInDialog(
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification de l'adresse mail", logMail));
+	}
 }
