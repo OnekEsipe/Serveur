@@ -17,7 +17,7 @@
 <f:metadata>
 	<f:event type="preRenderView" listener="#{eventAccueil.before}" />
 </f:metadata>
-<h:body>	
+<h:body>
 	<!-- Insertion du menu -->
 	<ui:include src="#{accueil.typeMenu}" />
 	<ui:include src="menuGauche.xhtml"></ui:include>
@@ -74,16 +74,25 @@
 								<p:outputLabel for="timeEnd" value="Heure de fin : " />
 								<p:calendar id="timeEnd" value="#{eventAccueil.timeEnd}"
 									pattern="HH:mm" timeOnly="true" />
-								<div style="margin: auto">
+
+								<h:outputText value="Signature : " />
+								<p:selectBooleanCheckbox value="#{eventAccueil.signingNeeded}"
+									disabled="#{eventAccueil.disabledSiBrouillon}" />
+
+								<h:outputText value="Ouvert à l'inscription : " />
+								<p:selectBooleanCheckbox value="#{eventAccueil.isOpened}"
+									disabled="#{eventAccueil.disabledSiBrouillon}" />
+
+								<div style="text-align: center;">
 									<p:commandButton value="Enregistrer les modifications"
-										ajax="false"
-										actionListener="#{eventAccueil.eventUpdateButton}" />
+										ajax="false" actionListener="#{eventAccueil.eventUpdateButton}"
+										icon="ui-icon-check" />
 								</div>
 							</h:panelGrid>
 						</h:form>
 					</p:panel>
 				</div>
-				<!-- ************Dupliquer l'événement **************** -->				
+				<!-- ************Dupliquer l'événement **************** -->
 				<div class="ui-g-5">
 					<p:panel id="dupliquerEvent" header="Dupliquer l'événement"
 						style="margin-bottom:20px">
@@ -91,14 +100,18 @@
 
 							<p:selectManyCheckbox id="basic"
 								value="#{eventAccueil.selectedoptions}">
-								<f:selectItem itemLabel="Liste des Candidats"
-									itemValue="candidats" />
-								<f:selectItem itemLabel="Liste des Jurys" itemValue="jurys" />
+								<f:selectItem id="liste-c" itemLabel="Liste des candidats"
+									itemValue="candidats" title=""/>	
+																
+								<f:selectItem itemLabel="Liste des jurys" itemValue="jurys" />
 							</p:selectManyCheckbox>
 							<br />
 							<div style="text-align: center;">
-								<p:commandButton value="Dupliquer"
-									actionListener="#{eventAccueil.buttonDupliquer}" ajax="false" />
+								<p:commandButton id="dupliquer" value="Dupliquer"
+									actionListener="#{eventAccueil.buttonDupliquer}" ajax="false"
+									icon="ui-icon-copy" />
+								<p:tooltip for="dupliquer" value="Cochez Liste des candidats/jurys pour obtenir
+								un événement dupliqué avec les mêmes candidats/jurys." position="top"/>
 							</div>
 						</h:form>
 					</p:panel>
