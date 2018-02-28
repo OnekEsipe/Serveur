@@ -257,7 +257,7 @@ public class AttributionJCBean implements Serializable {
 
 	private void JuryParCandidat(int randomX) {
 		if (randomX > juryList.size()) {
-			messageerror="le nombre de jury affecté à cet événement est insuffisant.";
+			messageerror="Le nombre de jurys affectés à cet événement est insuffisant.";
 			return;
 		}
 		HashMap<Integer, List<Jury>> alljury = new HashMap<>();
@@ -307,7 +307,7 @@ public class AttributionJCBean implements Serializable {
 	public void CandidatParJury(int randomX) {
 		if (randomX > candidatsJurys.size()) {
 			
-			messageerror="le nombre de candidat affecté à cet événement est insuffisant.";
+			messageerror="Le nombre de candidats affectés à cet événement est insuffisant.";
 			return;
 		}
 		HashMap<Integer, List<Candidat>> allcandidat = new HashMap<>();
