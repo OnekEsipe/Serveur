@@ -71,7 +71,7 @@ public class StatistiquesBean implements Serializable {
 		double value;
 		String notation;
 		
-		public StatsJury(String name, double value, int nbNoted, int nbNotes) {
+		public StatsJury(String name, double value, double nbNoted, double nbNotes) {
 			this.name = name;
 			this.value = value;
 			this.notation = nbNoted+"/"+nbNotes;
@@ -95,7 +95,7 @@ public class StatistiquesBean implements Serializable {
 		double value;
 		String notation;
 		
-		public StatsCandidate(String name, double value, int nbNoted, int nbNotes) {
+		public StatsCandidate(String name, double value, double nbNoted, double nbNotes) {
 			this.name = name;
 			this.value = value;
 			this.notation = nbNoted+"/"+nbNotes;
@@ -176,11 +176,11 @@ public class StatistiquesBean implements Serializable {
 	}
 
 	public void InitStatByCandidat() {
-		int total = 0;
-		int totalNoteDone = 0;
+		double total = 0;
+		double totalNoteDone = 0;
 		for (Candidat candidat : this.candidats) {
-			int totalNotes = 0;
-			int nbNoted = 0;
+			double totalNotes = 0;
+			double nbNoted = 0;
 			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
 			for (Evaluation evaluation : evaluations) {
 				List<Note> notes = evaluation.getNotes();
@@ -209,8 +209,8 @@ public class StatistiquesBean implements Serializable {
 	
 	public void InitStatByJury() {
 		for (Jury jury : this.jurys) {
-			int totalNotes = 0;
-			int nbNoted = 0;
+			double totalNotes = 0;
+			double nbNoted = 0;
 			List<Evaluation> evaluations = evaluation.findByIdJury(jury.getIdjury());
 			for (Evaluation evaluation : evaluations) {
 				List<Note> notes = evaluation.getNotes();
