@@ -71,7 +71,7 @@ public class StatistiquesBean implements Serializable {
 		double value;
 		String notation;
 		
-		public StatsJury(String name, double value, double nbNoted, double nbNotes) {
+		public StatsJury(String name, double value, int nbNoted, int nbNotes) {
 			this.name = name;
 			this.value = value;
 			this.notation = nbNoted+"/"+nbNotes;
@@ -95,7 +95,7 @@ public class StatistiquesBean implements Serializable {
 		double value;
 		String notation;
 		
-		public StatsCandidate(String name, double value, double nbNoted, double nbNotes) {
+		public StatsCandidate(String name, double value, int nbNoted, int nbNotes) {
 			this.name = name;
 			this.value = value;
 			this.notation = nbNoted+"/"+nbNotes;
@@ -179,8 +179,8 @@ public class StatistiquesBean implements Serializable {
 		double total = 0;
 		double totalNoteDone = 0;
 		for (Candidat candidat : this.candidats) {
-			double totalNotes = 0;
-			double nbNoted = 0;
+			int totalNotes = 0;
+			int nbNoted = 0;
 			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
 			for (Evaluation evaluation : evaluations) {
 				List<Note> notes = evaluation.getNotes();
@@ -196,21 +196,21 @@ public class StatistiquesBean implements Serializable {
 			if(totalNotes == 0) {
 				notesByCandidats.add(new StatsCandidate(candidat.getNom()+" "+candidat.getPrenom(), 100, 0, 0));
 			} else {
-				notesByCandidats.add(new StatsCandidate(candidat.getNom()+" "+candidat.getPrenom(), (double) ((nbNoted/totalNotes)*100), nbNoted, totalNotes));
+				notesByCandidats.add(new StatsCandidate(candidat.getNom()+" "+candidat.getPrenom(), (double) (((double)nbNoted/(double)totalNotes)*100), nbNoted, totalNotes));
 			}
 		}
 		if (total == 0) {
 			this.setTotalAvancement(100);
 		} else {
-			this.setTotalAvancement((totalNoteDone/total)*100);
-			this.setTotalString(totalNoteDone+"/"+total);
+			this.setTotalAvancement(((double)totalNoteDone/(double)total)*100);
+			this.setTotalString((int)totalNoteDone+"/"+(int)total);
 		}
 	}
 	
 	public void InitStatByJury() {
 		for (Jury jury : this.jurys) {
-			double totalNotes = 0;
-			double nbNoted = 0;
+			int totalNotes = 0;
+			int nbNoted = 0;
 			List<Evaluation> evaluations = evaluation.findByIdJury(jury.getIdjury());
 			for (Evaluation evaluation : evaluations) {
 				List<Note> notes = evaluation.getNotes();
@@ -225,7 +225,7 @@ public class StatistiquesBean implements Serializable {
 			if(totalNotes == 0) {
 				notesByJurys.add(new StatsJury(user.getNom()+" "+user.getPrenom(), (double) 100, 0, 0));
 			} else {
-				notesByJurys.add(new StatsJury(user.getNom()+" "+user.getPrenom(), (double) ((nbNoted/totalNotes)*100), nbNoted, totalNotes));
+				notesByJurys.add(new StatsJury(user.getNom()+" "+user.getPrenom(), (double) (((double)nbNoted/(double)totalNotes)*100), nbNoted, totalNotes));
 			}
 		}
 	}

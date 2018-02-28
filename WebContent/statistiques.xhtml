@@ -24,11 +24,24 @@
 		<div class="ui-g-2"></div>
 		<div class="ui-g-10">
 			<h:form>
-				<p:panel header="Avancement de la notation de l'événement">
-					<p:progressBar value="#{statistiques.totalAvancement}"
-						labelTemplate="{value}%" displayOnly="true" />
-					<h:inputText value="#{statistiques.totalString}"></h:inputText>
-				</p:panel>
+			<div class="ui-g-12">
+				<p:panelGrid style='width:100%'>
+					<f:facet name="header">
+						<p:row>
+							<p:column colspan="2">Avancement global</p:column>
+						</p:row>
+					</f:facet>
+					<p:row>
+						<p:column>
+							<p:progressBar value="#{statistiques.totalAvancement}"
+								labelTemplate="{value}%" displayOnly="true" />
+						</p:column>
+						<p:column style='width:50px'>
+							<h:outputText value="#{statistiques.totalString}"></h:outputText>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</div>
 				<br />
 				<div class="ui-g-6">
 					<p:dataTable var="juryStat" value="#{statistiques.notesByJurys}"
