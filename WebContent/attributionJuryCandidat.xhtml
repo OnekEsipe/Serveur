@@ -44,7 +44,7 @@
 							</div>
 							<div class="ui-g-2">
 								<p:spinner value="#{attributionjc.randomX}" min="1" max="99"
-									size="1" />
+									size="3" />
 							</div>
 							<div class="ui-g-4">
 								<p:commandButton value="Attribuer" id="withIcon"
@@ -57,7 +57,7 @@
 				<div class="ui-g-3">
 					<p:panel header="Exporter les attributions" style="height:100px">
 						<h:form id="exporter">
-						<div class="ui-g-5"></div>
+							<div class="ui-g-5"></div>
 							<h:commandLink>
 								<p:graphicImage name="/image/csv.png" width="30" />
 								<p:dataExporter type="csv" target="attrib"
@@ -81,8 +81,6 @@
 			<!-- Attribution manuel -->
 			<h4>#{attributionjc.avertissementMessage}</h4>
 			<div class="ui-g">
-
-
 				<h:form id="tableCheckBox">
 					<div class="tableau">
 						<div class="ui-g">
@@ -115,24 +113,25 @@
 						</table>
 					</div>
 					<br />
-					<div class="ui-g">
-						<div class="ui-g-6"></div>
+					<div class="ui-g-10">
 						<div class="ui-g-6">
 							<p:commandButton value="Enregistrer les attributions"
 								actionListener="#{attributionjc.validationButton}"
 								update="exporter" />
+						</div>
+						<div class="ui-g-4">
 							<p:commandButton value="Vider les attributions"
 								actionListener="#{attributionjc.clearButton}"
 								update="tableCheckBox" />
 						</div>
 					</div>
-
-
 				</h:form>
 			</div>
 		</div>
 	</div>
-	<br/>
+	<br />
+	<br />
+	<br />
 	<!-- Insertion du footer -->
 	<ui:include src="footer.xhtml" />
 </h:body>
