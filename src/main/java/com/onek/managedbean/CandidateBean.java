@@ -37,10 +37,12 @@ public class CandidateBean implements Serializable {
 
 	private String firstName;
 	private String lastName;
+	private boolean homonyme;
 
 	private int idEvent;
 	private Evenement event;
-
+	private String messagedoublon;
+	private String homonymeimport;
 	private List<Candidat> candidats;
 	private Candidat candidat;
 	// Gestion import
@@ -63,8 +65,35 @@ public class CandidateBean implements Serializable {
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			this.event = evenement.findById(idEvent);
 			candidats = candidateService.findCandidatesByEvent(idEvent);
+			messagedoublon = "";
+			homonymeimport = "";
+			homonyme = false;
 			emptyForm();
 		}
+	}
+
+	public String getHomonymeimport() {
+		return homonymeimport;
+	}
+
+	public void setHomonymeimport(String homonymeimport) {
+		this.homonymeimport = homonymeimport;
+	}
+
+	public boolean isHomonyme() {
+		return homonyme;
+	}
+
+	public void setHomonyme(boolean homonyme) {
+		this.homonyme = homonyme;
+	}
+
+	public String getMessagedoublon() {
+		return messagedoublon;
+	}
+
+	public void setMessagedoublon(String messagedoublon) {
+		this.messagedoublon = messagedoublon;
 	}
 
 	private void emptyForm() {
@@ -162,21 +191,59 @@ public class CandidateBean implements Serializable {
 		if (firstName.isEmpty()) {
 			firstName = "";
 		}
+
+		Candidat newCandidat = new Candidat();
+		newCandidat.setPrenom(firstName);
+		newCandidat.setNom(lastName);
+		newCandidat.setEvenement(event);
+		for (Candidat candidat : candidats) {
+			if (candidat.getNom().equals(lastName) && candidat.getPrenom().equals(firstName)) {
+				messagedoublon = "le candidat " + lastName + " " + firstName
+						+ " existe déja. Voulez vous l'ajouter quand même?";
+				homonyme = true;
+				return;
+			}
+		}
+		if (!homonyme) {
+			candidateService.addCandidate(newCandidat);
+			candidats.add(newCandidat);
+			firstName = "";
+			lastName = "";
+
+		}
+	}
+
+	public void addCandidat() {
+		if (lastName.isEmpty()) {
+			logInfo = "Merci de remplir tous les champs du formulaire";
+			return;
+		}
+		if (firstName.isEmpty()) {
+			firstName = "";
+		}
 		Candidat newCandidat = new Candidat();
 		newCandidat.setPrenom(firstName);
 		newCandidat.setNom(lastName);
 		newCandidat.setEvenement(event);
 		candidateService.addCandidate(newCandidat);
 		candidats.add(newCandidat);
+		clearPanel();
+
+	}
+
+	public void clearPanel() {
 		firstName = "";
 		lastName = "";
+		messagedoublon = "";
+		homonyme = false;
 	}
 
 	public void fileImportCsv(FileUploadEvent event) throws IOException {
 
 		List<String[]> data = new ArrayList<String[]>();
 		List<Candidat> importedCandidats = new ArrayList<>();
-
+		homonymeimport="";
+		importLog="";
 		try (CSVReader reader = new CSVReader(new InputStreamReader(event.getFile().getInputstream()), ';')) {
 			String[] nextLine = null;
 			// récupération des données du fichier
@@ -213,7 +280,6 @@ public class CandidateBean implements Serializable {
 				}
 			}
 			if (indexnom == -1) {
-
 				importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
 				return;
 			}
@@ -228,8 +294,16 @@ public class CandidateBean implements Serializable {
 				}
 			}
 			if (!importedCandidats.isEmpty()) {
+				for (Candidat importedcandidat : importedCandidats) {
+					for (Candidat candidat : candidats) {
+						if (candidat.getNom().equals(importedcandidat.getNom())
+								&& candidat.getPrenom().equals(importedcandidat.getPrenom())) {
+							homonymeimport = "Vous avez ajouté des candidats homonymes";
+						}
+					}
+					candidats.add(importedcandidat);
+				}
 				candidateService.addCandidates(importedCandidats);
-				candidats.addAll(importedCandidats);
 			}
 		} catch (IOException e) {
 			importLog = "Le Contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.";
@@ -257,26 +331,26 @@ public class CandidateBean implements Serializable {
 
 	public void telechargerModele() throws IOException {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-	    ExternalContext externalContext = facesContext.getExternalContext();
-	    externalContext.setResponseContentType("text/csv; charset=UTF-8");
-	    externalContext.setResponseCharacterEncoding("UTF-8");
-	    externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"modeleCandidat.csv\"");
-	    Writer writer = externalContext.getResponseOutputWriter();
-	    try {
-	        writer.write("nom;prenom\n");
-	        writer.write("Smith;James");
-	    } finally {
-	        if (writer != null) {
-	            writer.close();
-	        }
-	    }
+		ExternalContext externalContext = facesContext.getExternalContext();
+		externalContext.setResponseContentType("text/csv; charset=UTF-8");
+		externalContext.setResponseCharacterEncoding("UTF-8");
+		externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"modeleCandidat.csv\"");
+		Writer writer = externalContext.getResponseOutputWriter();
+		try {
+			writer.write("nom;prenom\n");
+			writer.write("Smith;James");
+		} finally {
+			if (writer != null) {
+				writer.close();
+			}
+		}
 
-	    facesContext.responseComplete();
+		facesContext.responseComplete();
 	}
-	
+
 	public void suppressAllCandidates() {
-		if(candidats.size() > 0) {
-			for(Candidat candidat : candidats) {
+		if (candidats.size() > 0) {
+			for (Candidat candidat : candidats) {
 				candidateService.supprimerCandidat(candidat.getIdcandidat());
 			}
 		}

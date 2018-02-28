@@ -29,8 +29,8 @@
 		<div class="ui-g-2"></div>
 		<div class="ui-g-9">
 			<div class="ui-g-6">
-				<p:panel id="ImporterCandidat" header="Importer des candidats"
-					style="margin-bottom:20px">
+				<p:panel id="ImporterCandidat" header="Importer des candidats" 
+					style="margin-bottom:20px; height: 50%;">
 					<h:form id="log" enctype="multipart/form-data">
 						<h2 id="format">
 							le fichier doit être au format csv, le parseur accepté est ";". <br />
@@ -39,39 +39,57 @@
 						</h2>
 						<p:fileUpload fileUploadListener="#{candidate.fileImportCsv}"
 							dragDropSupport="true" multiple="false" mode="advanced"
-							id="upload" allowTypes="/(\.|\/)(csv)$/" update="tabCandidat log" />
+							id="upload" allowTypes="/(\.|\/)(csv)$/" update="tabCandidat log"/>
 						<br />
 						<p:commandButton value="Télécharger un modèle"
 							action="#{candidate.telechargerModele}" ajax="false"
 							icon="ui-icon-arrowthick-1-s">
 						</p:commandButton>
 						<h3 id="erreur">#{candidate.importLog}</h3>
+						<h4 id="homonymeimport">#{candidate.homonymeimport}</h4>
 					</h:form>
 				</p:panel>
 			</div>
 			<div class="ui-g-6">
 				<p:panel id="addcandidat" header="Ajouter un Candidat"
-					style="margin-bottom:20px">
-					<h:form style="margin-top:3.5%">
+					style="margin-bottom:20px; height: 50%;">
+					<h:form>
 						<p:growl id="msgs" showDetail="true" />
-						<h:panelGrid columns="2" cellpadding="5">
-
+						<h:panelGrid columns="2" cellpadding="5"
+							rendered="#{ not candidate.homonyme}">
 							<p:outputLabel for="lastnameCandidat" value="Nom:" />
 							<p:inputText id="lastnameCandidat" name="lastnameCandidat"
 								placeholder="Entrer le nom" size="20"
 								value="#{candidate.lastName}" required="true" />
-
-
-							<p:outputLabel for="firstnameCandidat" value="Prénom" />
+							<p:outputLabel for="firstnameCandidat" value="Prénom:" />
 							<p:inputText id="firstnameCandidat" name="firstnameCandidat"
 								placeholder="Entrer le prénom" size="20"
 								value="#{candidate.firstName}" />
-
-							<p:commandButton value="Ajouter le candidat"
-								action="#{candidate.click}" icon="ui-icon-check"
-								update="tabCandidat" ajax="false" style="margin-top:20%;" />
 						</h:panelGrid>
+						<p:commandButton value="Ajouter le candidat"
+							action="#{candidate.click}" icon="ui-icon-check"
+							update="tabCandidat" ajax="false"
+							rendered="#{not candidate.homonyme}" style="margin-top:10%;" />
+						<h:panelGrid columns="2" cellpadding="5"
+							rendered="#{candidate.homonyme}">
+							<p:outputLabel for="lastname" value="Nom:" />
+							<p:inputText id="lastname" disabled="true"
+								name="lastnameCandidat" placeholder="Entrer le nom" size="20"
+								value="#{candidate.lastName}" required="true" />
+							<p:outputLabel for="firstname" value="Prénom:" />
+							<p:inputText id="firstname" disabled="true"
+								name="firstnameCandidat" placeholder="Entrer le prénom"
+								size="20" value="#{candidate.firstName}" />
+						</h:panelGrid>
+						<h4 id="messagedoublon">#{candidate.messagedoublon}</h4>
+						<p:commandButton value="Oui" action="#{candidate.addCandidat}"
+							update="tabCandidat messagedoublon" ajax="false"
+							rendered="#{candidate.homonyme}" />
+						<p:commandButton value="Non" action="#{candidate.clearPanel}"
+							update="tabCandidat messagedoublon" ajax="false"
+							rendered="#{candidate.homonyme}" />
 					</h:form>
+					<br/>
 				</p:panel>
 			</div>
 		</div>
@@ -127,7 +145,8 @@
 			<div class="ui-g-2"></div>
 		</div>
 		<div class="ui-g-10"></div>
-		<h:form style="margin-left:-4.5%" rendered="#{not eventAccueil.disabledSiBrouillon}">
+		<h:form style="margin-left:-4.5%"
+			rendered="#{not eventAccueil.disabledSiBrouillon}">
 			<p:commandButton value="Supprimer tous les candidats"
 				action="#{candidate.suppressAllCandidates}" ajax="false">
 			</p:commandButton>
