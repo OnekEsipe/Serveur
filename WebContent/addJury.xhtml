@@ -55,10 +55,15 @@
 						</p:column>
 					</p:dataTable>
 				</div>
-				
-				
 				<div class="ui-g-2">
-				<br /><br /><br /><br /><br /><br /><br /><br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
 					<p:commandButton style="width:90%;" process="checkboxDT"
 						actionListener="#{addjury.buttonAdd}" update="@(form)"
 						icon="ui-icon-circle-arrow-e" title="Icon Only" />
@@ -68,7 +73,7 @@
 		<div class="ui-g-4">
 			<h:form>
 				<!-- Debut liste jurys anonymes -->
-				<p:dataTable  id="tabJurysAnos" var="utilisateursAno"
+				<p:dataTable id="tabJurysAnos" var="utilisateursAno"
 					style="display:none;" value="#{addjury.utilisateursAnos}"
 					widgetVar="utilisateurTable2" scrollable="true" scrollHeight="300"
 					rowKey="#{utilisateursAno.nom}">
@@ -87,7 +92,7 @@
 					<div class="ui-g">
 						<div class="ui-g-4">
 							<p:spinner id="juryAnonyme" value="#{addjury.juryAnonyme}"
-								min="0" max="999" size="1" />
+								min="0" max="999" size="3" />
 						</div>
 						<div class="ui-g-4">
 							<p:commandButton value="Ajouter" ajax="false"
@@ -108,7 +113,7 @@
 
 			</h:form>
 			<h:form>
-				<p:dataTable  var="utilisateur" value="#{addjury.utilisateurs}"
+				<p:dataTable var="utilisateur" value="#{addjury.utilisateurs}"
 					scrollable="true" scrollHeight="500">
 
 					<!-- barre de recherche -->
@@ -128,7 +133,7 @@
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
 							actionListener="#{addjury.supprimerUtilisateur}" ajax="true"
-							update="@(form)">
+							update="@(form)" style="background-color: #B40404; border-color: #8A0808;">
 							<p:confirm header="Confirmation"
 								message="Voulez-vous vraiment supprimer le jury ?"
 								icon="ui-icon-trash" />
@@ -144,12 +149,13 @@
 					<!-- ********fin*********** -->
 				</p:dataTable>
 			</h:form>
-		</div>		
+		</div>
 	</div>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
 	<!-- Insertion du footer -->
 	<ui:include src="footer.xhtml" />
 </h:body>
