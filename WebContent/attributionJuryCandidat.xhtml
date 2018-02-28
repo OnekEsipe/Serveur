@@ -26,7 +26,7 @@
 		<div class="ui-g-10">
 
 			<div class="ui-g">
-				<div class="ui-g-8">
+				<div class="ui-g-7">
 					<p:panel id="AttributionAutomatique"
 						rendered="#{attributionjc.isopen}"
 						header="Attribuer des cadidats automatiquement"
@@ -54,8 +54,29 @@
 						</h:form>
 					</p:panel>
 				</div>
-			</div>
+				<div class="ui-g-3">
+					<p:panel header="Exporter les attributions" style="height:100px">
+						<h:form id="exporter">
+						<div class="ui-g-5"></div>
+							<h:commandLink>
+								<p:graphicImage name="/image/csv.png" width="30" />
+								<p:dataExporter type="csv" target="attrib"
+									fileName="Attribution_JuryCandidats" />
+							</h:commandLink>
+							<p:dataTable id="attrib" var="attrib"
+								value="#{attributionjc.messageAttrib}" style="display:none;">
+								<p:column headerText="Jury">
+									<h:outputText value="#{attrib.jury}" />
+								</p:column>
+								<p:column headerText="Candidats">
+									<h:outputText value="#{attrib.candidats}" />
+								</p:column>
+							</p:dataTable>
 
+						</h:form>
+					</p:panel>
+				</div>
+			</div>
 			<br />
 			<!-- Attribution manuel -->
 			<h4>#{attributionjc.avertissementMessage}</h4>
@@ -66,13 +87,7 @@
 					<div class="tableau">
 						<div class="ui-g">
 							<div class="ui-g-10"></div>
-							<div class="ui-g-2">
-								<h:commandLink>
-									<p:graphicImage name="/image/csv.png" width="30" />
-									<p:dataExporter type="csv" target="attrib"
-										fileName="Attribution_JuryCandidats" />
-								</h:commandLink>
-							</div>
+							<div class="ui-g-2"></div>
 						</div>
 
 						<table>
@@ -105,22 +120,13 @@
 						<div class="ui-g-6">
 							<p:commandButton value="Enregistrer les attributions"
 								actionListener="#{attributionjc.validationButton}"
-								update="attrib" />
+								update="exporter" />
 							<p:commandButton value="Vider les attributions"
 								actionListener="#{attributionjc.clearButton}"
 								update="tableCheckBox" />
 						</div>
 					</div>
 
-					<p:dataTable id="attrib" var="attrib"
-						value="#{attributionjc.messageAttrib}" style="display:none;">
-						<p:column headerText="Jury">
-							<h:outputText value="#{attrib.jury}" />
-						</p:column>
-						<p:column headerText="Candidats">
-							<h:outputText value="#{attrib.candidats}" />
-						</p:column>
-					</p:dataTable>
 
 				</h:form>
 			</div>
