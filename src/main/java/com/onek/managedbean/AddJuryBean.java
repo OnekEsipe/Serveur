@@ -185,7 +185,7 @@ public class AddJuryBean implements Serializable {
 		passwordGenerator = new Password();
 		List<Utilisateur> anonymousJurys = new ArrayList<>();
 		Utilisateur anonymousJury;
-		int increment = juryService.findAnonymousByIdEvent(idEvent).size();
+		int increment = juryService.listJurysAnnonymesByEvent(idEvent).size();
 		if (juryAnonyme > 0) {
 			for (int i = 0 + increment; i < juryAnonyme + increment; i++) {
 				anonymousJury = new Utilisateur();

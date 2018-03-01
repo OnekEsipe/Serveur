@@ -276,16 +276,6 @@ public class UserDaoImpl implements UserDao, Serializable {
 	}
 
 	@Override
-	public void editUser(Utilisateur user) {
-		Objects.requireNonNull(user);
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.update(user);
-		session.getTransaction().commit();
-		session.close();
-	}
-
-	@Override
 	public Utilisateur findByToken(String token) {
 		Objects.requireNonNull(token);
 		Session session = sessionFactory.openSession();

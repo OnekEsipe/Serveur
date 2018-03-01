@@ -16,7 +16,6 @@ public interface UserDao {
 	public List<Utilisateur> getAllUsersExceptCurrentAndAnonymous(int idcurrentUser);
 	public boolean mailExist(String mail);
 	public Utilisateur findByMail(String mail);
-	public void editUser(Utilisateur user);
 	public Utilisateur findUserById(int iduser);
 	public Utilisateur findByToken(String token);
 	public List<Utilisateur> getAllUsersExceptDeleted();

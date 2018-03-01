@@ -1,10 +1,12 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+
+import javax.persistence.NoResultException;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
@@ -14,7 +16,6 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.onek.model.Candidat;
 import com.onek.model.Critere;
 import com.onek.model.Evaluation;
 import com.onek.model.Jury;
@@ -64,7 +65,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
-		List<Jury> jurys = new ArrayList<>();
+		List<Jury> jurys = null;
 		try {
 			transaction = session.beginTransaction();
 			jurys = (List<Jury>) session.createQuery(
@@ -133,7 +134,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		Objects.requireNonNull(user);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
-		List<Jury> jurys = new ArrayList<>();
+		List<Jury> jurys = null;
 		try {
 			transaction = session.beginTransaction();
 			jurys = (List<Jury>) session.createQuery(
@@ -163,7 +164,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
-		List<Jury> jurys = new ArrayList<>();
+		List<Jury> jurys = null;
 		try {
 			transaction = session.beginTransaction();
 			jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent")
@@ -182,33 +183,6 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 			session.close();
 		}
 		return jurys;
-	}
-
-	/* associated jurys and candidates for an event */
-	@Override
-	public HashMap<Jury, List<Candidat>> associatedJurysCandidatesByEvent(List<Jury> jurys, int idevent) {
-		Objects.requireNonNull(jurys);
-		if(idevent < 1) {
-			throw new IllegalArgumentException("id must be positive");
-		}
-		if(jurys.isEmpty()) {
-			throw new IllegalStateException("List must not be empty");
-		}
-		HashMap<Jury, List<Candidat>> map = new HashMap<>();
-		for (Jury jury : jurys) {
-			if (!map.containsKey(jury)) {
-				map.put(jury, new ArrayList<>());
-			}
-			List<Evaluation> evaluations = jury.getEvaluations();
-			for (Evaluation evaluation : evaluations) {
-				List<Candidat> candidates = map.get(jury);
-				if (evaluation.getCandidat().getEvenement().getIdevent() == idevent) {
-					candidates.add(evaluation.getCandidat());
-				}
-				map.put(jury, candidates);
-			}
-		}
-		return map;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -375,12 +349,21 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		if(id < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
+		Utilisateur jury = null;
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		Utilisateur jury = (Utilisateur) session.createQuery("FROM Utilisateur WHERE iduser = :id").setParameter("id", id)
-				.getSingleResult();
-		session.getTransaction().commit();
-		session.close();
+		try {
+			session.beginTransaction();
+			 jury = (Utilisateur) session.createQuery("FROM Utilisateur WHERE iduser = :id").setParameter("id", id)
+					.getSingleResult();
+			session.getTransaction().commit();
+			
+		} catch (NoResultException e) {
+			logger.error(this.getClass().getName(), e);
+		}finally {
+			session.close();
+		}
+
+
 		return jury;
 	}
 	
