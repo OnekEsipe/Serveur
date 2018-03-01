@@ -29,7 +29,7 @@
 				<div class="ui-g-7">
 					<p:panel id="AttributionAutomatique"
 						rendered="#{attributionjc.isopen}"
-						header="Attribuer des cadidats automatiquement"
+						header="Attribuer des candidats automatiquement"
 						style="height:150px">
 						<div class="ui-g">
 							<h:form>
@@ -39,8 +39,8 @@
 								<div class="ui-g-4">
 									<p:selectOneMenu id="methode" value="#{attributionjc.methode}"
 										style="width:125px">
-										<f:selectItem itemLabel="Jury par Candidat" itemValue="1" />
-										<f:selectItem itemLabel="Candidat par Jury" itemValue="2" />
+										<f:selectItem itemLabel="Jury par candidat" itemValue="1" />
+										<f:selectItem itemLabel="Candidat par jury" itemValue="2" />
 									</p:selectOneMenu>
 								</div>
 								<div class="ui-g-2">
@@ -54,9 +54,6 @@
 										actionListener="#{attributionjc.attributionAutomatique}" />
 								</div>
 							</h:form>
-						</div>
-						<div class="ui-g">
-							<h4>#{attributionjc.messageerror}</h4>
 						</div>
 					</p:panel>
 				</div>
