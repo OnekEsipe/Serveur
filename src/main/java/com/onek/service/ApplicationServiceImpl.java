@@ -89,8 +89,13 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		if (!userService.userExist(login)) {
 			return Optional.empty();
 		}
+		Utilisateur user = userService.findByLogin(login);
+		// check if user is deleted		
+		if (user.getIsdeleted()) {
+			return Optional.empty();
+		}
 		// check if jury is assigned
-		int idUser = userService.findByLogin(login).getIduser();
+		int idUser = user.getIduser();
 		if (!juryDao.juryIsAssigned(idUser, id)) {
 			return Optional.empty();
 		}
@@ -159,7 +164,11 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		Evaluation evaluation = evaluationDao.findById(evaluationResource.getIdEvaluation());
 		if (evaluation == null) {
 			return false;
-		}
+		}		
+		// check if user associated with a jury is deleted
+		if (evaluation.getJury().getUtilisateur().getIsdeleted()) {
+			return false;
+		}		
 		Evenement event = eventDao.findById(evaluationResource.getIdEvent());
 		if (event == null) {
 			return false;
@@ -250,6 +259,9 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			return false;
 		}
 		Utilisateur user = userService.findByLogin(eventCode.getLogin());
+		if (user.getIsdeleted()) {
+			return false;
+		}
 		Evenement event = eventDao.findByCode(eventCode.getEventCode());
 		if (event == null) {
 			throw new IllegalStateException("Le code événement est incorrect.");
