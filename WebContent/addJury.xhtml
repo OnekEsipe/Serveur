@@ -46,6 +46,9 @@
 						</f:facet>
 						<p:column selectionMode="multiple"
 							style="width:16px;text-align:center" />
+						<p:column headerText="Login">
+							<h:outputText value="#{utilisateur.login}" />
+						</p:column>
 						<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
 							filterMatchMode="contains" filterStyle="display:none">
 							<h:outputText value="#{utilisateur.nom}" />
@@ -103,9 +106,9 @@
 							<h:commandLink>
 								<p:graphicImage id="icon" name="/image/csv.png" width="30" />
 								<p:dataExporter type="csv" target="tabJurysAnos"
-									fileName="liste_jurys" pageOnly="true" />
+									fileName="#{addjury.exportName}"  pageOnly="true" />
 								<p:tooltip for="icon"
-									value="exporter la liste des jurys annonymes" position="top" />
+									value="#{addjury.exportName}" position="top" />
 							</h:commandLink>
 						</div>
 					</div>
@@ -121,6 +124,9 @@
 						Listes des jurys de l'événement
 					</f:facet>
 					<!-- ********fin*********** -->
+					<p:column headerText="Login" sortBy="#{utilisateur.login}">
+							<h:outputText value="#{utilisateur.login}" />
+						</p:column>
 					<p:column headerText="Nom" sortBy="#{utilisateur.nom}">
 						<h:outputText value="#{utilisateur.nom}" />
 					</p:column>
