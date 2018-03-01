@@ -106,7 +106,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			}			
 			EvenementResource eventResource = new EvenementResource(event);
 			List<Jury> jurys = juryDao.findJuryAndAnonymousByIdEvent(id, login);
-			List<EvaluationResource> evaluations = createEvaluationList(jurys);
+			List<EvaluationResource> evaluations = createEvaluationList(jurys, login);
 			eventResource.setEvaluations(evaluations);
 			eventResource.setJurys(associatedJurysCandidates(jurys, id));
 			return Optional.of(eventResource);
@@ -338,9 +338,12 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	}
 
 	/* create evaluation resource list */
-	private List<EvaluationResource> createEvaluationList(List<Jury> jurys) {
+	private List<EvaluationResource> createEvaluationList(List<Jury> jurys, String login) {
 		List<EvaluationResource> evaluations = new ArrayList<>();
 		for (Jury jury : jurys) {
+			if (!jury.getUtilisateur().getLogin().equals(login)) {
+				continue;
+			}
 			List<Evaluation> evaluationForOneJury = jury.getEvaluations();
 			for (Evaluation evaluation : evaluationForOneJury) {
 				evaluations.add(new EvaluationResource(evaluation));
