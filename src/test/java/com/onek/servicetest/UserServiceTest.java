@@ -242,6 +242,7 @@ public class UserServiceTest {
 	@Test
 	public void testuserExistAndCorrectPasswordOK() {
 		Utilisateur user = userService.findByLogin("aa");
+		
 		assertTrue(userService.userExistAndCorrectPassword(user.getLogin(),user.getMotdepasse()));
 	}
 	
