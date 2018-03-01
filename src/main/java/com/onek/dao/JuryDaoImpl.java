@@ -22,6 +22,9 @@ import com.onek.model.Note;
 import com.onek.model.Utilisateur;
 import com.onek.utils.DroitsUtilisateur;
 
+/**
+ * Dao du model Jury
+ */
 @Repository
 public class JuryDaoImpl implements JuryDao, Serializable {
 	private static final long serialVersionUID = 1L;
@@ -184,7 +187,6 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		return jurys;
 	}
 
-	/* associated jurys and candidates for an event */
 	@Override
 	public HashMap<Jury, List<Candidat>> associatedJurysCandidatesByEvent(List<Jury> jurys, int idevent) {
 		Objects.requireNonNull(jurys);
@@ -280,6 +282,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		}
 		return utilisateursAnnonymes;
 	}
+	
 	@Override
 	public void supprimerUtilisateurAnonyme(int iduser) {
 		if(iduser < 1 ) {
@@ -303,6 +306,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 			session.close();
 		}
 	}
+
 	@Override
 	public void supprimerUtilisateur(int iduser, int idevent) {
 		if(iduser < 1 || idevent < 1) {
@@ -370,6 +374,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 			session.close();
 		}
 	}
+
 	@Override
 	public Utilisateur findById(int id) {
 		if(id < 1) {

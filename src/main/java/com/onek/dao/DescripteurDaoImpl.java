@@ -12,6 +12,9 @@ import org.springframework.stereotype.Repository;
 
 import com.onek.model.Descripteur;
 
+/**
+ * Dao du model Descripteur
+ */
 @Repository
 public class DescripteurDaoImpl implements DescripteurDao, Serializable{
 

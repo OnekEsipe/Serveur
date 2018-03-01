@@ -16,6 +16,9 @@ import org.springframework.stereotype.Repository;
 import com.onek.model.Critere;
 import com.onek.model.Evenement;
 
+/**
+ * Dao du model Evenement
+ */
 @Repository
 public class EvenementDaoImpl implements EvenementDao, Serializable {
 	private static final long serialVersionUID = 1L;
@@ -155,7 +158,7 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 			session.close();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Evenement> findAll() {
@@ -179,7 +182,7 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 		}		
 		return events;
 	}
-	
+
 	public void supprimerEvent(int idevent) {
 		if(idevent < 1) {
 			throw new IllegalArgumentException("id must be positive");
