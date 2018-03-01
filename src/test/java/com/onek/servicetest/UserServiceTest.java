@@ -36,7 +36,7 @@ public class UserServiceTest {
 
 	private Utilisateur user;
 	private List<Utilisateur> users = new ArrayList<>();
-	private String[] login = {"aa","bb","cc","dd","ee"};
+	private String[] login = {"aa","bb","cc","dd"};
 	private String formatMail = "@gmail.com";
 	
 	@Before
@@ -223,7 +223,8 @@ public class UserServiceTest {
 			assertNotNull(user);
 			users.add(user);
 		});
-		assertEquals(logins.size(), users.size());
+		System.out.println("logins size : "+logins.size()+" users size : "+users.size());
+		assertTrue(logins.size() == users.size());
 	}
 	
 	@Test

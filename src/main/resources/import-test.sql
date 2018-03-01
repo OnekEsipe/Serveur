@@ -24,11 +24,16 @@ INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdelete
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Julien', 'Jasmin', 'jj', 'jj@gmail.com', 'O', '7323a5431d1c31072983a6a5bf23745b655ddf59', false);
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Kevin', 'Karin', 'kk', 'kk@gmail.com', 'O', '2ed45186c72f9319dc64338cdf16ab76b44cf3d1', false);
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Lucie', 'Lion', 'll', 'll@gmail.com', 'A', '110c8a30c16070bf2813480d9492a1a170a7d80a', false);
+INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Lucie2', 'Lion2', 'll2', 'll2@gmail.com', 'A', '110c8a30c16070bf2813480d9492a1a170a7d80b', false);
 INSERT INTO utilisateurs (nom, prenom, login, mail, droits, motdepasse, isdeleted) VALUES ('Manon', 'Mint', 'mm', 'mm@gmail.com', 'R', 'b8d09b4d8580aacbd9efc4540a9b88d2feb9d7e5', true);
 INSERT INTO evenements (code, datestart, datestop, isdeleted, isopened, nom, signingneeded, status, iduser) VALUES ('1013902701', '2018-02-27 07:01:00', '2018-03-01 23:59:00', false, false, 'event1', true, 'Brouillon', 3);
+INSERT INTO evenements (code, datestart, datestop, isdeleted, isopened, nom, signingneeded, status, iduser) VALUES ('1013902711', '2018-02-27 07:01:00', '2018-03-01 23:59:00', false, false, 'event2', true, 'Ouvert', 4);
+INSERT INTO evenements (code, datestart, datestop, isdeleted, isopened, nom, signingneeded, status, iduser) VALUES ('1013902710', '2018-02-27 07:01:00', '2018-03-01 23:59:00', false, false, 'event3', true, 'Ouvert', 12);
 INSERT INTO jurys (idevent,iduser) VALUES (1, 1);
 INSERT INTO jurys (idevent,iduser) VALUES (1, 2);
 INSERT INTO jurys (idevent,iduser) VALUES (1, 3);
+INSERT INTO jurys (idevent,iduser) VALUES (3, 12);
+INSERT INTO jurys (idevent,iduser) VALUES (2, 13);
 INSERT INTO candidats (nom,prenom,idevent) VALUES ('Candidat1', '', 1);
 INSERT INTO candidats (nom,prenom,idevent) VALUES ('Candidat2', 'candid2prenom', 1);
 INSERT INTO candidats (nom,prenom,idevent) VALUES ('Candidat3', '', 1);
