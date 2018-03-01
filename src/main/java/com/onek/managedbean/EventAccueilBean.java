@@ -31,6 +31,7 @@ import com.onek.service.EventAccueilService;
 import com.onek.service.GrilleService;
 import com.onek.service.JuryService;
 import com.onek.service.UserService;
+import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Navigation;
 import com.onek.utils.Password;
 
@@ -61,6 +62,9 @@ public class EventAccueilBean implements Serializable {
 
 	@Autowired
 	private CandidateService candidatService;
+	
+	@Autowired
+	private UserService users;
 
 	private int idEvent;
 	private Evenement event;
@@ -264,6 +268,13 @@ public class EventAccueilBean implements Serializable {
 		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
 		event.setStatus(statut);
+		if (statut.equals("Fermé")) {
+			for (Jury jury : event.getJurys()) {
+				if (jury.getUtilisateur().getDroits().equals(DroitsUtilisateur.ANONYME.toString())) {
+					users.deleteUser(jury.getUtilisateur().getIduser());
+				}
+			}
+		}
 		if (!nom.isEmpty()) {
 			event.setNom(nom);
 		}
