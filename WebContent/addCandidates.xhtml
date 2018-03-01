@@ -126,7 +126,7 @@
 								actionListener="#{candidate.supprimerCandidat}" ajax="true"
 								update="@(form)"
 								style="background-color: #B40404; border-color: #8A0808;">
-								<p:confirm header="Confirmation"
+								<p:confirm header="Confirmation de suppression"
 									message="Voulez-vous vraiment supprimer le candidat ?"
 									icon="ui-icon-trash" />
 								<f:param name="idcandidat" value="#{candidat.idcandidat}" />
@@ -150,9 +150,20 @@
 		<h:form style="margin-left:-4.5%"
 			rendered="#{not eventAccueil.disabledSiBrouillon}">
 			<p:commandButton value="Supprimer tous les candidats"
-				action="#{candidate.suppressAllCandidates}" ajax="true"
+				actionListener="#{candidate.suppressAllCandidates}" ajax="true"
 				update="tabCandidat" icon="ui-icon-trash"
-				style="background-color: #B40404; border-color: #8A0808;" />
+				style="background-color: #B40404; border-color: #8A0808;">
+				<p:confirm header="Confirmation de suppression"
+					message="Voulez-vous vraiment supprimer tous les candidats ?"
+					icon="ui-icon-trash" />
+			</p:commandButton>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+				</p:commandButton>
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 		</h:form>
 		<br /> <br />
 	</div>
