@@ -13,11 +13,12 @@ errorCreationCandidate{
 	font-size: small;
 	font: small-caps;
 }
+
 #messagedoublon{
 	color: red;
 	font-size: small;
 	font: small-caps;
-	
+	margin-bottom: 3px;
 }
 #homonymeimport{
 	color: red;
