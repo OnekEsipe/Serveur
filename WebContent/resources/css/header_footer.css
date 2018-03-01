@@ -4,10 +4,6 @@
   margin: 0;
 }
 
-/*html, body {
-  height: 100%;
-}*/
-
 header {
 	height: 1em;
 	background: #2399e5;
@@ -49,6 +45,15 @@ h1.hf {
 	margin-top: 0;
 	margin-right: 0;
 	margin-left: 1em;
+}
+
+.version {
+	font-family: "latoregular", "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: white;
+	margin-top: 0;
+	margin-right: 1em;
+	margin-left: 1em;
+	float: right;
 }
 
 footer {
