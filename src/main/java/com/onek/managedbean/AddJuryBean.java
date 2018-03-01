@@ -46,6 +46,8 @@ public class AddJuryBean implements Serializable {
 	private List<Utilisateur> utilisateursAnos;
 
 	private int juryAnonyme;
+	
+	private String exportName;
 
 	public List<Utilisateur> getUtilisateursAnos() {
 		return utilisateursAnos;
@@ -111,6 +113,14 @@ public class AddJuryBean implements Serializable {
 		this.idEvent = id;
 	}
 
+	public String getExportName() {
+		return exportName;
+	}
+
+	public void setExportName(String exportName) {
+		this.exportName = exportName;
+	}
+
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
@@ -131,6 +141,7 @@ public class AddJuryBean implements Serializable {
 			utilisateursAnos = new ArrayList<>();
 			List<Jury> jurys = juryService.listJurysAnnonymesByEvent(idEvent);
 			jurys.forEach(jury -> utilisateursAnos.add(jury.getUtilisateur()));
+			exportName = "liste_jurys_anonymes_"+event.getNom();
 
 		}
 	}
