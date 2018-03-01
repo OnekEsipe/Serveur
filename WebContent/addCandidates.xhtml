@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Home Onek</title>
+	<title>ONEK' - Gestion des candidats</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
@@ -20,7 +20,6 @@
 	<h:outputStylesheet library="css" name="accueil.css" />
 	<ui:include src="#{accueil.typeMenu}" />
 
-
 	<ui:include src="menuGauche.xhtml"></ui:include>
 	<br />
 	<br />
@@ -28,9 +27,10 @@
 	<div class="ui-g">
 		<div class="ui-g-2"></div>
 		<div class="ui-g-9">
-			<div class="ui-g-6">
-				<p:panel id="ImporterCandidat" header="Importer des candidats" 
+			<div class="ui-g-8">
+				<p:panel id="ImporterCandidat" header="Importer des candidats"
 					style="margin-bottom:20px; height: 50%;">
+
 					<h:form id="log" enctype="multipart/form-data">
 						<h2 id="format">
 							Le fichier doit être au format csv, le parseur accepté est ";". <br />
@@ -48,43 +48,42 @@
 							action="#{candidate.telechargerModele}" ajax="false"
 							icon="ui-icon-arrowthick-1-s">
 						</p:commandButton>
-						<h3 id="erreur">#{candidate.importLog}</h3>
-						<h4 id="homonymeimport">#{candidate.homonymeimport}</h4>
 					</h:form>
 				</p:panel>
 			</div>
-			<div class="ui-g-6">
-				<p:panel id="addcandidat" header="Ajouter un Candidat"
+
+			<div class="ui-g-4">
+				<p:panel header="Ajouter un candidat"
 					style="margin-bottom:20px; height: 50%;">
-					<h:form>
-						<p:growl id="msgs" showDetail="true" />
+					<h:form id="addcandidat">
 						<h:panelGrid columns="2" cellpadding="5"
 							rendered="#{ not candidate.homonyme}">
-							<p:outputLabel for="lastnameCandidat" value="Nom:" />
+							<p:outputLabel for="lastnameCandidat" value="Nom :" />
 							<p:inputText id="lastnameCandidat" name="lastnameCandidat"
 								placeholder="Entrer le nom" size="20"
 								value="#{candidate.lastName}" required="true" />
-							<p:outputLabel for="firstnameCandidat" value="Prénom:" />
+							<p:outputLabel for="firstnameCandidat" value="Prénom :" />
 							<p:inputText id="firstnameCandidat" name="firstnameCandidat"
 								placeholder="Entrer le prénom" size="20"
 								value="#{candidate.firstName}" />
 						</h:panelGrid>
 						<p:commandButton value="Ajouter le candidat"
 							action="#{candidate.click}" icon="ui-icon-check"
-							update="tabCandidat" ajax="false"
+							update="tabCandidat addcandidat" ajax="false"
 							rendered="#{not candidate.homonyme}" style="margin-top:10%;" />
+
 						<h:panelGrid columns="2" cellpadding="5"
 							rendered="#{candidate.homonyme}">
-							<p:outputLabel for="lastname" value="Nom:" />
+							<p:outputLabel for="lastname" value="Nom :" />
 							<p:inputText id="lastname" disabled="true"
 								name="lastnameCandidat" placeholder="Entrer le nom" size="20"
 								value="#{candidate.lastName}" required="true" />
-							<p:outputLabel for="firstname" value="Prénom:" />
+							<p:outputLabel for="firstname" value="Prénom :" />
 							<p:inputText id="firstname" disabled="true"
 								name="firstnameCandidat" placeholder="Entrer le prénom"
 								size="20" value="#{candidate.firstName}" />
 						</h:panelGrid>
-						<h4 id="messagedoublon">#{candidate.messagedoublon}</h4>
+						<h4 style="margin-bottom: 3px;" id="messagedoublon">#{candidate.messagedoublon}</h4>
 						<p:commandButton value="Oui" action="#{candidate.addCandidat}"
 							update="tabCandidat messagedoublon" ajax="false"
 							rendered="#{candidate.homonyme}" />
@@ -92,7 +91,7 @@
 							update="tabCandidat messagedoublon" ajax="false"
 							rendered="#{candidate.homonyme}" />
 					</h:form>
-					<br/>
+					<br />
 				</p:panel>
 			</div>
 		</div>
@@ -125,11 +124,11 @@
 							<p:growl id="message" showDetail="true" />
 							<p:commandButton id="iconOnly" icon="ui-icon-trash"
 								actionListener="#{candidate.supprimerCandidat}" ajax="true"
-								update="@(form)" style="background-color: #B40404; border-color: #8A0808;">
+								update="@(form)"
+								style="background-color: #B40404; border-color: #8A0808;">
 								<p:confirm header="Confirmation"
-									message="Voulez-vous vraiment supprimer le candidat"
+									message="Voulez-vous vraiment supprimer le candidat ?"
 									icon="ui-icon-trash" />
-
 								<f:param name="idcandidat" value="#{candidat.idcandidat}" />
 							</p:commandButton>
 
@@ -151,13 +150,11 @@
 		<h:form style="margin-left:-4.5%"
 			rendered="#{not eventAccueil.disabledSiBrouillon}">
 			<p:commandButton value="Supprimer tous les candidats"
-				action="#{candidate.suppressAllCandidates}" ajax="false">
-			</p:commandButton>
+				action="#{candidate.suppressAllCandidates}" ajax="true"
+				update="tabCandidat" icon="ui-icon-trash"
+				style="background-color: #B40404; border-color: #8A0808;" />
 		</h:form>
 		<br /> <br />
-		<div id="errorCreationCandidate">
-			<h:outputText value="#{candidate.logInfo}" />
-		</div>
 	</div>
 	<br />
 	<br />
