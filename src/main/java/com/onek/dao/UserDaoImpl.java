@@ -299,13 +299,13 @@ public class UserDaoImpl implements UserDao, Serializable {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Utilisateur> getAllUsersExceptDeleted() {
+	public List<Utilisateur> getAllUsersExceptDeletedansAno() {
 		List<Utilisateur> users = new ArrayList<>();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			users = (List<Utilisateur>) session.createQuery("from Utilisateur where isdeleted = :isdeleted").setParameter("isdeleted", false).list();
+			users = (List<Utilisateur>) session.createQuery("from Utilisateur where (isdeleted = :isdeleted AND droits != :droits)").setParameter("isdeleted", false).setParameter("droits", "A").list();
 			transaction.commit();
 			logger.info("Find all users done except deleted!");
 		} catch (RuntimeException e) {

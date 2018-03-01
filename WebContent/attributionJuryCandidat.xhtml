@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Onek team</title>
+	<title>ONEK' - Attribution</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
@@ -26,53 +26,73 @@
 		<div class="ui-g-10">
 
 			<div class="ui-g">
-				<div class="ui-g-8">
+				<div class="ui-g-7">
 					<p:panel id="AttributionAutomatique"
 						rendered="#{attributionjc.isopen}"
 						header="Attribuer des cadidats automatiquement"
-						style="height:100px">
-						<h:form>
-							<div class="ui-g-2">
-								<p:outputLabel>Nombre de </p:outputLabel>
-							</div>
-							<div class="ui-g-4">
-								<p:selectOneMenu id="methode" value="#{attributionjc.methode}"
-									style="width:125px">
-									<f:selectItem itemLabel="Jury par Candidat" itemValue="1" />
-									<f:selectItem itemLabel="Candidat par Jury" itemValue="2" />
-								</p:selectOneMenu>
-							</div>
-							<div class="ui-g-2">
-								<p:spinner value="#{attributionjc.randomX}" min="1" max="99"
-									size="1" />
-							</div>
-							<div class="ui-g-4">
-								<p:commandButton value="Attribuer" id="withIcon"
-									icon="ui-icon-refresh" update="tableCheckBox"
-									actionListener="#{attributionjc.attributionAutomatique}" />
-							</div>
+						style="height:150px">
+						<div class="ui-g">
+							<h:form>
+								<div class="ui-g-2">
+									<p:outputLabel>Nombre de </p:outputLabel>
+								</div>
+								<div class="ui-g-4">
+									<p:selectOneMenu id="methode" value="#{attributionjc.methode}"
+										style="width:125px">
+										<f:selectItem itemLabel="Jury par Candidat" itemValue="1" />
+										<f:selectItem itemLabel="Candidat par Jury" itemValue="2" />
+									</p:selectOneMenu>
+								</div>
+								<div class="ui-g-2">
+									<p:spinner value="#{attributionjc.randomX}" min="1" max="99"
+										size="3" />
+								</div>
+								<div class="ui-g-4">
+									<p:commandButton value="Attribuer" id="withIcon"
+										icon="ui-icon-refresh"
+										update="tableCheckBox AttributionAutomatique"
+										actionListener="#{attributionjc.attributionAutomatique}" />
+								</div>
+							</h:form>
+						</div>
+						<div class="ui-g">
+							<h4>#{attributionjc.messageerror}</h4>
+						</div>
+					</p:panel>
+				</div>
+				<div class="ui-g-3">
+					<p:panel header="Exporter les attributions" style="height:150px">
+						<h:form id="exporter">
+							
+							<div class="ui-g-4"></div>
+							<h:commandLink>
+								<p:graphicImage name="/image/csv.png" width="60"  />
+								<p:dataExporter type="csv" target="attrib"
+									fileName="Attribution_JuryCandidats" />
+							</h:commandLink>
+							<p:dataTable id="attrib" var="attrib"
+								value="#{attributionjc.messageAttrib}" style="display:none;">
+								<p:column headerText="Jury">
+									<h:outputText value="#{attrib.jury}" />
+								</p:column>
+								<p:column headerText="Candidats">
+									<h:outputText value="#{attrib.candidats}" />
+								</p:column>
+							</p:dataTable>
+
 						</h:form>
 					</p:panel>
 				</div>
 			</div>
-
 			<br />
 			<!-- Attribution manuel -->
 			<h4>#{attributionjc.avertissementMessage}</h4>
 			<div class="ui-g">
-
-
 				<h:form id="tableCheckBox">
 					<div class="tableau">
 						<div class="ui-g">
 							<div class="ui-g-10"></div>
-							<div class="ui-g-2">
-								<h:commandLink>
-									<p:graphicImage name="/image/csv.png" width="30" />
-									<p:dataExporter type="csv" target="attrib"
-										fileName="Attribution_JuryCandidats" />
-								</h:commandLink>
-							</div>
+							<div class="ui-g-2"></div>
 						</div>
 
 						<table>
@@ -100,31 +120,26 @@
 						</table>
 					</div>
 					<br />
-					<div class="ui-g">
-						<div class="ui-g-6"></div>
+					<div class="ui-g-10">
 						<div class="ui-g-6">
 							<p:commandButton value="Enregistrer les attributions"
 								actionListener="#{attributionjc.validationButton}"
-								update="attrib" />
+								update="exporter" />
+						</div>
+						<div class="ui-g-4">
 							<p:commandButton value="Vider les attributions"
 								actionListener="#{attributionjc.clearButton}"
 								update="tableCheckBox" />
 						</div>
 					</div>
-
-					<p:dataTable id="attrib" var="attrib"
-						value="#{attributionjc.messageAttrib}" style="display:none;">
-						<p:column headerText="Jury">
-							<h:outputText value="#{attrib.jury}" />
-						</p:column>
-						<p:column headerText="Candidats">
-							<h:outputText value="#{attrib.candidats}" />
-						</p:column>
-					</p:dataTable>
-
 				</h:form>
 			</div>
 		</div>
 	</div>
+	<br />
+	<br />
+	<br />
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>

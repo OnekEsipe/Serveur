@@ -42,7 +42,7 @@ import com.onek.utils.Navigation;
 @Component("statistiques")
 public class StatistiquesBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
 	private final static Logger logger = Logger.getLogger(StatistiquesBean.class);
 
 	@Autowired
@@ -52,29 +52,31 @@ public class StatistiquesBean implements Serializable {
 
 	private int idEvent;
 	private Evenement event;
-	
+
 	private double totalAvancement;
-	
+
 	private String totalString;
-	
+
 	private List<StatsCandidate> notesByCandidats;
 	private List<StatsJury> notesByJurys;
-	
+
 	private List<StatsCandidate> filteredNotesByCandidats;
 	private List<StatsJury> filteredNotesByJurys;
-	
+
 	private List<Candidat> candidats;
 	private List<Jury> jurys;
-	
+
 	public class StatsJury {
 		String name;
 		double value;
 		String notation;
-		
-		public StatsJury(String name, double value, double nbNoted, double nbNotes) {
+		List<Candidat> candidats;
+
+		public StatsJury(String name, double value, int nbNoted, int nbNotes, List<Candidat> candidats) {
 			this.name = name;
 			this.value = value;
-			this.notation = nbNoted+"/"+nbNotes;
+			this.notation = nbNoted + "/" + nbNotes;
+			this.candidats = candidats;
 		}
 
 		public String getName() {
@@ -88,17 +90,27 @@ public class StatistiquesBean implements Serializable {
 		public String getNotation() {
 			return notation;
 		}
+
+		public List<Candidat> getCandidats() {
+			return candidats;
+		}
+
+		public void setCandidats(List<Candidat> candidats) {
+			this.candidats = candidats;
+		}
 	}
-	
+
 	public class StatsCandidate {
 		String name;
 		double value;
 		String notation;
-		
-		public StatsCandidate(String name, double value, double nbNoted, double nbNotes) {
+		List<Utilisateur> jurys;
+
+		public StatsCandidate(String name, double value, int nbNoted, int nbNotes, List<Utilisateur> jurys) {
 			this.name = name;
 			this.value = value;
-			this.notation = nbNoted+"/"+nbNotes;
+			this.notation = nbNoted + "/" + nbNotes;
+			this.jurys = jurys;
 		}
 
 		public String getName() {
@@ -111,6 +123,14 @@ public class StatistiquesBean implements Serializable {
 
 		public String getNotation() {
 			return notation;
+		}
+
+		public List<Utilisateur> getJurys() {
+			return jurys;
+		}
+
+		public void setJurys(List<Utilisateur> jurys) {
+			this.jurys = jurys;
 		}
 	}
 
@@ -138,7 +158,7 @@ public class StatistiquesBean implements Serializable {
 	public void buttonResult() {
 		buildXlsx("candidat");
 	}
-	
+
 	public void buttonResultByJurys() {
 		buildXlsx("jury");
 	}
@@ -166,7 +186,7 @@ public class StatistiquesBean implements Serializable {
 	public void setNotesByJurys(List<StatsJury> notesByJurys) {
 		this.notesByJurys = notesByJurys;
 	}
-	
+
 	public double getTotalAvancement() {
 		return totalAvancement;
 	}
@@ -178,54 +198,70 @@ public class StatistiquesBean implements Serializable {
 	public void InitStatByCandidat() {
 		double total = 0;
 		double totalNoteDone = 0;
+		List<Utilisateur> jurys;
 		for (Candidat candidat : this.candidats) {
-			double totalNotes = 0;
-			double nbNoted = 0;
+			jurys = new ArrayList<>();
+			int totalNotes = 0;
+			int nbNoted = 0;
 			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
 			for (Evaluation evaluation : evaluations) {
 				List<Note> notes = evaluation.getNotes();
 				for (Note note : notes) {
 					totalNotes++;
 					total++;
-					if(note.getNiveau() > -1) {
+					if (note.getNiveau() > -1) {
 						nbNoted++;
 						totalNoteDone++;
+					} else {
+						if (!jurys.contains(evaluation.getJury().getUtilisateur())) {
+							jurys.add(evaluation.getJury().getUtilisateur());
+						}
 					}
 				}
 			}
-			if(totalNotes == 0) {
-				notesByCandidats.add(new StatsCandidate(candidat.getNom()+" "+candidat.getPrenom(), 100, 0, 0));
+			if (totalNotes == 0) {
+				notesByCandidats
+						.add(new StatsCandidate(candidat.getNom() + " " + candidat.getPrenom(), 100, 0, 0, jurys));
 			} else {
-				notesByCandidats.add(new StatsCandidate(candidat.getNom()+" "+candidat.getPrenom(), (double) ((nbNoted/totalNotes)*100), nbNoted, totalNotes));
+				notesByCandidats.add(new StatsCandidate(candidat.getNom() + " " + candidat.getPrenom(),
+						(double) (((double) nbNoted / (double) totalNotes) * 100), nbNoted, totalNotes, jurys));
 			}
 		}
 		if (total == 0) {
 			this.setTotalAvancement(100);
+			this.setTotalString((int) totalNoteDone + "/" + (int) total);
 		} else {
-			this.setTotalAvancement((totalNoteDone/total)*100);
-			this.setTotalString(totalNoteDone+"/"+total);
+			this.setTotalAvancement(((double) totalNoteDone / (double) total) * 100);
+			this.setTotalString((int) totalNoteDone + "/" + (int) total);
 		}
 	}
-	
+
 	public void InitStatByJury() {
+		List<Candidat> candidats;
 		for (Jury jury : this.jurys) {
-			double totalNotes = 0;
-			double nbNoted = 0;
+			candidats = new ArrayList<>();
+			int totalNotes = 0;
+			int nbNoted = 0;
 			List<Evaluation> evaluations = evaluation.findByIdJury(jury.getIdjury());
 			for (Evaluation evaluation : evaluations) {
 				List<Note> notes = evaluation.getNotes();
 				for (Note note : notes) {
 					totalNotes++;
-					if(note.getNiveau() > -1) {
+					if (note.getNiveau() > -1) {
 						nbNoted++;
+					} else {
+						if (!candidats.contains(evaluation.getCandidat())) {
+							candidats.add(evaluation.getCandidat());
+						}
 					}
 				}
 			}
 			Utilisateur user = jury.getUtilisateur();
-			if(totalNotes == 0) {
-				notesByJurys.add(new StatsJury(user.getNom()+" "+user.getPrenom(), (double) 100, 0, 0));
+			if (totalNotes == 0) {
+				notesByJurys.add(new StatsJury(user.getNom() + " " + user.getPrenom(), (double) 100, 0, 0, candidats));
 			} else {
-				notesByJurys.add(new StatsJury(user.getNom()+" "+user.getPrenom(), (double) ((nbNoted/totalNotes)*100), nbNoted, totalNotes));
+				notesByJurys.add(new StatsJury(user.getNom() + " " + user.getPrenom(),
+						(double) (((double) nbNoted / (double) totalNotes) * 100), nbNoted, totalNotes, candidats));
 			}
 		}
 	}
@@ -300,7 +336,8 @@ public class StatistiquesBean implements Serializable {
 			int colNum = 0;
 			Map<String, List<String>> mapResultsByCritere = new HashMap<>();
 			List<Evaluation> evaluations = evaluation.findByIdJury(jury.getIdjury());
-			XSSFSheet sheet = workbook.createSheet(jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom());
+			XSSFSheet sheet = workbook
+					.createSheet(jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom());
 			Row row = sheet.createRow(rowNum++);
 			Cell cell = row.createCell(colNum++);
 			cell.setCellValue("Candidats");
@@ -320,8 +357,7 @@ public class StatistiquesBean implements Serializable {
 				row = sheet.createRow(rowNum++);
 				colNum = 0;
 				cell = row.createCell(colNum++);
-				cell.setCellValue(
-						eval.getCandidat().getNom() + " " + eval.getCandidat().getPrenom());
+				cell.setCellValue(eval.getCandidat().getNom() + " " + eval.getCandidat().getPrenom());
 				StringBuilder sb = new StringBuilder();
 				cell.setCellStyle(style2);
 				sb.append("SUM(");
@@ -334,8 +370,8 @@ public class StatistiquesBean implements Serializable {
 					cell.setCellValue(niveaux.get(note.getNiveau()));
 					cell.setCellStyle(style2);
 					sb.append("Parametres!" + mapParam.get(note.getCritere().getTexte()).get("coef").formatAsString()
-							+ "*Parametres!" + mapParam.get(note.getCritere().getTexte())
-									.get(niveaux.get(note.getNiveau())));
+							+ "*Parametres!"
+							+ mapParam.get(note.getCritere().getTexte()).get(niveaux.get(note.getNiveau())));
 					cell = row.createCell(colNum++);
 					cell.setCellValue(note.getCommentaire());
 					cell.setCellStyle(style);
@@ -367,8 +403,7 @@ public class StatistiquesBean implements Serializable {
 				sb.append("AVERAGE(");
 				if (mapResultsByCritere.containsKey(critere.getTexte())) {
 					for (String niveau : mapResultsByCritere.get(critere.getTexte())) {
-						sb.append("Parametres!" + mapParam.get(critere.getTexte()).get(niveau))
-								.append("+");
+						sb.append("Parametres!" + mapParam.get(critere.getTexte()).get(niveau)).append("+");
 					}
 					sb.setLength(sb.length() - 1);
 					sb.append(")");
@@ -454,19 +489,19 @@ public class StatistiquesBean implements Serializable {
 				cell.setCellStyle(style2);
 				for (Critere critere : criteres) {
 					cell = row.createCell(colNum++);
-					cell.setCellFormula("'" + jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom() + "'!"
-							+ resultJurys.get(jury).get(critere.getTexte()).formatAsString());
+					cell.setCellFormula("'" + jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom()
+							+ "'!" + resultJurys.get(jury).get(critere.getTexte()).formatAsString());
 					cell.setCellStyle(style);
 				}
 				cell = row.createCell(colNum++);
 				if (resultJurys.get(jury).containsKey("total")) {
-					cell.setCellFormula("'" + jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom() + "'!"
-							+ resultJurys.get(jury).get("total").formatAsString());
+					cell.setCellFormula("'" + jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom()
+							+ "'!" + resultJurys.get(jury).get("total").formatAsString());
 					cell.setCellStyle(style);
 				}
 			}
 		}
-		
+
 	}
 
 	private void fillParameterPage(XSSFWorkbook workbook, List<Critere> criteres) {
@@ -569,8 +604,8 @@ public class StatistiquesBean implements Serializable {
 					cell.setCellValue(niveaux.get(note.getNiveau()));
 					cell.setCellStyle(style2);
 					sb.append("Parametres!" + mapParam.get(note.getCritere().getTexte()).get("coef").formatAsString()
-							+ "*Parametres!" + mapParam.get(note.getCritere().getTexte())
-									.get(niveaux.get(note.getNiveau())));
+							+ "*Parametres!"
+							+ mapParam.get(note.getCritere().getTexte()).get(niveaux.get(note.getNiveau())));
 					cell = row.createCell(colNum++);
 					cell.setCellValue(note.getCommentaire());
 					cell.setCellStyle(style);
@@ -601,8 +636,7 @@ public class StatistiquesBean implements Serializable {
 				sb.append("AVERAGE(");
 				if (mapResultsByCritere.containsKey(critere.getTexte())) {
 					for (String niveau : mapResultsByCritere.get(critere.getTexte())) {
-						sb.append("Parametres!" + mapParam.get(critere.getTexte()).get(niveau))
-								.append("+");
+						sb.append("Parametres!" + mapParam.get(critere.getTexte()).get(niveau)).append("+");
 					}
 					sb.setLength(sb.length() - 1);
 					sb.append(")");

@@ -33,7 +33,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 
 	@Override
 	public boolean juryIsAssigned(int idUser, int idEvent) {
-		if(idUser < 1 || idEvent < 1) {
+		if (idUser < 1 || idEvent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
@@ -60,7 +60,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Jury> findJuryAndAnonymousByIdEvent(int idEvent, String login) {
 		Objects.requireNonNull(login);
-		if(idEvent < 1) {
+		if (idEvent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
@@ -100,7 +100,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Jury> findAnonymousByIdEvent(int idEvent) {
-		if(idEvent < 1) {
+		if (idEvent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
@@ -159,7 +159,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Jury> findJurysByIdevent(int idevent) {
-		if(idevent < 1) {
+		if (idevent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
@@ -188,7 +188,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> listJurysByEvent(int idevent) {
-		if(idevent < 1) {
+		if (idevent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		List<Utilisateur> utilisateurs = new ArrayList<>();
@@ -220,7 +220,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> findJurysAnnonymesByEvent(int idevent) {
-		if(idevent < 1) {
+		if (idevent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		List<Utilisateur> utilisateurs = new ArrayList<>();
@@ -254,17 +254,18 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		}
 		return utilisateursAnnonymes;
 	}
+
 	@Override
 	public void supprimerUtilisateurAnonyme(int iduser) {
-		if(iduser < 1 ) {
+		if (iduser < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
-			transaction = session.beginTransaction();		
-			session.createQuery("delete from Utilisateur where iduser = :iduser")
-					.setParameter("iduser", iduser).executeUpdate();
+			transaction = session.beginTransaction();
+			session.createQuery("delete from Utilisateur where iduser = :iduser").setParameter("iduser", iduser)
+					.executeUpdate();
 			transaction.commit();
 			logger.info("Delete jury done !");
 		} catch (RuntimeException e) {
@@ -272,22 +273,38 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 	}
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public void supprimerUtilisateur(int iduser, int idevent) {
-		if(iduser < 1 || idevent < 1) {
+		if (iduser < 1 || idevent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
-			transaction = session.beginTransaction();		
-			session.createQuery("delete from Jury where iduser = :iduser AND idevent = :idevent")
-					.setParameter("iduser", iduser).setParameter("idevent", idevent).executeUpdate();
+			transaction = session.beginTransaction();
+			Jury jury = (Jury)session
+					.createQuery("FROM Jury WHERE iduser = :iduser AND idevent = :idevent ")
+					.setParameter("iduser", iduser).setParameter("idevent", idevent).getSingleResult();
+			List<Evaluation> evaluationToDelete = (List<Evaluation>) session
+					.createQuery("FROM Evaluation WHERE idjuryeval = :iduser").setParameter("iduser", jury.getIdjury())
+					.getResultList();
+			for (Evaluation evaluation : evaluationToDelete) {
+				System.out.println("id evaluation "+evaluation.getIdevaluation());
+				List<Note> notesToDelete = (List<Note>) session
+						.createQuery("FROM Note WHERE idevaluation = :idevaluation")
+						.setParameter("idevaluation", evaluation.getIdevaluation()).getResultList();
+				for (Note note : notesToDelete) {
+					session.delete(note);
+				}
+				session.delete(evaluation);
+			}
+			session.delete(jury);
 			transaction.commit();
 			logger.info("Delete jury done !");
 		} catch (RuntimeException e) {
@@ -295,8 +312,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 	}
@@ -324,7 +340,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@Override
 	public void addListJurys(List<Jury> jurys) {
 		Objects.requireNonNull(jurys);
-		if(jurys.isEmpty()) {
+		if (jurys.isEmpty()) {
 			throw new IllegalStateException("List must not be empty");
 		}
 		Session session = sessionFactory.openSession();
@@ -339,14 +355,14 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 	}
+
 	@Override
 	public Utilisateur findById(int id) {
-		if(id < 1) {
+		if (id < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Utilisateur jury = null;
@@ -362,20 +378,17 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		}finally {
 			session.close();
 		}
-
-
 		return jury;
 	}
-	
+
 	@Override
 	public Jury findJuryById(int id) {
-		if(id < 1) {
+		if (id < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Jury jury = (Jury) session.createQuery("FROM Jury WHERE idjury = :id").setParameter("id", id)
-				.getSingleResult();
+		Jury jury = (Jury) session.createQuery("FROM Jury WHERE idjury = :id").setParameter("id", id).getSingleResult();
 		session.getTransaction().commit();
 		session.close();
 		return jury;

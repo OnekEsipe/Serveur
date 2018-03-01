@@ -45,7 +45,6 @@ public class AddJuryBean implements Serializable {
 	private List<Utilisateur> utilisateursAll;
 	private List<Utilisateur> utilisateursAnos;
 
-	private Password passwordGenerator;
 	private int juryAnonyme;
 
 	public List<Utilisateur> getUtilisateursAnos() {
@@ -62,14 +61,6 @@ public class AddJuryBean implements Serializable {
 
 	public void setJuryAnonyme(int juryAnonyme) {
 		this.juryAnonyme = juryAnonyme;
-	}
-
-	public Password getPasswordGenerator() {
-		return passwordGenerator;
-	}
-
-	public void setPasswordGenerator(Password passwordGenerator) {
-		this.passwordGenerator = passwordGenerator;
 	}
 
 	public List<Utilisateur> getUtilisateurs() {
@@ -182,7 +173,6 @@ public class AddJuryBean implements Serializable {
 	}
 
 	public void addJuryAnonymeButton() {
-		passwordGenerator = new Password();
 		List<Utilisateur> anonymousJurys = new ArrayList<>();
 		Utilisateur anonymousJury;
 		int increment = juryService.listJurysAnnonymesByEvent(idEvent).size();
@@ -203,7 +193,7 @@ public class AddJuryBean implements Serializable {
 					anonymousJury.setLogin("Jury" + i + "_" + idEvent);
 					anonymousJury.setNom("Jury" + i + "_" + idEvent);
 				}
-				anonymousJury.setMotdepasse(passwordGenerator.generatePassword(8));
+				anonymousJury.setMotdepasse(Password.generatePassword(8));
 				anonymousJury.setMail("");
 				anonymousJury.setPrenom("");
 				anonymousJurys.add(anonymousJury);

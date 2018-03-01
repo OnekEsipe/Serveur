@@ -18,5 +18,5 @@ public interface UserDao {
 	public Utilisateur findByMail(String mail);
 	public Utilisateur findUserById(int iduser);
 	public Utilisateur findByToken(String token);
-	public List<Utilisateur> getAllUsersExceptDeleted();
+	public List<Utilisateur> getAllUsersExceptDeletedansAno();
 }

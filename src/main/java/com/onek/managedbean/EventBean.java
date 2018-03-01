@@ -153,14 +153,13 @@ public class EventBean implements Serializable {
 		addEvent();
 		addEvenementCode();
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", event.getIdevent());
-		Navigation.redirect("accueil.xhtml");
+		Navigation.redirect("eventManager.xhtml");
 	}
 
 	private void addEvenementCode() {
-		Password pass = new Password();
 		Integer id = event.getIdevent();
 		int length = (int) (Math.log10(id) + 1);
-		String codeEvent = id+pass.generateCode(10-length);
+		String codeEvent = Password.generateCode(10-length)+id;
 		event.setCode(codeEvent);
 		evenementService.editEvenement(event);
 	}
