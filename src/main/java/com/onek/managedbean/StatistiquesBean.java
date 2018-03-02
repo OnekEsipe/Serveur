@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -642,6 +643,10 @@ public class StatistiquesBean implements Serializable {
 						cell = row.createCell(colNum);
 						cell.setCellValue(signature.getNom());
 						cell.setCellStyle(style);
+						colNum++;
+						cell = row.createCell(colNum);
+						String encoded = Base64.getEncoder().encodeToString(signature.getSignature());
+						cell.setCellValue(encoded);
 						colNum++;
 						cell = row.createCell(colNum);
 						int imageIDX = workbook.addPicture(signature.getSignature(), Workbook.PICTURE_TYPE_JPEG);
