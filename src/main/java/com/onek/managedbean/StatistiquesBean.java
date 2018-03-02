@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -23,6 +24,7 @@ import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -287,6 +289,7 @@ public class StatistiquesBean implements Serializable {
 
 	private XSSFCellStyle style;
 	private XSSFCellStyle style2;
+	private XSSFCellStyle styleSignature;
 
 	private void init(XSSFWorkbook workbook) {
 		niveaux.put(0, "A");
@@ -298,15 +301,20 @@ public class StatistiquesBean implements Serializable {
 		niveaux.put(-1, "-");
 		style = workbook.createCellStyle();
 		style2 = workbook.createCellStyle();
+		styleSignature = workbook.createCellStyle();
 		style.setBorderLeft(BorderStyle.THIN);
 		style.setBorderRight(BorderStyle.THIN);
 		style.setBorderBottom(BorderStyle.THIN);
 		style.setBorderTop(BorderStyle.THIN);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
 		style2.setBorderLeft(BorderStyle.THIN);
 		style2.setBorderRight(BorderStyle.THIN);
 		style2.setBorderBottom(BorderStyle.THIN);
 		style2.setBorderTop(BorderStyle.THIN);
 		style2.setAlignment(HorizontalAlignment.CENTER);
+		style2.setVerticalAlignment(VerticalAlignment.CENTER);
+		styleSignature.setAlignment(HorizontalAlignment.CENTER);
+		styleSignature.setVerticalAlignment(VerticalAlignment.CENTER);
 	}
 
 	public void buildXlsx(String who, boolean signature) {
@@ -329,9 +337,12 @@ public class StatistiquesBean implements Serializable {
 			if (who.equals("jury")) {
 				externalContext.setResponseHeader("Content-Disposition",
 						"attachment; filename=\"Export_Jury_" + event.getNom() + ".xlsx\"");
-			} else if (who.equals("candidat")) {
+			} else if (who.equals("candidat") && !signature) {
 				externalContext.setResponseHeader("Content-Disposition",
 						"attachment; filename=\"Export_Candidat_" + event.getNom() + ".xlsx\"");
+			} else if (who.equals("candidat") && signature) {
+				externalContext.setResponseHeader("Content-Disposition",
+						"attachment; filename=\"Export_Candidat_" + event.getNom() +"_Signature"+".xlsx\"");
 			}
 			workbook.write(externalContext.getResponseOutputStream());
 			facesContext.responseComplete();
@@ -568,7 +579,7 @@ public class StatistiquesBean implements Serializable {
 			cell.setCellStyle(style);
 			colNum++;
 			cell = row.createCell(colNum);
-			cell.setCellValue(0);
+			cell.setCellValue("");
 			cell.setCellStyle(style);
 			mapParam.get(critere.getTexte()).put("-", cell.getAddress());
 			rowNum += 2;
@@ -598,6 +609,9 @@ public class StatistiquesBean implements Serializable {
 			}
 			cell = row.createCell(colNum++);
 			cell.setCellValue("Total");
+			cell.setCellStyle(style2);
+			cell = row.createCell(colNum++);
+			cell.setCellValue("Signatures");
 			cell.setCellStyle(style2);
 			for (Evaluation eval : evaluations) {
 				row = sheet.createRow(rowNum++);
@@ -641,17 +655,23 @@ public class StatistiquesBean implements Serializable {
 					for (Signature signature : eval.getSignatures()) {
 						cell = row.createCell(colNum);
 						cell.setCellValue(signature.getNom());
-						cell.setCellStyle(style);
+						cell.setCellStyle(styleSignature);
+						sheet.autoSizeColumn(colNum);
 						colNum++;
 						cell = row.createCell(colNum);
+						
 						int imageIDX = workbook.addPicture(signature.getSignature(), Workbook.PICTURE_TYPE_JPEG);
 						CreationHelper helper = workbook.getCreationHelper();
 						Drawing<?> drawing = sheet.createDrawingPatriarch();
 						ClientAnchor anchor = helper.createClientAnchor();
 						anchor.setCol1(colNum);
-						anchor.setRow1(rowNum);
+						anchor.setRow1(rowNum-1);
+						anchor.setRow2(rowNum-1);
+						anchor.setCol2(colNum);
 						Picture pict = drawing.createPicture(anchor, imageIDX);
-						pict.resize();
+						pict.resize(1, 1);
+						sheet.setColumnWidth(colNum, 6000);
+						row.setHeight((short) 1400);
 						colNum++;
 					}
 				}

@@ -52,7 +52,7 @@
 						</p:column>
 						<p:column headerText="Avancement">
 							<p:progressBar value="#{juryStat.value}" labelTemplate="{value}%"
-								displayOnly="true" />
+								displayOnly="true"/>
 						</p:column>
 						<p:column headerText="Notes" style='width:40px'
 							sortBy="#{juryStat.notation}">
@@ -118,7 +118,7 @@
 						<p:commandButton rendered="#{statistiques.signedEvent}" value="Exporter les résultats par candidat avec signature"
 							actionListener="#{statistiques.buttonResultSign}" ajax="false"/>
 					</div>
-					<div class="ui-g-6"></div>
+					<div class="ui-g-4"></div>
 					<div class="ui-g-2">
 						<p:commandButton value="Exporter les résultats par jury"
 							actionListener="#{statistiques.buttonResultByJurys}" ajax="false" />
