@@ -8,6 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.onek.model.Critere;
 import com.onek.model.Descripteur;
 
+/**
+ * Json critere
+ */
 public class CritereResource implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -23,6 +26,11 @@ public class CritereResource implements Serializable {
 	@JsonProperty("Descriptor")
 	private final List<DescripteurResource> descripteurs = new ArrayList<>();
 
+	/**
+	 * Données d'un critère : <br/>
+	 * Id - Category - Text - Descriptor
+	 * @param critere
+	 */
 	public CritereResource(Critere critere) {
 		idCritere = critere.getIdcritere();
 		categorie = critere.getCategorie();

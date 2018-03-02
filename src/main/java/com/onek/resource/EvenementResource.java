@@ -11,6 +11,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.onek.model.Critere;
 import com.onek.model.Evenement;
 
+/**
+ * Json evenement
+ */
 public class EvenementResource implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -39,6 +42,11 @@ public class EvenementResource implements Serializable {
 	@JsonProperty("Evaluations")
 	private List<EvaluationResource> evaluations;
 
+	/**
+	 * Données d'un evenement : <br/>
+	 * Id - signingNeeded - Name - Criterias - Jurys - Evaluations - Begin - End
+	 * @param evenement
+	 */
 	public EvenementResource(Evenement evenement) {
 		idEvent = evenement.getIdevent();
 		dateStart = evenement.getDatestart();
