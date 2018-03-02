@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.onek.dao.CritereDao;
 import com.onek.dao.DescripteurDao;
+import com.onek.dao.NoteDao;
 import com.onek.model.Critere;
 import com.onek.model.Descripteur;
+import com.onek.model.Note;
 
 @Service
 public class GrilleServiceImpl implements GrilleService, Serializable{
@@ -20,6 +22,9 @@ public class GrilleServiceImpl implements GrilleService, Serializable{
 	
 	@Autowired
 	private DescripteurDao descripteurDao;
+	
+	@Autowired
+	private NoteDao noteDao;
 	
 	@Override
 	public void addCriteres(List<Critere> criteres) {
@@ -49,6 +54,11 @@ public class GrilleServiceImpl implements GrilleService, Serializable{
 	@Override
 	public void supprimerDescripteur(Descripteur descripteur) {
 		descripteurDao.supprimerDescripteur(descripteur);
+	}
+
+	@Override
+	public void addNote(Note note) {
+		noteDao.addNote(note);
 	}
 	
 }
