@@ -186,9 +186,10 @@ public class AddJuryBean implements Serializable {
 	public void addJuryAnonymeButton() {
 		List<Utilisateur> anonymousJurys = new ArrayList<>();
 		Utilisateur anonymousJury;
-		int increment = juryService.listJurysAnnonymesByEvent(idEvent).size();
+		List<Jury> jurys = juryService.listJurysAnnonymesByEvent(idEvent);
+		int increment = jurys.size();
 		if (juryAnonyme > 0) {
-			for (int i = 0 + increment; i < juryAnonyme + increment; i++) {
+			for (int i = 0; i < juryAnonyme + increment; i++) {
 				anonymousJury = new Utilisateur();
 				anonymousJury.setDroits("A");
 				anonymousJury.setIsdeleted(false);
@@ -204,6 +205,19 @@ public class AddJuryBean implements Serializable {
 					anonymousJury.setLogin("Jury" + i + "_" + idEvent);
 					anonymousJury.setNom("Jury" + i + "_" + idEvent);
 				}
+				
+				// check if login is not used
+				boolean loginIsUsed = false;
+				for(Jury jury : jurys) {
+					if (jury.getUtilisateur().getLogin().equals(anonymousJury.getLogin())) {
+						loginIsUsed = true;
+						break;
+					}
+				}
+				if (loginIsUsed) {
+					continue;
+				}
+				
 				anonymousJury.setMotdepasse(Password.generatePassword(8));
 				anonymousJury.setMail("");
 				anonymousJury.setPrenom("");
@@ -215,7 +229,6 @@ public class AddJuryBean implements Serializable {
 			// On met à jour la liste des jurys anonymes
 			anonymousJurys.forEach(jury -> utilisateursAnos.add(jury));
 			utilisateursAnos.forEach(juryAno -> System.out.println(juryAno.getNom()));
-
 		}
 	}
 }

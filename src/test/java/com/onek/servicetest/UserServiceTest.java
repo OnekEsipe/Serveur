@@ -143,8 +143,6 @@ public class UserServiceTest {
 	public void testfindUserByIdInvalidId() {
 		userService.findUserById(-1);
 	}
-
-
 	
 	/*
 	 * TESTS DE TRANSACTIONS ECHOUEES
@@ -241,7 +239,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testuserExistAndCorrectPasswordOK() {
-		Utilisateur user = userService.findByLogin("aa");
+		Utilisateur user = userService.findByLogin("bb");
 		assertTrue(userService.userExistAndCorrectPassword(user.getLogin(),user.getMotdepasse()));
 	}
 	
@@ -333,13 +331,18 @@ public class UserServiceTest {
 		Utilisateur adduser = new Utilisateur();
 		String label = "azerty"+users.size();
 		adduser.setLogin(label);
-		adduser.setMail(label+formatMail);
+		adduser.setMail("onek2018esipe@gmail.com");
 		adduser.setNom(label);
 		adduser.setMotdepasse(label);
 		userService.addUser(adduser);
 		Utilisateur us = userService.findByLogin(label);
 		assertNotNull(us);
 		assertEquals(us.getLogin(), label);
+	}
+	
+	@Test
+	public void testgetAllUsersExceptDeletedansAnoOK() {
+		assertTrue(!userService.getAllUsersExceptDeleted().isEmpty());
 	}
 
 }

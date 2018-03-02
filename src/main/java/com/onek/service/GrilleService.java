@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.onek.model.Critere;
 import com.onek.model.Descripteur;
+import com.onek.model.Note;
 
 public interface GrilleService {
 
@@ -14,4 +15,6 @@ public interface GrilleService {
 	public void updateCritere(Critere critere);
 	
 	public void supprimerDescripteur(Descripteur descripteur);
+	
+	public void addNote(Note note);
 }
