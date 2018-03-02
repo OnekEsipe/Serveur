@@ -288,6 +288,7 @@ public class StatistiquesBean implements Serializable {
 
 	private XSSFCellStyle style;
 	private XSSFCellStyle style2;
+	private XSSFCellStyle styleImage;
 
 	private void init(XSSFWorkbook workbook) {
 		niveaux.put(0, "A");
@@ -645,6 +646,7 @@ public class StatistiquesBean implements Serializable {
 						cell.setCellStyle(style);
 						colNum++;
 						cell = row.createCell(colNum);
+						
 						int imageIDX = workbook.addPicture(signature.getSignature(), Workbook.PICTURE_TYPE_JPEG);
 						CreationHelper helper = workbook.getCreationHelper();
 						Drawing<?> drawing = sheet.createDrawingPatriarch();
@@ -654,11 +656,13 @@ public class StatistiquesBean implements Serializable {
 						anchor.setDx2(1023);
 						anchor.setDy2(255);
 						anchor.setCol1(colNum);
-						anchor.setRow1(rowNum);
-						anchor.setRow2(rowNum);
+						anchor.setRow1(rowNum-1);
+						anchor.setRow2(rowNum-1);
 						anchor.setCol2(colNum);
 						Picture pict = drawing.createPicture(anchor, imageIDX);
-						pict.resize(2, 4);
+						pict.resize(4, 2);
+						sheet.setColumnWidth(colNum, 25);
+						row.setHeight((short) 25);
 						colNum++;
 					}
 				}
