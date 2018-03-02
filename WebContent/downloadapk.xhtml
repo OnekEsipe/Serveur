@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>ONEK' - Télécharger l'APK</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+
+<f:metadata>
+	<f:event type="preRenderView" listener="#{downloadApk.before}" />
+</f:metadata>
+
+<h:body>
+	<header>
+		<div class="ui-g">
+			<div class="ui-g-1">
+				<p:graphicImage name="/image/logo.png" width="50" />
+			</div>
+			<div class="ui-g-11">
+				<h1 class="hf">ONEK'</h1>
+			</div>
+		</div>
+	</header>
+	<br />
+	<br />
+	<br />
+	<br />
+
+	<div class="page-wrap">
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-4">
+				<h:form>
+					<p:commandButton value="Retour" id="withIcon"
+						icon="ui-icon-arrowthick-1-w" action="index.xhtml"
+						styleClass="bigbutton" />
+				</h:form>
+			</div>
+		</div>
+		<br />
+		<div class="ui-g-12">
+			<h:form>
+				<div class="panelGrid">
+					<p:panel header="Comment installer l'APK ?">
+						<h:panelGrid columns="1" cellpadding="5">
+							Todo
+						</h:panelGrid>
+					</p:panel>
+				</div>
+			</h:form>
+		</div>
+
+		<br /> <br />
+		<div class="ui-g-12">
+			<div class="telecharger">
+				<h:form>
+					<p:commandButton value="Télécharger"
+						action="#{downloadApk.download}"
+						icon="ui-icon-arrowthickstop-1-s" />
+				</h:form>
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
+</h:body>
+</html>
