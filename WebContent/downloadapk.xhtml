@@ -37,8 +37,8 @@
 		<div class="ui-g">
 			<div class="ui-g-12 ui-md-4">
 				<h:form>
-					<p:commandButton value="Retour" id="withIcon"
-						icon="ui-icon-arrowthick-1-w" action="index.xhtml"
+					<p:commandButton value="Retour"
+						icon="ui-icon-arrowthick-1-w" action="#{downloadApk.retour}"
 						styleClass="bigbutton" />
 				</h:form>
 			</div>
@@ -47,9 +47,18 @@
 		<div class="ui-g-12">
 			<h:form>
 				<div class="panelGrid">
-					<p:panel header="Comment installer l'APK ?">
+					<p:panel header="Comment installer l'apk ?">
 						<h:panelGrid columns="1" cellpadding="5">
-							Todo
+							Télécharger l'apk.							
+							La transférer sur votre tablette/smartphone dans un dossier facilement accessible (exemple : download).
+							<br/>
+							Sur la tablette/smartphone, allez dans les paramètres de sécurité et activez les sources inconnues.
+							<br/>
+							Allez chercher l'apk et cliquer dessus pour l'installer.
+							<br/>
+							Retournez dans les paramètres de sécurité et désactivez l'installation des sources inconnues.
+							<br/>
+							L'application est installée.
 						</h:panelGrid>
 					</p:panel>
 				</div>
@@ -61,8 +70,8 @@
 			<div class="telecharger">
 				<h:form>
 					<p:commandButton value="Télécharger"
-						action="#{downloadApk.download}"
-						icon="ui-icon-arrowthickstop-1-s" />
+						action="#{downloadApk.download}" icon="ui-icon-arrowthickstop-1-s"
+						ajax="false" />
 				</h:form>
 			</div>
 		</div>
