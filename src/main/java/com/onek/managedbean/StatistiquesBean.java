@@ -660,7 +660,7 @@ public class StatistiquesBean implements Serializable {
 						anchor.setRow2(rowNum-1);
 						anchor.setCol2(colNum);
 						Picture pict = drawing.createPicture(anchor, imageIDX);
-						pict.resize(8, 8);
+						pict.resize(4, 4);
 						sheet.setColumnWidth(colNum, 8000);
 						row.setHeight((short) 1400);
 						colNum++;
