@@ -38,7 +38,7 @@
 						timeOnly="true" required="true" />
 					<p:outputLabel for="date2" value="Date de fin :" />
 					<p:calendar id="date2" value="#{event.date2}"
-						mindate="#{calendarView.date1}" maxdate="31/12/20"
+						mindate="#{calendarView.date1}" locale="de" navigator="true"
 						pattern="dd-MM-yyyy" action="#{event.dateValid}" required="true" />
 					<p:outputLabel for="time2" value="Heure de fin :" />
 					<p:calendar id="time2" value="#{event.hour2}" pattern="HH:mm"
