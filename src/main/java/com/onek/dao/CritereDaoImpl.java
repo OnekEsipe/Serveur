@@ -15,6 +15,9 @@ import org.springframework.stereotype.Repository;
 import com.onek.model.Critere;
 import com.onek.model.Descripteur;
 
+/**
+ * Dao du model Critere
+ */
 @Repository
 public class CritereDaoImpl implements CritereDao, Serializable {
 	private static final long serialVersionUID = 1L;

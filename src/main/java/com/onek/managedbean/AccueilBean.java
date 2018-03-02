@@ -21,6 +21,9 @@ import com.onek.service.UserService;
 import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Navigation;
 
+/**
+ * ManagedBean AccueilBean
+ */
 @Component("accueil")
 public class AccueilBean implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -45,6 +48,11 @@ public class AccueilBean implements Serializable {
 	private int idevent;
 	private String typeMenu;
 
+	/**
+	 * Méthode appelée lors d'un GET sur la page accueil.xhtml.<br/>
+	 * Elle permet d'initialiser les variables nécessaires à l'affichage.
+	 * @param e ComponentSystemEvent
+	 */
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
@@ -74,23 +82,39 @@ public class AccueilBean implements Serializable {
 
 	}
 
+	/**
+	 * Getter de la variable idevent.
+	 * @return idevent L'id de l'événement
+	 */
 	public int getIdevent() {
 		return idevent;
 	}
 
+	/**
+	 * Setter de la variable idevent.
+	 * @param idevent L'id de l'événement
+	 */
 	public void setIdevent(int idevent) {
 		this.idevent = idevent;
 	}
 
+	/**
+	 * Getter de la variable evenement
+	 * @return evenement
+	 */
 	public Evenement getEvent() {
 		return evenement;
 	}
 
+	/**
+	 * Setter de la variable evenement
+	 * @param event Evenement
+	 */
 	public void setEvent(Evenement event) {
 		this.evenement = event;
 	}
 
-	public void refresh() {
+	private void refresh() {
 		if (user.getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {
 			events = eventService.findAll();
 		} else if (user.getDroits().equals(DroitsUtilisateur.ORGANISATEUR.toString())) {
@@ -108,63 +132,122 @@ public class AccueilBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Getter de la variable events
+	 * @return events La liste des événements
+	 */
 	public List<Evenement> getEvents() {
 		return events;
 	}
 
+	/**
+	 * Setter de la variable events
+	 * @param events La liste des événements
+	 */
 	public void setEvents(List<Evenement> events) {
 		this.events = events;
 	}
 
+	/**
+	 * Getter de la variable filterevents
+	 * @return filterevents Liste des événements filtrés
+	 */
 	public List<Evenement> getFilteredevents() {
 		return filteredevents;
 	}
 
+	/**
+	 * Setter de la variable filterevents
+	 * @param filteredevents Liste des événements filtrés
+	 */
 	public void setFilteredevents(List<Evenement> filteredevents) {
 		this.filteredevents = filteredevents;
 	}
 
+	/**
+	 * Getter de la variable selectedevent
+	 * @return selectedevent Evenement selectionné
+	 */
 	public Evenement getSelectedevent() {
 		return selectedevent;
 	}
 
+	/**
+	 * Setter de la variable selectedevent
+	 * @param selectedevent Evenement selectionné
+	 */
 	public void setSelectedevent(Evenement selectedevent) {
 		this.selectedevent = selectedevent;
 	}
 
+	/**
+	 * Getter de la variable user
+	 * @return user L'utilisateur
+	 */
 	public Utilisateur getUser() {
 		return user;
 	}
 
+	/**
+	 * Setter de la variable user
+	 * @param user L'utilisateur
+	 */
 	public void setUser(Utilisateur user) {
 		this.user = user;
 	}
 
+	/**
+	 * Getter de la variable typeMenu
+	 * @return typeMenu Type du menu (organisateur ou administrateur)
+	 */
 	public String getTypeMenu() {
 		return typeMenu;
 	}
 
+	/**
+	 * Setter de la variable typeMenu
+	 * @param typeMenu Type du menu (organisateur ou administrateur)
+	 */
 	public void setTypeMenu(String typeMenu) {
 		this.typeMenu = typeMenu;
 	}
 
+	/**
+	 * Getter de la variable visible
+	 * @return visible
+	 */
 	public boolean getVisible() {
 		return visible;
 	}
 
+	/**
+	 * Setter de la variable visible
+	 * @param visible
+	 */
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
 
+	/**
+	 * Getter de la variable evenementChoisi
+	 * @return evenementChoisi
+	 */
 	public String getEvenementChoisi() {
 		return evenementChoisi;
 	}
 
+	/**
+	 * Setter de la variable evenementChoisi
+	 * @param evenementChoisi
+	 */
 	public void setEvenementChoisi(String evenementChoisi) {
 		this.evenementChoisi = evenementChoisi;
 	}
 
-
+	/**
+	 * Navigation vers d'autres pages xhtml en fonction de la lignes cliquées.
+	 * @param event
+	 */
 	public void onRowSelect(SelectEvent event) {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent",
 				selectedevent.getIdevent());
@@ -172,6 +255,9 @@ public class AccueilBean implements Serializable {
 		Navigation.redirect("eventManager.xhtml");
 	}
 
+	/**
+	 * Navigation vers viewCreateEvent.xhtml
+	 */
 	public void buttonAction() {
 		Navigation.redirect("viewCreateEvent.xhtml");
 	}

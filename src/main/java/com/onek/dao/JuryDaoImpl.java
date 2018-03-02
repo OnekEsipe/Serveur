@@ -23,6 +23,9 @@ import com.onek.model.Note;
 import com.onek.model.Utilisateur;
 import com.onek.utils.DroitsUtilisateur;
 
+/**
+ * Dao du model Jury
+ */
 @Repository
 public class JuryDaoImpl implements JuryDao, Serializable {
 	private static final long serialVersionUID = 1L;
@@ -255,7 +258,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		}
 		return utilisateursAnnonymes;
 	}
-
+  
 	@Override
 	public void supprimerUtilisateurAnonyme(int iduser) {
 		if (iduser < 1) {

@@ -20,7 +20,13 @@ public class Password {
 		return result;
 	}
 
-	public static String generatePassword(int length) {
+	/**
+	 * Génère un mot de passe en utilisant différents dictionnaires (ALPHA, ALPA_CAPS, NUMERIC).
+	 * Les lettres I, l sont volontairement ommises pour des soucis de lectures
+	 * @param length Longueur du mot de passe
+	 * @return Le mot de passe généré
+	 */
+	public String generatePassword(int length) {
 		if(length < 1 || length > Integer.MAX_VALUE) {
 			throw new IllegalArgumentException("length must be positive and inf Integer.MAX_VALUE");
 		}
@@ -28,7 +34,12 @@ public class Password {
 		return password;
 	}
 	
-	public static String generateCode(int length) {
+	/**
+	 * Génère un code événement avec le dictionnaire NUMERIC
+	 * @param length Longueur du code
+	 * @return Le code événement généré
+	 */
+	public String generateCode(int length) {
 		if(length < 1 || length > Integer.MAX_VALUE) {
 			throw new IllegalArgumentException("length must be positive and inf Integer.MAX_VALUE");
 		}
@@ -36,6 +47,11 @@ public class Password {
 		return password;
 	}
 	
+	/**
+	 * Vérifie la règle des mots de passe : Au moins 6 caractères et au moins 1 majuscule
+	 * @param password Mot de passe a verifier
+	 * @return True si la règle est respectée
+	 */
 	public static boolean verifyPasswordRule(String password) {
 		if (password.length() >= 6 && !password.toLowerCase().equals(password)) {
 			return true;
