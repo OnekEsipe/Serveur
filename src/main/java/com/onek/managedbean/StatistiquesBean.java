@@ -658,7 +658,6 @@ public class StatistiquesBean implements Serializable {
 						anchor.setRow2(rowNum);
 						anchor.setCol2(colNum);
 						Picture pict = drawing.createPicture(anchor, imageIDX);
-						pict.resize();
 						colNum++;
 					}
 				}
