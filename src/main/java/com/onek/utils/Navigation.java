@@ -36,5 +36,6 @@ public class Navigation {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String result = params.get(name);
 		return "".equals(result) ? null : result;
-	}
+	}	
+
 }

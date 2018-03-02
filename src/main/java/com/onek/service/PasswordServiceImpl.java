@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
@@ -84,6 +85,8 @@ public class PasswordServiceImpl implements PasswordService, Serializable {
 	
 	@Override
 	public void updatePassword(Utilisateur user, String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		Objects.requireNonNull(user);
+		Objects.requireNonNull(password);
 		user.setMotdepasse(Encode.sha1(password));
 		Date date = new Date();
 		date.setTime(new Date().getTime() - 1_585_000); // token valid while 15 seconds

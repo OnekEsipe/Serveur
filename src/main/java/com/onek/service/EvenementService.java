@@ -13,14 +13,18 @@ public interface EvenementService {
 	 * @see com.onek.dao.EvenementDao#addEvenement(Evenement)
 	 */
 	public void addEvenement(Evenement event);
-	public boolean isValid(Evenement event);
 	
 	/**
 	 * @see com.onek.dao.EvenementDao#findById(int)
 	 */
 	public Evenement findById(int id);
 	
-	/**
+  /**
+	 * @see com.onek.dao.EvenementDao#findByCode(String)
+	 */
+	public Evenement findByCode(String code);
+
+  /**
 	 * @see com.onek.dao.EvenementDao#editEvenement(Evenement)
 	 */
 	public void editEvenement(Evenement event);
@@ -39,7 +43,7 @@ public interface EvenementService {
 	 * @see com.onek.dao.EvenementDao#findByIdUser(int)
 	 */
 	public List<Evenement> myListEvents(int iduser);
-	
+
 	/**
 	 * @see com.onek.dao.EvenementDao#addDuplicatedEvent(Evenement)
 	 */

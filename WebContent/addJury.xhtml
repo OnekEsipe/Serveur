@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Onek team</title>
+	<title>ONEK' - Gestion des jurys</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
@@ -20,8 +20,6 @@
 	<ui:include src="#{accueil.typeMenu}" />
 	<ui:include src="menuGauche.xhtml"></ui:include>
 	<br />
-	<br />
-
 	<div class="ui-g">
 		<div class="ui-g-2"></div>
 		<div class="ui-g-5">
@@ -48,19 +46,27 @@
 						</f:facet>
 						<p:column selectionMode="multiple"
 							style="width:16px;text-align:center" />
+						<p:column headerText="Login">
+							<h:outputText value="#{utilisateur.login}" />
+						</p:column>
 						<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
 							filterMatchMode="contains" filterStyle="display:none">
 							<h:outputText value="#{utilisateur.nom}" />
 						</p:column>
-						<p:column headerText="prénom">
+						<p:column headerText="Prénom">
 							<h:outputText value="#{utilisateur.prenom}" />
 						</p:column>
 					</p:dataTable>
 				</div>
-				
-				
 				<div class="ui-g-2">
-				<br /><br /><br /><br /><br /><br /><br /><br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
 					<p:commandButton style="width:90%;" process="checkboxDT"
 						actionListener="#{addjury.buttonAdd}" update="@(form)"
 						icon="ui-icon-circle-arrow-e" title="Icon Only" />
@@ -70,10 +76,10 @@
 		<div class="ui-g-4">
 			<h:form>
 				<!-- Debut liste jurys anonymes -->
-				<p:dataTable  id="tabJurysAnos" var="utilisateursAno"
+				<p:dataTable id="tabJurysAnos" var="utilisateursAno"
 					style="display:none;" value="#{addjury.utilisateursAnos}"
 					widgetVar="utilisateurTable2" scrollable="true" scrollHeight="300"
-					rowKey="#{utilisateursAno.nom}">
+					rowKey="#{utilisateursAno.nom}" sortBy="#{utilisateursAno.nom}">
 					<!-- ********fin*********** -->
 					<p:column headerText="Nom">
 						<h:outputText value="#{utilisateursAno.nom}" />
@@ -89,7 +95,7 @@
 					<div class="ui-g">
 						<div class="ui-g-4">
 							<p:spinner id="juryAnonyme" value="#{addjury.juryAnonyme}"
-								min="0" max="999" size="1" />
+								min="0" max="999" size="3" />
 						</div>
 						<div class="ui-g-4">
 							<p:commandButton value="Ajouter" ajax="false"
@@ -100,9 +106,9 @@
 							<h:commandLink>
 								<p:graphicImage id="icon" name="/image/csv.png" width="30" />
 								<p:dataExporter type="csv" target="tabJurysAnos"
-									fileName="liste_jurys" pageOnly="true" />
+									fileName="#{addjury.exportName}"  pageOnly="true" />
 								<p:tooltip for="icon"
-									value="exporter la liste des jurys annonymes" position="top" />
+									value="#{addjury.exportName}" position="top" />
 							</h:commandLink>
 						</div>
 					</div>
@@ -110,18 +116,21 @@
 
 			</h:form>
 			<h:form>
-				<p:dataTable  var="utilisateur" value="#{addjury.utilisateurs}"
-					scrollable="true" scrollHeight="500">
+				<p:dataTable var="utilisateur" value="#{addjury.utilisateurs}"
+					scrollable="true" scrollHeight="500" sortBy="#{utilisateur.login}">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
 						Listes des jurys de l'événement
 					</f:facet>
 					<!-- ********fin*********** -->
+					<p:column headerText="Login" sortBy="#{utilisateur.login}">
+							<h:outputText value="#{utilisateur.login}" />
+						</p:column>
 					<p:column headerText="Nom" sortBy="#{utilisateur.nom}">
 						<h:outputText value="#{utilisateur.nom}" />
 					</p:column>
-					<p:column headerText="prénom" sortBy="#{utilisateur.prenom}">
+					<p:column headerText="Prénom" sortBy="#{utilisateur.prenom}">
 						<h:outputText value="#{utilisateur.prenom}" />
 					</p:column>
 					<!-- ********la colonne supprimée*********** -->
@@ -130,7 +139,7 @@
 						<p:growl id="message" showDetail="true" />
 						<p:commandButton id="iconOnly" icon="ui-icon-trash"
 							actionListener="#{addjury.supprimerUtilisateur}" ajax="true"
-							update="@(form)">
+							update="@(form)" style="background-color: #B40404; border-color: #8A0808;">
 							<p:confirm header="Confirmation"
 								message="Voulez-vous vraiment supprimer le jury ?"
 								icon="ui-icon-trash" />
@@ -147,7 +156,13 @@
 				</p:dataTable>
 			</h:form>
 		</div>
-		<div class="ui-g-1"></div>
 	</div>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>

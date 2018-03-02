@@ -1,9 +1,7 @@
 package com.onek.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
-import com.onek.model.Candidat;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
 
@@ -126,5 +124,15 @@ public interface JuryDao {
 	 * @exception IllegalArgumentException Si iduser inférieur à 1
 	 * @param iduser Id de l'utilisateur
 	 */
-	public void supprimerUtilisateurAnonyme(int iduser);
+  public void supprimerUtilisateurAnonyme(int iduser);
+
+  /**
+	 * Récupère un jury par l'id depuis la base de données.
+	 * Une erreur de type RuntimeException entraine le rollback.
+	 * @exception IllegalArgumentException Si id inférieur à 1
+	 * @param id Id du jury
+	 * @return Le jury correspondant à l'id
+	 */
+	public Jury findJuryById(int id);
+
 }

@@ -91,24 +91,6 @@ public class JuryDaoTest {
 		juryDao.findJuryAndAnonymousByIdEvent(10, null);
 	}
 	
-	@Test(expected=NullPointerException.class)
-	public void testassociatedJurysCandidatesByEvent1() {
-		juryDao.associatedJurysCandidatesByEvent(null, 10);
-	}
-	
-	@Test(expected=IllegalStateException.class)
-	public void testassociatedJurysCandidatesByEvent2() {
-		List<Jury> jurys = new ArrayList<>();
-		juryDao.associatedJurysCandidatesByEvent(jurys, 10);
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void testassociatedJurysCandidatesByEvent3() {
-		List<Jury> jurys = new ArrayList<>();
-		jurys.add(new Jury());
-		juryDao.associatedJurysCandidatesByEvent(jurys, -1);
-	}
-	
 	@Test(expected=IllegalStateException.class)
 	public void testaddListJurys1() {
 		List<Jury> jurys = new ArrayList<>();
@@ -120,15 +102,4 @@ public class JuryDaoTest {
 		juryDao.addListJurys(null);
 	}	
 	
-	/*
-	 * TESTS DE TRANSACTIONS ECHOUEES
-	 * TODO
-	 */
-	
-	
-	/*
-	 * TESTS DE TRANSACTIONS REUSSIES
-	 * TODO
-	 */
-
 }

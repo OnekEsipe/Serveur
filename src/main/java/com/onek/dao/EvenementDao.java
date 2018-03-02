@@ -62,7 +62,4 @@ public interface EvenementDao {
 	 * @param idevent Id de l'événement
 	 */
 	public void supprimerEvent(int idevent);
-	
-	
-	public Evenement addDuplicatedEvent(Evenement event);
 }

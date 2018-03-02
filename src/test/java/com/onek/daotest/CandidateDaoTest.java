@@ -51,17 +51,6 @@ public class CandidateDaoTest {
 		candidateDao.addCandidates(emptyList);
 	}
 	
-	/*
-	 * TESTS DE TRANSACTIONS ECHOUEES
-	 * TODO
-	 */
-	
-
-	
-	/*
-	 * TESTS DE TRANSACTIONS REUSSIES
-	 * TODO
-	 */
 
 
 }

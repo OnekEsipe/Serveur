@@ -44,23 +44,8 @@ public class EvenementDaoTest {
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void testNullPointerExceptionAddDuplicatedEvent() {
-		evenementDao.addDuplicatedEvent(null);
-	}
-	
-	@Test(expected=NullPointerException.class)
 	public void testNullPointerExceptionFindByCode() {
 		evenementDao.findByCode(null);
 	}
 	
-	/*
-	 * TESTS DE TRANSACTIONS ECHOUEES
-	 * TODO
-	 */
-	
-	
-	/*
-	 * TESTS DE TRANSACTIONS REUSSIES
-	 * TODO
-	 */
 }

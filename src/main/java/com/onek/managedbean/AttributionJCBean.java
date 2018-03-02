@@ -11,10 +11,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -49,6 +51,7 @@ public class AttributionJCBean implements Serializable {
 
 	private int methode;
 	private int randomX;
+	private boolean saveConfirmed;
 
 	private List<Candidat> candidatsJurys;
 	private boolean isopen;
@@ -131,13 +134,14 @@ public class AttributionJCBean implements Serializable {
 			attribJC = new LinkedHashMap<>();
 			attributionFinal = new LinkedHashMap<>();
 			messageAttrib = new ArrayList<>();
+
 			status = evenement.findById(idEvent).getStatus();
 			avertissementMessage = "";
 
 			if (!status.equals("Brouillon")) {
 				isopen = false;
-				avertissementMessage = "Status de l'événement: " + status
-						+ ". Les suppressions d'attributions ne seront pas prises en compte ";
+				avertissementMessage = "Statut de l'événement: " + status
+						+ ". Les suppressions d'attributions ne seront pas prises en compte.";
 			}
 			candidatsJurys = candidatservice.findCandidatesByEvent(idEvent);
 			juryList = juryservice.findJurysByIdevent(idEvent);
@@ -154,6 +158,13 @@ public class AttributionJCBean implements Serializable {
 				}
 				displayAttrib();
 			}
+
+			if (saveConfirmed) {
+				RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Confirmation", "Les modifications ont été enregistrées avec succès !"));
+				saveConfirmed = false;
+			}
+
 		}
 	}
 
@@ -302,6 +313,7 @@ public class AttributionJCBean implements Serializable {
 				}
 			}
 		}
+		saveConfirmed = true;
 		Navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
@@ -316,12 +328,12 @@ public class AttributionJCBean implements Serializable {
 	 * Apelle de la méthode correspondant au type d'attribution automatique
 	 */
 	public void attributionAutomatique() {
-
 		if (methode == 2) {
-			CandidatParJury(randomX);
+			candidatParJury(randomX);
 		} else {
-			JuryParCandidat(randomX);
+			juryParCandidat(randomX);
 		}
+
 	}
 
 	/**
@@ -330,7 +342,7 @@ public class AttributionJCBean implements Serializable {
 	 */
 	private void JuryParCandidat(int randomX) {
 		if (randomX > juryList.size()) {
-			System.out.println("attribution impossible");
+			showErrorAssignment("Le nombre de jurys affectés à cet événement est insuffisant.");
 			return;
 		}
 		HashMap<Integer, List<Jury>> alljury = new HashMap<>();
@@ -383,7 +395,7 @@ public class AttributionJCBean implements Serializable {
 	 */
 	public void CandidatParJury(int randomX) {
 		if (randomX > candidatsJurys.size()) {
-			System.out.println("attribution impossible");
+			showErrorAssignment("Le nombre de candidats affectés à cet événement est insuffisant.");
 			return;
 		}
 		HashMap<Integer, List<Candidat>> allcandidat = new HashMap<>();
@@ -481,6 +493,11 @@ public class AttributionJCBean implements Serializable {
 			messageAttrib.add(new MessageAttrib(attrib.getKey().getUtilisateur().toString(), sb.toString()));
 		}
 		Collections.sort(messageAttrib, (o1, o2) -> o1.getJury().compareTo(o2.getJury()));
+	}
+	
+	private void showErrorAssignment(String logErrorAssignment) {
+		RequestContext.getCurrentInstance().showMessageInDialog(
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Erreur lors de l'attribution", logErrorAssignment));
 	}
 
 	/**

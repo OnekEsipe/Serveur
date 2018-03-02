@@ -4,14 +4,14 @@ import java.security.SecureRandom;
 
 public class Password {
 	
-	private final SecureRandom random = new SecureRandom();
+	private final static SecureRandom random = new SecureRandom();
 
 	/** different dictionaries used */
-	private final String ALPHA_CAPS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	private final String ALPHA = "abcdefghijklmnopqrstuvwxyz";
-	private final String NUMERIC = "0123456789";
+	private final static String ALPHA_CAPS = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+	private final static String ALPHA = "abcdefghijkmnopqrstuvwxyz";
+	private static final String NUMERIC = "0123456789";
 
-	private String initGeneratePassword(int len, String dic) {
+	private static String initGeneratePassword(int len, String dic) {
 		String result = "";
 		for (int i = 0; i < len; i++) {
 			int index = random.nextInt(dic.length());

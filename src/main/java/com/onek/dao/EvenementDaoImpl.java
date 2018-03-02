@@ -28,15 +28,15 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public void addEvenement(Evenement event) {
+	public Evenement addEvenement(Evenement event) {
 		Objects.requireNonNull(event);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			session.save(event);
+			session.save(event);	
 			transaction.commit();
-			logger.info("Add event done !");
+			logger.info("Duplicate event done ! ");
 		}
 		catch(RuntimeException e) {
 			if (transaction != null) {
@@ -46,7 +46,8 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 		}
 		finally {
 			session.close();
-		}				
+		}
+		return event;
 	}
 
 	@Override
@@ -207,25 +208,5 @@ public class EvenementDaoImpl implements EvenementDao, Serializable {
 			session.close();
 		}		
 	}
-	public Evenement addDuplicatedEvent(Evenement event) {
-		Objects.requireNonNull(event);
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-		try {
-			transaction = session.beginTransaction();
-			session.save(event);	
-			transaction.commit();
-			logger.info("Duplicate event done ! ");
-		}
-		catch(RuntimeException e) {
-			if (transaction != null) {
-				transaction.rollback();
-			}
-			logger.error(this.getClass().getName(), e);
-		}
-		finally {
-			session.close();
-		}
-		return event;
-	}
+
 }

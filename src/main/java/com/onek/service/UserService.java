@@ -89,4 +89,5 @@ public interface UserService {
 	 * @see com.onek.dao.UserDao#getAllUsersExceptDeleted()
 	 */
 	public List<Utilisateur> getAllUsersExceptDeleted();
+
 }

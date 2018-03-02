@@ -92,6 +92,7 @@ public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 					.setParameter("id", idCandidat).list();
 			for (Evaluation evaluation : evaluations) {
 				Hibernate.initialize(evaluation.getNotes());
+				Hibernate.initialize(evaluation.getSignatures());
 			}
 			transaction.commit();
 			logger.info("Find evaluation by id candidate done !");

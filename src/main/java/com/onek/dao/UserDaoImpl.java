@@ -279,16 +279,6 @@ public class UserDaoImpl implements UserDao, Serializable {
 	}
 
 	@Override
-	public void editUser(Utilisateur user) {
-		Objects.requireNonNull(user);
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.update(user);
-		session.getTransaction().commit();
-		session.close();
-	}
-
-	@Override
 	public Utilisateur findByToken(String token) {
 		Objects.requireNonNull(token);
 		Session session = sessionFactory.openSession();
@@ -312,13 +302,13 @@ public class UserDaoImpl implements UserDao, Serializable {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Utilisateur> getAllUsersExceptDeleted() {
-		List<Utilisateur> users = new ArrayList<>();
+	public List<Utilisateur> getAllUsersExceptDeletedansAno() {
+		List<Utilisateur> users = null;
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			users = (List<Utilisateur>) session.createQuery("from Utilisateur where isdeleted = :isdeleted").setParameter("isdeleted", false).list();
+			users = (List<Utilisateur>) session.createQuery("from Utilisateur where (isdeleted = :isdeleted AND droits != :droits)").setParameter("isdeleted", false).setParameter("droits", "A").list();
 			transaction.commit();
 			logger.info("Find all users done except deleted!");
 		} catch (RuntimeException e) {

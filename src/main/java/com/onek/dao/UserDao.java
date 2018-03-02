@@ -86,8 +86,6 @@ public interface UserDao {
 	 */
 	public Utilisateur findByMail(String mail);
 	
-	public void editUser(Utilisateur user);
-	
 	/**
 	 * Récupère un utilisateur par l'id utilisateur depuis la base de données.
 	 * Une erreur de type RuntimeException entraine le rollback
@@ -110,4 +108,12 @@ public interface UserDao {
 	 * @return La liste des utilisateurs 
 	 */
 	public List<Utilisateur> getAllUsersExceptDeleted();
+
+  /**
+	 * Récupère les utilisateurs, or utilisateurs supprimés et anonymes, depuis la base de données.
+	 * Une erreur de type RuntimeException entraine le rollback
+	 * @return La liste des utilisateurs 
+	 */
+	public List<Utilisateur> getAllUsersExceptDeletedansAno();
+
 }

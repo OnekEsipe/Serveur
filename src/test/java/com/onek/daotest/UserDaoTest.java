@@ -89,12 +89,6 @@ public class UserDaoTest {
 		userDao.findUserById(-1);
 	}
 	
-	@Test(expected=NullPointerException.class)
-	public void testEditUser() {
-		userDao.editUser(null);
-	}
-	
-	
 	/*
 	 * TESTS DE TRANSACTIONS ECHOUEES
 	 */	

@@ -65,5 +65,10 @@ public interface JuryService {
 	/**
 	 * @see com.onek.dao.JuryDao#supprimerUtilisateurAnonyme(int)
 	 */
-	public void supprimerUtilisateurAnonyme(int iduser);
+  public void supprimerUtilisateurAnonyme(int iduser);
+	public Jury findJuryById(int id);
+	public List<Jury> findJuryAndAnonymousByIdEvent(int idEvent, String login);
+	public List<Jury> findByUser(Utilisateur user);
+	public List<Utilisateur> findJurysAnnonymesByEvent(int idevent);
+
 }

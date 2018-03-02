@@ -12,9 +12,13 @@ import javax.faces.event.ComponentSystemEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.onek.model.Candidat;
 import com.onek.model.Critere;
 import com.onek.model.Descripteur;
+import com.onek.model.Evaluation;
 import com.onek.model.Evenement;
+import com.onek.model.Note;
+import com.onek.service.EvaluationService;
 import com.onek.service.EvenementService;
 import com.onek.service.GrilleService;
 import com.onek.utils.Navigation;
@@ -30,6 +34,9 @@ public class GrilleBean {
 
 	@Autowired
 	EvenementService evenement;
+	
+	@Autowired
+	private EvaluationService evaluation;
 
 	private int idEvent;
 	private Evenement event;
@@ -163,6 +170,25 @@ public class GrilleBean {
 			grille.updateCritere(c);
 		} else {
 			grille.addCritere(c);
+			for (Candidat cand : event.getCandidats()) {
+				for (Evaluation eval : evaluation.findByIdCandidate(cand.getIdcandidat())) {
+					boolean isPresent = false;
+					for (Note not : eval.getNotes()) {
+						if (not.getCritere().equals(c)) {
+							isPresent = true;
+						}
+					}
+					if (!isPresent) {
+						Note note = new Note();
+						note.setCommentaire("");
+						note.setCritere(c);
+						note.setDate(eval.getDatedernieremodif());
+						note.setEvaluation(eval);
+						note.setNiveau(-1);
+						grille.addNote(note);
+					}
+				}
+			}
 			criteres.add(c);
 		}
 		Navigation.redirect("grille.xhtml");

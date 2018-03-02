@@ -1,10 +1,12 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+
+import javax.persistence.NoResultException;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
@@ -14,7 +16,6 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.onek.model.Candidat;
 import com.onek.model.Critere;
 import com.onek.model.Evaluation;
 import com.onek.model.Jury;
@@ -35,7 +36,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 
 	@Override
 	public boolean juryIsAssigned(int idUser, int idEvent) {
-		if(idUser < 1 || idEvent < 1) {
+		if (idUser < 1 || idEvent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
@@ -62,17 +63,18 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Jury> findJuryAndAnonymousByIdEvent(int idEvent, String login) {
 		Objects.requireNonNull(login);
-		if(idEvent < 1) {
+		if (idEvent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
-		List<Jury> jurys = new ArrayList<>();
+		List<Jury> jurys = null;
 		try {
 			transaction = session.beginTransaction();
 			jurys = (List<Jury>) session.createQuery(
 					"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND (u.login = :login OR u.droits = 'A') AND u.isdeleted IS FALSE")
 					.setParameter("idEvent", idEvent).setParameter("login", login).list();
+			logger.info("TAILLE LISTE:" + jurys.size());
 			for (Jury jury : jurys) {
 				Hibernate.initialize(jury.getUtilisateur());
 				Hibernate.initialize(jury.getEvaluations());
@@ -102,7 +104,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Jury> findAnonymousByIdEvent(int idEvent) {
-		if(idEvent < 1) {
+		if (idEvent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
@@ -136,7 +138,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		Objects.requireNonNull(user);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
-		List<Jury> jurys = new ArrayList<>();
+		List<Jury> jurys = null;
 		try {
 			transaction = session.beginTransaction();
 			jurys = (List<Jury>) session.createQuery(
@@ -161,12 +163,12 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Jury> findJurysByIdevent(int idevent) {
-		if(idevent < 1) {
+		if (idevent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
-		List<Jury> jurys = new ArrayList<>();
+		List<Jury> jurys = null;
 		try {
 			transaction = session.beginTransaction();
 			jurys = (List<Jury>) session.createQuery("from Jury where evenement.idevent = :idevent")
@@ -187,36 +189,10 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		return jurys;
 	}
 
-	@Override
-	public HashMap<Jury, List<Candidat>> associatedJurysCandidatesByEvent(List<Jury> jurys, int idevent) {
-		Objects.requireNonNull(jurys);
-		if(idevent < 1) {
-			throw new IllegalArgumentException("id must be positive");
-		}
-		if(jurys.isEmpty()) {
-			throw new IllegalStateException("List must not be empty");
-		}
-		HashMap<Jury, List<Candidat>> map = new HashMap<>();
-		for (Jury jury : jurys) {
-			if (!map.containsKey(jury)) {
-				map.put(jury, new ArrayList<>());
-			}
-			List<Evaluation> evaluations = jury.getEvaluations();
-			for (Evaluation evaluation : evaluations) {
-				List<Candidat> candidates = map.get(jury);
-				if (evaluation.getCandidat().getEvenement().getIdevent() == idevent) {
-					candidates.add(evaluation.getCandidat());
-				}
-				map.put(jury, candidates);
-			}
-		}
-		return map;
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> listJurysByEvent(int idevent) {
-		if(idevent < 1) {
+		if (idevent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		List<Utilisateur> utilisateurs = new ArrayList<>();
@@ -248,7 +224,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> findJurysAnnonymesByEvent(int idevent) {
-		if(idevent < 1) {
+		if (idevent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		List<Utilisateur> utilisateurs = new ArrayList<>();
@@ -282,18 +258,18 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 		}
 		return utilisateursAnnonymes;
 	}
-	
+  
 	@Override
 	public void supprimerUtilisateurAnonyme(int iduser) {
-		if(iduser < 1 ) {
+		if (iduser < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
-			transaction = session.beginTransaction();		
-			session.createQuery("delete from Utilisateur where iduser = :iduser")
-					.setParameter("iduser", iduser).executeUpdate();
+			transaction = session.beginTransaction();
+			session.createQuery("delete from Utilisateur where iduser = :iduser").setParameter("iduser", iduser)
+					.executeUpdate();
 			transaction.commit();
 			logger.info("Delete jury done !");
 		} catch (RuntimeException e) {
@@ -301,23 +277,38 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void supprimerUtilisateur(int iduser, int idevent) {
-		if(iduser < 1 || idevent < 1) {
+		if (iduser < 1 || idevent < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
-			transaction = session.beginTransaction();		
-			session.createQuery("delete from Jury where iduser = :iduser AND idevent = :idevent")
-					.setParameter("iduser", iduser).setParameter("idevent", idevent).executeUpdate();
+			transaction = session.beginTransaction();
+			Jury jury = (Jury)session
+					.createQuery("FROM Jury WHERE iduser = :iduser AND idevent = :idevent ")
+					.setParameter("iduser", iduser).setParameter("idevent", idevent).getSingleResult();
+			List<Evaluation> evaluationToDelete = (List<Evaluation>) session
+					.createQuery("FROM Evaluation WHERE idjuryeval = :iduser").setParameter("iduser", jury.getIdjury())
+					.getResultList();
+			for (Evaluation evaluation : evaluationToDelete) {
+				System.out.println("id evaluation "+evaluation.getIdevaluation());
+				List<Note> notesToDelete = (List<Note>) session
+						.createQuery("FROM Note WHERE idevaluation = :idevaluation")
+						.setParameter("idevaluation", evaluation.getIdevaluation()).getResultList();
+				for (Note note : notesToDelete) {
+					session.delete(note);
+				}
+				session.delete(evaluation);
+			}
+			session.delete(jury);
 			transaction.commit();
 			logger.info("Delete jury done !");
 		} catch (RuntimeException e) {
@@ -325,8 +316,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 	}
@@ -354,7 +344,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 	@Override
 	public void addListJurys(List<Jury> jurys) {
 		Objects.requireNonNull(jurys);
-		if(jurys.isEmpty()) {
+		if (jurys.isEmpty()) {
 			throw new IllegalStateException("List must not be empty");
 		}
 		Session session = sessionFactory.openSession();
@@ -369,21 +359,40 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 				transaction.rollback();
 			}
 			logger.error(this.getClass().getName(), e);
-		}
-		finally {
+		} finally {
 			session.close();
 		}
 	}
 
 	@Override
 	public Utilisateur findById(int id) {
-		if(id < 1) {
+		if (id < 1) {
+			throw new IllegalArgumentException("id must be positive");
+		}
+		Utilisateur jury = null;
+		Session session = sessionFactory.openSession();
+		try {
+			session.beginTransaction();
+			 jury = (Utilisateur) session.createQuery("FROM Utilisateur WHERE iduser = :id").setParameter("id", id)
+					.getSingleResult();
+			session.getTransaction().commit();
+			
+		} catch (NoResultException e) {
+			logger.error(this.getClass().getName(), e);
+		}finally {
+			session.close();
+		}
+		return jury;
+	}
+
+	@Override
+	public Jury findJuryById(int id) {
+		if (id < 1) {
 			throw new IllegalArgumentException("id must be positive");
 		}
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Utilisateur jury = (Utilisateur) session.createQuery("FROM Utilisateur WHERE iduser = :id").setParameter("id", id)
-				.getSingleResult();
+		Jury jury = (Jury) session.createQuery("FROM Jury WHERE idjury = :id").setParameter("id", id).getSingleResult();
 		session.getTransaction().commit();
 		session.close();
 		return jury;

@@ -6,12 +6,13 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Onek team</title>
+	<title>ONEK' - Créer un événement</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
 	<h:outputStylesheet library="css" name="createEvent.css" />
 	<h:outputStylesheet library="css" name="user.css" />
+	<h:outputStylesheet library="css" name="header_footer.css" />
 </h:head>
 <f:metadata>
 	<f:event type="preRenderView" listener="#{event.before}" />
@@ -20,44 +21,42 @@
 	<!-- Insertion du menu -->
 	<ui:include src="#{accueil.typeMenu}" />
 	<br />
-	<br />
-	<div class="ui-g tab-users">
-		<h:form>
+	<div class="ui-g tab-users page-wrap">
+		<h:form id="createevent" class="form-create">
 			<!-- Inputs of date -->
-			<p:growl id="msgs" showDetail="true" />
 			<p:panel header="Créer un nouvel événement">
 				<h:panelGrid columns="2" cellpadding="5">
-					<p:outputLabel for="nameEvent" value="Nom:" />
+					<p:outputLabel for="nameEvent" value="Nom :" />
 					<p:inputText id="nameEvent" name="nameEvent"
 						placeholder="Entrer le nom" size="20" value="#{event.name}"
 						required="true" />
-					<p:outputLabel for="date1" value="Date de début:" />
+					<p:outputLabel for="date1" value="Date de début :" />
 					<p:calendar id="date1" value="#{event.date1}" locale="de"
 						navigator="true" pattern="dd-MM-yyyy" required="true" />
-					<p:outputLabel for="time1" value="Heure de début:" />
+					<p:outputLabel for="time1" value="Heure de début :" />
 					<p:calendar id="time1" value="#{event.hour1}" pattern="HH:mm"
 						timeOnly="true" required="true" />
-					<p:outputLabel for="date2" value="Date de fin:" />
+					<p:outputLabel for="date2" value="Date de fin :" />
 					<p:calendar id="date2" value="#{event.date2}"
-						mindate="#{calendarView.date1}" maxdate="31/12/20"
+						mindate="#{calendarView.date1}" locale="de" navigator="true"
 						pattern="dd-MM-yyyy" action="#{event.dateValid}" required="true" />
-					<p:outputLabel for="time2" value="Heure de fin:" />
+					<p:outputLabel for="time2" value="Heure de fin :" />
 					<p:calendar id="time2" value="#{event.hour2}" pattern="HH:mm"
 						timeOnly="true" required="true" action="#{event.hourValid}" />
 					<h:outputText value="Signature : " />
 					<p:selectBooleanCheckbox value="#{event.isSigned}" />
-					<h:outputText value="Ouvert a l'inscription : " />
+					<h:outputText value="Ouvert à l'inscription : " />
 					<p:selectBooleanCheckbox value="#{event.isOpened}" />
 				</h:panelGrid>
-			</p:panel>
-			<br />
-			<p:commandButton value="Suivant" update="msgs"
-				action="#{event.click}" icon="ui-icon-check" ajax="false" />
+				<br />
+				<div style="text-align: center;">
+				<p:commandButton value="Créer" update="createevent" action="#{event.click}"
+					icon="ui-icon-check" ajax="true" />
+				</div>
+			</p:panel>			
 		</h:form>
-		<!-- 
-				<h:outputText id="errorCreationEvent" value="#{event.logInfo}" />
-		 -->
-		<!-- <h2 id="debug">#{event.debug}</h2> -->
 	</div>
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>

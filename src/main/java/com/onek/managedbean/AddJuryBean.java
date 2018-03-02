@@ -48,8 +48,9 @@ public class AddJuryBean implements Serializable {
 	private List<Utilisateur> utilisateursAll;
 	private List<Utilisateur> utilisateursAnos;
 
-	private Password passwordGenerator;
 	private int juryAnonyme;
+	
+	private String exportName;
 
 	/**
 	 * Getter de la variable utilisateursAnos
@@ -195,7 +196,23 @@ public class AddJuryBean implements Serializable {
 		this.idEvent = id;
 	}
 
-	/**
+  /**
+	 * Getter de la variable exportName
+	 * @return exportName Nom de l'export
+	 */
+	public String getExportName() {
+		return exportName;
+	}
+
+  /**
+	 * Setter de la variable exportName
+	 * @param exportName Nom de l'export
+	 */
+	public void setExportName(String exportName) {
+		this.exportName = exportName;
+	}
+
+  /**
 	 * Méthode appelée lors d'un GET sur la page addJury.xhtml.<br/>
 	 * Elle permet d'initialiser les variables nécessaires à l'affichage.
 	 * @param e ComponentSystemEvent
@@ -220,6 +237,7 @@ public class AddJuryBean implements Serializable {
 			utilisateursAnos = new ArrayList<>();
 			List<Jury> jurys = juryService.listJurysAnnonymesByEvent(idEvent);
 			jurys.forEach(jury -> utilisateursAnos.add(jury.getUtilisateur()));
+			exportName = "liste_jurys_anonymes_"+event.getNom();
 
 		}
 	}
@@ -277,12 +295,12 @@ public class AddJuryBean implements Serializable {
 	 * Génére des jurys anonymes avec un formatage du nom en fonction de l'id événement et génére un mot de passe.
 	 */
 	public void addJuryAnonymeButton() {
-		passwordGenerator = new Password();
 		List<Utilisateur> anonymousJurys = new ArrayList<>();
 		Utilisateur anonymousJury;
-		int increment = juryService.findAnonymousByIdEvent(idEvent).size();
+		List<Jury> jurys = juryService.listJurysAnnonymesByEvent(idEvent);
+		int increment = jurys.size();
 		if (juryAnonyme > 0) {
-			for (int i = 0 + increment; i < juryAnonyme + increment; i++) {
+			for (int i = 0; i < juryAnonyme + increment; i++) {
 				anonymousJury = new Utilisateur();
 				anonymousJury.setDroits("A");
 				anonymousJury.setIsdeleted(false);
@@ -298,7 +316,20 @@ public class AddJuryBean implements Serializable {
 					anonymousJury.setLogin("Jury" + i + "_" + idEvent);
 					anonymousJury.setNom("Jury" + i + "_" + idEvent);
 				}
-				anonymousJury.setMotdepasse(passwordGenerator.generatePassword(8));
+				
+				// check if login is not used
+				boolean loginIsUsed = false;
+				for(Jury jury : jurys) {
+					if (jury.getUtilisateur().getLogin().equals(anonymousJury.getLogin())) {
+						loginIsUsed = true;
+						break;
+					}
+				}
+				if (loginIsUsed) {
+					continue;
+				}
+				
+				anonymousJury.setMotdepasse(Password.generatePassword(8));
 				anonymousJury.setMail("");
 				anonymousJury.setPrenom("");
 				anonymousJurys.add(anonymousJury);
@@ -308,7 +339,6 @@ public class AddJuryBean implements Serializable {
 
 			anonymousJurys.forEach(jury -> utilisateursAnos.add(jury));
 			utilisateursAnos.forEach(juryAno -> System.out.println(juryAno.getNom()));
-
 		}
 	}
 }

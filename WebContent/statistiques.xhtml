@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Onek team</title>
+	<title>ONEK' - Statistiques</title>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
@@ -22,51 +22,112 @@
 	<br />
 	<div class="ui-g">
 		<div class="ui-g-2"></div>
-		<div class="ui-g-9">
+		<div class="ui-g-10">
 			<h:form>
-				<p:panel header="Avancement de la notation de l'événement">
-					<p:progressBar value="#{statistiques.totalAvancement}"
-						labelTemplate="{value}%" displayOnly="true" />
-				</p:panel>
+				<div class="ui-g-12">
+					<p:panelGrid style='width:100%'>
+						<f:facet name="header">
+							<p:row>
+								<p:column colspan="2">Avancement global</p:column>
+							</p:row>
+						</f:facet>
+						<p:row>
+							<p:column>
+								<p:progressBar value="#{statistiques.totalAvancement}"
+									labelTemplate="{value}%" displayOnly="true" />
+							</p:column>
+							<p:column style='width:50px'>
+								<h:outputText style="text-align:center" value="#{statistiques.totalString}"></h:outputText>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</div>
 				<br />
-				<br />
-				<p:dataTable var="juryStat" value="#{statistiques.notesByJurys}">
-					<p:column headerText="Jury">
-						<h:outputText value="#{juryStat.name}" />
-					</p:column>
-					<p:column headerText="Avancement">
-						<p:progressBar value="#{juryStat.value}" labelTemplate="{value}%"
-							displayOnly="true" />
-					</p:column>
-				</p:dataTable>
-				<br />
-				<br />
-				<p:dataTable var="candiStat"
-					value="#{statistiques.notesByCandidats}">
-					<p:column headerText="Candidat">
-						<h:outputText value="#{candiStat.name}" />
-					</p:column>
-					<p:column headerText="Avancement">
-						<p:progressBar value="#{candiStat.value}" labelTemplate="{value}%"
-							displayOnly="true" />
-					</p:column>
-				</p:dataTable>
-				<br />
-				<br />
-				<p:commandButton
-					value="Exporter les résultats par candidat de l'événement"
-					actionListener="#{statistiques.buttonResult}" ajax="false" />
-				<br />
-				<br />
-				<p:commandButton
-					value="Exporter les résultats par jury de l'événement"
-					actionListener="#{statistiques.buttonResultByJurys}" ajax="false" />
-				<br />
-				<br />
-				<p:commandButton value="Retour"
-					actionListener="#{statistiques.buttonRetour}" ajax="false" />
+				<div class="ui-g-6">
+					<p:dataTable var="juryStat" value="#{statistiques.notesByJurys}"
+						scrollable="true" scrollHeight="300">
+						<p:column headerText="Jury" filterBy="#{juryStat.name}"
+							filterMatchMode="contains">
+							<h:outputText value="#{juryStat.name}" />
+						</p:column>
+						<p:column headerText="Avancement">
+							<p:progressBar value="#{juryStat.value}" labelTemplate="{value}%"
+								displayOnly="true" />
+						</p:column>
+						<p:column headerText="Notes" style='width:40px'
+							sortBy="#{juryStat.notation}">
+							<h:outputText style="text-align:center" value="#{juryStat.notation}"></h:outputText>
+						</p:column>
+						<p:column headerText="Evaluations manquantes pour"
+							style='width:auto'>
+							<p:commandButton id="CandidatsNotNotedBtn" value="Afficher"
+								type="button" style="margin-left: auto; margin-right: auto;" />
+							<p:overlayPanel for="CandidatsNotNotedBtn" hideEffect="fade"
+								dynamic="true" style="width:600px">
+								<p:dataTable var="candidat" value="#{juryStat.candidats}">
+									<p:column headerText="Nom">
+										<h:outputText value="#{candidat.nom}" />
+									</p:column>
+									<p:column headerText="Prenom">
+										<h:outputText value="#{candidat.prenom}" />
+									</p:column>
+								</p:dataTable>
+							</p:overlayPanel>
+						</p:column>
+					</p:dataTable>
+				</div>
+				<div class="ui-g-6">
+					<p:dataTable var="candiStat"
+						value="#{statistiques.notesByCandidats}" scrollable="true"
+						scrollHeight="300">
+						<p:column headerText="Candidat" filterBy="#{candiStat.name}"
+							filterMatchMode="contains">
+							<h:outputText value="#{candiStat.name}" />
+						</p:column>
+						<p:column headerText="Avancement">
+							<p:progressBar value="#{candiStat.value}"
+								labelTemplate="{value}%" displayOnly="true" />
+						</p:column>
+						<p:column headerText="Notes" style='width:40px'
+							sortBy="#{candiStat.notation}">
+							<h:outputText style="text-align:center" value="#{candiStat.notation}"></h:outputText>
+						</p:column>
+						<p:column headerText="Evaluations manquantes par" style='width:auto'>
+							<p:commandButton id="JurysNotNotedBtn" value="Afficher"
+								type="button" style="margin-left: auto; margin-right: auto;" />
+							<p:overlayPanel for="JurysNotNotedBtn" hideEffect="fade"
+								dynamic="true" style="width:600px">
+								<p:dataTable var="jury" value="#{candiStat.jurys}">
+									<p:column headerText="Nom">
+										<h:outputText value="#{jury.nom}" />
+									</p:column>
+									<p:column headerText="Prenom">
+										<h:outputText value="#{jury.prenom}" />
+									</p:column>
+								</p:dataTable>
+							</p:overlayPanel>
+						</p:column>
+					</p:dataTable>
+				</div>
+				<div class="ui-g-12">
+					<div class="ui-g-3">
+						<p:commandButton value="Exporter les résultats par candidat"
+							actionListener="#{statistiques.buttonResult}" ajax="false" />
+					</div>
+					<div class="ui-g-3">
+						<p:commandButton rendered="#{statistiques.signedEvent}" value="Exporter les résultats par candidat avec signature"
+							actionListener="#{statistiques.buttonResultSign}" ajax="false"/>
+					</div>
+					<div class="ui-g-6"></div>
+					<div class="ui-g-2">
+						<p:commandButton value="Exporter les résultats par jury"
+							actionListener="#{statistiques.buttonResultByJurys}" ajax="false" />
+					</div>
+				</div>
 			</h:form>
 		</div>
 	</div>
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>

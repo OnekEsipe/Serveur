@@ -36,7 +36,7 @@ public class UserServiceTest {
 
 	private Utilisateur user;
 	private List<Utilisateur> users = new ArrayList<>();
-	private String[] login = {"aa","bb","cc","dd","ee"};
+	private String[] login = {"aa","bb","cc","dd"};
 	private String formatMail = "@gmail.com";
 	
 	@Before
@@ -143,8 +143,6 @@ public class UserServiceTest {
 	public void testfindUserByIdInvalidId() {
 		userService.findUserById(-1);
 	}
-
-
 	
 	/*
 	 * TESTS DE TRANSACTIONS ECHOUEES
@@ -223,7 +221,8 @@ public class UserServiceTest {
 			assertNotNull(user);
 			users.add(user);
 		});
-		assertEquals(logins.size(), users.size());
+		System.out.println("logins size : "+logins.size()+" users size : "+users.size());
+		assertTrue(logins.size() == users.size());
 	}
 	
 	@Test
@@ -332,13 +331,18 @@ public class UserServiceTest {
 		Utilisateur adduser = new Utilisateur();
 		String label = "azerty"+users.size();
 		adduser.setLogin(label);
-		adduser.setMail(label+formatMail);
+		adduser.setMail("onek2018esipe@gmail.com");
 		adduser.setNom(label);
 		adduser.setMotdepasse(label);
 		userService.addUser(adduser);
 		Utilisateur us = userService.findByLogin(label);
 		assertNotNull(us);
 		assertEquals(us.getLogin(), label);
+	}
+	
+	@Test
+	public void testgetAllUsersExceptDeletedansAnoOK() {
+		assertTrue(!userService.getAllUsersExceptDeleted().isEmpty());
 	}
 
 }

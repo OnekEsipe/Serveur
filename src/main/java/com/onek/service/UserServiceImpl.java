@@ -80,10 +80,13 @@ public class UserServiceImpl implements UserService, Serializable {
 		if (!userExist(login)) {
 			return false;
 		}
-		if ( password.isEmpty()) {
+		if (password.isEmpty()) {
 			return false;
 		}
 		Utilisateur user = findByLogin(login);
+		if (user.getIsdeleted()) {
+			return false;
+		}
 		if (user.getDroits().equals(DroitsUtilisateur.ANONYME.toString())) {
 			String hash;
 			try {
@@ -138,6 +141,6 @@ public class UserServiceImpl implements UserService, Serializable {
 	}
 	@Override
 	public List<Utilisateur> getAllUsersExceptDeleted(){
-		return userDao.getAllUsersExceptDeleted();
+		return userDao.getAllUsersExceptDeletedansAno();
 	}
 }

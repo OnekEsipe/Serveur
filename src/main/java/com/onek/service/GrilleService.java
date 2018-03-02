@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.onek.model.Critere;
 import com.onek.model.Descripteur;
+import com.onek.model.Note;
 
 /**
  * Interface de la classe GrilleServiceImpl. Couche service
@@ -39,4 +40,6 @@ public interface GrilleService {
 	 * @see com.onek.dao.DescripteurDao#supprimerDescripteur(Descripteur)
 	 */
 	public void supprimerDescripteur(Descripteur descripteur);
+	
+	public void addNote(Note note);
 }

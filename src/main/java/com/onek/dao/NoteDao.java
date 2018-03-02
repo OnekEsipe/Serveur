@@ -1,5 +1,7 @@
 package com.onek.dao;
 
+import java.util.List;
+
 import com.onek.model.Note;
 
 /**
@@ -21,5 +23,7 @@ public interface NoteDao {
 	 * @param note La note à mettre à jour
 	 */
 	void update(Note note);
+	public List<Note> getAllNotes();
+	public Note findNoteById(int idnote);
 
 }
