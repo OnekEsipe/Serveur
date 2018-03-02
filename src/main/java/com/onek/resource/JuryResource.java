@@ -6,9 +6,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.onek.model.Jury;
 
-/**
- * Json jury
- */
 public class JuryResource implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -24,11 +21,6 @@ public class JuryResource implements Serializable {
 	@JsonProperty("Candidates")
 	private List<CandidatResource> candidats;
 	
-	/**
-	 * Données d'un jury : <br/>
-	 * Id - LastName - FirstName - Candidates
-	 * @param jury
-	 */
 	public JuryResource(Jury jury) {
 		idJury = jury.getIdjury();
 		nom = jury.getUtilisateur().getNom();

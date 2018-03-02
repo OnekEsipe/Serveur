@@ -12,9 +12,6 @@ import com.onek.model.Candidat;
 import com.onek.model.Evaluation;
 import com.onek.model.Jury;
 
-/**
- * Service EvaluationServiceImpl
- */
 @Service
 public class EvaluationServiceImpl implements EvaluationService, Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +25,7 @@ public class EvaluationServiceImpl implements EvaluationService, Serializable {
 		return evaluationDao.findByIdCandidate(idCandidat);
 	}
   
-    @Override
+  @Override
 	public void deleteEvaluation(int idJury, int idCandidat) {
 		evaluationDao.deleteEvaluation(idJury, idCandidat);
 	}

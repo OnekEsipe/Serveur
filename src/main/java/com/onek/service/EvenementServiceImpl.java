@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 import com.onek.dao.EvenementDao;
 import com.onek.model.Evenement;
 
-/**
- * Service EvenementServiceImpl
- */
 @Service
 public class EvenementServiceImpl implements EvenementService, Serializable{
 	private static final long serialVersionUID = 1L;
@@ -20,8 +17,8 @@ public class EvenementServiceImpl implements EvenementService, Serializable{
 	private EvenementDao eventDao;
 	
 	@Override
-	public void addEvenement(Evenement event) {
-		eventDao.addEvenement(event);		
+	public Evenement addEvenement(Evenement event) {
+		return eventDao.addEvenement(event);		
 	}
 
 	@Override

@@ -5,9 +5,6 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Json mot de passe modifié
- */
 public class PasswordModify implements Serializable{
 	private static final long serialVersionUID = 1L;
 

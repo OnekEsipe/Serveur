@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.onek.model.Utilisateur;
 
-/**
- * Json login
- */
 public class LoginResource {
 
 	@JsonProperty("Login")
@@ -20,11 +17,6 @@ public class LoginResource {
 		
 	}
 	
-	/**
-	 * Données d'un login : <br/>
-	 * Login - Password
-	 * @param user
-	 */
 	public LoginResource(Utilisateur user) {
 		this.login = user.getLogin();
 		this.password = user.getMotdepasse();

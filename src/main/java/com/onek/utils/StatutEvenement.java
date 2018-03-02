@@ -1,8 +1,5 @@
 package com.onek.utils;
 
-/**
- * Enum des status de l'événement
- */
 public enum StatutEvenement {
 	BROUILLON("Brouillon"),
 	OUVERT("Ouvert"),

@@ -47,9 +47,6 @@ import com.onek.service.EvaluationService;
 import com.onek.service.EvenementService;
 import com.onek.utils.Navigation;
 
-/**
- * ManagedBean StatistiquesBean
- */
 @Component("statistiques")
 public class StatistiquesBean implements Serializable {
 
@@ -78,19 +75,14 @@ public class StatistiquesBean implements Serializable {
 
 	private List<Candidat> candidats;
 	private List<Jury> jurys;
-	
-	/**
-	 * Classe interne StatsJury. Etablie le lien entre un jury et ses statistiques
-	 */
+
 	public class StatsJury {
 		String name;
 		double value;
-		
-		/**
-		 * @param name Nom du jury
-		 * @param value Valeur de la statistique
-		 */
-		public StatsJury(String name, double value) {
+		String notation;
+		List<Candidat> candidats;
+
+		public StatsJury(String name, double value, int nbNoted, int nbNotes, List<Candidat> candidats) {
 			this.name = name;
 			this.value = value;
 			this.notation = nbNoted + "/" + nbNotes;
@@ -117,19 +109,14 @@ public class StatistiquesBean implements Serializable {
 			this.candidats = candidats;
 		}
 	}
-	
-	/**
-	 * Classe interne StatsCandidate. Etablie le lien entre un candidat et ses statistiques
-	 */
+
 	public class StatsCandidate {
 		String name;
 		double value;
-		
-		/**
-		 * @param name Nom du candidat
-		 * @param value Valeur de la statistique
-		 */
-		public StatsCandidate(String name, double value) {
+		String notation;
+		List<Utilisateur> jurys;
+
+		public StatsCandidate(String name, double value, int nbNoted, int nbNotes, List<Utilisateur> jurys) {
 			this.name = name;
 			this.value = value;
 			this.notation = nbNoted + "/" + nbNotes;
@@ -157,11 +144,6 @@ public class StatistiquesBean implements Serializable {
 		}
 	}
 
-	/**
-	 * Méthode appelée lors d'un GET sur la page statistiques.xhtml.<br/>
-	 * Elle permet d'initialiser les variables nécessaires à l'affichage.
-	 * @param e ComponentSystemEvent
-	 */
 	public void before(ComponentSystemEvent e) throws ParseException {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
@@ -184,103 +166,50 @@ public class StatistiquesBean implements Serializable {
 		}
 	}
 
-	/**
-	 * Construit le fichier excel pour les candidats (sans la signature)
-	 * Crée une page pour chacun des candidats. Rempli chaque pages avec les critères et les notes
-	 */
 	public void buttonResult() {
 		buildXlsx("candidat", false);
 	}
 
-	/**
-	 * Construit le fichier excel pour les jurys (sans signature)
-	 * Crée une page pour chacun des jurys. Rempli chaque pages avec les critères et les notes
-	 */
 	public void buttonResultByJurys() {
 		buildXlsx("jury", false);
 	}
 
-	/**
-	 * Navigation vers la page eventAccueil.xhtml
-	 */
-	public void buttonRetour() {
-		Navigation.redirect("eventAccueil.xhtml");
-
-  /**
-	 * Construit le fichier excel pour les candidats (avec la signature)
-	 * Crée une page pour chacun des candidats. Rempli chaque pages avec les critères et les notes
-	 */
 	public void buttonResultSign() {
 		buildXlsx("candidat", true);
 	}
 
-	/**
-	 * Getter de la variable idEvent
-	 * @return idEvent Id de l'événement
-	 */
 	public int getIdEvent() {
 		return idEvent;
 	}
 
-	/**
-	 * Setter de la variable lastName
-	 * @param lastName Nom de l'utilisateur
-	 */
 	public void setIdEvent(int idEvent) {
 		this.idEvent = idEvent;
 	}
 
-	/**
-	 * Getter de la variable getNotesByCandidats
-	 * @return getNotesByCandidats Liste des notes par candidats
-	 */
 	public List<StatsCandidate> getNotesByCandidats() {
 		return notesByCandidats;
 	}
 
-	/**
-	 * Setter de la variable getNotesByCandidats
-	 * @param getNotesByCandidats Liste des notes par candidats
-	 */
 	public void setNotesByCandidats(List<StatsCandidate> notesByCandidats) {
 		this.notesByCandidats = notesByCandidats;
 	}
 
-	/**
-	 * Getter de la variable notesByJurys
-	 * @return notesByJurys Liste des notes par jurys
-	 */
 	public List<StatsJury> getNotesByJurys() {
 		return notesByJurys;
 	}
 
-	/**
-	 * Setter de la variable notesByJurys
-	 * @param notesByJurys Liste des notes par jurys
-	 */
 	public void setNotesByJurys(List<StatsJury> notesByJurys) {
 		this.notesByJurys = notesByJurys;
 	}
 
-	/**
-	 * Getter de la variable totalAvancement
-	 * @return totalAvancement Avancement total de la notation
-	 */
 	public double getTotalAvancement() {
 		return totalAvancement;
 	}
 
-	/**
-	 * Setter de la variable totalAvancement
-	 * @param totalAvancement Avancement total de la notation
-	 */
 	public void setTotalAvancement(double totalAvancement) {
 		this.totalAvancement = totalAvancement;
 	}
 
-	/**
-	 * Initialisation des statistiques par candidats
-	 */
 	public void InitStatByCandidat() {
 		double total = 0;
 		double totalNoteDone = 0;
@@ -322,9 +251,6 @@ public class StatistiquesBean implements Serializable {
 		}
 	}
 
-	/**
-	 * Initialisation des statistiques par jurys
-	 */
 	public void InitStatByJury() {
 		List<Candidat> candidats;
 		for (Jury jury : this.jurys) {
@@ -365,11 +291,6 @@ public class StatistiquesBean implements Serializable {
 	private XSSFCellStyle style2;
 	private XSSFCellStyle styleSignature;
 
-	/**
-	 * Initialise le fichier excel. 
-	 * Création de tableaux avec bordure pour les niveaux possibles des critères
-	 * @param workbook Fichier excel
-	 */
 	private void init(XSSFWorkbook workbook) {
 		niveaux.put(0, "A");
 		niveaux.put(1, "B");
@@ -396,11 +317,6 @@ public class StatistiquesBean implements Serializable {
 		styleSignature.setVerticalAlignment(VerticalAlignment.CENTER);
 	}
 
-	/**
-	 * Construction du fichier excel. Nommage du fichier en fonction du type d'export.
-	 * @param who
-   * @param signature True si la signature doit être exporté
-	 */
 	public void buildXlsx(String who, boolean signature) {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		init(workbook);
