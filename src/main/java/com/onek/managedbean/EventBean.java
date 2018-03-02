@@ -17,6 +17,9 @@ import com.onek.service.UserService;
 import com.onek.utils.Navigation;
 import com.onek.utils.Password;
 
+/**
+ * ManagedBean EventBean
+ */
 @Component("event")
 public class EventBean implements Serializable {
 	@Autowired
@@ -41,7 +44,11 @@ public class EventBean implements Serializable {
 
 	private Evenement event;
 
-
+	/**
+	 * Méthode appelée lors d'un GET sur la page viewCreateEvent.xhtml.<br/>
+	 * Elle permet d'initialiser les variables nécessaires à l'affichage.
+	 * @param e ComponentSystemEvent
+	 */
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
 			Navigation.redirect("index.xhtml");
@@ -64,6 +71,9 @@ public class EventBean implements Serializable {
 		setIsSigned(false);
 	}
 
+	/**
+	 * Ajoute un événement 
+	 */
 	public void addEvent() {
 	FacesContext fc = FacesContext.getCurrentInstance();
 		String login = (String) fc.getExternalContext().getSessionMap().get("user");
@@ -80,70 +90,137 @@ public class EventBean implements Serializable {
 		evenementService.addEvenement(event);
 	}
 
+	/**
+	 * Getter de la variable logInfo
+	 * @return logInfo Message d'information
+	 */
 	public String getLogInfo() {
 		return logInfo;
 	}
 
+	/**
+	 * Getter de la variable debug
+	 * @return debug Message de debug
+	 */
 	public String getDebug() {
 		return debug;
 	}
 
+	/**
+	 * Getter de la variable name
+	 * @return name Nom de l'événement
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Setter de la variable name
+	 * @param name Nom de l'événement
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Getter de la variable date1
+	 * @return date1 Date de début de l'événement
+	 */
 	public Date getDate1() {
 		return date1;
 	}
 
+	/**
+	 * Setter de la variable date1
+	 * @param date1 Date de début de l'événement
+	 */
 	public void setDate1(Date date1) {
 		this.date1 = date1;
 	}
 
+	/**
+	 * Getter de la variable date2
+	 * @return date2 Date de fin de l'événement
+	 */
 	public Date getDate2() {
 		return date2;
 	}
 
+	/**
+	 * Setter de la variable date2
+	 * @param date2 Date de fin de l'événement
+	 */
 	public void setDate2(Date date2) {
 		this.date2 = date2;
 	}
 
+	/**
+	 * Getter de la variable hour1
+	 * @return hour1 Heure de début de l'événement
+	 */
 	public Date getHour1() {
 		return hour1;
 	}
 
+	/**
+	 * Setter de la variable hour1
+	 * @param hour1 Heure de début de l'événement
+	 */
 	public void setHour1(Date hour1) {
 		this.hour1 = hour1;
 	}
 
+	/**
+	 * Getter de la variable hour2
+	 * @return hour2 Heure de fin de l'événement
+	 */
 	public Date getHour2() {
 		return hour2;
 	}
 
+	/**
+	 * Setter de la variable hour2
+	 * @param hour2 Heure de fin de l'événement
+	 */
 	public void setHour2(Date hour2) {
 		this.hour2 = hour2;
 	}
 
+	/**
+	 * Getter de la variable isOpened
+	 * @return isOpened Boolean lié à la checkbox "Ouvert à l'inscription"
+	 */
 	public boolean getIsOpened() {
 		return isOpened;
 	}
 
+	/**
+	 * Setter de la variable isOpened
+	 * @param isOpened Boolean lié à la checkbox "Ouvert à l'inscription"
+	 */
 	public void setIsOpened(boolean isOpened) {
 		this.isOpened = isOpened;
 	}
 
+	/**
+	 * Getter de la variable isSigned
+	 * @return isSigned Boolean lié à la checkbox "Signature"
+	 */
 	public boolean getIsSigned() {
 		return isSigned;
 	}
 
+	/**
+	 * Setter de la variable isSigned
+	 * @param isSigned Boolean lié à la checkbox "Signature"
+	 */
 	public void setIsSigned(boolean issigned) {
 		this.isSigned = issigned;
 	}	
 
+	/**
+	 * Vérifie les données et appelle les méthodes pour l'enregistrement d'un événement
+	 */
 	public void click() {
 		if(name.isEmpty() || !validDate(date1, date2) || !validHour(hour1, hour2) ) {
 			logInfo = "Formulaire invalide, merci de vérifier vos saisies "+name.isEmpty()+" "+validDate(date1, date2)+" "+validHour(hour1, hour2)+
@@ -175,6 +252,10 @@ public class EventBean implements Serializable {
 		}
 		return true;
 	}
+	
+	/**
+	 * Message de debug
+	 */
 	public void debug() {
 		debug = "Données de l'évènement : \nNom : "+name+"\nDate de début : "+date1+"\nDate de fin : "+
 				date2+"Heure de debut : "+hour1+"\n"+"Heure de fin : "+hour2;

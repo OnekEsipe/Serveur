@@ -7,6 +7,9 @@ import com.onek.service.PasswordService;
 import com.onek.service.UserService;
 import com.onek.utils.Navigation;
 
+/**
+ * ManagedBean ForgotPasswordBean
+ */
 @Component("forgotPassword")
 public class ForgotPasswordBean {
 	
@@ -19,22 +22,41 @@ public class ForgotPasswordBean {
 	private String logInfo;
 	private String mail;
 
+	/**
+	 * Getter de la variable logInfo
+	 * @return logInfo Message d'information
+	 */
 	public String getLogInfo() {
 		return logInfo;
 	}
 
+	/**
+	 * Setter de la variable logInfo
+	 * @param logInfo Le message a afficher
+	 */
 	public void setLogInfo(String logInfo) {
 		this.logInfo = logInfo;
 	}
 
+	/**
+	 * Getter de la variable mail
+	 * @return mail
+	 */
 	public String getMail() {
 		return mail;
 	}
-
+	
+	/**
+	 * Setter de la variable mail
+	 * @param mail
+	 */
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
 
+	/**
+	 * Envoi le mail de réinitialisation de mot de passe
+	 */
 	public void send() {
 		if (!userService.mailExist(mail)) {
 			logInfo = "L'adresse mail saisie ne correspond à aucun utilisateur.";
@@ -47,6 +69,9 @@ public class ForgotPasswordBean {
 		}
 	}
 	
+	/**
+	 * Navigation vers index.xhtml
+	 */
 	public void retour() {
 		Navigation.redirect("index.xhtml");
 	}

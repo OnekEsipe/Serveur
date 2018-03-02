@@ -26,6 +26,9 @@ import com.onek.service.EvenementService;
 import com.onek.service.JuryService;
 import com.onek.utils.Navigation;
 
+/**
+ * ManagedBean AttributionJCBean
+ */
 @Component("attributionjc")
 public class AttributionJCBean implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -58,42 +61,62 @@ public class AttributionJCBean implements Serializable {
 
 	private List<MessageAttrib> messageAttrib;
 	private String avertissementMessage;
-	private String avertMessage;
 
-	public String getAvertMessage() {
-		return avertMessage;
-	}
-
-	public void setAvertMessage(String avertMessage) {
-		this.avertMessage = avertMessage;
-	}
-
+	/**
+	 * Getter de la variable isOpen
+	 * @return isopen Boolean de gestion d'affichage en fonction du status de l'événement
+	 */
 	public boolean isIsopen() {
 		return isopen;
 	}
 
+	/**
+	 * Setter de la variable isOpen
+	 * @param isopen Boolean de gestion d'affichage en fonction du status de l'événement
+	 */
 	public void setIsopen(boolean isopen) {
 		this.isopen = isopen;
 	}
 
+	/**
+	 * Getter de la variable methode
+	 * @return methode Indique le type d'attribution automatique : jury/candidat ou candidat/jury
+	 */
 	public int getMethode() {
 		return methode;
 	}
 
+	/**
+	 * Setter de la variable methode
+	 * @param methode Indique le type d'attribution automatique : jury/candidat ou candidat/jury
+	 */
 	public void setMethode(int methode) {
 		this.methode = methode;
 	}
 
+	/**
+	 * Getter de la variable randomX
+	 * @return randomX Le nombre choisi avec le spinner
+	 */
 	public int getRandomX() {
 		return randomX;
 	}
 
+	/**
+	 * Setter de la variable randomX
+	 * @param randomX Le nombre choisi avec le spinner
+	 */
 	public void setRandomX(int randomX) {
 		this.randomX = randomX;
 	}
 
+	/**
+	 * Méthode appelée lors d'un GET sur la page attributionJuryCandidat.xhtml.<br/>
+	 * Elle permet d'initialiser les variables nécessaires à l'affichage.
+	 * Pré-rempli la map attribJC en fonction des attributions existantes
+	 * @param e ComponentSystemEvent
+	 */
 	public void before(ComponentSystemEvent e) {
-
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
 				Navigation.redirect("index.xhtml");
@@ -108,9 +131,6 @@ public class AttributionJCBean implements Serializable {
 			attribJC = new LinkedHashMap<>();
 			attributionFinal = new LinkedHashMap<>();
 			messageAttrib = new ArrayList<>();
-
-			// Initialisation-update de la liste des candidats, utilisateurs, jurys et de
-			// l'attribution deja realisee + init du message d'avertissement
 			status = evenement.findById(idEvent).getStatus();
 			avertissementMessage = "";
 
@@ -137,54 +157,108 @@ public class AttributionJCBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Getter de la variable avertissementMessage
+	 * @return avertissementMessage Message d'avertissement au cas  où l'événement est dans un statut autre que brouillon
+	 */
 	public String getAvertissementMessage() {
 		return avertissementMessage;
 	}
 
+	/**
+	 * Setter de la variable avertissementMessage
+	 * @param avertissementMessage Message d'avertissement au cas  où l'événement est dans un statut autre que brouillon
+	 */
 	public void setAvertissementMessage(String avertissementMessage) {
 		this.avertissementMessage = avertissementMessage;
 	}
 
+	/**
+	 * Getter de la variable idEvent
+	 * @return idEvent Id de l'événement
+	 */
 	public int getIdEvent() {
 		return idEvent;
 	}
 
+	/**
+	 * Setter de la variable idEvent
+	 * @param idEvent Id de l'événement
+	 */
 	public void setIdEvent(int idEvent) {
 		this.idEvent = idEvent;
 	}
 
+	/**
+	 * Getter de la variable candidatsJurys
+	 * @return candidatsJurys Liste des candidats
+	 */
 	public List<Candidat> getCandidatsJurys() {
 		return candidatsJurys;
 	}
 
+	/**
+	 * Setter de la variable candidatsJurys
+	 * @param candidatsJurys Liste des candidats
+	 */
 	public void setCandidatsJurys(List<Candidat> candidatsJurys) {
 		this.candidatsJurys = candidatsJurys;
 	}
 
+	/**
+	 * Getter de la variable messageAttrib
+	 * @return messageAttrib Liste de MessageAttrib
+	 */
 	public List<MessageAttrib> getMessageAttrib() {
 		return messageAttrib;
 	}
 
+	/**
+	 * Setter de la variable messageAttrib
+	 * @param messageAttrib Liste de MessageAttrib
+	 */
 	public void setMessageAttrib(List<MessageAttrib> messageAttrib) {
 		this.messageAttrib = messageAttrib;
 	}
 
+	/**
+	 * Getter de la variable juryList
+	 * @return juryList Liste des jurys
+	 */
 	public List<Jury> getJuryList() {
 		return juryList;
 	}
 
+	/**
+	 * Setter de la variable juryList
+	 * @param juryList Liste des jurys
+	 */
 	public void setJuryList(List<Jury> juryList) {
 		this.juryList = juryList;
 	}
 
+	/**
+	 * Getter de la variable attribJC
+	 * @return attribJC Map d'attributions des jurys-candidats. Elle est remplie avec les checkboxs
+	 */
 	public Map<Jury, Map<Candidat, Boolean>> getAttribJC() {
 		return attribJC;
 	}
 
+	/**
+	 * Setter de la variable attribJC
+	 * @param attribJC Map d'attributions des jurys-candidats. Elle est remplie avec les checkboxs
+	 */
 	public void setAttribJC(Map<Jury, Map<Candidat, Boolean>> attribJC) {
 		this.attribJC = attribJC;
 	}
 
+	/**
+	 * Si une checkbox est selectionnée : sauvegarde de l'attribution. <br/>
+	 * Si une checkbox est deselectionnée : suppression de l'attribution. <br/>
+	 * Dans le cas d'un statut événement différent de brouillon, les suppressions ne sont pas prises en compte.
+	 * @param actionEvent
+	 */
 	public void validationButton(ActionEvent actionEvent) {
 		ArrayList<Candidat> selectedCandidates;
 		Date date = new Date();
@@ -231,10 +305,16 @@ public class AttributionJCBean implements Serializable {
 		Navigation.redirect("attributionJuryCandidat.xhtml");
 	}
 
+	/**
+	 * Navigation vers la page eventAccueil.xhtml
+	 */
 	public void retour() {
 		Navigation.redirect("eventAccueil.xhtml");
 	}
 
+	/**
+	 * Apelle de la méthode correspondant au type d'attribution automatique
+	 */
 	public void attributionAutomatique() {
 
 		if (methode == 2) {
@@ -244,6 +324,10 @@ public class AttributionJCBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Attribution automatique jurys par candidat.
+	 * @param randomX Nombre saisi par l'utilisateur avec le spinner
+	 */
 	private void JuryParCandidat(int randomX) {
 		if (randomX > juryList.size()) {
 			System.out.println("attribution impossible");
@@ -293,6 +377,10 @@ public class AttributionJCBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Attribution automatique candidats par jury.
+	 * @param randomX Nombre saisi par l'utilisateur avec le spinner
+	 */
 	public void CandidatParJury(int randomX) {
 		if (randomX > candidatsJurys.size()) {
 			System.out.println("attribution impossible");
@@ -346,6 +434,10 @@ public class AttributionJCBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Passe a false toutes les attributions afin de vider les checkboxs
+	 * @param actionEvent
+	 */
 	public void clearButton(ActionEvent actionEvent) {
 		clearAttribution();
 	}
@@ -391,28 +483,51 @@ public class AttributionJCBean implements Serializable {
 		Collections.sort(messageAttrib, (o1, o2) -> o1.getJury().compareTo(o2.getJury()));
 	}
 
-	// Inner class pour la datatable
+	/**
+	 * Inner class pour la datatable attribution. Les données sont des strings.
+	 * La datatable est cachée et est necessaire pour réaliser l'exportation des données.
+	 */
 	public static class MessageAttrib {
 		private String jury;
 		private String candidats;
 
+		/**
+		 * @param jury Le string pour le jury
+		 * @param candidats Le string pour les candidats
+		 */
 		public MessageAttrib(String jury, String candidats) {
 			this.jury = jury;
 			this.candidats = candidats;
 		}
 
+		/**
+		 * Getter de la variable jury
+		 * @return jury
+		 */
 		public String getJury() {
 			return jury;
 		}
 
+		/**
+		 * Setter de la variable jury
+		 * @param jury
+		 */
 		public void setJury(String jury) {
 			this.jury = jury;
 		}
 
+		/**
+		 * Getter de la variable candidats
+		 * @return candidats
+		 */
 		public String getCandidats() {
 			return candidats;
 		}
 
+		/**
+		 * Setter de la variable candidats
+		 * @param candidats
+		 */
 		public void setCandidats(String candidats) {
 			this.candidats = candidats;
 		}
