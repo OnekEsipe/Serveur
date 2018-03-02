@@ -656,6 +656,7 @@ public class StatistiquesBean implements Serializable {
 						cell = row.createCell(colNum);
 						cell.setCellValue(signature.getNom());
 						cell.setCellStyle(styleSignature);
+						sheet.autoSizeColumn(colNum);
 						colNum++;
 						cell = row.createCell(colNum);
 						
