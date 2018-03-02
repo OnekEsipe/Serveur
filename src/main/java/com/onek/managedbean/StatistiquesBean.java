@@ -24,6 +24,7 @@ import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -288,7 +289,7 @@ public class StatistiquesBean implements Serializable {
 
 	private XSSFCellStyle style;
 	private XSSFCellStyle style2;
-	private XSSFCellStyle styleImage;
+	private XSSFCellStyle styleSignature;
 
 	private void init(XSSFWorkbook workbook) {
 		niveaux.put(0, "A");
@@ -300,15 +301,20 @@ public class StatistiquesBean implements Serializable {
 		niveaux.put(-1, "-");
 		style = workbook.createCellStyle();
 		style2 = workbook.createCellStyle();
+		styleSignature = workbook.createCellStyle();
 		style.setBorderLeft(BorderStyle.THIN);
 		style.setBorderRight(BorderStyle.THIN);
 		style.setBorderBottom(BorderStyle.THIN);
 		style.setBorderTop(BorderStyle.THIN);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
 		style2.setBorderLeft(BorderStyle.THIN);
 		style2.setBorderRight(BorderStyle.THIN);
 		style2.setBorderBottom(BorderStyle.THIN);
 		style2.setBorderTop(BorderStyle.THIN);
 		style2.setAlignment(HorizontalAlignment.CENTER);
+		style2.setVerticalAlignment(VerticalAlignment.CENTER);
+		styleSignature.setAlignment(HorizontalAlignment.CENTER);
+		styleSignature.setVerticalAlignment(VerticalAlignment.CENTER);
 	}
 
 	public void buildXlsx(String who, boolean signature) {
@@ -649,7 +655,7 @@ public class StatistiquesBean implements Serializable {
 					for (Signature signature : eval.getSignatures()) {
 						cell = row.createCell(colNum);
 						cell.setCellValue(signature.getNom());
-						cell.setCellStyle(style);
+						cell.setCellStyle(styleSignature);
 						colNum++;
 						cell = row.createCell(colNum);
 						
