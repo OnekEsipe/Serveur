@@ -71,6 +71,7 @@ public class JuryDaoImpl implements JuryDao, Serializable {
 			jurys = (List<Jury>) session.createQuery(
 					"SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND (u.login = :login OR u.droits = 'A') AND u.isdeleted IS FALSE")
 					.setParameter("idEvent", idEvent).setParameter("login", login).list();
+			logger.info("TAILLE LISTE:" + jurys.size());
 			for (Jury jury : jurys) {
 				Hibernate.initialize(jury.getUtilisateur());
 				Hibernate.initialize(jury.getEvaluations());

@@ -165,7 +165,7 @@ public class JuryServiceTest {
 	
 	@Test
 	public void testfindJuryAndAnonymousByIdEventKO1() {
-		assertTrue(juryService.findJuryAndAnonymousByIdEvent(1,"a").isEmpty());
+		assertTrue(juryService.findJuryAndAnonymousByIdEvent(Integer.MAX_VALUE,"a").isEmpty());
 	}
 	
 	@Test

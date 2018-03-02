@@ -79,7 +79,7 @@ public class PasswordServiceTest {
 	 */
 	@Test
 	public void testresetOK() {
-		String mailexistant = "aa@gmail.com";
+		String mailexistant = "onek2018esipe@gmail.com";
 		assertFalse(passwordService.reset(mailexistant));
 	}
 	
