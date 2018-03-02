@@ -7,8 +7,8 @@ public class Password {
 	private final static SecureRandom random = new SecureRandom();
 
 	/** different dictionaries used */
-	private final static String ALPHA_CAPS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	private final static String ALPHA = "abcdefghijklmnopqrstuvwxyz";
+	private final static String ALPHA_CAPS = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+	private final static String ALPHA = "abcdefghijkmnopqrstuvwxyz";
 	private static final String NUMERIC = "0123456789";
 
 	private static String initGeneratePassword(int len, String dic) {
