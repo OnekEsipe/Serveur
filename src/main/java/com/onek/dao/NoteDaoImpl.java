@@ -1,6 +1,7 @@
 package com.onek.dao;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import org.apache.log4j.Logger;
@@ -19,7 +20,7 @@ public class NoteDaoImpl implements NoteDao, Serializable {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public Note addNote(Note note) {
 		Objects.requireNonNull(note);
@@ -61,6 +62,37 @@ public class NoteDaoImpl implements NoteDao, Serializable {
 		finally {
 			session.close();
 		}
-	}	
-	
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Note> getAllNotes() {
+		List<Note> notes = null;
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+
+		transaction = session.beginTransaction();
+		notes = (List<Note>) session.createQuery("from Note").list();
+		transaction.commit();
+
+		session.close();
+		return notes;
+	}
+
+	@Override
+	public Note findNoteById(int idnote) {
+		if(idnote < 1) {
+			throw new IllegalArgumentException("id must be positive"); 
+		}
+		Note note = null;
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		note = (Note) session.createQuery("from Note where idnote = :idnote")
+				.setParameter("idnote", idnote).getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		return note;
+	}
+
+
 }

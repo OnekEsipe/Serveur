@@ -143,8 +143,6 @@ public class UserServiceTest {
 	public void testfindUserByIdInvalidId() {
 		userService.findUserById(-1);
 	}
-
-
 	
 	/*
 	 * TESTS DE TRANSACTIONS ECHOUEES
@@ -340,6 +338,11 @@ public class UserServiceTest {
 		Utilisateur us = userService.findByLogin(label);
 		assertNotNull(us);
 		assertEquals(us.getLogin(), label);
+	}
+	
+	@Test
+	public void testgetAllUsersExceptDeletedansAnoOK() {
+		assertTrue(!userService.getAllUsersExceptDeleted().isEmpty());
 	}
 
 }
