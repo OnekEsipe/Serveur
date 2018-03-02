@@ -331,9 +331,12 @@ public class StatistiquesBean implements Serializable {
 			if (who.equals("jury")) {
 				externalContext.setResponseHeader("Content-Disposition",
 						"attachment; filename=\"Export_Jury_" + event.getNom() + ".xlsx\"");
-			} else if (who.equals("candidat")) {
+			} else if (who.equals("candidat") && !signature) {
 				externalContext.setResponseHeader("Content-Disposition",
 						"attachment; filename=\"Export_Candidat_" + event.getNom() + ".xlsx\"");
+			} else if (who.equals("candidat") && signature) {
+				externalContext.setResponseHeader("Content-Disposition",
+						"attachment; filename=\"Export_Candidat_" + event.getNom() +"_Signature"+".xlsx\"");
 			}
 			workbook.write(externalContext.getResponseOutputStream());
 			facesContext.responseComplete();
@@ -601,6 +604,9 @@ public class StatistiquesBean implements Serializable {
 			cell = row.createCell(colNum++);
 			cell.setCellValue("Total");
 			cell.setCellStyle(style2);
+			cell = row.createCell(colNum++);
+			cell.setCellValue("Signatures");
+			cell.setCellStyle(style2);
 			for (Evaluation eval : evaluations) {
 				row = sheet.createRow(rowNum++);
 				colNum = 0;
@@ -651,10 +657,6 @@ public class StatistiquesBean implements Serializable {
 						CreationHelper helper = workbook.getCreationHelper();
 						Drawing<?> drawing = sheet.createDrawingPatriarch();
 						ClientAnchor anchor = helper.createClientAnchor();
-//						anchor.setDx1(0);
-//						anchor.setDy1(0);
-//						anchor.setDx2(1023);
-//						anchor.setDy2(255);
 						anchor.setCol1(colNum);
 						anchor.setRow1(rowNum-1);
 						anchor.setRow2(rowNum-1);
