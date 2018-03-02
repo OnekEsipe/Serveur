@@ -2,7 +2,6 @@ package com.onek.servicetest;
 
 import static org.junit.Assert.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.fasterxml.jackson.databind.ser.std.ArraySerializerBase;
-import com.onek.model.Critere;
-import com.onek.model.Descripteur;
 import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
 import com.onek.service.EvenementService;
-import com.onek.service.GrilleService;
 import com.onek.service.JuryService;
 import com.onek.service.UserService;
 
@@ -171,7 +166,7 @@ public class JuryServiceTest {
 	
 	@Test
 	public void testfindJuryAndAnonymousByIdEventKO1() {
-		assertTrue(juryService.findJuryAndAnonymousByIdEvent(1,"a").isEmpty());
+		assertTrue(juryService.findJuryAndAnonymousByIdEvent(Integer.MAX_VALUE,"a").isEmpty());
 	}
 	
 	@Test
