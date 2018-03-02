@@ -53,7 +53,7 @@
 							filterMatchMode="contains" filterStyle="display:none">
 							<h:outputText value="#{utilisateur.nom}" />
 						</p:column>
-						<p:column headerText="prénom">
+						<p:column headerText="Prénom">
 							<h:outputText value="#{utilisateur.prenom}" />
 						</p:column>
 					</p:dataTable>
@@ -79,7 +79,7 @@
 				<p:dataTable id="tabJurysAnos" var="utilisateursAno"
 					style="display:none;" value="#{addjury.utilisateursAnos}"
 					widgetVar="utilisateurTable2" scrollable="true" scrollHeight="300"
-					rowKey="#{utilisateursAno.nom}">
+					rowKey="#{utilisateursAno.nom}" sortBy="#{utilisateursAno.nom}">
 					<!-- ********fin*********** -->
 					<p:column headerText="Nom">
 						<h:outputText value="#{utilisateursAno.nom}" />
@@ -117,7 +117,7 @@
 			</h:form>
 			<h:form>
 				<p:dataTable var="utilisateur" value="#{addjury.utilisateurs}"
-					scrollable="true" scrollHeight="500">
+					scrollable="true" scrollHeight="500" sortBy="#{utilisateur.login}">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
@@ -130,7 +130,7 @@
 					<p:column headerText="Nom" sortBy="#{utilisateur.nom}">
 						<h:outputText value="#{utilisateur.nom}" />
 					</p:column>
-					<p:column headerText="prénom" sortBy="#{utilisateur.prenom}">
+					<p:column headerText="Prénom" sortBy="#{utilisateur.prenom}">
 						<h:outputText value="#{utilisateur.prenom}" />
 					</p:column>
 					<!-- ********la colonne supprimée*********** -->
