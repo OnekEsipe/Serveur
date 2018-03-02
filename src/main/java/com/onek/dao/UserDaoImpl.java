@@ -17,9 +17,6 @@ import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
 import com.onek.utils.DroitsUtilisateur;
 
-/**
- * Dao du model User
- */
 @Repository
 public class UserDaoImpl implements UserDao, Serializable {
 	private static final long serialVersionUID = 1L;

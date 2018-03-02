@@ -16,9 +16,6 @@ import com.onek.model.Candidat;
 import com.onek.model.Evaluation;
 import com.onek.model.Note;
 
-/**
- * Dao du model Candidat
- */
 @Repository
 public class CandidatesDaoImpl implements CandidatesDao, Serializable {
 

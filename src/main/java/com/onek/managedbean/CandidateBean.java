@@ -26,9 +26,6 @@ import com.onek.utils.Navigation;
 
 import au.com.bytecode.opencsv.CSVReader;
 
-/**
- * ManagedBean CandidateBean
- */
 @Component("candidate")
 public class CandidateBean implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -49,15 +46,11 @@ public class CandidateBean implements Serializable {
 	private String messagedoublon;
 	private List<Candidat> candidats;
 	private Candidat candidat;
+	// Gestion import
 	private final List<Candidat> importedCandidates = new ArrayList<>();
 
 	private String logInfo;
 
-	/**
-	 * Méthode appelée lors d'un GET sur la page addCandidates.xhtml.<br/>
-	 * Elle permet d'initialiser les variables nécessaires à l'affichage.
-	 * @param e ComponentSystemEvent
-	 */
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
@@ -98,170 +91,71 @@ public class CandidateBean implements Serializable {
 		setLastName("");
 	}
 
-	/**
-	 * Getter de la variable logInfo
-	 * @return logInfo Message d'information
-	 */
 	public String getLogInfo() {
 		return logInfo;
 	}
 
-	/**
-	 * Setter de la variable logInfo
-	 * @param logInfo Le message a afficher
-	 */
 	public void setLogInfo(String logInfo) {
 		this.logInfo = logInfo;
 	}
 
-	/**
-	 * Ajout de candidats via un import de fichier
-	 * @param candidates Liste de candidats
-	 */
+	// Ajout de candidats via un import de fichier
 	public void addCandidates(List<Candidat> candidates) {
 		candidateService.addCandidates(candidates);
 	}
 
-	/**
-	 * Getter de la variable firstName
-	 * @return firstName Prenom de l'utilisateur
-	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
-	/**
-	 * Setter de la variable firstName
-	 * @param firstName Prenom de l'utilisateur
-	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-	/**
-	 * Getter de la variable lastName
-	 * @return lastName Nom de l'utilisateur
-	 */
 	public String getLastName() {
 		return lastName;
 	}
 
-	/**
-	 * Setter de la variable lastName
-	 * @param lastName Nom de l'utilisateur
-	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
-	/**
-	 * Getter de la variable idEvent
-	 * @return idEvent Id de l'événement
-	 */
 	public int getIdEvent() {
 		return idEvent;
 	}
 
-	/**
-	 * Setter de la variable idEvent
-	 * @param idEvent Id de l'événement
-	 */
 	public void setIdEvent(int idevent) {
 		this.idEvent = idevent;
 	}
 
-	/**
-	 * Getter de la variable candidats
-	 * @return candidats Liste des candidats
-	 */
 	public List<Candidat> getCandidats() {
 		return candidats;
 	}
 
-	/**
-	 * Setter de la variable candidats
-	 * @param candidats Liste des candidats
-	 */
 	public void setCandidats(List<Candidat> candidats) {
 		this.candidats = candidats;
 	}
 
-	/**
-	 * Getter de la variable candidat
-	 * @return candidat Un candidat
-	 */
 	public Candidat getCandidat() {
 		return candidat;
 	}
 
-	/**
-	 * Setter de la variable candidat
-	 * @param candidat Un candidat
-	 */
 	public void setCandidat(Candidat candidat) {
 		this.candidat = candidat;
 	}
 
-	/**
-	 * Getter de la variable filteredcandidats
-	 * @return filteredcandidats Liste des candidats filtrés
-	 */
 	public List<Candidat> getFilteredcandidats() {
 		return filteredcandidats;
 	}
 
-	/**
-	 * Setter de la variable filteredcandidats
-	 * @param filteredcandidats Liste des candidats filtrés
-	 */
 	public void setFilteredcandidats(List<Candidat> filteredcandidats) {
 		this.filteredcandidats = filteredcandidats;
 	}
 
-	/**
-	 * Getter de la variable importedCandidates
-	 * @return importedCandidates Liste des candidats importés
-	 */
 	public List<Candidat> getImportedCandidates() {
 		return importedCandidates;
 	}
 
-	/**
-	 * Getter de la variable importLog
-	 * @return importLog Message pour l'importation de candidats
-	 */
-	public String getImportLog() {
-		return importLog;
-	}
-
-	/**
-	 * Setter de la variable importLog
-	 * @param importLog Message pour l'importation de candidats
-	 */
-	public void setImportLog(String importLog) {
-		this.importLog = importLog;
-	}
-
-	/**
-	 * Getter de la variable message
-	 * @return message
-	 */
-	public String getMessage() {
-		return message;
-	}
-
-	/**
-	 * Setter de la variable message
-	 * @return message
-	 */
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	
-	/**
-	 * Création d'un candidat. Le prénom est facultatif
-	 */
 	public void click() {
 		if (lastName.isEmpty()) {
 			logInfo = "Merci de remplir tous les champs du formulaire";
@@ -296,9 +190,6 @@ public class CandidateBean implements Serializable {
 		}
 	}
 
-  /**
-	 * Ajout d'un candidat
-	 */
 	public void addCandidat() {
 		if (lastName.isEmpty()) {
 			showMessageAddCandidate("Merci de remplir tous les champs du formulaire");
@@ -316,9 +207,6 @@ public class CandidateBean implements Serializable {
 		clearPanel();
 	}
 
-  /**
-	 * Clear du panel pour affichage
-	 */
 	public void clearPanel() {
 		firstName = "";
 		lastName = "";
@@ -326,11 +214,6 @@ public class CandidateBean implements Serializable {
 		homonyme = false;
 	}
 
-	/**
-	 * Importation d'un fichier candidat de type csv. Format du csv : nom;prenom
-	 * @param event Evenement lié à l'upload du fichier
-	 * @throws IOException
-	 */
 	public void fileImportCsv(FileUploadEvent event) throws IOException {
 
 		List<String[]> data = new ArrayList<String[]>();
@@ -419,9 +302,6 @@ public class CandidateBean implements Serializable {
 		return candidat;
 	}
 
-	/**
-	 * Suppression d'un candidat
-	 */
 	public void supprimerCandidat() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
@@ -431,31 +311,24 @@ public class CandidateBean implements Serializable {
 		candidats.remove(candidat);
 	}
 
-	/**
-	 * Création du modele csv pour l'import
-	 * @throws IOException
-	 */
 	public void telechargerModele() throws IOException {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-	    ExternalContext externalContext = facesContext.getExternalContext();
-	    externalContext.setResponseContentType("text/csv; charset=UTF-8");
-	    externalContext.setResponseCharacterEncoding("UTF-8");
-	    externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"modeleCandidat.csv\"");
-	    Writer writer = externalContext.getResponseOutputWriter();
-	    try {
-	        writer.write("nom;prenom\n");
-	        writer.write("Smith;James");
-	    } finally {
-	        if (writer != null) {
-	            writer.close();
-	        }
-	    }
-	    facesContext.responseComplete();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		externalContext.setResponseContentType("text/csv; charset=UTF-8");
+		externalContext.setResponseCharacterEncoding("UTF-8");
+		externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"modeleCandidat.csv\"");
+		Writer writer = externalContext.getResponseOutputWriter();
+		try {
+			writer.write("nom;prenom\n");
+			writer.write("Smith;James");
+		} finally {
+			if (writer != null) {
+				writer.close();
+			}
+		}
+		facesContext.responseComplete();
 	}
-	
-	/**
-	 * Suppression de tous les candidats
-	 */
+
 	public void suppressAllCandidates() {
 		if (candidats.size() > 0) {
 			for (Candidat candidat : candidats) {

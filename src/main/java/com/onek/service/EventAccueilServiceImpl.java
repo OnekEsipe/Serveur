@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 import com.onek.dao.EvenementDao;
 import com.onek.model.Evenement;
 
-/**
- * Service EventAccueilServiceImpl
- */
 @Service
 public class EventAccueilServiceImpl implements EventAccueilService, Serializable {
 	private static final long serialVersionUID = 1L;

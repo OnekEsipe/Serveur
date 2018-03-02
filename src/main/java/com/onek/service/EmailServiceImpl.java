@@ -16,9 +16,6 @@ import org.springframework.stereotype.Service;
 
 import com.onek.bean.MailBean;
 
-/**
- * Service EmailServiceImpl
- */
 @Service
 public class EmailServiceImpl implements EmailService, Serializable {
 	private static final long serialVersionUID = 1L;

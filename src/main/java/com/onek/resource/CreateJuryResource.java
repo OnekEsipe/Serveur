@@ -3,9 +3,6 @@ package com.onek.resource;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Json création de jury
- */
 public class CreateJuryResource {
 
 	@JsonProperty("Lastname")
