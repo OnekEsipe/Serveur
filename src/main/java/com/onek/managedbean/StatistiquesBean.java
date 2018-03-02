@@ -17,8 +17,13 @@ import javax.faces.event.ComponentSystemEvent;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
@@ -34,6 +39,7 @@ import com.onek.model.Evaluation;
 import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Note;
+import com.onek.model.Signature;
 import com.onek.model.Utilisateur;
 import com.onek.service.EvaluationService;
 import com.onek.service.EvenementService;
@@ -56,6 +62,8 @@ public class StatistiquesBean implements Serializable {
 	private double totalAvancement;
 
 	private String totalString;
+	
+	private boolean signedEvent;
 
 	private List<StatsCandidate> notesByCandidats;
 	private List<StatsJury> notesByJurys;
@@ -152,15 +160,20 @@ public class StatistiquesBean implements Serializable {
 			jurys = event.getJurys();
 			InitStatByCandidat();
 			InitStatByJury();
+			this.signedEvent = event.getSigningneeded();
 		}
 	}
 
 	public void buttonResult() {
-		buildXlsx("candidat");
+		buildXlsx("candidat", false);
 	}
 
 	public void buttonResultByJurys() {
-		buildXlsx("jury");
+		buildXlsx("jury", false);
+	}
+
+	public void buttonResultSign() {
+		buildXlsx("candidat", true);
 	}
 
 	public int getIdEvent() {
@@ -296,13 +309,13 @@ public class StatistiquesBean implements Serializable {
 		style2.setAlignment(HorizontalAlignment.CENTER);
 	}
 
-	public void buildXlsx(String who) {
+	public void buildXlsx(String who, boolean signature) {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		init(workbook);
 		List<Critere> criteres = event.getCriteres();
 		fillParameterPage(workbook, criteres);
 		if (who.equals("candidat")) {
-			fillCandidatesPages(workbook, criteres);
+			fillCandidatesPages(workbook, criteres, signature);
 		} else {
 			fillJurysPages(workbook, criteres);
 		}
@@ -563,7 +576,7 @@ public class StatistiquesBean implements Serializable {
 		}
 	}
 
-	private void fillCandidatesPages(XSSFWorkbook workbook, List<Critere> criteres) {
+	private void fillCandidatesPages(XSSFWorkbook workbook, List<Critere> criteres, boolean needSignature) {
 		for (Candidat candidat : candidats) {
 			resultCandidats.put(candidat, new HashMap<>());
 			int rowNum = 0;
@@ -623,6 +636,24 @@ public class StatistiquesBean implements Serializable {
 					cell.setCellFormula(sb.toString());
 					cell.setCellStyle(style);
 					colNum++;
+				}
+				if (needSignature) {
+					for (Signature signature : eval.getSignatures()) {
+						cell = row.createCell(colNum);
+						cell.setCellValue(signature.getNom());
+						cell.setCellStyle(style);
+						colNum++;
+						cell = row.createCell(colNum);
+						int imageIDX = workbook.addPicture(signature.getSignature(), Workbook.PICTURE_TYPE_JPEG);
+						CreationHelper helper = workbook.getCreationHelper();
+						Drawing<?> drawing = sheet.createDrawingPatriarch();
+						ClientAnchor anchor = helper.createClientAnchor();
+						anchor.setCol1(colNum);
+						anchor.setRow1(rowNum);
+						Picture pict = drawing.createPicture(anchor, imageIDX);
+						pict.resize();
+						colNum++;
+					}
 				}
 			}
 			colNum = 0;
@@ -712,6 +743,14 @@ public class StatistiquesBean implements Serializable {
 
 	public void setFilteredNotesByCandidats(List<StatsCandidate> filteredNotesByCandidats) {
 		this.filteredNotesByCandidats = filteredNotesByCandidats;
+	}
+
+	public boolean isSignedEvent() {
+		return signedEvent;
+	}
+
+	public void setSignedEvent(boolean signedEvent) {
+		this.signedEvent = signedEvent;
 	}
 
 }

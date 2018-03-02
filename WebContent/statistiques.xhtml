@@ -114,6 +114,11 @@
 						<p:commandButton value="Exporter les résultats par candidat"
 							actionListener="#{statistiques.buttonResult}" ajax="false" />
 					</div>
+					<div class="ui-g-3">
+						<p:commandButton rendered="#{statistiques.signedEvent}" value="Exporter les résultats par candidat avec signature"
+							actionListener="#{statistiques.buttonResultSign}" ajax="false"/>
+					</div>
+					<div class="ui-g-6"></div>
 					<div class="ui-g-2">
 						<p:commandButton value="Exporter les résultats par jury"
 							actionListener="#{statistiques.buttonResultByJurys}" ajax="false" />

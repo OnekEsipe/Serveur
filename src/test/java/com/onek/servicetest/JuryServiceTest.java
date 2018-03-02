@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import com.onek.model.Evenement;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
@@ -185,7 +184,7 @@ public class JuryServiceTest {
 	 */
 	@Test
 	public void testfindJurysByIdeventOK() {
-		assertTrue(juryService.findJurysByIdevent(1).size() == 3);
+		assertTrue(!juryService.findJurysByIdevent(1).isEmpty());
 	}
 	
 	@Test

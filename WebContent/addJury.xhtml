@@ -46,11 +46,14 @@
 						</f:facet>
 						<p:column selectionMode="multiple"
 							style="width:16px;text-align:center" />
+						<p:column headerText="Login">
+							<h:outputText value="#{utilisateur.login}" />
+						</p:column>
 						<p:column headerText="Nom" filterBy="#{utilisateur.nom}"
 							filterMatchMode="contains" filterStyle="display:none">
 							<h:outputText value="#{utilisateur.nom}" />
 						</p:column>
-						<p:column headerText="prénom">
+						<p:column headerText="Prénom">
 							<h:outputText value="#{utilisateur.prenom}" />
 						</p:column>
 					</p:dataTable>
@@ -76,7 +79,7 @@
 				<p:dataTable id="tabJurysAnos" var="utilisateursAno"
 					style="display:none;" value="#{addjury.utilisateursAnos}"
 					widgetVar="utilisateurTable2" scrollable="true" scrollHeight="300"
-					rowKey="#{utilisateursAno.nom}">
+					rowKey="#{utilisateursAno.nom}" sortBy="#{utilisateursAno.nom}">
 					<!-- ********fin*********** -->
 					<p:column headerText="Nom">
 						<h:outputText value="#{utilisateursAno.nom}" />
@@ -103,9 +106,9 @@
 							<h:commandLink>
 								<p:graphicImage id="icon" name="/image/csv.png" width="30" />
 								<p:dataExporter type="csv" target="tabJurysAnos"
-									fileName="liste_jurys" pageOnly="true" />
+									fileName="#{addjury.exportName}"  pageOnly="true" />
 								<p:tooltip for="icon"
-									value="exporter la liste des jurys annonymes" position="top" />
+									value="#{addjury.exportName}" position="top" />
 							</h:commandLink>
 						</div>
 					</div>
@@ -114,17 +117,20 @@
 			</h:form>
 			<h:form>
 				<p:dataTable var="utilisateur" value="#{addjury.utilisateurs}"
-					scrollable="true" scrollHeight="500">
+					scrollable="true" scrollHeight="500" sortBy="#{utilisateur.login}">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
 						Listes des jurys de l'événement
 					</f:facet>
 					<!-- ********fin*********** -->
+					<p:column headerText="Login" sortBy="#{utilisateur.login}">
+							<h:outputText value="#{utilisateur.login}" />
+						</p:column>
 					<p:column headerText="Nom" sortBy="#{utilisateur.nom}">
 						<h:outputText value="#{utilisateur.nom}" />
 					</p:column>
-					<p:column headerText="prénom" sortBy="#{utilisateur.prenom}">
+					<p:column headerText="Prénom" sortBy="#{utilisateur.prenom}">
 						<h:outputText value="#{utilisateur.prenom}" />
 					</p:column>
 					<!-- ********la colonne supprimée*********** -->

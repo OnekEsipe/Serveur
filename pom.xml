@@ -4,7 +4,7 @@
 	<groupId>com.server</groupId>
 	<artifactId>Serveur</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>Serveur Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -144,18 +144,24 @@
 		</dependency>
 		<!-- Log -->
 		<dependency>
-		    <groupId>log4j</groupId>
-		    <artifactId>log4j</artifactId>
-		    <version>1.2.17</version>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 		<!-- openCSV -->
 		<dependency>
-    		<groupId>net.sf.opencsv</groupId>
-   			<artifactId>opencsv</artifactId>
+			<groupId>net.sf.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
 			<version>2.3</version>
 		</dependency>
 	</dependencies>
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
