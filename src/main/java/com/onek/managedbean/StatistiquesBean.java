@@ -644,7 +644,7 @@ public class StatistiquesBean implements Serializable {
 						cell.setCellStyle(style);
 						colNum++;
 						cell = row.createCell(colNum);
-						int imageIDX = workbook.addPicture(signature.getSignature(), Workbook.PICTURE_TYPE_PNG);
+						int imageIDX = workbook.addPicture(signature.getSignature(), Workbook.PICTURE_TYPE_JPEG);
 						CreationHelper helper = workbook.getCreationHelper();
 						Drawing<?> drawing = sheet.createDrawingPatriarch();
 						ClientAnchor anchor = helper.createClientAnchor();
