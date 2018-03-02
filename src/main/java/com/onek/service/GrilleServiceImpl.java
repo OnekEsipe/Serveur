@@ -11,6 +11,9 @@ import com.onek.dao.DescripteurDao;
 import com.onek.model.Critere;
 import com.onek.model.Descripteur;
 
+/**
+ * Service GrilleServiceImpl
+ */
 @Service
 public class GrilleServiceImpl implements GrilleService, Serializable{
 	private static final long serialVersionUID = 1L;

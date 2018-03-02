@@ -13,6 +13,9 @@ import com.onek.model.Candidat;
 import com.onek.model.Jury;
 import com.onek.model.Utilisateur;
 
+/**
+ * Service JuryServiceImpl
+ */
 @Service
 public class JuryServiceImpl implements JuryService, Serializable{
 	private static final long serialVersionUID = 1L;

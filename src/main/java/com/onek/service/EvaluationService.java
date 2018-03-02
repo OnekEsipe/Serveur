@@ -1,4 +1,3 @@
-
 package com.onek.service;
 
 import java.util.List;
@@ -7,10 +6,28 @@ import com.onek.model.Jury;
 import com.onek.model.Evaluation;
 import com.onek.model.Candidat;
 
+/**
+ * Interface de la classe EvaluationServiceImpl. Couche service
+ */
 public interface EvaluationService {
 
+	/**
+	 * @see com.onek.dao.EvaluationDao#findByIdCandidate(int)
+	 */
 	List<Evaluation> findByIdCandidate(Integer idCandidat);
+	
+	/**
+	 * @see com.onek.dao.EvaluationDao#findByIdJury(int)
+	 */
 	List<Evaluation> findByIdJury(Integer idJury);
+	
+	/**
+	 * @see com.onek.dao.EvaluationDao#deleteEvaluation(int, int)
+	 */
 	void deleteEvaluation(int idJury, int idCandidat);
+	
+	/**
+	 * @see com.onek.dao.EvaluationDao#saveEvaluation(Candidat, Jury, Date, int)
+	 */
 	public void saveEvaluation(Candidat candidat, Jury jury, Date date, int idevent);
 }

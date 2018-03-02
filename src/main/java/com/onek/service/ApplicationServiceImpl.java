@@ -45,6 +45,9 @@ import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Encode;
 import com.onek.utils.StatutEvenement;
 
+/**
+ * Service ApplicationServiceImpl
+ */
 @Service
 public class ApplicationServiceImpl implements ApplicationService, Serializable {
 	private static final long serialVersionUID = 1L;
