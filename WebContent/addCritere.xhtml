@@ -13,30 +13,41 @@
 </h:head>
 <h:body>
 	<!-- Insertion du menu -->
-	<ui:include src="#{accueil.typeMenu}" />	
-	<ui:include src="menuGauche.xhtml" style="height: 100%;"/>
-	<br />	
+	<ui:include src="#{accueil.typeMenu}" />
+	<ui:include src="menuGauche.xhtml" style="height: 100%;" />
+	<br />
 	<div class="ui-g page-wrap">
 		<div class="ui-g-2"></div>
 		<div class="ui-g-9">
-			<h:form id="addcritere" rendered="#{not eventAccueil.disabledSiBrouillon}">
-				<div title="addCritère">
+			<h:form id="addcritere"
+				rendered="#{not eventAccueil.disabledSiBrouillon}">
+				<div>
 					<p:outputPanel>
 						<p:panel header="Ajouter un critère">
-							<h:panelGrid id="grid" columns="4" cellpadding="5">
-								<p:outputLabel for="nom" value="Nom :" style="font-weight:bold" />
+							<h:panelGrid id="grid" columns="4" cellpadding="5" layout="grid">								
+								<p:outputLabel for="nom" value="Nom :" style="font-weight:bold" />						
 								<p:inputText id="nom" value="#{grille.nom}" required="true" />
 
-								<p:outputLabel for="coef" value="Coefficient :" style="font-weight:bold" />
+								<h:panelGroup>
+									<p:outputLabel id="labelcoef" for="coef" value="Coefficient :"
+										style="font-weight:bold" />
+									<p:tooltip for="labelcoef" value="Coefficient du critère pour la calcul de la note finale" position="top" />
+								</h:panelGroup>
 								<p:inputNumber id="coef" value="#{grille.coefficient}"
 									minValue="0" decimalPlaces="2" required="true" />
 
-								<p:outputLabel for="categorie" value="Catégorie :"
-									style="font-weight:bold" />
+								<h:panelGroup>
+									<p:outputLabel id="labelcat" for="categorie"
+										value="Catégorie :" style="font-weight:bold" />
+									<p:tooltip for="labelcat" value="Utilisée pour trier les critères dans l'application" position="top" />
+								</h:panelGroup>
 								<p:inputText id="categorie" value="#{grille.categorie}" />
 
-								<h:outputLabel value="Nombre de niveaux :"
-									style="font-weight:bold" />
+								<h:panelGroup>
+									<h:outputLabel id="labelniv" value="Nombre de niveaux :"
+										style="font-weight:bold" />
+									<p:tooltip for="labelniv" value="Nombre de niveaux pour le critère" position="top" />
+								</h:panelGroup>
 								<p:selectOneMenu id="nbNiveau" value="#{grille.nbDescripteur}"
 									style="width:125px">
 									<f:selectItems value="#{grille.numbers}" />
@@ -49,11 +60,13 @@
 					<div class="ui-g">
 						<p:outputPanel id="toUpdate">
 							<div class="ui-g-12 ui-md-6 ui-lg-4">
-								<p:panel header="A" style="width:300px; height:250px;">
+								<p:panel header="A" style="width:230px; height:250px;">
 									<h:panelGrid columns="1" cellpadding="3">
-										<p:outputLabel for="poids1" value="Poids :" style="font-weight:bold" />
-										<p:inputNumber id="poids1" value="#{grille.poids1}" decimalPlaces="0"
-											label="Poids" required="true"/>
+										<p:outputLabel id="labelpoids1" for="poids1" value="Poids :"
+											style="font-weight:bold" />
+										<p:inputNumber id="poids1" value="#{grille.poids1}"
+											decimalPlaces="0" label="Poids" required="true" />
+										<p:tooltip for="labelpoids1" value="Valeur du niveau pour le calcul de la note finale" position="top" />
 
 										<h:outputLabel value="Description :" style="font-weight:bold" />
 										<p:inputTextarea counter="display" maxlength="500"
@@ -65,11 +78,13 @@
 								</p:panel>
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-lg-4">
-								<p:panel header="B" style="width:300px; height:250px;">
+								<p:panel header="B" style="width:230px; height:250px;">
 									<h:panelGrid columns="1" cellpadding="3">
-										<p:outputLabel for="poids2" value="Poids :" style="font-weight:bold" />
-										<p:inputNumber id="poids2" value="#{grille.poids2}" decimalPlaces="0"
-											label="Poids" required="true"/>
+										<p:outputLabel id="labelpoids2" for="poids2" value="Poids :"
+											style="font-weight:bold" />
+										<p:inputNumber id="poids2" value="#{grille.poids2}"
+											decimalPlaces="0" label="Poids" required="true" />
+										<p:tooltip for="labelpoids2" value="Valeur du niveau pour le calcul de la note finale" position="top" />
 
 										<h:outputLabel value="Description :" style="font-weight:bold" />
 										<p:inputTextarea counter="display2" maxlength="500"
@@ -80,12 +95,14 @@
 								</p:panel>
 							</div>
 							<div class="ui-g-12 ui-lg-4">
-								<p:panel header="C" style="width:300px; height:250px;"
+								<p:panel header="C" style="width:230px; height:250px;"
 									rendered="#{grille.nbDescripteur > 2}">
 									<h:panelGrid columns="1" cellpadding="3">
-										<p:outputLabel for="poids3" value="Poids :" style="font-weight:bold" />
-										<p:inputNumber id="poids3" value="#{grille.poids3}" decimalPlaces="0"
-											label="Poids" required="true"/>
+										<p:outputLabel id="labelpoids3" for="poids3" value="Poids :"
+											style="font-weight:bold" />
+										<p:inputNumber id="poids3" value="#{grille.poids3}"
+											decimalPlaces="0" label="Poids" required="true" />
+										<p:tooltip for="labelpoids3" value="Valeur du niveau pour le calcul de la note finale" position="top" />
 
 										<h:outputLabel value="Description :" style="font-weight:bold" />
 										<p:inputTextarea counter="display3" maxlength="500"
@@ -96,12 +113,14 @@
 								</p:panel>
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-lg-4">
-								<p:panel header="D" style="width:300px; height:250px;"
+								<p:panel header="D" style="width:230px; height:250px;"
 									rendered="#{grille.nbDescripteur > 3}">
 									<h:panelGrid columns="1" cellpadding="3">
-										<p:outputLabel for="poids4" value="Poids :" style="font-weight:bold" />
-										<p:inputNumber id="poids4" value="#{grille.poids4}" decimalPlaces="0"
-											label="Poids" required="true"/>
+										<p:outputLabel id="labelpoids4" for="poids4" value="Poids :"
+											style="font-weight:bold" />
+										<p:inputNumber id="poids4" value="#{grille.poids4}"
+											decimalPlaces="0" label="Poids" required="true" />
+										<p:tooltip for="labelpoids4" value="Valeur du niveau pour le calcul de la note finale" position="top" />
 
 										<h:outputLabel value="Description :" style="font-weight:bold" />
 										<p:inputTextarea counter="display4" maxlength="500"
@@ -112,12 +131,14 @@
 								</p:panel>
 							</div>
 							<div class="ui-g-12 ui-md-6 ui-lg-4">
-								<p:panel header="E" style="width:300px; height:250px;"
+								<p:panel header="E" style="width:230px; height:250px;"
 									rendered="#{grille.nbDescripteur > 4}">
 									<h:panelGrid columns="1" cellpadding="3">
-										<p:outputLabel for="poids5" value="Poids :" style="font-weight:bold" />
-										<p:inputNumber id="poids5" value="#{grille.poids5}" decimalPlaces="0"
-											label="Poids" required="true" />
+										<p:outputLabel id="labelpoids5" for="poids5" value="Poids :"
+											style="font-weight:bold" />
+										<p:inputNumber id="poids5" value="#{grille.poids5}"
+											decimalPlaces="0" label="Poids" required="true" />
+										<p:tooltip for="labelpoids5" value="Valeur du niveau pour le calcul de la note finale" position="top" />
 
 										<h:outputLabel value="Description :" style="font-weight:bold" />
 										<p:inputTextarea counter="display5" maxlength="500"
@@ -128,12 +149,14 @@
 								</p:panel>
 							</div>
 							<div class="ui-g-12 ui-lg-4">
-								<p:panel header="F" style="width:300px; height:250px;"
+								<p:panel header="F" style="width:230px; height:250px;"
 									rendered="#{grille.nbDescripteur > 5}">
 									<h:panelGrid columns="1" cellpadding="3">
-										<p:outputLabel for="poids6" value="Poids :" style="font-weight:bold" />
-										<p:inputNumber id="poids6" value="#{grille.poids6}" decimalPlaces="0"
-											label="Poids" required="true"/>
+										<p:outputLabel id="labelpoids6" for="poids6" value="Poids :"
+											style="font-weight:bold" />
+										<p:inputNumber id="poids6" value="#{grille.poids6}"
+											decimalPlaces="0" label="Poids" required="true" />
+										<p:tooltip for="labelpoids6" value="Valeur du niveau pour le calcul de la note finale" position="top" />
 
 										<h:outputLabel value="Description :" style="font-weight:bold" />
 										<p:inputTextarea counter="display6" maxlength="500"
@@ -148,10 +171,10 @@
 					<div>
 						<p:commandButton value="Ajouter" action="#{grille.onClicAdd}"
 							icon="ui-icon-check" rendered="#{not grille.modification}"
-							update="addcritere"/>
-						<p:commandButton value="Enregistrer les modifications" action="#{grille.onClicAdd}"
-							icon="ui-icon-check" rendered="#{grille.modification}"
-							update="addcritere"/>
+							update="addcritere" />
+						<p:commandButton value="Enregistrer les modifications"
+							action="#{grille.onClicAdd}" icon="ui-icon-check"
+							rendered="#{grille.modification}" update="addcritere" />
 					</div>
 					<br />
 				</div>
@@ -165,9 +188,9 @@
 			</h:form>
 		</div>
 	</div>
-	<br/>
-	<br/>
-	<br/>
+	<br />
+	<br />
+	<br />
 	<!-- Insertion du footer -->
 	<ui:include src="footer.xhtml" />
 </h:body>

@@ -338,12 +338,12 @@ public class CandidateBean implements Serializable {
 		candidats.clear();		
 	}
 
-	public void showMessageImport(String importLog) {
+	private void showMessageImport(String importLog) {
 		RequestContext.getCurrentInstance()
 				.showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Importer des candidats", importLog));
 	}
 
-	public void showMessageAddCandidate(String addCandidateLog) {
+	private void showMessageAddCandidate(String addCandidateLog) {
 		RequestContext.getCurrentInstance().showMessageInDialog(
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Ajouter un candidat", addCandidateLog));
 	}

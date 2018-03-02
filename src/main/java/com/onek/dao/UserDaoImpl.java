@@ -300,7 +300,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Utilisateur> getAllUsersExceptDeletedansAno() {
-		List<Utilisateur> users = new ArrayList<>();
+		List<Utilisateur> users = null;
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {

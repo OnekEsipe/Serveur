@@ -193,12 +193,12 @@ public class AccountBean implements Serializable {
 		showMessageMail("Modification effectuée avec succès !");
 	}
 	
-	public void showMessagePassword(String logPassword) {
+	private void showMessagePassword(String logPassword) {
 		RequestContext.getCurrentInstance().showMessageInDialog(
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification du mot de passe", logPassword));
 	}
 	
-	public void showMessageMail(String logMail) {
+	private void showMessageMail(String logMail) {
 		RequestContext.getCurrentInstance().showMessageInDialog(
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification de l'adresse mail", logMail));
 	}
