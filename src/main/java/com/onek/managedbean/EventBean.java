@@ -28,6 +28,9 @@ public class EventBean implements Serializable {
 	@Autowired
 	private EvenementService evenementService;
 	
+	@Autowired
+	private AccueilBean accueilBean;
+	
 	private String name;
 	private Date date1;					//format => dd-MM-yyy
 	private Date date2;					//format => dd-MM-yyy
@@ -153,6 +156,7 @@ public class EventBean implements Serializable {
 		addEvent();
 		addEvenementCode();
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idEvent", event.getIdevent());
+		accueilBean.setEvenementChoisi(event.getNom());
 		Navigation.redirect("eventManager.xhtml");
 	}
 
