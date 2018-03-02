@@ -1,5 +1,7 @@
 package com.onek.managedbean;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
+import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,11 +17,13 @@ import org.springframework.stereotype.Component;
 import com.onek.model.Utilisateur;
 import com.onek.service.UserService;
 import com.onek.utils.DroitsUtilisateur;
+import com.onek.utils.Encode;
 import com.onek.utils.Navigation;
 import com.onek.utils.Password;
 
 @Component("addUser")
 public class AddUserBean {
+	private final static Logger logger = Logger.getLogger(AddUserBean.class);
 
 	@Autowired
 	UserService userService;
@@ -186,7 +191,13 @@ public class AddUserBean {
 		newUser.setPrenom(firstName);
 		newUser.setMail(mail);
 		newUser.setLogin(login);
-		newUser.setMotdepasse(password);
+		try {
+			newUser.setMotdepasse(Encode.sha1(password));
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e1) {
+			logger.error(this.getClass().getName(), e1);
+			logInfo = "Création impossible : une erreur interne est survenue.";
+			showLogMessage(true);
+		}
 		newUser.setIsdeleted(false);
 		if (isAdmin) {
 			newUser.setDroits(DroitsUtilisateur.ADMINISTRATEUR.toString());
