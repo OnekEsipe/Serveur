@@ -651,18 +651,18 @@ public class StatistiquesBean implements Serializable {
 						CreationHelper helper = workbook.getCreationHelper();
 						Drawing<?> drawing = sheet.createDrawingPatriarch();
 						ClientAnchor anchor = helper.createClientAnchor();
-						anchor.setDx1(0);
-						anchor.setDy1(0);
-						anchor.setDx2(1023);
-						anchor.setDy2(255);
+//						anchor.setDx1(0);
+//						anchor.setDy1(0);
+//						anchor.setDx2(1023);
+//						anchor.setDy2(255);
 						anchor.setCol1(colNum);
 						anchor.setRow1(rowNum-1);
 						anchor.setRow2(rowNum-1);
 						anchor.setCol2(colNum);
 						Picture pict = drawing.createPicture(anchor, imageIDX);
 						pict.resize(8, 8);
-						sheet.setColumnWidth(colNum, 400);
-						row.setHeight((short) 400);
+						sheet.setColumnWidth(colNum, 800);
+						row.setHeight((short) 800);
 						colNum++;
 					}
 				}
