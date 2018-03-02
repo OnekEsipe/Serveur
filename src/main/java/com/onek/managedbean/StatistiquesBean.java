@@ -570,7 +570,7 @@ public class StatistiquesBean implements Serializable {
 			cell.setCellStyle(style);
 			colNum++;
 			cell = row.createCell(colNum);
-			cell.setCellValue(0);
+			cell.setCellValue("");
 			cell.setCellStyle(style);
 			mapParam.get(critere.getTexte()).put("-", cell.getAddress());
 			rowNum += 2;
@@ -661,8 +661,8 @@ public class StatistiquesBean implements Serializable {
 						anchor.setCol2(colNum);
 						Picture pict = drawing.createPicture(anchor, imageIDX);
 						pict.resize(8, 8);
-						sheet.setColumnWidth(colNum, 800);
-						row.setHeight((short) 800);
+						sheet.setColumnWidth(colNum, 8000);
+						row.setHeight((short) 1400);
 						colNum++;
 					}
 				}
