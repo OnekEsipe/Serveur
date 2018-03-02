@@ -331,7 +331,7 @@ public class UserServiceTest {
 		Utilisateur adduser = new Utilisateur();
 		String label = "azerty"+users.size();
 		adduser.setLogin(label);
-		adduser.setMail(label+formatMail);
+		adduser.setMail("onek2018esipe@gmail.com");
 		adduser.setNom(label);
 		adduser.setMotdepasse(label);
 		userService.addUser(adduser);
