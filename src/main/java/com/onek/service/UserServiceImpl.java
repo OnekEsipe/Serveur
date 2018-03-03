@@ -158,14 +158,14 @@ public class UserServiceImpl implements UserService, Serializable {
 		message += "Vous recevez ce message car un administrateur vous a inscrit à <strong>l'application ONEK'</strong>";
 		message += " en tant qu'<strong>" + user.getNomDroits().toLowerCase() + "</strong>.<br/><br/>";
 		message += "Vous trouverez vos informations de connexion ci-dessous :<br/>";
-		message += "Login : " + user.getLogin() + "<br/>";
-		message += "Mot de passe :" + password + "<br/><br/>";
+		message += "Login : <strong>" + user.getLogin() + "</strong><br/>";
+		message += "Mot de passe : <strong>" + password + "</strong><br/><br/>";
 		message += "Vous pouvez accéder à l'application via le lien suivant :<br/>";
-		message += "<a href=\"" + url + "index.xhtml>" + "" + url + "index.xhtml</a><br/><br/>";
+		message += "<a href=\"" + url + "index.xhtml\">" + url + "index.xhtml</a><br/><br/>";
 		message += "Nous vous conseillons de modifier votre mot de passe dès votre première connexion.<br/><br/>";		
 		message += "Cordialement,<br/>";
 		message += "<strong>L'équipe ONEK'</strong>";		
 
-		return emailService.sendMail(user.getMail(), "[ONEK'] Inscription a l'application", message);
+		return emailService.sendMail(user.getMail(), "[ONEK'] Inscription", message);
 	}
 }
