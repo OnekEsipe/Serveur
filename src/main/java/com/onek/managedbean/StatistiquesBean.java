@@ -17,6 +17,7 @@ import javax.faces.event.ComponentSystemEvent;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Drawing;
@@ -413,7 +414,7 @@ public class StatistiquesBean implements Serializable {
 			cell.setCellStyle(style);
 			colNum++;
 			cell = row.createCell(colNum);
-			cell.setCellValue("");
+			cell.setCellType(CellType.BLANK);
 			cell.setCellStyle(style);
 			range = range + ":" + cell.getAddress().formatAsString();
 			rowNum += 2;
