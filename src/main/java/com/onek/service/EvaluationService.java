@@ -26,17 +26,17 @@ public interface EvaluationService {
 	 */
 	void deleteEvaluation(int idJury, int idCandidat);
 	
-  /**
+	/**
 	 * @see com.onek.dao.EvaluationDao#findById(int)
 	 */
 	public Evaluation findById(int id);
   
-   /**
+ 	/**
 	 * @see com.onek.dao.EvaluationDao#update(Evaluation)
 	 */
 	public void update(Evaluation evaluation);
   
-  /**
+	/**
 	 * @see com.onek.dao.EvaluationDao#saveEvaluation(Candidat, Jury, Date, int)
 	 */
 	public void saveEvaluation(Candidat candidat, Jury jury, Date date, int idevent);

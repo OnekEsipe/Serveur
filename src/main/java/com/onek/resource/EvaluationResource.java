@@ -14,9 +14,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.onek.model.Evaluation;
 import com.onek.model.Note;
 
-/**
- * Json evaluation
- */
 public class EvaluationResource implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -53,11 +50,6 @@ public class EvaluationResource implements Serializable {
 		
 	}
 	
-	/**
-	 * Données d'un evaluation : <br/>
-	 * Id - IdJury - IdEvent - IdCandidate - Comment - IsSigned - Criterias - Signatures - LastUpdatedDate
-	 * @param evaluation
-	 */
 	public EvaluationResource(Evaluation evaluation) {
 		idEvaluation = evaluation.getIdevaluation();
 		idJury = evaluation.getJury().getUtilisateur().getIduser();

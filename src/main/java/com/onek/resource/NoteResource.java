@@ -14,9 +14,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.onek.model.Descripteur;
 import com.onek.model.Note;
 
-/**
- * Json note
- */
 public class NoteResource implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -50,11 +47,6 @@ public class NoteResource implements Serializable {
 		
 	}
 	
-	/**
-	 * Données d'une note : <br/>
-	 * Text - Category - Comment - Descriptor - LastModification - SelectedLevel - SelectedDescriptor
-	 * @param note
-	 */
 	public NoteResource(Note note) {
 		idCriteria = note.getCritere().getIdcritere();
 		text = note.getCritere().getTexte();

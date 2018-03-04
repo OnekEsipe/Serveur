@@ -6,9 +6,6 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.onek.model.Candidat;
 
-/**
- * Json candidat
- */
 public class CandidatResource implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -21,11 +18,6 @@ public class CandidatResource implements Serializable {
 	@JsonProperty("FirstName")
 	private final String prenom;		
 	
-	/**
-	 * Données d'un candidat :<br/>
-	 * Id - LastName - FirstName
-	 * @param candidat Candidat
-	 */
 	public CandidatResource(Candidat candidat) {
 		Objects.requireNonNull(candidat);
 		idCandidat = candidat.getIdcandidat();
