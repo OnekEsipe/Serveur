@@ -18,7 +18,13 @@ public interface JuryService {
 	List<Jury> findJurysByIdevent(int idevent);
 	
 	/**
-	 * @see com.onek.dao.JuryDao#associatedJurysCandidatesByEvent(java.util.ist, int)
+	 * Récupère les associations jurys-candidats depuis la base de données.
+	 * Une erreur de type RuntimeException entraine le rollback.
+	 * @exception IllegalStateException Si la liste de candidats est vide
+	 * @exception IllegalArgumentException Si idEvent inférieur à 1
+	 * @param jurys Liste des jurys
+	 * @param idevent Id de l'événément
+	 * @return Map des jurys associés aux candidats pour un événement
 	 */
 	HashMap<Jury, List<Candidat>> associatedJurysCandidatesByEvent(List<Jury> jurys, int idevent);
 	
@@ -48,11 +54,6 @@ public interface JuryService {
 	public void addJuryToEvent(Jury jury);
 	
 	/**
-	 * @see com.onek.dao.JuryDao#findAnonymousByIdEvent(int)
-	 */
-	public List<Jury> findAnonymousByIdEvent(int idEvent);
-	
-	/**
 	 * @see com.onek.dao.JuryDao#addListJurys(java.util.List)
 	 */
 	public void addListJurys(List<Jury> jurys);
@@ -61,14 +62,30 @@ public interface JuryService {
 	 * @see com.onek.dao.JuryDao#findById(int)
 	 */
 	public Utilisateur findById(int id) ;
+
+	/**
+	 * @see com.onek.dao.JuryDao#findJuryById(int)
+	 */
+	public Jury findJuryById(int id);
 	
 	/**
 	 * @see com.onek.dao.JuryDao#supprimerUtilisateurAnonyme(int)
 	 */
-  public void supprimerUtilisateurAnonyme(int iduser);
-	public Jury findJuryById(int id);
+	public void supprimerUtilisateurAnonyme(int iduser);
+	
+	/**
+	 * @see com.onek.dao.JuryDao#findJuryAndAnonymousByIdEvent(int, String)
+	 */
 	public List<Jury> findJuryAndAnonymousByIdEvent(int idEvent, String login);
+	
+	/**
+	 * @see com.onek.dao.JuryDao#findByUser(Utilisateur)
+	 */
 	public List<Jury> findByUser(Utilisateur user);
+	
+	/**
+	 * @see com.onek.dao.JuryDao#findJurysAnnonymesByEvent(int)
+	 */
 	public List<Utilisateur> findJurysAnnonymesByEvent(int idevent);
 
 }

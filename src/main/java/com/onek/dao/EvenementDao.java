@@ -13,8 +13,9 @@ public interface EvenementDao {
 	 * Enregistre un evenement dans la base de données.
 	 * Une erreur de type RuntimeException entraine le rollback
 	 * @param Evenement Un evenement
+	 * @return Evenement ajouté
 	 */
-	public void addEvenement(Evenement event);
+	public Evenement addEvenement(Evenement event);
 	
 	/**
 	 * Récupére un evenement par son identifiant.

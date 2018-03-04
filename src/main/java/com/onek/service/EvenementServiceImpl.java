@@ -20,8 +20,8 @@ public class EvenementServiceImpl implements EvenementService, Serializable{
 	private EvenementDao eventDao;
 	
 	@Override
-	public void addEvenement(Evenement event) {
-		eventDao.addEvenement(event);		
+	public Evenement addEvenement(Evenement event) {
+		return eventDao.addEvenement(event);		
 	}
 
 	@Override

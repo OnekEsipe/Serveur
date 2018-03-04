@@ -12,7 +12,7 @@ public interface EvenementService {
 	/**
 	 * @see com.onek.dao.EvenementDao#addEvenement(Evenement)
 	 */
-	public void addEvenement(Evenement event);
+	public Evenement addEvenement(Evenement event);
 	
 	/**
 	 * @see com.onek.dao.EvenementDao#findById(int)
@@ -43,9 +43,4 @@ public interface EvenementService {
 	 * @see com.onek.dao.EvenementDao#findByIdUser(int)
 	 */
 	public List<Evenement> myListEvents(int iduser);
-
-	/**
-	 * @see com.onek.dao.EvenementDao#addDuplicatedEvent(Evenement)
-	 */
-	public Evenement addDuplicatedEvent(Evenement event);
 }

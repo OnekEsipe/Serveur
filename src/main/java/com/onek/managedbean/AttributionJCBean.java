@@ -340,7 +340,7 @@ public class AttributionJCBean implements Serializable {
 	 * Attribution automatique jurys par candidat.
 	 * @param randomX Nombre saisi par l'utilisateur avec le spinner
 	 */
-	private void JuryParCandidat(int randomX) {
+	private void juryParCandidat(int randomX) {
 		if (randomX > juryList.size()) {
 			showErrorAssignment("Le nombre de jurys affectés à cet événement est insuffisant.");
 			return;
@@ -393,7 +393,7 @@ public class AttributionJCBean implements Serializable {
 	 * Attribution automatique candidats par jury.
 	 * @param randomX Nombre saisi par l'utilisateur avec le spinner
 	 */
-	public void CandidatParJury(int randomX) {
+	public void candidatParJury(int randomX) {
 		if (randomX > candidatsJurys.size()) {
 			showErrorAssignment("Le nombre de candidats affectés à cet événement est insuffisant.");
 			return;

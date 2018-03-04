@@ -101,13 +101,6 @@ public interface UserDao {
 	 * @return L'utilisateur trouvé
 	 */
 	public Utilisateur findByToken(String token);
-	
-	/**
-	 * Récupère les utilisateurs, or utilisateurs supprimés, depuis la base de données.
-	 * Une erreur de type RuntimeException entraine le rollback
-	 * @return La liste des utilisateurs 
-	 */
-	public List<Utilisateur> getAllUsersExceptDeleted();
 
   /**
 	 * Récupère les utilisateurs, or utilisateurs supprimés et anonymes, depuis la base de données.

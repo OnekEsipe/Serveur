@@ -225,39 +225,6 @@ public class CandidateBean implements Serializable {
 	public List<Candidat> getImportedCandidates() {
 		return importedCandidates;
 	}
-
-	/**
-	 * Getter de la variable importLog
-	 * @return importLog Message pour l'importation de candidats
-	 */
-	public String getImportLog() {
-		return importLog;
-	}
-
-	/**
-	 * Setter de la variable importLog
-	 * @param importLog Message pour l'importation de candidats
-	 */
-	public void setImportLog(String importLog) {
-		this.importLog = importLog;
-	}
-
-	/**
-	 * Getter de la variable message
-	 * @return message
-	 */
-	public String getMessage() {
-		return message;
-	}
-
-	/**
-	 * Setter de la variable message
-	 * @return message
-	 */
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
 	
 	/**
 	 * Création d'un candidat. Le prénom est facultatif

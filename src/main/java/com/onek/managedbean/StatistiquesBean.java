@@ -83,12 +83,17 @@ public class StatistiquesBean implements Serializable {
 	public class StatsJury {
 		String name;
 		double value;
-		
+		String notation;
+		List<Candidat> candidats;
+
 		/**
 		 * @param name Nom du jury
 		 * @param value Valeur de la statistique
+		 * @param nbNoted Nombre de notes réalisées
+		 * @param nbNotes Nomre de notes total
+		 * @param candidats Liste des candidats
 		 */
-		public StatsJury(String name, double value) {
+		public StatsJury(String name, double value, int nbNoted, int nbNotes, List<Candidat> candidats) {
 			this.name = name;
 			this.value = value;
 			this.notation = nbNoted + "/" + nbNotes;
@@ -122,12 +127,17 @@ public class StatistiquesBean implements Serializable {
 	public class StatsCandidate {
 		String name;
 		double value;
+		String notation;
+		List<Utilisateur> jurys;
 		
 		/**
 		 * @param name Nom du candidat
 		 * @param value Valeur de la statistique
+		 * @param nbNoted Nombre de notes réalisées
+		 * @param nbNotes Nomre de notes total
+		 * @param candidats Liste des jurys
 		 */
-		public StatsCandidate(String name, double value) {
+		public StatsCandidate(String name, double value, int nbNoted, int nbNotes, List<Utilisateur> jurys) {
 			this.name = name;
 			this.value = value;
 			this.notation = nbNoted + "/" + nbNotes;
@@ -197,12 +207,6 @@ public class StatistiquesBean implements Serializable {
 	public void buttonResultByJurys() {
 		buildXlsx("jury", false);
 	}
-
-	/**
-	 * Navigation vers la page eventAccueil.xhtml
-	 */
-	public void buttonRetour() {
-		Navigation.redirect("eventAccueil.xhtml");
 
   /**
 	 * Construit le fichier excel pour les candidats (avec la signature)

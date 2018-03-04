@@ -14,12 +14,12 @@ public interface EvaluationService {
 	/**
 	 * @see com.onek.dao.EvaluationDao#findByIdCandidate(int)
 	 */
-	List<Evaluation> findByIdCandidate(Integer idCandidat);
+	List<Evaluation> findByIdCandidate(int idCandidat);
 	
 	/**
 	 * @see com.onek.dao.EvaluationDao#findByIdJury(int)
 	 */
-	List<Evaluation> findByIdJury(Integer idJury);
+	List<Evaluation> findByIdJury(int idJury);
 	
 	/**
 	 * @see com.onek.dao.EvaluationDao#deleteEvaluation(int, int)

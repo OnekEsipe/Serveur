@@ -26,7 +26,7 @@ public class Password {
 	 * @param length Longueur du mot de passe
 	 * @return Le mot de passe généré
 	 */
-	public String generatePassword(int length) {
+	public static String generatePassword(int length) {
 		if(length < 1 || length > Integer.MAX_VALUE) {
 			throw new IllegalArgumentException("length must be positive and inf Integer.MAX_VALUE");
 		}
@@ -39,7 +39,7 @@ public class Password {
 	 * @param length Longueur du code
 	 * @return Le code événement généré
 	 */
-	public String generateCode(int length) {
+	public static String generateCode(int length) {
 		if(length < 1 || length > Integer.MAX_VALUE) {
 			throw new IllegalArgumentException("length must be positive and inf Integer.MAX_VALUE");
 		}

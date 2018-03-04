@@ -57,17 +57,6 @@ public interface JuryDao {
 	public List<Jury> findJurysByIdevent(int idevent);
 	
 	/**
-	 * Récupère les associations jurys-candidats depuis la base de données.
-	 * Une erreur de type RuntimeException entraine le rollback.
-	 * @exception IllegalStateException Si la liste de candidats est vide
-	 * @exception IllegalArgumentException Si idEvent inférieur à 1
-	 * @param jurys Liste des jurys
-	 * @param idevent Id de l'événément
-	 * @return Map des jurys associés aux candidats pour un événement
-	 */
-	public HashMap<Jury, List<Candidat>> associatedJurysCandidatesByEvent(List<Jury> jurys, int idevent);
-	
-	/**
 	 * Récupère la liste des utilisateurs d'un événement depuis la base de données.
 	 * Une erreur de type RuntimeException entraine le rollback.
 	 * @exception IllegalArgumentException Si idEvent inférieur à 1

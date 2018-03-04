@@ -34,7 +34,6 @@ public class JuryServiceImpl implements JuryService, Serializable{
 		return juryDao.findJurysByIdevent(idevent);
 	}
 	
-	/* associated jurys and candidates for an event */
 	@Override
 	public HashMap<Jury, List<Candidat>> associatedJurysCandidatesByEvent(List<Jury> jurys, int idevent) {
 		Objects.requireNonNull(jurys);

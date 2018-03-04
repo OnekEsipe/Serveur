@@ -85,22 +85,6 @@ public class AddJuryBean implements Serializable {
 	}
 
 	/**
-	 * Getter de la variable passwordGenerator
-	 * @return passwordGenerator Le mot de passe généré pour les jurys anonymes
-	 */
-	public Password getPasswordGenerator() {
-		return passwordGenerator;
-	}
-
-	/**
-	 * Setter de la variable passwordGenerator
-	 * @param passwordGenerator Le mot de passe généré pour les jurys anonymes
-	 */
-	public void setPasswordGenerator(Password passwordGenerator) {
-		this.passwordGenerator = passwordGenerator;
-	}
-
-	/**
 	 * Getter de la variable utilisateurs
 	 * @return utilisateurs Liste des utilisateurs
 	 */
