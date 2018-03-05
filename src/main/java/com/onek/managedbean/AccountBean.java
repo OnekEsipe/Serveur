@@ -187,7 +187,7 @@ public class AccountBean implements Serializable {
 			return;
 		}
 		lastEmail = newEmail;
-		user.setMail(newEmail);
+		user.setMail(newEmail.toLowerCase());
 		newEmail = "";
 		userService.updateUserInfos(user);
 		showMessageMail("Modification effectuée avec succès !");

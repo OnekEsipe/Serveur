@@ -65,6 +65,7 @@ public class UserServiceImpl implements UserService, Serializable {
 		if (mailExist(user.getMail())) {
 			throw new IllegalStateException("L'adresse mail est déjà utilisée.");
 		}
+		user.setMail(user.getMail().toLowerCase());
 		userDao.addUser(user);
 	}
 
@@ -122,7 +123,7 @@ public class UserServiceImpl implements UserService, Serializable {
 
 	@Override
 	public boolean mailExist(String mail) {
-		return userDao.mailExist(mail);
+		return userDao.mailExist(mail.toLowerCase());
 	}
 
 	@Override
