@@ -110,7 +110,7 @@
 										<ui:repeat value="#{attributionjc.candidatsJurys}"
 											var="candidat">
 											<td align="center"><p:selectBooleanCheckbox
-													value="#{attributionjc.attribJC[jury][candidat]}" /></td>
+													value="#{attributionjc.attribJC[jury][candidat]}" disabled="#{attributionjc.attribJCDisabledCheckBox[jury][candidat]}"/></td>
 										</ui:repeat>
 									</tr>
 								</ui:repeat>
@@ -127,7 +127,7 @@
 						<div class="ui-g-4">
 							<p:commandButton value="Vider les attributions"
 								actionListener="#{attributionjc.clearButton}"
-								update="tableCheckBox" />
+								rendered="#{attributionjc.isopen}" update="tableCheckBox" />
 						</div>
 					</div>
 				</h:form>
