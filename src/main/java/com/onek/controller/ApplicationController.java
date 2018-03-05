@@ -1,9 +1,12 @@
 package com.onek.controller;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,11 +44,14 @@ public class ApplicationController {
 	/* Create a new jury from app */
 	@RequestMapping(value = "/createjury", method = RequestMethod.POST)
 	public ResponseEntity<String> createJury(@RequestBody CreateJuryResource createJuryResource) {
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/plain; charset=utf-8");
 		try {
 			applicationService.createJury(createJuryResource);
 		} catch (IllegalStateException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-		}
+			ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(e.getMessage());			
+			return new ResponseEntity<String>(byteBuffer.toString(), responseHeaders, HttpStatus.CONFLICT);
+		}		
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
@@ -94,12 +100,15 @@ public class ApplicationController {
 	/* code event */
 	@RequestMapping(value = "/events/code", method = RequestMethod.POST)
 	public ResponseEntity<? extends Object> codeEvent(@RequestBody CodeEvenementResource eventCode) {
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/plain; charset=utf-8");
 		try {
 			if (!applicationService.subscribe(eventCode)) {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
 		} catch (IllegalStateException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+			ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(e.getMessage());		
+			return new ResponseEntity<String>(byteBuffer.toString(), responseHeaders, HttpStatus.CONFLICT);
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
@@ -138,4 +147,5 @@ public class ApplicationController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
+	
 }
