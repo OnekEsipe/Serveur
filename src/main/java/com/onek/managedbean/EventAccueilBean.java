@@ -283,6 +283,22 @@ public class EventAccueilBean implements Serializable {
 		event.setIsopened(isOpened);
 		event.setSigningneeded(signingNeeded);
 		eventAccueilservice.editEvenement(event);
+		if (statut.equals("Brouillon")) {
+			setVisibleB("true");
+			setVisibleO("false");
+			setVisibleF("false");
+			disabledSiBrouillon = false;
+		} else if (statut.equals("Ouvert")) {
+			setVisibleB("false");
+			setVisibleO("true");
+			setVisibleF("false");
+			disabledSiBrouillon = true;
+		} else {
+			setVisibleB("false");
+			setVisibleO("false");
+			setVisibleF("true");
+			disabledSiBrouillon = true;
+		}
 		RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Modifier un événement", "Les modifications ont été enregistrées avec succès !"));
 	}
