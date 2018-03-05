@@ -104,10 +104,10 @@
 						<!-- ********la colonne supprimée*********** -->
 						<p:column style="width:32px;text-align: center"
 							rendered="#{not eventAccueil.disabledSiBrouillon}">
-							<p:growl id="message" showDetail="true" />
+							
 							<p:commandButton id="iconOnly" icon="ui-icon-trash"
 								actionListener="#{candidate.supprimerCandidat}" ajax="true"
-								update="@(form)"
+								update="tabCandidat"
 								style="background-color: #B40404; border-color: #8A0808;">
 								<p:confirm header="Confirmation de suppression"
 									message="Voulez-vous vraiment supprimer le candidat ?"
