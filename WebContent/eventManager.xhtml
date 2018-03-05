@@ -33,6 +33,7 @@
 						<h:form id="modifevent" style="width:1000px !important">
 							<h:panelGrid columns="2" cellpadding="10">
 								<p:outputLabel for="nom" value="Nom : " />
+
 								<h:outputText value="#{eventAccueil.event.nom}"
 									rendered="#{eventAccueil.visibleO}" />
 								<h:outputText value="#{eventAccueil.event.nom}"
@@ -40,8 +41,12 @@
 								<p:inputText id="nom" value="#{eventAccueil.nom}"
 									rendered="#{eventAccueil.visibleB}"
 									placeholder="#{eventAccueil.event.nom}" required="true" />
-
-								<p:outputLabel value="Code inscription : " />
+								<h:panelGroup>
+									<p:outputLabel id="codeInscri" value="Code inscription : " />
+									<p:tooltip for="codeInscri"
+										value="code utilisé pour l'inscription depuis l'application"
+										position="top" />
+								</h:panelGroup>
 								<h:outputText value="#{eventAccueil.event.code}"></h:outputText>
 								<p:outputLabel value="Statut : " />
 
@@ -66,33 +71,40 @@
 								<p:outputLabel for="dateStart" value="Date de début : " />
 								<p:calendar id="dateStart" value="#{eventAccueil.dateStart}"
 									required="true" />
-									
-									<p:outputLabel for="timeStart" value="Heure de début : " />
+
+								<p:outputLabel for="timeStart" value="Heure de début : " />
 								<p:calendar id="timeStart" value="#{eventAccueil.timeStart}"
 									pattern="HH:mm" timeOnly="true" required="true" />
 
 								<p:outputLabel for="dateEnd" value="Date de fin : " />
 								<p:calendar id="dateEnd" value="#{eventAccueil.dateEnd}"
-									required="true" />								
+									required="true" />
 
 								<p:outputLabel for="timeEnd" value="Heure de fin : " />
 								<p:calendar id="timeEnd" value="#{eventAccueil.timeEnd}"
 									pattern="HH:mm" timeOnly="true" required="true" />
-
-								<h:outputText value="Signature : " />
+								<h:panelGroup>
+									<h:outputText id="signature" value="Signature : " />
+									<p:tooltip for="signature"
+										value="événement nécessitant une signature lors de la notation "
+										position="top" />
+								</h:panelGroup>
 								<p:selectBooleanCheckbox value="#{eventAccueil.signingNeeded}"
 									disabled="#{eventAccueil.disabledSiBrouillon}" />
-
-								<h:outputText value="Ouvert à l'inscription : " />
+								<h:panelGroup>
+									<h:outputText id="ouvertInscri"
+										value="Ouvert à l'inscription : " />
+									<p:tooltip for="ouvertInscri"
+										value="ouvrir l'inscription depuis l'application mobile à l'aide du code événement"
+										position="top" />
+								</h:panelGroup>
 								<p:selectBooleanCheckbox value="#{eventAccueil.isOpened}"
 									disabled="#{eventAccueil.disabledSiBrouillon}" />
 
 								<div style="text-align: center;">
 									<p:commandButton value="Enregistrer les modifications"
-										ajax="true"
-										actionListener="#{eventAccueil.eventUpdateButton}"
-										icon="ui-icon-check" 
-										update="modifevent"/>
+										ajax="true" actionListener="#{eventAccueil.eventUpdateButton}"
+										icon="ui-icon-check" update="modifevent" />
 								</div>
 							</h:panelGrid>
 						</h:form>
