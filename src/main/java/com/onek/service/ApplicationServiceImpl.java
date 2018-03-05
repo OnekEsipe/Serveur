@@ -270,10 +270,10 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			throw new IllegalStateException("L'événement n'est pas ouvert à l'inscription.");
 		}
 		if (event.getIsdeleted()) {
-			return false;
+			throw new IllegalArgumentException("L'événement n'existe pas.");
 		}
 		if (event.getStatus().equals(StatutEvenement.FERME.toString())) {
-			return false;
+			throw new IllegalArgumentException("L'événement est fermé.");
 		}
 		if (juryDao.juryIsAssigned(user.getIduser(), event.getIdevent())) {
 			throw new IllegalStateException("Vous êtes déjà inscrit.");

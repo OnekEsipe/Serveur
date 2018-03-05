@@ -111,6 +111,10 @@ public class ApplicationController {
 			ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(e.getMessage());
 			return new ResponseEntity<String>(new String(byteBuffer.array(), Charset.forName("UTF-8")), responseHeaders,
 					HttpStatus.CONFLICT);
+		} catch(IllegalArgumentException e) {
+			ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(e.getMessage());
+			return new ResponseEntity<String>(new String(byteBuffer.array(), Charset.forName("UTF-8")), responseHeaders,
+					HttpStatus.FORBIDDEN);
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
