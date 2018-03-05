@@ -170,7 +170,8 @@ public class CandidateBean implements Serializable {
 		newCandidat.setNom(lastName);
 		newCandidat.setEvenement(event);
 		for (Candidat candidat : candidats) {
-			if (candidat.getNom().equals(lastName) && candidat.getPrenom().equals(firstName)) {
+			if (candidat.getNom().toLowerCase().equals(lastName.toLowerCase())
+					&& candidat.getPrenom().toLowerCase().equals(firstName.toLowerCase())) {
 				if (firstName.isEmpty()) {
 					messagedoublon = "Le candidat " + lastName + " " + firstName
 							+ " existe déja. Voulez-vous l'ajouter ?";
@@ -273,8 +274,8 @@ public class CandidateBean implements Serializable {
 			if (!importedCandidats.isEmpty()) {
 				for (Candidat importedcandidat : importedCandidats) {
 					for (Candidat candidat : candidats) {
-						if (candidat.getNom().equals(importedcandidat.getNom())
-								&& candidat.getPrenom().equals(importedcandidat.getPrenom())) {
+						if (candidat.getNom().toLowerCase().equals(importedcandidat.getNom().toLowerCase())
+								&& candidat.getPrenom().toLowerCase().equals(importedcandidat.getPrenom().toLowerCase())) {
 							showMessageImport(
 									"La liste des candidats a été importée avec succès,<br/>mais des candidats homonymes ont été détectés.");
 							homonymeDetected = true;
@@ -335,7 +336,7 @@ public class CandidateBean implements Serializable {
 				candidateService.supprimerCandidat(candidat.getIdcandidat());
 			}
 		}
-		candidats.clear();		
+		candidats.clear();
 	}
 
 	private void showMessageImport(String importLog) {
