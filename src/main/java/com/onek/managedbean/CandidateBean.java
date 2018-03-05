@@ -164,7 +164,8 @@ public class CandidateBean implements Serializable {
 		if (firstName.isEmpty()) {
 			firstName = "";
 		}
-
+		messagedoublon="";
+		homonyme=false;
 		Candidat newCandidat = new Candidat();
 		newCandidat.setPrenom(firstName);
 		newCandidat.setNom(lastName);
@@ -172,12 +173,10 @@ public class CandidateBean implements Serializable {
 		for (Candidat candidat : candidats) {
 			if (candidat.getNom().toLowerCase().equals(lastName.toLowerCase())
 					&& candidat.getPrenom().toLowerCase().equals(firstName.toLowerCase())) {
-				if (firstName.isEmpty()) {
-					messagedoublon = "Le candidat " + lastName + " " + firstName
-							+ " existe déja. Voulez-vous l'ajouter ?";
-				} else {
-					messagedoublon = "Le candidat " + lastName + " existe déja. Voulez-vous l'ajouter ?";
-				}
+
+				messagedoublon = "Le candidat " + lastName + " " + firstName
+						+ " ne peut pas être ajouter car il existe déja.";
+
 				homonyme = true;
 				return;
 			}
