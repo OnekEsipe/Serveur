@@ -338,14 +338,11 @@ public class CandidateBean implements Serializable {
 		try {
 			writer.write("nom;prenom");
 			writer.write(System.getProperty("line.separator"));
-			if (candidats.isEmpty()) {
-				writer.write("Smith;James");
-			} else {
-				for (Candidat candidat : candidats) {
-					writer.write(candidat.getNom() + ";" + candidat.getPrenom());
-					writer.write(System.getProperty("line.separator"));
-				}
+			for (Candidat candidat : candidats) {
+				writer.write(candidat.getNom() + ";" + candidat.getPrenom());
+				writer.write(System.getProperty("line.separator"));
 			}
+
 		} finally {
 			if (writer != null) {
 				writer.close();
