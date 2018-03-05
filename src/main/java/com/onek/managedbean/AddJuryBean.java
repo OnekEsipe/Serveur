@@ -161,7 +161,21 @@ public class AddJuryBean implements Serializable {
 			utilisateursAll.add(jury);
 		}
 	}
-
+	public void suppressAllJurys() {
+		if (utilisateurs.size() > 0) {
+			for (Utilisateur utilisateur : utilisateurs) {
+				juryService.supprimerUtilisateur(utilisateur.getIduser(), idEvent);
+				if(utilisateur.getDroits().equals("A")) {
+					utilisateursAnos.remove(utilisateur);
+					juryService.supprimerUtilisateurAnonyme(utilisateur.getIduser());
+				}
+				else {
+					utilisateursAll.add(utilisateur);
+				}
+			}
+		}
+		utilisateurs.clear();	
+	}
 	public void buttonAdd() {
 
 		for (Utilisateur utilisateur : selectedutilisateurs) {
