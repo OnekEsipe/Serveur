@@ -2,6 +2,7 @@ package com.onek.managedbean;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -90,6 +91,7 @@ public class GrilleBean {
 			resetValues();
 			this.modification = false;
 		}
+		criteres.sort(Comparator.comparing(Critere::getCategorie).thenComparing(Critere::getIdcritere));
 	}
 
 	public void onClicAdd() {
@@ -152,7 +154,7 @@ public class GrilleBean {
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (modification ) {
+		if (modification) {
 			grille.updateCritere(c);
 		} else {
 			grille.addCritere(c);
