@@ -20,7 +20,7 @@ import com.onek.utils.Password;
 @Component("event")
 public class EventBean implements Serializable {
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	private static final long serialVersionUID = 1L;	
 	private static final int ecartHour = 3_600_000; //en milliseconde
@@ -164,7 +164,11 @@ public class EventBean implements Serializable {
 		Integer id = event.getIdevent();
 		int length = (int) (Math.log10(id) + 1);
 		String codeEvent = Password.generateCode(10-length)+id;
-		event.setCode(codeEvent);
+		if (evenementService.findByCode(codeEvent) != null) {
+			addEvenementCode();
+			return;
+		}
+		event.setCode(codeEvent);		
 		evenementService.editEvenement(event);
 	}
 
