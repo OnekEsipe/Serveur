@@ -213,15 +213,19 @@ public class StatistiquesBean implements Serializable {
 	}
 
 	public void InitStatByCandidat() {
+		int totalEvaluationCompletes = 0;
+		int totalEvaluations = 0;
 		double total = 0;
 		double totalNoteDone = 0;
 		List<Utilisateur> jurys;
 		for (Candidat candidat : this.candidats) {
 			jurys = new ArrayList<>();
 			int evaluationCompletes = 0;
+			int evaluationsDone = 0;
 			int totalNotes = 0;
 			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
 			for (Evaluation evaluation : evaluations) {
+				totalEvaluations++;
 				int nbNoted = 0;
 				List<Note> notes = evaluation.getNotes();
 				for (Note note : notes) {
@@ -230,6 +234,7 @@ public class StatistiquesBean implements Serializable {
 					if (note.getNiveau() > -1) {
 						nbNoted++;
 						totalNoteDone++;
+						evaluationsDone++;
 					} else {
 						if (!jurys.contains(evaluation.getJury().getUtilisateur())) {
 							jurys.add(evaluation.getJury().getUtilisateur());
@@ -238,6 +243,7 @@ public class StatistiquesBean implements Serializable {
 				}
 				if (nbNoted == notes.size()) {
 					evaluationCompletes++;
+					totalEvaluationCompletes++;
 				}
 			}
 			if (totalNotes == 0) {
@@ -245,7 +251,7 @@ public class StatistiquesBean implements Serializable {
 						.add(new StatsCandidate(candidat.getNom() + " " + candidat.getPrenom(), 100, 0, 0, jurys));
 			} else {
 				notesByCandidats.add(new StatsCandidate(candidat.getNom() + " " + candidat.getPrenom(),
-						(double) (((double) evaluationCompletes / (double) evaluations.size()) * 100),
+						(double) (((double) evaluationsDone / (double) totalNotes) * 100),
 						evaluationCompletes, evaluations.size(), jurys));
 			}
 		}
@@ -254,7 +260,7 @@ public class StatistiquesBean implements Serializable {
 			this.setTotalString((int) totalNoteDone + "/" + (int) total);
 		} else {
 			this.setTotalAvancement(((double) totalNoteDone / (double) total) * 100);
-			this.setTotalString((int) totalNoteDone + "/" + (int) total);
+			this.setTotalString((int) totalEvaluationCompletes + "/" + (int) totalEvaluations);
 		}
 	}
 
@@ -262,6 +268,7 @@ public class StatistiquesBean implements Serializable {
 		List<Candidat> candidats;
 		for (Jury jury : this.jurys) {
 			candidats = new ArrayList<>();
+			int evaluationsDone = 0;
 			int evaluationCompletes = 0;
 			int totalNotes = 0;
 			List<Evaluation> evaluations = evaluation.findByIdJury(jury.getIdjury());
@@ -272,6 +279,7 @@ public class StatistiquesBean implements Serializable {
 					totalNotes++;
 					if (note.getNiveau() > -1) {
 						nbNoted++;
+						evaluationsDone++;
 					} else {
 						if (!candidats.contains(evaluation.getCandidat())) {
 							candidats.add(evaluation.getCandidat());
@@ -287,7 +295,7 @@ public class StatistiquesBean implements Serializable {
 				notesByJurys.add(new StatsJury(user.getNom() + " " + user.getPrenom(), (double) 100, 0, 0, candidats));
 			} else {
 				notesByJurys.add(new StatsJury(user.getNom() + " " + user.getPrenom(),
-						(double) (((double) evaluationCompletes / (double) evaluations.size()) * 100),
+						(double) (((double) evaluationsDone / (double) totalNotes) * 100),
 						evaluationCompletes, evaluations.size(), candidats));
 			}
 		}

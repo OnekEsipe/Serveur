@@ -37,7 +37,8 @@
 									labelTemplate="{value}%" displayOnly="true" />
 							</p:column>
 							<p:column style='width:50px'>
-								<h:outputText style="text-align:center" value="#{statistiques.totalString}"></h:outputText>
+								<h:outputText style="text-align:center"
+									value="#{statistiques.totalString}"></h:outputText>
 							</p:column>
 						</p:row>
 					</p:panelGrid>
@@ -52,11 +53,11 @@
 						</p:column>
 						<p:column headerText="Avancement">
 							<p:progressBar value="#{juryStat.value}" labelTemplate="{value}%"
-								displayOnly="true"/>
+								displayOnly="true" />
 						</p:column>
-						<p:column headerText="Notes" style='width:40px'
-							sortBy="#{juryStat.notation}">
-							<h:outputText style="text-align:center" value="#{juryStat.notation}"></h:outputText>
+						<p:column headerText="Terminées" sortBy="#{juryStat.notation}"
+							style="text-align:center">
+							<h:outputText value="#{juryStat.notation}"></h:outputText>
 						</p:column>
 						<p:column headerText="Evaluations manquantes pour"
 							style='width:auto'>
@@ -88,11 +89,11 @@
 							<p:progressBar value="#{candiStat.value}"
 								labelTemplate="{value}%" displayOnly="true" />
 						</p:column>
-						<p:column headerText="Notes" style='width:40px'
-							sortBy="#{candiStat.notation}">
-							<h:outputText style="text-align:center" value="#{candiStat.notation}"></h:outputText>
+						<p:column headerText="Terminées" sortBy="#{candiStat.notation}" style="text-align:center">
+							<h:outputText value="#{candiStat.notation}"></h:outputText>
 						</p:column>
-						<p:column headerText="Evaluations manquantes par" style='width:auto'>
+						<p:column headerText="Evaluations manquantes par"
+							style='width:auto'>
 							<p:commandButton id="JurysNotNotedBtn" value="Afficher"
 								type="button" style="margin-left: auto; margin-right: auto;" />
 							<p:overlayPanel for="JurysNotNotedBtn" hideEffect="fade"
@@ -115,8 +116,9 @@
 							actionListener="#{statistiques.buttonResult}" ajax="false" />
 					</div>
 					<div class="ui-g-3">
-						<p:commandButton rendered="#{statistiques.signedEvent}" value="Exporter les résultats par candidat avec signature"
-							actionListener="#{statistiques.buttonResultSign}" ajax="false"/>
+						<p:commandButton rendered="#{statistiques.signedEvent}"
+							value="Exporter les résultats par candidat avec signature"
+							actionListener="#{statistiques.buttonResultSign}" ajax="false" />
 					</div>
 					<div class="ui-g-4"></div>
 					<div class="ui-g-2">
