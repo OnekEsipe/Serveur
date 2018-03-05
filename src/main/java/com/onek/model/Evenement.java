@@ -222,4 +222,35 @@ public class Evenement implements Serializable {
 		}
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((code == null) ? 0 : code.hashCode());
+		result = prime * result + ((idevent == null) ? 0 : idevent.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Evenement other = (Evenement) obj;
+		if (code == null) {
+			if (other.code != null)
+				return false;
+		} else if (!code.equals(other.code))
+			return false;
+		if (idevent == null) {
+			if (other.idevent != null)
+				return false;
+		} else if (!idevent.equals(other.idevent))
+			return false;
+		return true;
+	}
+
 }
