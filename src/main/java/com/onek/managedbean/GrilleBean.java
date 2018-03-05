@@ -147,8 +147,8 @@ public class GrilleBean {
 		if (nbDescripteur > 5) {
 			d = new Descripteur();
 			d.setNiveau("F");
-			d.setPoids(poids5);
-			d.setTexte(texte5);
+			d.setPoids(poids6);
+			d.setTexte(texte6);
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
