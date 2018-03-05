@@ -47,7 +47,7 @@
 								<h:outputText value="#{critere.categorie}" />
 							</p:column>
 
-							<p:column headerText="Descripteur">
+							<p:column headerText="Descripteur" style="text-align:center">
 								<p:commandButton id="DescBtn" value="Afficher" type="button" />
 								<p:overlayPanel id="DescPanel" for="DescBtn" hideEffect="fade"
 									dynamic="true" style="width:600px">
@@ -65,7 +65,7 @@
 								</p:overlayPanel>
 							</p:column>
 							<!--  *********la colonne modifier********** -->
-							<p:column style="width:32px;text-align:center"
+							<p:column style="text-align:center"
 								rendered="#{not eventAccueil.disabledSiBrouillon}">
 								<p:commandButton icon=" ui-icon-pencil"
 									actionListener="#{grille.modifierCritere}" ajax="false">
@@ -73,7 +73,7 @@
 								</p:commandButton>
 							</p:column>
 							<!-- ********la colonne supprimée*********** -->
-							<p:column style="width:32px;text-align:center"
+							<p:column style="text-align:center"
 								rendered="#{not eventAccueil.disabledSiBrouillon}">
 								<p:growl id="message" showDetail="true" />
 								<p:commandButton id="iconOnly" icon="ui-icon-trash"
