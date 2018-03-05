@@ -20,6 +20,9 @@ import org.springframework.stereotype.Component;
 
 import com.onek.utils.Navigation;
 
+/**
+ * ManagedBean DownloadApk
+ */
 @Component("downloadApk")
 public class DownloadApk implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -27,6 +30,11 @@ public class DownloadApk implements Serializable {
 
 	private Path apkPath;
 
+	/**
+	 * Méthode appelée lors d'un GET sur la page downloadapk.xhtml.<br/>
+	 * Elle permet d'initialiser les variables nécessaires à l'affichage.
+	 * @param e ComponentSystemEvent
+	 */
 	public void before(ComponentSystemEvent cse) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			Properties properties = new Properties();
@@ -40,10 +48,16 @@ public class DownloadApk implements Serializable {
 		}
 	}
 	
+	/**
+	 * Navigation vers la page index.xhtml
+	 */
 	public void retour() {
 		Navigation.redirect("index.xhtml");
 	}
 
+	/**
+	 * Téléchargement de l'apk
+	 */
 	public void download() {
 		if (apkPath == null) {
 			showLogError("Le fichier n'existe pas.");

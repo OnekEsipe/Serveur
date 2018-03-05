@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import com.onek.model.Utilisateur;
 import com.onek.utils.Encode;
 
+/**
+ * Service PasswordServiceImpl
+ */
 @Service
 public class PasswordServiceImpl implements PasswordService, Serializable {
 	private static final long serialVersionUID = 1L;

@@ -380,11 +380,6 @@ public class StatistiquesBean implements Serializable {
 	private XSSFCellStyle style2;
 	private XSSFCellStyle styleSignature;
 
-	/**
-	 * Initialise le fichier excel. 
-	 * Création de tableaux avec bordure pour les niveaux possibles des critères
-	 * @param workbook Fichier excel
-	 */
 	private void init(XSSFWorkbook workbook) {
 		niveaux.put(0, "A");
 		niveaux.put(1, "B");
@@ -452,11 +447,6 @@ public class StatistiquesBean implements Serializable {
 		}
 	}
 
-	/**
-	 * Remplit le fichier excel avec une feuille par jury
-	 * @param workbook Fichier excel
-	 * @param criteres Liste de criteres
-	 */
 	private void fillJurysPages(XSSFWorkbook workbook, List<Critere> criteres) {
 		for (Jury jury : jurys) {
 			resultJurys.put(jury, new HashMap<>());
@@ -571,12 +561,6 @@ public class StatistiquesBean implements Serializable {
 		}
 	}
 
-	/**
-	 * Remplit la page de résultats du fichier excel
-	 * @param workbook Fichier excel
-	 * @param criteres Liste des critères
-	 * @param who 
-	 */
 	private void fillResultsPage(XSSFWorkbook workbook, List<Critere> criteres, String who) {
 		int rowNum = 0;
 		int colNum = 0;
@@ -639,11 +623,6 @@ public class StatistiquesBean implements Serializable {
 		}
 	}
 
-	/**
-	 * Remplit la page paramètre du fichier excel (coefficient, descripteur, poids)
-	 * @param workbook
-	 * @param criteres
-	 */
 	private void fillParameterPage(XSSFWorkbook workbook, List<Critere> criteres) {
 		int colNum = 0;
 		int rowNum = 0;
@@ -703,12 +682,6 @@ public class StatistiquesBean implements Serializable {
 		}
 	}
 
-	/**
-	 * Remplit les pages candidats du fichier excel
-	 * @param workbook Fichier excel
-	 * @param criteres Liste des crières
-	 * @param needSignature Gestion de la signature
-	 */
 	private void fillCandidatesPages(XSSFWorkbook workbook, List<Critere> criteres, boolean needSignature) {
 		for (Candidat candidat : candidats) {
 			Map<Critere, List<String>> notesByCriteres = new HashMap<>();
@@ -849,10 +822,6 @@ public class StatistiquesBean implements Serializable {
 		}
 	}
 
-	/**
-	 * Re-size des colonnes pour placer correctement la signature
-	 * @param workbook Fichier excel
-	 */
 	private void autoSizeColumns(XSSFWorkbook workbook) {
 		int numberOfSheets = workbook.getNumberOfSheets();
 		for (int i = 0; i < numberOfSheets; i++) {

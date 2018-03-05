@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
-import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,10 +29,12 @@ import com.onek.service.EventAccueilService;
 import com.onek.service.GrilleService;
 import com.onek.service.JuryService;
 import com.onek.service.UserService;
-import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Navigation;
 import com.onek.utils.Password;
 
+/**
+ * ManagedBean EventAccueilBean
+ */
 @Component("eventAccueil")
 public class EventAccueilBean implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -62,9 +62,6 @@ public class EventAccueilBean implements Serializable {
 
 	@Autowired
 	private CandidateService candidatService;
-	
-	@Autowired
-	private UserService users;
 
 	private int idEvent;
 	private Evenement event;
@@ -75,8 +72,6 @@ public class EventAccueilBean implements Serializable {
 	private Date dateEnd;
 	private Date timeStart;
 	private Date timeEnd;
-	private boolean signingNeeded;
-	private boolean isOpened;
 	private List<String> selectedoptions;
 	private boolean disabledSiBrouillon;
 	private boolean disabledSiSupprime;
@@ -85,70 +80,139 @@ public class EventAccueilBean implements Serializable {
 	private String visibleO = "false";
 	private String visibleF = "false";
 
+	/**
+	 * Getter de la variable disabledSiSupprime
+	 * @return disabledSiSupprime 
+	 */
 	public boolean isDisabledSiSupprime() {
 		return disabledSiSupprime;
 	}
 
+	/**
+	 * Setter de la variable disabledSiSupprime
+	 * @param disabledSiSupprime 
+	 */
 	public void setDisabledSiSupprime(boolean disabledSiSupprime) {
 		this.disabledSiSupprime = disabledSiSupprime;
 	}
 
+	/**
+	 * Getter de la variable disabledSiBrouillon
+	 * @return disabledSiBrouillon 
+	 */
 	public boolean isDisabledSiBrouillon() {
 		return disabledSiBrouillon;
 	}
 
+	/**
+	 * Setter de la variable disabledSiBrouillon
+	 * @param disabledSiBrouillon 
+	 */
 	public void setDisabledSiBrouillon(boolean disabledSiBrouillon) {
 		this.disabledSiBrouillon = disabledSiBrouillon;
 	}
 
+	/**
+	 * Getter de la variable nom
+	 * @return nom 
+	 */
 	public String getNom() {
 		return nom;
 	}
 
+	/**
+	 * Setter de la variable nom
+	 * @param nom 
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
+	/**
+	 * Getter de la variable visibleF
+	 * @return visibleF Visibilité en statut fermé
+	 */
 	public String getVisibleF() {
 		return visibleF;
 	}
 
+	/**
+	 * Setter de la variable visibleF
+	 * @param visibleF Visibilité en statut fermé
+	 */
 	public void setVisibleF(String visibleF) {
 		this.visibleF = visibleF;
 	}
 
+	/**
+	 * Getter de la variable visibleB
+	 * @return visibleB Visibilité en statut brouillon
+	 */
 	public String getVisibleB() {
 		return visibleB;
 	}
 
+	/**
+	 * Setter de la variable visibleB
+	 * @return visibleB Visibilité en statut brouillon
+	 */
 	public void setVisibleB(String visibleB) {
 		this.visibleB = visibleB;
 	}
 
+	/**
+	 * Getter de la variable visibleO
+	 * @return visibleO Visibilité en statut ouvert
+	 */
 	public String getVisibleO() {
 		return visibleO;
 	}
 
+	/**
+	 * Setter de la variable visibleO
+	 * @param visibleO Visibilité en statut ouvert
+	 */
 	public void setVisibleO(String visibleO) {
 		this.visibleO = visibleO;
 	}
 
+	/**
+	 * Getter de la variable event
+	 * @return event
+	 */
 	public Evenement getEvent() {
 		return event;
 	}
 
+	/**
+	 * Setter de la variable event
+	 * @param event
+	 */
 	public void setEvent(Evenement event) {
 		this.event = event;
 	}
 
+	/**
+	 * Getter de la variable getSelectedoptions
+	 * @return getSelectedoptions Liste des options selectionnées
+	 */
 	public List<String> getSelectedoptions() {
 		return selectedoptions;
 	}
 
+	/**
+	 * Setter de la variable getSelectedoptions
+	 * @param getSelectedoptions Liste des options selectionnées
+	 */
 	public void setSelectedoptions(List<String> selectedoptions) {
 		this.selectedoptions = selectedoptions;
 	}
 
+	/**
+	 * Méthode appelée lors d'un GET sur la page eventAccueil.xhtml.<br/>
+	 * Elle permet d'initialiser les variables nécessaires à l'affichage.
+	 * @param e ComponentSystemEvent
+	 */
 	public void before(ComponentSystemEvent e) throws ParseException {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
@@ -183,8 +247,6 @@ public class EventAccueilBean implements Serializable {
 			}
 			this.dateStart = event.getDatestart();
 			this.dateEnd = event.getDatestop();
-			this.signingNeeded = event.getSigningneeded();
-			this.isOpened = event.getIsopened();
 
 			DateFormat dfTime = new SimpleDateFormat("HH:mm");
 			String sTimeStart = dfTime.format(event.getDatestart().getTime());
@@ -200,102 +262,136 @@ public class EventAccueilBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Getter de la variable getTimeStart
+	 * @return getTimeStart Heure de début
+	 */
 	public Date getTimeStart() {
 		return timeStart;
 	}
 
+	/**
+	 * Setter de la variable getTimeStart
+	 * @param getTimeStart Heure de début
+	 */
 	public void setTimeStart(Date timeStart) {
 		this.timeStart = timeStart;
 	}
 
+	/**
+	 * Getter de la variable timeEnd
+	 * @return timeEnd Heure de fin
+	 */
 	public Date getTimeEnd() {
 		return timeEnd;
 	}
 
+	/**
+	 * Setter de la variable timeEnd
+	 * @param timeEnd Heure de fin
+	 */
 	public void setTimeEnd(Date timeEnd) {
 		this.timeEnd = timeEnd;
 	}
 
+	/**
+	 * Getter de la variable dateEnd
+	 * @return dateEnd Date de fin
+	 */
 	public Date getDateEnd() {
 		return dateEnd;
 	}
 
+	/**
+	 * Setter de la variable dateEnd
+	 * @param dateEnd Date de fin
+	 */
 	public void setDateEnd(Date dateEnd) {
 		this.dateEnd = dateEnd;
 	}
 
+	/**
+	 * Getter de la variable dateStart
+	 * @return dateStart Date de début
+	 */
 	public Date getDateStart() {
 		return dateStart;
 	}
 
+	/**
+	 * Setter de la variable dateStart
+	 * @param dateStart Date de début
+	 */
 	public void setDateStart(Date dateStart) {
 		this.dateStart = dateStart;
 	}
 
+	/**
+	 * Getter de la variable statut
+	 * @return statut
+	 */
 	public String getStatut() {
 		return statut;
 	}
 
+	/**
+	 * Setter de la variable statut
+	 * @param statut
+	 */
 	public void setStatut(String statut) {
 		this.statut = statut;
 	}
 
+	/**
+	 * Getter de la variable idEvent
+	 * @return idEvent Id de l'événement
+	 */
 	public int getIdEvent() {
 		return idEvent;
 	}
 
+	/**
+	 * Setter de la variable idEvent
+	 * @param idEvent Id de l'événement
+	 */
 	public void setIdEvent(int idEvent) {
 		this.idEvent = idEvent;
 	}
 
-	public boolean getSigningNeeded() {
-		return signingNeeded;
-	}
-
-	public void setSigningNeeded(boolean signingNeed) {
-		this.signingNeeded = signingNeed;
-	}
-
-	public boolean getIsOpened() {
-		return isOpened;
-	}
-
-	public void setIsOpened(boolean isOpened) {
-		this.isOpened = isOpened;
-	}
-
+	/**
+	 * Update des champs du formulaire
+	 */
 	public void eventUpdateButton() {
 		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
 		event.setStatus(statut);
-		if (statut.equals("Fermé")) {
-			for (Jury jury : event.getJurys()) {
-				if (jury.getUtilisateur().getDroits().equals(DroitsUtilisateur.ANONYME.toString())) {
-					users.deleteUser(jury.getUtilisateur().getIduser());
-				}
-			}
-		}
 		if (!nom.isEmpty()) {
 			event.setNom(nom);
 		}
-		event.setIsopened(isOpened);
-		event.setSigningneeded(signingNeeded);
 		eventAccueilservice.editEvenement(event);
-		RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Modifier un événement", "Les modifications ont été enregistrées avec succès !"));
+		Navigation.redirect("eventAccueil.xhtml");
 	}
 
+	/**
+	 * Supprime un événement et redirige vers la page accueil.xhtml
+	 */
 	public void supprimerEvent() {
 		evenementService.supprimerEvent(event.getIdevent());
 		Navigation.redirect("accueil.xhtml");
 	}
 
+	/**
+	 * Ré-active un événement et redirige vers la page accueil.xhtml
+	 */
 	public void buttonRecuperer() {
 		event.setIsdeleted(false);
 		evenementService.editEvenement(event);
 		Navigation.redirect("accueil.xhtml");
 	}
 
+	/**
+	 * Duplique un événement et ses critères. Il est possible aussi de dupliquer les candidats et les jurys si les options sont selectionnées.
+	 */
 	public void buttonDupliquer() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		String login = (String) fc.getExternalContext().getSessionMap().get("user");

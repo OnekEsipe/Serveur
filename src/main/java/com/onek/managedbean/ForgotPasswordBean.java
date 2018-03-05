@@ -1,8 +1,5 @@
 package com.onek.managedbean;
 
-import javax.faces.application.FacesMessage;
-
-import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +7,9 @@ import com.onek.service.PasswordService;
 import com.onek.service.UserService;
 import com.onek.utils.Navigation;
 
+/**
+ * ManagedBean ForgotPasswordBean
+ */
 @Component("forgotPassword")
 public class ForgotPasswordBean {
 	
@@ -19,35 +19,61 @@ public class ForgotPasswordBean {
 	@Autowired
 	private PasswordService passwordService;
 
+	private String logInfo;
 	private String mail;
 
+	/**
+	 * Getter de la variable logInfo
+	 * @return logInfo Message d'information
+	 */
+	public String getLogInfo() {
+		return logInfo;
+	}
+
+	/**
+	 * Setter de la variable logInfo
+	 * @param logInfo Le message a afficher
+	 */
+	public void setLogInfo(String logInfo) {
+		this.logInfo = logInfo;
+	}
+
+	/**
+	 * Getter de la variable mail
+	 * @return mail
+	 */
 	public String getMail() {
 		return mail;
 	}
-
+	
+	/**
+	 * Setter de la variable mail
+	 * @param mail
+	 */
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
 
+	/**
+	 * Envoi le mail de réinitialisation de mot de passe
+	 */
 	public void send() {
 		if (!userService.mailExist(mail)) {
-			showLog("L'adresse mail saisie ne correspond à aucun utilisateur.");
+			logInfo = "L'adresse mail saisie ne correspond à aucun utilisateur.";
 			return;
 		}		
 		if (passwordService.reset(mail)) {			
-			showLog("Un mail contenant un lien pour redéfinir votre mot de passe a été envoyé.");
+			logInfo = "Un mail contenant un lien pour redéfinir votre mot de passe a été envoyé.";
 		} else {
-			showLog("Une erreur interne a empêché la réinitialisation du mot de passe.");
+			logInfo = "Une erreur interne a empêché la réinitialisation du mot de passe.";
 		}
 	}
 	
+	/**
+	 * Navigation vers index.xhtml
+	 */
 	public void retour() {
 		Navigation.redirect("index.xhtml");
-	}
-	
-	private void showLog(String logInfo) {
-		RequestContext.getCurrentInstance().showMessageInDialog(
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Mot de passe oublié", logInfo));
 	}
 
 }

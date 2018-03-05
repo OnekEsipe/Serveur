@@ -45,6 +45,9 @@ import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Encode;
 import com.onek.utils.StatutEvenement;
 
+/**
+ * Service ApplicationServiceImpl
+ */
 @Service
 public class ApplicationServiceImpl implements ApplicationService, Serializable {
 	private static final long serialVersionUID = 1L;
@@ -70,7 +73,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 
 	@Autowired
 	private JuryService juryService;
-
+	
 	@Autowired
 	private SignatureDao signatureDao;
 
@@ -89,13 +92,8 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		if (!userService.userExist(login)) {
 			return Optional.empty();
 		}
-		Utilisateur user = userService.findByLogin(login);
-		// check if user is deleted
-		if (user.getIsdeleted()) {
-			return Optional.empty();
-		}
 		// check if jury is assigned
-		int idUser = user.getIduser();
+		int idUser = userService.findByLogin(login).getIduser();
 		if (!juryDao.juryIsAssigned(idUser, id)) {
 			return Optional.empty();
 		}
@@ -103,10 +101,10 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			Evenement event = eventDao.findById(id);
 			if (!eventIsEligible(event)) {
 				return Optional.empty();
-			}
+			}			
 			EvenementResource eventResource = new EvenementResource(event);
 			List<Jury> jurys = juryDao.findJuryAndAnonymousByIdEvent(id, login);
-			List<EvaluationResource> evaluations = createEvaluationList(jurys, login);
+			List<EvaluationResource> evaluations = createEvaluationList(jurys);
 			eventResource.setEvaluations(evaluations);
 			eventResource.setJurys(associatedJurysCandidates(jurys, id));
 			return Optional.of(eventResource);
@@ -126,7 +124,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		List<Integer> idEvents = new ArrayList<>();
 		for (Jury jury : jurys) {
 			Evenement event = jury.getEvenement();
-			if (eventIsEligible(event, jury)) {
+			if (eventIsEligible(event)) {
 				idEvents.add(event.getIdevent());
 			}
 		}
@@ -135,7 +133,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		// search anonymous for all events affected at login
 		for (Jury jury : jurys) {
 			Evenement event = jury.getEvenement();
-			if (!eventIsEligible(event, jury)) {
+			if (!eventIsEligible(event)) {
 				continue;
 			}
 			Integer idEvent = event.getIdevent();
@@ -158,15 +156,11 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 
 	@Override
 	public boolean importEvaluation(EvaluationResource evaluationResource) {
-		if (evaluationResource == null) {
+		if(evaluationResource == null) {
 			return false;
 		}
 		Evaluation evaluation = evaluationDao.findById(evaluationResource.getIdEvaluation());
 		if (evaluation == null) {
-			return false;
-		}
-		// check if user associated with a jury is deleted
-		if (evaluation.getJury().getUtilisateur().getIsdeleted()) {
 			return false;
 		}
 		Evenement event = eventDao.findById(evaluationResource.getIdEvent());
@@ -193,19 +187,19 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			checkDate = true;
 		}
 		evaluation.setCommentaire(evaluationResource.getComment());
-		evaluation.setDatedernieremodif(evaluationResource.getDateLastChange());
-
+		evaluation.setDatedernieremodif(evaluationResource.getDateLastChange());		
+		
 		// add signature
 		if (evaluationResource.getIsSigned() && !evaluation.getIssigned()) {
 			evaluation.setIssigned(true);
-			for (SignatureResource signatureResource : evaluationResource.getSignatures()) {
+			for(SignatureResource signatureResource : evaluationResource.getSignatures()) {
 				Signature signature = signatureResource.createSignature();
 				signature.setEvaluation(evaluation);
 				signatureDao.addSignature(signature);
-			}
+			}	
 		}
-		evaluationDao.update(evaluation);
-
+		evaluationDao.update(evaluation);		
+		
 		List<NoteResource> noteResources = evaluationResource.getNotes();
 		List<Note> newMarks = new ArrayList<>();
 		List<Note> marksDB = evaluation.getNotes();
@@ -259,9 +253,6 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			return false;
 		}
 		Utilisateur user = userService.findByLogin(eventCode.getLogin());
-		if (user.getIsdeleted()) {
-			return false;
-		}
 		Evenement event = eventDao.findByCode(eventCode.getEventCode());
 		if (event == null) {
 			throw new IllegalStateException("Le code événement est incorrect.");
@@ -338,12 +329,9 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	}
 
 	/* create evaluation resource list */
-	private List<EvaluationResource> createEvaluationList(List<Jury> jurys, String login) {
+	private List<EvaluationResource> createEvaluationList(List<Jury> jurys) {
 		List<EvaluationResource> evaluations = new ArrayList<>();
 		for (Jury jury : jurys) {
-			if (!jury.getUtilisateur().getLogin().equals(login)) {
-				continue;
-			}
 			List<Evaluation> evaluationForOneJury = jury.getEvaluations();
 			for (Evaluation evaluation : evaluationForOneJury) {
 				evaluations.add(new EvaluationResource(evaluation));
@@ -351,18 +339,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 		}
 		return evaluations;
 	}
-
-	private boolean eventIsEligible(Evenement event, Jury jury) {
-		if (!eventIsEligible(event))
-			return false;
-		// check if jury is assigned to an evaluation
-		List<Evaluation> evaluations = evaluationDao.findByIdJury(jury.getIdjury());
-		if (evaluations.isEmpty()) {
-			return false;
-		}
-		return true;
-	}
-
+	
 	private boolean eventIsEligible(Evenement event) {
 		// check if evenement is deleted
 		if (event.getIsdeleted()) {

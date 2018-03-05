@@ -3,6 +3,9 @@ package com.onek.resource;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Json code evenement
+ */
 public class CodeEvenementResource {
 
 	@JsonProperty("Login")

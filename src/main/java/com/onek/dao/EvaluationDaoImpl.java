@@ -20,6 +20,9 @@ import com.onek.model.Evaluation;
 import com.onek.model.Jury;
 import com.onek.model.Note;
 
+/**
+ * Dao du model Evaluation
+ */
 @Repository
 public class EvaluationDaoImpl implements EvaluationDao, Serializable {
 	private static final long serialVersionUID = 1L;
