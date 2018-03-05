@@ -220,7 +220,7 @@ public class CandidateBean implements Serializable {
 		List<String[]> data = new ArrayList<String[]>();
 		List<Candidat> importedCandidats = new ArrayList<>();
 		boolean homonymeDetected = false;
-
+		List<Candidat> homonymes = new ArrayList<>();
 		try (CSVReader reader = new CSVReader(new InputStreamReader(event.getFile().getInputstream()), ';')) {
 			String[] nextLine = null;
 			// récupération des données du fichier
@@ -272,26 +272,39 @@ public class CandidateBean implements Serializable {
 			}
 
 			if (!importedCandidats.isEmpty()) {
+				
 				for (Candidat importedcandidat : importedCandidats) {
+					homonymeDetected = false;
 					for (Candidat candidat : candidats) {
-						if (candidat.getNom().toLowerCase().equals(importedcandidat.getNom().toLowerCase())
-								&& candidat.getPrenom().toLowerCase().equals(importedcandidat.getPrenom().toLowerCase())) {
-							showMessageImport(
-									"La liste des candidats a été importée avec succès,<br/>mais des candidats homonymes ont été détectés.");
+						if (candidat.getNom().toLowerCase().equals(importedcandidat.getNom().toLowerCase()) && candidat
+								.getPrenom().toLowerCase().equals(importedcandidat.getPrenom().toLowerCase())) {
+							homonymes.add(candidat);
 							homonymeDetected = true;
 							break;
 						}
 					}
-					candidats.add(importedcandidat);
+					if (!homonymeDetected) {
+						candidats.add(importedcandidat);
+					}
 				}
-				candidateService.addCandidates(importedCandidats);
+				importedCandidats.removeAll(homonymes);
+				if (importedCandidats.size() > 0) {
+					candidateService.addCandidates(importedCandidats);
+				}
 			}
 		} catch (IOException e) {
 			showMessageImport("Le contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.");
 			return;
 		}
-		if (!homonymeDetected) {
+		if (homonymes.isEmpty()) {
 			showMessageImport("La liste des candidats a été importée avec succès !");
+		}else{
+			StringBuilder listehomonyme = new StringBuilder("Les candidats ci-dessous n'ont pas été ajoutés car ils existent déja <br />  ");
+			for (Candidat candidat : homonymes) {
+				listehomonyme.append(candidat.getNom()).append(" ").append(candidat.getPrenom()).append("<br />");
+			}
+			listehomonyme.setLength(listehomonyme.length());
+			showMessageImport(listehomonyme.toString());
 		}
 	}
 
