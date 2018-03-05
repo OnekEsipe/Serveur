@@ -50,7 +50,7 @@
 							<p:column headerText="Descripteur" style="text-align:center">
 								<p:commandButton id="DescBtn" value="Afficher" type="button" />
 								<p:overlayPanel id="DescPanel" for="DescBtn" hideEffect="fade"
-									dynamic="true" style="width:600px">
+									dynamic="true" style="width:auto">
 									<p:dataTable var="descripteur" value="#{critere.descripteurs}">
 										<p:column headerText="Niveau">
 											<h:outputText value="#{descripteur.niveau}" />
@@ -58,14 +58,14 @@
 										<p:column headerText="Poids">
 											<h:outputText value="#{descripteur.poids}" />
 										</p:column>
-										<p:column headerText="Description" style='width:400px'>
+										<p:column headerText="Description" style='width:auto'>
 											<h:outputText value="#{descripteur.texte}" />
 										</p:column>
 									</p:dataTable>
 								</p:overlayPanel>
 							</p:column>
 							<!--  *********la colonne modifier********** -->
-							<p:column style="text-align:center"
+							<p:column style="text-align:center;width:8%"
 								rendered="#{not eventAccueil.disabledSiBrouillon}">
 								<p:commandButton icon=" ui-icon-pencil"
 									actionListener="#{grille.modifierCritere}" ajax="false">
@@ -73,7 +73,7 @@
 								</p:commandButton>
 							</p:column>
 							<!-- ********la colonne supprimée*********** -->
-							<p:column style="text-align:center"
+							<p:column style="text-align:center;width:8%"
 								rendered="#{not eventAccueil.disabledSiBrouillon}">
 								<p:growl id="message" showDetail="true" />
 								<p:commandButton id="iconOnly" icon="ui-icon-trash"

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -347,6 +348,7 @@ public class StatistiquesBean implements Serializable {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		init(workbook);
 		List<Critere> criteres = event.getCriteres();
+		criteres.sort(Comparator.comparing(Critere::getCategorie).thenComparing(Critere::getIdcritere));
 		fillParameterPage(workbook, criteres);
 		if (who.equals("candidat")) {
 			fillCandidatesPages(workbook, criteres, signature);
