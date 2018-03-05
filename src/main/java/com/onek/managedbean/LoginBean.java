@@ -32,7 +32,6 @@ public class LoginBean implements Serializable {
 	public void before(ComponentSystemEvent e) {
 		this.login = "";
 		this.motDePasse = "";
-		this.message = "";
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("user");
