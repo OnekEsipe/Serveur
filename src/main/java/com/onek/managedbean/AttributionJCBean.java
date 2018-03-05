@@ -58,10 +58,21 @@ public class AttributionJCBean implements Serializable {
 	private Map<Jury, ArrayList<Candidat>> attributionFinal;
 
 	private Map<Jury, Map<Candidat, Boolean>> attribJC;
+	
+	// Gestion des checkbox : disabled si le statut événement n'est pas Brouillon
+	private Map<Jury, Map<Candidat, Boolean>> attribJCDisabledCheckBox;
 
 	private List<MessageAttrib> messageAttrib;
 	private String avertissementMessage;
 	private String avertMessage;
+
+	public Map<Jury, Map<Candidat, Boolean>> getAttribJCDisabledCheckBox() {
+		return attribJCDisabledCheckBox;
+	}
+
+	public void setAttribJCDisabledCheckBox(Map<Jury, Map<Candidat, Boolean>> attribJCDisabledCheckBox) {
+		this.attribJCDisabledCheckBox = attribJCDisabledCheckBox;
+	}
 
 	public String getAvertMessage() {
 		return avertMessage;
@@ -109,6 +120,7 @@ public class AttributionJCBean implements Serializable {
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			isopen = true;
 			attribJC = new LinkedHashMap<>();
+			attribJCDisabledCheckBox = new LinkedHashMap<>();
 			attributionFinal = new LinkedHashMap<>();
 			messageAttrib = new ArrayList<>();
 			// Initialisation-update de la liste des candidats, utilisateurs, jurys et de
@@ -131,6 +143,9 @@ public class AttributionJCBean implements Serializable {
 					LinkedHashMap<Candidat, Boolean> candidatesPreChecked = new LinkedHashMap<>();
 					for (Candidat candidatAttributed : candidatesList) {
 						candidatesPreChecked.put(candidatAttributed, true);
+					}
+					if(isopen == false) {
+						attribJCDisabledCheckBox.put(entryAssociation.getKey(), candidatesPreChecked);
 					}
 					attribJC.put(entryAssociation.getKey(), candidatesPreChecked);
 				}
