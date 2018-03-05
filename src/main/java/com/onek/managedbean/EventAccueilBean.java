@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,8 +31,10 @@ import com.onek.service.EventAccueilService;
 import com.onek.service.GrilleService;
 import com.onek.service.JuryService;
 import com.onek.service.UserService;
+import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Navigation;
 import com.onek.utils.Password;
+
 
 /**
  * ManagedBean EventAccueilBean
@@ -62,6 +66,9 @@ public class EventAccueilBean implements Serializable {
 
 	@Autowired
 	private CandidateService candidatService;
+	
+	@Autowired
+	private UserService users;
 
 	private int idEvent;
 	private Evenement event;
@@ -72,6 +79,8 @@ public class EventAccueilBean implements Serializable {
 	private Date dateEnd;
 	private Date timeStart;
 	private Date timeEnd;
+	private boolean signingNeeded;
+	private boolean isOpened;
 	private List<String> selectedoptions;
 	private boolean disabledSiBrouillon;
 	private boolean disabledSiSupprime;
@@ -247,6 +256,8 @@ public class EventAccueilBean implements Serializable {
 			}
 			this.dateStart = event.getDatestart();
 			this.dateEnd = event.getDatestop();
+			this.signingNeeded = event.getSigningneeded();
+			this.isOpened = event.getIsopened();
 
 			DateFormat dfTime = new SimpleDateFormat("HH:mm");
 			String sTimeStart = dfTime.format(event.getDatestart().getTime());
@@ -357,6 +368,22 @@ public class EventAccueilBean implements Serializable {
 	public void setIdEvent(int idEvent) {
 		this.idEvent = idEvent;
 	}
+	
+	public boolean getSigningNeeded() {
+		return signingNeeded;
+	}
+
+	public void setSigningNeeded(boolean signingNeed) {
+		this.signingNeeded = signingNeed;
+	}
+
+	public boolean getIsOpened() {
+		return isOpened;
+	}
+
+	public void setIsOpened(boolean isOpened) {
+		this.isOpened = isOpened;
+	}
 
 	/**
 	 * Update des champs du formulaire
@@ -365,11 +392,21 @@ public class EventAccueilBean implements Serializable {
 		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
 		event.setStatus(statut);
+		if (statut.equals("Fermé")) {
+			for (Jury jury : event.getJurys()) {
+				if (jury.getUtilisateur().getDroits().equals(DroitsUtilisateur.ANONYME.toString())) {
+					users.deleteUser(jury.getUtilisateur().getIduser());
+				}
+			}
+		}
 		if (!nom.isEmpty()) {
 			event.setNom(nom);
 		}
+		event.setIsopened(isOpened);
+		event.setSigningneeded(signingNeeded);
 		eventAccueilservice.editEvenement(event);
-		Navigation.redirect("eventAccueil.xhtml");
+		RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Modifier un événement", "Les modifications ont été enregistrées avec succès !"));
 	}
 
 	/**
