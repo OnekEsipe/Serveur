@@ -69,6 +69,9 @@
 						<h:outputText value="#{evenement.datestop}"
 							converter="javax.faces.DateTime" />
 					</p:column>
+					<p:column headerText="Créé par">
+						<h:outputText value="#{evenement.getUtilisateur().getLogin()}" />
+					</p:column>
 					<p:column headerText="Supprimé" id="etatevent"
 						rendered="#{accueil.visible}">
 						<h:outputText value="#{evenement.isDeleted()}" />
