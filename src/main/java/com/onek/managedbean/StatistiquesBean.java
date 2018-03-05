@@ -17,12 +17,14 @@ import javax.faces.event.ComponentSystemEvent;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -289,10 +291,11 @@ public class StatistiquesBean implements Serializable {
 		List<Utilisateur> jurys;
 		for (Candidat candidat : this.candidats) {
 			jurys = new ArrayList<>();
+			int evaluationCompletes = 0;
 			int totalNotes = 0;
-			int nbNoted = 0;
 			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
 			for (Evaluation evaluation : evaluations) {
+				int nbNoted = 0;
 				List<Note> notes = evaluation.getNotes();
 				for (Note note : notes) {
 					totalNotes++;
@@ -306,13 +309,17 @@ public class StatistiquesBean implements Serializable {
 						}
 					}
 				}
+				if (nbNoted == notes.size()) {
+					evaluationCompletes++;
+				}
 			}
 			if (totalNotes == 0) {
 				notesByCandidats
 						.add(new StatsCandidate(candidat.getNom() + " " + candidat.getPrenom(), 100, 0, 0, jurys));
 			} else {
 				notesByCandidats.add(new StatsCandidate(candidat.getNom() + " " + candidat.getPrenom(),
-						(double) (((double) nbNoted / (double) totalNotes) * 100), nbNoted, totalNotes, jurys));
+						(double) (((double) evaluationCompletes / (double) evaluations.size()) * 100),
+						evaluationCompletes, evaluations.size(), jurys));
 			}
 		}
 		if (total == 0) {
@@ -331,10 +338,11 @@ public class StatistiquesBean implements Serializable {
 		List<Candidat> candidats;
 		for (Jury jury : this.jurys) {
 			candidats = new ArrayList<>();
+			int evaluationCompletes = 0;
 			int totalNotes = 0;
-			int nbNoted = 0;
 			List<Evaluation> evaluations = evaluation.findByIdJury(jury.getIdjury());
 			for (Evaluation evaluation : evaluations) {
+				int nbNoted = 0;
 				List<Note> notes = evaluation.getNotes();
 				for (Note note : notes) {
 					totalNotes++;
@@ -346,25 +354,31 @@ public class StatistiquesBean implements Serializable {
 						}
 					}
 				}
+				if (nbNoted == notes.size()) {
+					evaluationCompletes++;
+				}
 			}
 			Utilisateur user = jury.getUtilisateur();
 			if (totalNotes == 0) {
 				notesByJurys.add(new StatsJury(user.getNom() + " " + user.getPrenom(), (double) 100, 0, 0, candidats));
 			} else {
 				notesByJurys.add(new StatsJury(user.getNom() + " " + user.getPrenom(),
-						(double) (((double) nbNoted / (double) totalNotes) * 100), nbNoted, totalNotes, candidats));
+						(double) (((double) evaluationCompletes / (double) evaluations.size()) * 100),
+						evaluationCompletes, evaluations.size(), candidats));
 			}
 		}
 	}
 
 	// PARTIE EXPORT DE L'EVENEMENT
-	private final Map<String, Map<String, CellAddress>> mapParam = new HashMap<>();
+	private final Map<String, String> mapParam = new HashMap<>();
 	private final Map<Integer, String> niveaux = new HashMap<>();
 	private final Map<Candidat, Map<String, CellAddress>> resultCandidats = new HashMap<>();
 	private final Map<Jury, Map<String, CellAddress>> resultJurys = new HashMap<>();
+	private final Map<Critere, String> paramRange = new HashMap<>();
 
 	private XSSFCellStyle style;
 	private XSSFCellStyle style2;
+	private XSSFCellStyle styleSignature;
 
 	/**
 	 * Initialise le fichier excel. 
@@ -381,21 +395,26 @@ public class StatistiquesBean implements Serializable {
 		niveaux.put(-1, "-");
 		style = workbook.createCellStyle();
 		style2 = workbook.createCellStyle();
+		styleSignature = workbook.createCellStyle();
 		style.setBorderLeft(BorderStyle.THIN);
 		style.setBorderRight(BorderStyle.THIN);
 		style.setBorderBottom(BorderStyle.THIN);
 		style.setBorderTop(BorderStyle.THIN);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
 		style2.setBorderLeft(BorderStyle.THIN);
 		style2.setBorderRight(BorderStyle.THIN);
 		style2.setBorderBottom(BorderStyle.THIN);
 		style2.setBorderTop(BorderStyle.THIN);
 		style2.setAlignment(HorizontalAlignment.CENTER);
+		style2.setVerticalAlignment(VerticalAlignment.CENTER);
+		styleSignature.setAlignment(HorizontalAlignment.CENTER);
+		styleSignature.setVerticalAlignment(VerticalAlignment.CENTER);
 	}
 
 	/**
 	 * Construction du fichier excel. Nommage du fichier en fonction du type d'export.
 	 * @param who
-   * @param signature True si la signature doit être exporté
+	 * @param signature True si la signature doit être exporté
 	 */
 	public void buildXlsx(String who, boolean signature) {
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -417,9 +436,12 @@ public class StatistiquesBean implements Serializable {
 			if (who.equals("jury")) {
 				externalContext.setResponseHeader("Content-Disposition",
 						"attachment; filename=\"Export_Jury_" + event.getNom() + ".xlsx\"");
-			} else if (who.equals("candidat")) {
+			} else if (who.equals("candidat") && !signature) {
 				externalContext.setResponseHeader("Content-Disposition",
 						"attachment; filename=\"Export_Candidat_" + event.getNom() + ".xlsx\"");
+			} else if (who.equals("candidat") && signature) {
+				externalContext.setResponseHeader("Content-Disposition",
+						"attachment; filename=\"Export_Candidat_" + event.getNom() + "_Signature" + ".xlsx\"");
 			}
 			workbook.write(externalContext.getResponseOutputStream());
 			facesContext.responseComplete();
@@ -430,12 +452,17 @@ public class StatistiquesBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Remplit le fichier excel avec une feuille par jury
+	 * @param workbook Fichier excel
+	 * @param criteres Liste de criteres
+	 */
 	private void fillJurysPages(XSSFWorkbook workbook, List<Critere> criteres) {
 		for (Jury jury : jurys) {
 			resultJurys.put(jury, new HashMap<>());
 			int rowNum = 0;
 			int colNum = 0;
-			Map<String, List<String>> mapResultsByCritere = new HashMap<>();
+			Map<Critere, List<String>> notesByCriteres = new HashMap<>();
 			List<Evaluation> evaluations = evaluation.findByIdJury(jury.getIdjury());
 			XSSFSheet sheet = workbook
 					.createSheet(jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom());
@@ -463,16 +490,17 @@ public class StatistiquesBean implements Serializable {
 				cell.setCellStyle(style2);
 				sb.append("SUM(");
 				for (Note note : eval.getNotes()) {
-					if (!mapResultsByCritere.containsKey(note.getCritere().getTexte())) {
-						mapResultsByCritere.put(note.getCritere().getTexte(), new ArrayList<>());
+					if (!notesByCriteres.containsKey(note.getCritere())) {
+						notesByCriteres.put(note.getCritere(), new ArrayList<>());
 					}
-					mapResultsByCritere.get(note.getCritere().getTexte()).add(niveaux.get(note.getNiveau()));
 					cell = row.createCell(colNum++);
 					cell.setCellValue(niveaux.get(note.getNiveau()));
 					cell.setCellStyle(style2);
-					sb.append("Parametres!" + mapParam.get(note.getCritere().getTexte()).get("coef").formatAsString()
-							+ "*Parametres!"
-							+ mapParam.get(note.getCritere().getTexte()).get(niveaux.get(note.getNiveau())));
+					notesByCriteres.get(note.getCritere()).add(cell.getAddress().formatAsString());
+					sb.append("Parametres!")
+							.append(mapParam.get(note.getCritere().getTexte()))
+							.append("*VLOOKUP(").append(cell.getAddress().formatAsString()).append(",")
+							.append(paramRange.get(note.getCritere())).append(",2,FALSE)");
 					cell = row.createCell(colNum++);
 					cell.setCellValue(note.getCommentaire());
 					cell.setCellStyle(style);
@@ -502,9 +530,10 @@ public class StatistiquesBean implements Serializable {
 			for (Critere critere : criteres) {
 				StringBuilder sb = new StringBuilder();
 				sb.append("AVERAGE(");
-				if (mapResultsByCritere.containsKey(critere.getTexte())) {
-					for (String niveau : mapResultsByCritere.get(critere.getTexte())) {
-						sb.append("Parametres!" + mapParam.get(critere.getTexte()).get(niveau)).append("+");
+				if (notesByCriteres.containsKey(critere)) {
+					for (String addresse : notesByCriteres.get(critere)) {
+						sb.append("VLOOKUP(").append(addresse).append(",").append(paramRange.get(critere))
+								.append(",2,FALSE)").append(",");
 					}
 					sb.setLength(sb.length() - 1);
 					sb.append(")");
@@ -531,7 +560,7 @@ public class StatistiquesBean implements Serializable {
 				sb.append("SUM(");
 				for (String[] values : adresses) {
 					sb.append(values[1]).append("*Parametres!")
-							.append(mapParam.get(values[0]).get("coef").formatAsString()).append("+");
+							.append(mapParam.get(values[0])).append("+");
 				}
 				sb.setLength(sb.length() - 1);
 				sb.append(")");
@@ -542,6 +571,12 @@ public class StatistiquesBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Remplit la page de résultats du fichier excel
+	 * @param workbook Fichier excel
+	 * @param criteres Liste des critères
+	 * @param who 
+	 */
 	private void fillResultsPage(XSSFWorkbook workbook, List<Critere> criteres, String who) {
 		int rowNum = 0;
 		int colNum = 0;
@@ -602,19 +637,23 @@ public class StatistiquesBean implements Serializable {
 				}
 			}
 		}
-
 	}
 
+	/**
+	 * Remplit la page paramètre du fichier excel (coefficient, descripteur, poids)
+	 * @param workbook
+	 * @param criteres
+	 */
 	private void fillParameterPage(XSSFWorkbook workbook, List<Critere> criteres) {
 		int colNum = 0;
 		int rowNum = 0;
 		XSSFSheet sheet = workbook.createSheet("Parametres");
 		for (Critere critere : criteres) {
-			mapParam.put(critere.getTexte(), new HashMap<>());
 			Row row = sheet.createRow(rowNum);
 			Cell cell = row.createCell(colNum);
 			cell.setCellValue(critere.getTexte());
 			cell.setCellStyle(style2);
+			String range = "Parametres!" + cell.getAddress().formatAsString();
 			rowNum++;
 			row = sheet.createRow(rowNum);
 			cell = row.createCell(colNum);
@@ -624,7 +663,7 @@ public class StatistiquesBean implements Serializable {
 			cell = row.createCell(colNum);
 			cell.setCellValue(critere.getCoefficient().doubleValue());
 			cell.setCellStyle(style);
-			mapParam.get(critere.getTexte()).put("coef", cell.getAddress());
+			mapParam.put(critere.getTexte(), cell.getAddress().formatAsString());
 			colNum--;
 			rowNum++;
 			row = sheet.createRow(rowNum);
@@ -646,7 +685,6 @@ public class StatistiquesBean implements Serializable {
 				cell = row.createCell(colNum);
 				cell.setCellValue(descripteur.getPoids().doubleValue());
 				cell.setCellStyle(style);
-				mapParam.get(critere.getTexte()).put(descripteur.getNiveau(), cell.getAddress());
 			}
 			rowNum++;
 			colNum--;
@@ -656,20 +694,27 @@ public class StatistiquesBean implements Serializable {
 			cell.setCellStyle(style);
 			colNum++;
 			cell = row.createCell(colNum);
-			cell.setCellValue(0);
+			cell.setCellType(CellType.BLANK);
 			cell.setCellStyle(style);
-			mapParam.get(critere.getTexte()).put("-", cell.getAddress());
+			range = range + ":" + cell.getAddress().formatAsString();
 			rowNum += 2;
 			colNum = 0;
+			paramRange.put(critere, range);
 		}
 	}
 
+	/**
+	 * Remplit les pages candidats du fichier excel
+	 * @param workbook Fichier excel
+	 * @param criteres Liste des crières
+	 * @param needSignature Gestion de la signature
+	 */
 	private void fillCandidatesPages(XSSFWorkbook workbook, List<Critere> criteres, boolean needSignature) {
 		for (Candidat candidat : candidats) {
+			Map<Critere, List<String>> notesByCriteres = new HashMap<>();
 			resultCandidats.put(candidat, new HashMap<>());
 			int rowNum = 0;
 			int colNum = 0;
-			Map<String, List<String>> mapResultsByCritere = new HashMap<>();
 			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
 			XSSFSheet sheet = workbook.createSheet(candidat.getNom() + " " + candidat.getPrenom());
 			Row row = sheet.createRow(rowNum++);
@@ -687,6 +732,9 @@ public class StatistiquesBean implements Serializable {
 			cell = row.createCell(colNum++);
 			cell.setCellValue("Total");
 			cell.setCellStyle(style2);
+			cell = row.createCell(colNum++);
+			cell.setCellValue("Signatures");
+			cell.setCellStyle(style2);
 			for (Evaluation eval : evaluations) {
 				row = sheet.createRow(rowNum++);
 				colNum = 0;
@@ -697,16 +745,17 @@ public class StatistiquesBean implements Serializable {
 				cell.setCellStyle(style2);
 				sb.append("SUM(");
 				for (Note note : eval.getNotes()) {
-					if (!mapResultsByCritere.containsKey(note.getCritere().getTexte())) {
-						mapResultsByCritere.put(note.getCritere().getTexte(), new ArrayList<>());
+					if (!notesByCriteres.containsKey(note.getCritere())) {
+						notesByCriteres.put(note.getCritere(), new ArrayList<>());
 					}
-					mapResultsByCritere.get(note.getCritere().getTexte()).add(niveaux.get(note.getNiveau()));
 					cell = row.createCell(colNum++);
 					cell.setCellValue(niveaux.get(note.getNiveau()));
 					cell.setCellStyle(style2);
-					sb.append("Parametres!" + mapParam.get(note.getCritere().getTexte()).get("coef").formatAsString()
-							+ "*Parametres!"
-							+ mapParam.get(note.getCritere().getTexte()).get(niveaux.get(note.getNiveau())));
+					notesByCriteres.get(note.getCritere()).add(cell.getAddress().formatAsString());
+					sb.append("Parametres!")
+							.append(mapParam.get(note.getCritere().getTexte()))
+							.append("*VLOOKUP(").append(cell.getAddress().formatAsString()).append(",")
+							.append(paramRange.get(note.getCritere())).append(",2,FALSE)");
 					cell = row.createCell(colNum++);
 					cell.setCellValue(note.getCommentaire());
 					cell.setCellStyle(style);
@@ -729,17 +778,23 @@ public class StatistiquesBean implements Serializable {
 					for (Signature signature : eval.getSignatures()) {
 						cell = row.createCell(colNum);
 						cell.setCellValue(signature.getNom());
-						cell.setCellStyle(style);
+						cell.setCellStyle(styleSignature);
+						sheet.autoSizeColumn(colNum);
 						colNum++;
 						cell = row.createCell(colNum);
+
 						int imageIDX = workbook.addPicture(signature.getSignature(), Workbook.PICTURE_TYPE_JPEG);
 						CreationHelper helper = workbook.getCreationHelper();
 						Drawing<?> drawing = sheet.createDrawingPatriarch();
 						ClientAnchor anchor = helper.createClientAnchor();
 						anchor.setCol1(colNum);
-						anchor.setRow1(rowNum);
+						anchor.setRow1(rowNum - 1);
+						anchor.setRow2(rowNum - 1);
+						anchor.setCol2(colNum);
 						Picture pict = drawing.createPicture(anchor, imageIDX);
-						pict.resize();
+						pict.resize(1, 1);
+						sheet.setColumnWidth(colNum, 6000);
+						row.setHeight((short) 1400);
 						colNum++;
 					}
 				}
@@ -753,9 +808,10 @@ public class StatistiquesBean implements Serializable {
 			for (Critere critere : criteres) {
 				StringBuilder sb = new StringBuilder();
 				sb.append("AVERAGE(");
-				if (mapResultsByCritere.containsKey(critere.getTexte())) {
-					for (String niveau : mapResultsByCritere.get(critere.getTexte())) {
-						sb.append("Parametres!" + mapParam.get(critere.getTexte()).get(niveau)).append("+");
+				if (notesByCriteres.containsKey(critere)) {
+					for (String addresse : notesByCriteres.get(critere)) {
+						sb.append("VLOOKUP(").append(addresse).append(",").append(paramRange.get(critere))
+								.append(",2,FALSE)").append(",");
 					}
 					sb.setLength(sb.length() - 1);
 					sb.append(")");
@@ -782,7 +838,7 @@ public class StatistiquesBean implements Serializable {
 				sb.append("SUM(");
 				for (String[] values : adresses) {
 					sb.append(values[1]).append("*Parametres!")
-							.append(mapParam.get(values[0]).get("coef").formatAsString()).append("+");
+							.append(mapParam.get(values[0])).append("+");
 				}
 				sb.setLength(sb.length() - 1);
 				sb.append(")");
@@ -793,6 +849,10 @@ public class StatistiquesBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Re-size des colonnes pour placer correctement la signature
+	 * @param workbook Fichier excel
+	 */
 	private void autoSizeColumns(XSSFWorkbook workbook) {
 		int numberOfSheets = workbook.getNumberOfSheets();
 		for (int i = 0; i < numberOfSheets; i++) {

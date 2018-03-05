@@ -2,8 +2,6 @@ package com.onek.managedbean;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -39,8 +37,6 @@ public class AddUserBean {
 	private String mail;
 	private Boolean isAdmin;
 	private String option;
-
-	private List<Utilisateur> users = new ArrayList<>();
 
 	private String logInfo;
 	private boolean error;
@@ -96,14 +92,6 @@ public class AddUserBean {
 
 	public void setUstilisateur(Utilisateur user) {
 		this.utilisateur = user;
-	}
-
-	public List<Utilisateur> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<Utilisateur> users) {
-		this.users = users;
 	}
 
 	public String getLastName() {
@@ -206,9 +194,11 @@ public class AddUserBean {
 		}
 		
 		try {
-			userService.addUser(newUser);
-			users.add(newUser);
 			logInfo = "Ajout effectué avec succès !";
+			userService.addUser(newUser);	
+			if (!userService.sendInscriptionMail(newUser, password)) {
+				logInfo = "Ajout effectué avec succès,<br/>mais le mail d'inscription n'a pas pu être envoyé.";
+			}			
 			showLogMessage(false);
 		} catch (IllegalStateException e) { // login exist
 			logInfo = "Création impossible : le login est déjà utilisé.";
