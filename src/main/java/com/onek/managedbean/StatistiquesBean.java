@@ -160,6 +160,8 @@ public class StatistiquesBean implements Serializable {
 			notesByJurys = new ArrayList<>();
 			candidats = event.getCandidats();
 			jurys = event.getJurys();
+			filteredNotesByCandidats = new ArrayList<>();
+			filteredNotesByJurys = new ArrayList<>();
 			InitStatByCandidat();
 			InitStatByJury();
 			this.signedEvent = event.getSigningneeded();
@@ -292,17 +294,22 @@ public class StatistiquesBean implements Serializable {
 	}
 
 	// PARTIE EXPORT DE L'EVENEMENT
-	private final Map<String, String> mapParam = new HashMap<>();
-	private final Map<Integer, String> niveaux = new HashMap<>();
-	private final Map<Candidat, Map<String, CellAddress>> resultCandidats = new HashMap<>();
-	private final Map<Jury, Map<String, CellAddress>> resultJurys = new HashMap<>();
-	private final Map<Critere, String> paramRange = new HashMap<>();
+	private Map<String, String> mapParam = new HashMap<>();
+	private Map<Integer, String> niveaux = new HashMap<>();
+	private Map<Candidat, Map<String, CellAddress>> resultCandidats = new HashMap<>();
+	private Map<Jury, Map<String, CellAddress>> resultJurys = new HashMap<>();
+	private Map<Critere, String> paramRange = new HashMap<>();
 
 	private XSSFCellStyle style;
 	private XSSFCellStyle style2;
 	private XSSFCellStyle styleSignature;
 
 	private void init(XSSFWorkbook workbook) {
+		mapParam = new HashMap<>();
+		niveaux = new HashMap<>();
+		resultCandidats = new HashMap<>();
+		resultJurys = new HashMap<>();
+		paramRange = new HashMap<>();
 		niveaux.put(0, "A");
 		niveaux.put(1, "B");
 		niveaux.put(2, "C");

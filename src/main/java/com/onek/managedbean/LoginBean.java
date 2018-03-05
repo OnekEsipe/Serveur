@@ -27,7 +27,6 @@ public class LoginBean implements Serializable {
 	private String login;
 	private String motDePasse;
 	private String message;
-	private Boolean checkbox;
 	private String version;
 
 	public void before(ComponentSystemEvent e) {
@@ -36,6 +35,9 @@ public class LoginBean implements Serializable {
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("user");
 				return;
 			}
+			this.login = "";
+			this.motDePasse = "";
+			this.message = "";
 			readVersion();
 		}		
 	}
@@ -66,14 +68,6 @@ public class LoginBean implements Serializable {
 
 	public void setMessage(String message) {
 		this.message = message;
-	}
-
-	public Boolean getCheckbox() {
-		return checkbox;
-	}
-
-	public void setCheckbox(Boolean checkbox) {
-		this.checkbox = checkbox;
 	}
 	
 	public String getVersion() {
