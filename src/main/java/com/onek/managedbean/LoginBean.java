@@ -85,11 +85,11 @@ public class LoginBean implements Serializable {
 			message = "Utilisateur ou mot de passe incorrect";
 			return;
 		}
-		this.login = "";
 		this.motDePasse = "";
 		this.message = "";
 		FacesContext fc = FacesContext.getCurrentInstance();
 		fc.getExternalContext().getSessionMap().put("user", login);
+		this.login = "";
 		Navigation.redirect("accueil.xhtml");
 	}
 	
