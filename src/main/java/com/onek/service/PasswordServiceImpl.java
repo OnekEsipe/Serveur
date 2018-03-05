@@ -51,16 +51,16 @@ public class PasswordServiceImpl implements PasswordService, Serializable {
 			message = "Bonjour " + user.getPrenom() + ",<br/><br/>";
 		}
 		message += "Vous recevez ce message parce qu'une réinitialisation du mot de passe de votre compte utilisateur a "
-				+ "été demandée pour <strong>l'application ONEK</strong>.<br/><br/>";
+				+ "été demandée pour <strong>l'application ONEK'</strong>.<br/><br/>";
 		message += "ATTENTION<br/>";
 		message += "Si vous n'avez pas demandé une réinitialisation du mot de passe, IGNOREZ et EFFACEZ cet email. "
 				+ "Continuez uniquement si vous souhaitez que votre mot de passe soit réinitialisé.<br/><br/>";
 		message += "Cliquez ou recopiez simplement le lien et complétez le reste du formulaire :<br/>";
-		message += "<a href=\"" + url +"?token=" + token + "\">" + ""
-				+  url + "?token=" + token + "</a><br/><br/>";
+		message += "<a href=\"" + url +"resetpassword.xhtml?token=" + token + "\">" + ""
+				+  url + "resetpassword.xhtml?token=" + token + "</a><br/><br/>";
 		message += "Cordialement,<br/>";
-		message += "<strong>L'équipe ONEK</strong>";		
-		return emailService.sendMail(mail, "[ONEK] Reinitialisation du mot de passe", message);		
+		message += "<strong>L'équipe ONEK'</strong>";		
+		return emailService.sendMail(mail, "[ONEK'] Reinitialisation du mot de passe", message);		
 	}
 	
 	@Override
