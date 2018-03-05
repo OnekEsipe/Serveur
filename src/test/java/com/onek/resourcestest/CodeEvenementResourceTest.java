@@ -1,10 +1,11 @@
 package com.onek.resourcestest;
 
+import static org.junit.Assert.assertNull;
+
 import java.beans.IntrospectionException;
 
 import org.junit.Test;
 
-import com.onek.beanstest.JavaBeanTester;
 import com.onek.resource.CodeEvenementResource;
 
 public class CodeEvenementResourceTest {
@@ -16,6 +17,8 @@ public class CodeEvenementResourceTest {
 	
 	@Test
 	public void validGetter() throws IntrospectionException {
-		JavaBeanTester.test(CodeEvenementResource.class);
+		CodeEvenementResource cer = new CodeEvenementResource();
+		assertNull(cer.getLogin());
+		assertNull(cer.getEventCode());
 	}
 }
