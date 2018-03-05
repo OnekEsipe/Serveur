@@ -30,6 +30,9 @@ public class LoginBean implements Serializable {
 	private String version;
 
 	public void before(ComponentSystemEvent e) {
+		this.login = "";
+		this.motDePasse = "";
+		this.message = "";
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("user");
@@ -83,6 +86,9 @@ public class LoginBean implements Serializable {
 			message = "Utilisateur ou mot de passe incorrect";
 			return;
 		}
+		this.login = "";
+		this.motDePasse = "";
+		this.message = "";
 		FacesContext fc = FacesContext.getCurrentInstance();
 		fc.getExternalContext().getSessionMap().put("user", login);
 		Navigation.redirect("accueil.xhtml");
