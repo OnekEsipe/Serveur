@@ -221,7 +221,7 @@ public class CandidateBean implements Serializable {
 		List<Candidat> importedCandidats = new ArrayList<>();
 		boolean homonymeDetected = false;
 		List<Candidat> homonymes = new ArrayList<>();
-		try (CSVReader reader = new CSVReader(new InputStreamReader(event.getFile().getInputstream()), ';')) {
+		try (CSVReader reader = new CSVReader(new InputStreamReader(event.getFile().getInputstream()), ';', '\"')) {
 			String[] nextLine = null;
 			// récupération des données du fichier
 			try {
@@ -272,7 +272,7 @@ public class CandidateBean implements Serializable {
 			}
 
 			if (!importedCandidats.isEmpty()) {
-				
+
 				for (Candidat importedcandidat : importedCandidats) {
 					homonymeDetected = false;
 					for (Candidat candidat : candidats) {
@@ -287,7 +287,9 @@ public class CandidateBean implements Serializable {
 						candidats.add(importedcandidat);
 					}
 				}
+
 				importedCandidats.removeAll(homonymes);
+
 				if (importedCandidats.size() > 0) {
 					candidateService.addCandidates(importedCandidats);
 				}
@@ -298,8 +300,9 @@ public class CandidateBean implements Serializable {
 		}
 		if (homonymes.isEmpty()) {
 			showMessageImport("La liste des candidats a été importée avec succès !");
-		}else{
-			StringBuilder listehomonyme = new StringBuilder("Les candidats ci-dessous n'ont pas été ajoutés car ils existent déja <br />  ");
+		} else {
+			StringBuilder listehomonyme = new StringBuilder(
+					"Les candidats ci-dessous n'ont pas été ajoutés car ils existent déja <br />  ");
 			for (Candidat candidat : homonymes) {
 				listehomonyme.append(candidat.getNom()).append(" ").append(candidat.getPrenom()).append("<br />");
 			}
@@ -333,8 +336,16 @@ public class CandidateBean implements Serializable {
 		externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"modeleCandidat.csv\"");
 		Writer writer = externalContext.getResponseOutputWriter();
 		try {
-			writer.write("nom;prenom\n");
-			writer.write("Smith;James");
+			writer.write("nom;prenom");
+			writer.write(System.getProperty("line.separator"));
+			if (candidats.isEmpty()) {
+				writer.write("Smith;James");
+			} else {
+				for (Candidat candidat : candidats) {
+					writer.write(candidat.getNom() + ";" + candidat.getPrenom());
+					writer.write(System.getProperty("line.separator"));
+				}
+			}
 		} finally {
 			if (writer != null) {
 				writer.close();
