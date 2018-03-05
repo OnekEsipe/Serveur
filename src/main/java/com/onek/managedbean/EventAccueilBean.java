@@ -84,6 +84,8 @@ public class EventAccueilBean implements Serializable {
 	private String visibleB = "false";
 	private String visibleO = "false";
 	private String visibleF = "false";
+	
+	private static final int ecartHour = 3_600_000; //en milliseconde
 
 	public boolean isDisabledSiSupprime() {
 		return disabledSiSupprime;
@@ -265,8 +267,8 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	public void eventUpdateButton() {
-		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime()));
-		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime()));
+		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime() + ecartHour));
+		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime() + ecartHour));
 		event.setStatus(statut);
 		if (statut.equals("Fermé")) {
 			for (Jury jury : event.getJurys()) {
