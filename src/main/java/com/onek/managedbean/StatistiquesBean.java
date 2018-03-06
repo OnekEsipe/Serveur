@@ -449,7 +449,7 @@ public class StatistiquesBean implements Serializable {
 			int rowNum = 0;
 			int colNum = 0;
 			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
-			XSSFSheet sheet = workbook.createSheet(candidat.getNom() + " " + candidat.getPrenom());
+			XSSFSheet sheet = workbook.createSheet(candidat.getNom().replace("'", " ") + " " + candidat.getPrenom().replace("'", " "));
 			Row row = sheet.createRow(rowNum++);
 			Cell cell = row.createCell(colNum++);
 			cell.setCellValue("Jurys");
@@ -606,7 +606,7 @@ public class StatistiquesBean implements Serializable {
 			Map<Critere, List<String>> notesByCriteres = new HashMap<>();
 			List<Evaluation> evaluations = evaluation.findByIdJury(jury.getIdjury());
 			XSSFSheet sheet = workbook
-					.createSheet(jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom());
+					.createSheet(jury.getUtilisateur().getNom().replace("'", " ") + " " + jury.getUtilisateur().getPrenom().replace("'", " "));
 			Row row = sheet.createRow(rowNum++);
 			Cell cell = row.createCell(colNum++);
 			cell.setCellValue("Candidats");
@@ -754,13 +754,13 @@ public class StatistiquesBean implements Serializable {
 				cell.setCellStyle(style2);
 				for (Critere critere : criteres) {
 					cell = row.createCell(colNum++);
-					cell.setCellFormula("'" + candidat.getNom() + " " + candidat.getPrenom() + "'!"
+					cell.setCellFormula("'" + candidat.getNom().replace("'", " ") + " " + candidat.getPrenom().replace("'", " ") + "'!"
 							+ resultCandidats.get(candidat).get(critere.getTexte()).formatAsString());
 					cell.setCellStyle(style);
 				}
 				cell = row.createCell(colNum++);
 				if (resultCandidats.get(candidat).containsKey("total")) {
-					cell.setCellFormula("'" + candidat.getNom() + " " + candidat.getPrenom() + "'!"
+					cell.setCellFormula("'" + candidat.getNom().replace("'", " ") + " " + candidat.getPrenom().replace("'", " ") + "'!"
 							+ resultCandidats.get(candidat).get("total").formatAsString());
 					cell.setCellStyle(style);
 				}
@@ -774,13 +774,13 @@ public class StatistiquesBean implements Serializable {
 				cell.setCellStyle(style2);
 				for (Critere critere : criteres) {
 					cell = row.createCell(colNum++);
-					cell.setCellFormula("'" + jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom()
+					cell.setCellFormula("'" + jury.getUtilisateur().getNom().replace("'", " ") + " " + jury.getUtilisateur().getPrenom().replace("'", " ")
 							+ "'!" + resultJurys.get(jury).get(critere.getTexte()).formatAsString());
 					cell.setCellStyle(style);
 				}
 				cell = row.createCell(colNum++);
 				if (resultJurys.get(jury).containsKey("total")) {
-					cell.setCellFormula("'" + jury.getUtilisateur().getNom() + " " + jury.getUtilisateur().getPrenom()
+					cell.setCellFormula("'" + jury.getUtilisateur().getNom().replace("'", " ") + " " + jury.getUtilisateur().getPrenom().replace("'", " ")
 							+ "'!" + resultJurys.get(jury).get("total").formatAsString());
 					cell.setCellStyle(style);
 				}
