@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Evenement;
@@ -21,6 +22,7 @@ import com.onek.utils.Navigation;
 import com.onek.utils.Password;
 
 @Component("addjury")
+@Scope("session")
 public class AddJuryBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -161,7 +163,21 @@ public class AddJuryBean implements Serializable {
 			utilisateursAll.add(jury);
 		}
 	}
-
+	public void suppressAllJurys() {
+		if (utilisateurs.size() > 0) {
+			for (Utilisateur utilisateur : utilisateurs) {
+				juryService.supprimerUtilisateur(utilisateur.getIduser(), idEvent);
+				if(utilisateur.getDroits().equals("A")) {
+					utilisateursAnos.remove(utilisateur);
+					juryService.supprimerUtilisateurAnonyme(utilisateur.getIduser());
+				}
+				else {
+					utilisateursAll.add(utilisateur);
+				}
+			}
+		}
+		utilisateurs.clear();	
+	}
 	public void buttonAdd() {
 
 		for (Utilisateur utilisateur : selectedutilisateurs) {

@@ -16,6 +16,7 @@ import javax.faces.event.ComponentSystemEvent;
 
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
@@ -36,6 +37,7 @@ import com.onek.utils.Navigation;
 import com.onek.utils.Password;
 
 @Component("eventAccueil")
+@Scope("session")
 public class EventAccueilBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -283,6 +285,22 @@ public class EventAccueilBean implements Serializable {
 		event.setIsopened(isOpened);
 		event.setSigningneeded(signingNeeded);
 		eventAccueilservice.editEvenement(event);
+		if (statut.equals("Brouillon")) {
+			setVisibleB("true");
+			setVisibleO("false");
+			setVisibleF("false");
+			disabledSiBrouillon = false;
+		} else if (statut.equals("Ouvert")) {
+			setVisibleB("false");
+			setVisibleO("true");
+			setVisibleF("false");
+			disabledSiBrouillon = true;
+		} else {
+			setVisibleB("false");
+			setVisibleO("false");
+			setVisibleF("true");
+			disabledSiBrouillon = true;
+		}
 		RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Modifier un événement", "Les modifications ont été enregistrées avec succès !"));
 	}

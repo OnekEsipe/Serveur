@@ -49,9 +49,10 @@ public class ApplicationController {
 		try {
 			applicationService.createJury(createJuryResource);
 		} catch (IllegalStateException e) {
-			ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(e.getMessage());			
-			return new ResponseEntity<String>(byteBuffer.toString(), responseHeaders, HttpStatus.CONFLICT);
-		}		
+			ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(e.getMessage());
+			return new ResponseEntity<String>(new String(byteBuffer.array(), Charset.forName("UTF-8")), responseHeaders,
+					HttpStatus.CONFLICT);
+		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
@@ -107,12 +108,17 @@ public class ApplicationController {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
 		} catch (IllegalStateException e) {
-			ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(e.getMessage());		
-			return new ResponseEntity<String>(byteBuffer.toString(), responseHeaders, HttpStatus.CONFLICT);
+			ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(e.getMessage());
+			return new ResponseEntity<String>(new String(byteBuffer.array(), Charset.forName("UTF-8")), responseHeaders,
+					HttpStatus.CONFLICT);
+		} catch(IllegalArgumentException e) {
+			ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(e.getMessage());
+			return new ResponseEntity<String>(new String(byteBuffer.array(), Charset.forName("UTF-8")), responseHeaders,
+					HttpStatus.FORBIDDEN);
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
-	
+
 	/* ids event */
 	@RequestMapping(value = "jury/events/id", method = RequestMethod.POST)
 	public ResponseEntity<? extends Object> idsEvents(@RequestBody LoginResource login) {
@@ -147,5 +153,5 @@ public class ApplicationController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
-	
+
 }

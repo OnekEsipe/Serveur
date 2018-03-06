@@ -58,6 +58,7 @@ public class PasswordServiceImpl implements PasswordService, Serializable {
 		message += "Cliquez ou recopiez simplement le lien et complétez le reste du formulaire :<br/>";
 		message += "<a href=\"" + url +"resetpassword.xhtml?token=" + token + "\">" + ""
 				+  url + "resetpassword.xhtml?token=" + token + "</a><br/><br/>";
+		message += "Ce lien est valide pendant 30 minutes.<br/><br/>";
 		message += "Cordialement,<br/>";
 		message += "<strong>L'équipe ONEK'</strong>";		
 		return emailService.sendMail(mail, "[ONEK'] Reinitialisation du mot de passe", message);		

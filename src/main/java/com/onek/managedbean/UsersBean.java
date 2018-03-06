@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Utilisateur;
@@ -15,6 +16,7 @@ import com.onek.service.UserService;
 import com.onek.utils.Navigation;
 
 @Component("users")
+@Scope("session")
 public class UsersBean {
 	
 	@Autowired

@@ -10,6 +10,7 @@ import javax.faces.event.ComponentSystemEvent;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Utilisateur;
@@ -20,6 +21,7 @@ import com.onek.utils.Navigation;
 import com.onek.utils.Password;
 
 @Component("addUser")
+@Scope("session")
 public class AddUserBean {
 	private final static Logger logger = Logger.getLogger(AddUserBean.class);
 

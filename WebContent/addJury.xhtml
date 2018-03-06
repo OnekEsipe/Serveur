@@ -31,7 +31,7 @@
 						filteredValue="#{addjury.filteredutilisateurs}"
 						selection="#{addjury.selectedutilisateurs}"
 						rowKey="#{utilisateur.nom}" style="margin-bottom:0 ;"
-						scrollable="true" scrollHeight="600"
+						scrollable="true" scrollHeight="400"
 						widgetVar="utilisateurallTable">
 						<f:facet name="header">
 							<p:outputPanel>
@@ -74,7 +74,7 @@
 			</h:form>
 		</div>
 		<div class="ui-g-4">
-			<h:form>
+			<h:form >
 				<!-- Debut liste jurys anonymes -->
 				<p:dataTable id="tabJurysAnos" var="utilisateursAno"
 					style="display:none;" value="#{addjury.utilisateursAnos}"
@@ -115,9 +115,9 @@
 				</p:panel>
 
 			</h:form>
-			<h:form>
+			<h:form id="tabJury">
 				<p:dataTable var="utilisateur" value="#{addjury.utilisateurs}"
-					scrollable="true" scrollHeight="500" sortBy="#{utilisateur.login}">
+					scrollable="true" scrollHeight="300" sortBy="#{utilisateur.login}">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
@@ -146,15 +146,33 @@
 							<f:param name="iduser" value="#{utilisateur.iduser}" />
 						</p:commandButton>
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-							<p:commandButton value="Yes" type="button"
+							<p:commandButton value="Oui" type="button"
 								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-							<p:commandButton value="No" type="button"
+							<p:commandButton value="Non" type="button"
 								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 						</p:confirmDialog>
 					</p:column>
 					<!-- ********fin*********** -->
 				</p:dataTable>
 			</h:form>
+			<h:form style="margin-left:-4.5%"
+			rendered="#{not eventAccueil.disabledSiBrouillon}">
+			<p:commandButton value="Supprimer tous les jurys"
+				actionListener="#{addjury.suppressAllJurys}" ajax="true"
+				update="tabJury" icon="ui-icon-trash"
+				style="background-color: #B40404; border-color: #8A0808;">
+				<p:confirm header="Confirmation de suppression"
+					message="Voulez-vous vraiment supprimer tous les jurys ?"
+					icon="ui-icon-trash" />
+			</p:commandButton>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+				</p:commandButton>
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
 		</div>
 	</div>
 	<br />

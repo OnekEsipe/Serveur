@@ -2,6 +2,7 @@ package com.onek.managedbean;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
@@ -24,6 +26,7 @@ import com.onek.service.GrilleService;
 import com.onek.utils.Navigation;
 
 @Component("grille")
+@Scope("session")
 public class GrilleBean {
 
 	@Autowired
@@ -90,6 +93,7 @@ public class GrilleBean {
 			resetValues();
 			this.modification = false;
 		}
+		criteres.sort(Comparator.comparing(Critere::getCategorie).thenComparing(Critere::getIdcritere));
 	}
 
 	public void onClicAdd() {
@@ -147,12 +151,12 @@ public class GrilleBean {
 		if (nbDescripteur > 5) {
 			d = new Descripteur();
 			d.setNiveau("F");
-			d.setPoids(poids5);
-			d.setTexte(texte5);
+			d.setPoids(poids6);
+			d.setTexte(texte6);
 			d.setCritere(c);
 			c.addDescripteur(d);
 		}
-		if (modification ) {
+		if (modification) {
 			grille.updateCritere(c);
 		} else {
 			grille.addCritere(c);

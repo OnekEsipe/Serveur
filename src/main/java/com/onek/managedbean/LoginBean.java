@@ -10,6 +10,7 @@ import javax.faces.event.ComponentSystemEvent;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.service.UserService;
@@ -17,6 +18,7 @@ import com.onek.utils.Navigation;
 
 @Configuration
 @Component("login")
+@Scope("session")
 public class LoginBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = Logger.getLogger(LoginBean.class);	
@@ -27,15 +29,19 @@ public class LoginBean implements Serializable {
 	private String login;
 	private String motDePasse;
 	private String message;
-	private Boolean checkbox;
 	private String version;
 
 	public void before(ComponentSystemEvent e) {
+		this.login = "";
+		this.motDePasse = "";
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("user");
 				return;
 			}
+			this.login = "";
+			this.motDePasse = "";
+			this.message = "";
 			readVersion();
 		}		
 	}
@@ -67,14 +73,6 @@ public class LoginBean implements Serializable {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
-	public Boolean getCheckbox() {
-		return checkbox;
-	}
-
-	public void setCheckbox(Boolean checkbox) {
-		this.checkbox = checkbox;
-	}
 	
 	public String getVersion() {
 		return version;
@@ -89,8 +87,11 @@ public class LoginBean implements Serializable {
 			message = "Utilisateur ou mot de passe incorrect";
 			return;
 		}
+		this.motDePasse = "";
+		this.message = "";
 		FacesContext fc = FacesContext.getCurrentInstance();
 		fc.getExternalContext().getSessionMap().put("user", login);
+		this.login = "";
 		Navigation.redirect("accueil.xhtml");
 	}
 	

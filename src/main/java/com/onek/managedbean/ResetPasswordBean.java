@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Utilisateur;
@@ -17,6 +18,7 @@ import com.onek.service.PasswordService;
 import com.onek.utils.Password;
 
 @Component("resetPassword")
+@Scope("session")
 public class ResetPasswordBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 

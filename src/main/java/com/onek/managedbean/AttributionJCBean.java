@@ -18,6 +18,7 @@ import javax.faces.event.ComponentSystemEvent;
 
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
@@ -29,6 +30,7 @@ import com.onek.service.JuryService;
 import com.onek.utils.Navigation;
 
 @Component("attributionjc")
+@Scope("session")
 public class AttributionJCBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -59,9 +61,19 @@ public class AttributionJCBean implements Serializable {
 
 	private Map<Jury, Map<Candidat, Boolean>> attribJC;
 
+	// Gestion des checkbox : disabled si le statut événement n'est pas Brouillon
+	private Map<Jury, Map<Candidat, Boolean>> attribJCDisabledCheckBox;
+
 	private List<MessageAttrib> messageAttrib;
-	private String avertissementMessage;
 	private String avertMessage;
+
+	public Map<Jury, Map<Candidat, Boolean>> getAttribJCDisabledCheckBox() {
+		return attribJCDisabledCheckBox;
+	}
+
+	public void setAttribJCDisabledCheckBox(Map<Jury, Map<Candidat, Boolean>> attribJCDisabledCheckBox) {
+		this.attribJCDisabledCheckBox = attribJCDisabledCheckBox;
+	}
 
 	public String getAvertMessage() {
 		return avertMessage;
@@ -109,17 +121,14 @@ public class AttributionJCBean implements Serializable {
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
 			isopen = true;
 			attribJC = new LinkedHashMap<>();
+			attribJCDisabledCheckBox = new LinkedHashMap<>();
 			attributionFinal = new LinkedHashMap<>();
 			messageAttrib = new ArrayList<>();
 			// Initialisation-update de la liste des candidats, utilisateurs, jurys et de
 			// l'attribution deja realisee + init du message d'avertissement
 			status = evenement.findById(idEvent).getStatus();
-			avertissementMessage = "";
-
 			if (!status.equals("Brouillon")) {
 				isopen = false;
-				avertissementMessage = "Statut de l'événement: " + status
-						+ ". Les suppressions d'attributions ne seront pas prises en compte.";
 			}
 			candidatsJurys = candidatservice.findCandidatesByEvent(idEvent);
 			juryList = juryservice.findJurysByIdevent(idEvent);
@@ -132,26 +141,27 @@ public class AttributionJCBean implements Serializable {
 					for (Candidat candidatAttributed : candidatesList) {
 						candidatesPreChecked.put(candidatAttributed, true);
 					}
+					if (isopen == false) {
+						attribJCDisabledCheckBox.put(entryAssociation.getKey(), candidatesPreChecked);
+					}
 					attribJC.put(entryAssociation.getKey(), candidatesPreChecked);
 				}
 				displayAttrib();
 			}
 
 			if (saveConfirmed) {
-				RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Confirmation", "Les modifications ont été enregistrées avec succès !"));
-				saveConfirmed = false;
+				if (isopen == false) {
+					RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Confirmation", "Les modifications ont été enregistrées avec succès !"));
+					saveConfirmed = false;
+				} else {
+					RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Confirmation",
+							"Les modifications ont été enregistrées avec succès ! ATTENTION : les jurys doivent raffraichir l'application pour récupérer les modifications"));
+					saveConfirmed = false;
+				}
 			}
-
 		}
-	}
-
-	public String getAvertissementMessage() {
-		return avertissementMessage;
-	}
-
-	public void setAvertissementMessage(String avertissementMessage) {
-		this.avertissementMessage = avertissementMessage;
 	}
 
 	public int getIdEvent() {
@@ -400,7 +410,7 @@ public class AttributionJCBean implements Serializable {
 		}
 		Collections.sort(messageAttrib, (o1, o2) -> o1.getJury().compareTo(o2.getJury()));
 	}
-	
+
 	private void showErrorAssignment(String logErrorAssignment) {
 		RequestContext.getCurrentInstance().showMessageInDialog(
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Erreur lors de l'attribution", logErrorAssignment));
