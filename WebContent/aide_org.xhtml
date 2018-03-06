@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>ONEK' - Aide</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+	<h:outputStylesheet library="css" name="header_footer.css" />
+</h:head>
+<h:body>
+	<!-- Insertion du header + menu -->
+	<ui:include src="#{accueil.typeMenu}" />
+	<br />
+	<div style="float: center;">
+		<object data="resources/manuels/ManuelUtilisationOrganisateur.pdf"
+			type="application/pdf" height="420px" width="100%">
+			Votre navigateur ne peut pas lire les pdf, <a
+				href="resources/manuels/ManuelUtilisationOrganisateur.pdf">cliquer-ici
+				pour le télécharger.</a>
+		</object>
+	</div>
+	<ui:include src="footer.xhtml" />
+</h:body>
+</html>
