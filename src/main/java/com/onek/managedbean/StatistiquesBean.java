@@ -444,12 +444,16 @@ public class StatistiquesBean implements Serializable {
 
 	private void fillCandidatesPages(XSSFWorkbook workbook, List<Critere> criteres, boolean needSignature) {
 		for (Candidat candidat : candidats) {
+			String fullName = (candidat.getNom().replace("'", " ") + " " + candidat.getPrenom().replace("'", " "));
+			if (fullName.length() >= 31) {
+				fullName = fullName.substring(0, 30);
+			}
 			Map<Critere, List<String>> notesByCriteres = new HashMap<>();
 			resultCandidats.put(candidat, new HashMap<>());
 			int rowNum = 0;
 			int colNum = 0;
 			List<Evaluation> evaluations = evaluation.findByIdCandidate(candidat.getIdcandidat());
-			XSSFSheet sheet = workbook.createSheet((candidat.getNom().replace("'", " ") + " " + candidat.getPrenom().replace("'", " ")).substring(0, 30));
+			XSSFSheet sheet = workbook.createSheet(fullName);
 			Row row = sheet.createRow(rowNum++);
 			Cell cell = row.createCell(colNum++);
 			cell.setCellValue("Jurys");
@@ -600,13 +604,17 @@ public class StatistiquesBean implements Serializable {
 
 	private void fillJurysPages(XSSFWorkbook workbook, List<Critere> criteres) {
 		for (Jury jury : jurys) {
+			String fullName = (jury.getUtilisateur().getNom().replace("'", " ") + " "
+					+ jury.getUtilisateur().getPrenom().replace("'", " "));
+			if (fullName.length() >= 31) {
+				fullName = fullName.substring(0, 30);
+			}
 			resultJurys.put(jury, new HashMap<>());
 			int rowNum = 0;
 			int colNum = 0;
 			Map<Critere, List<String>> notesByCriteres = new HashMap<>();
 			List<Evaluation> evaluations = evaluation.findByIdJury(jury.getIdjury());
-			XSSFSheet sheet = workbook
-					.createSheet((jury.getUtilisateur().getNom().replace("'", " ") + " " + jury.getUtilisateur().getPrenom().replace("'", " ")).substring(0, 30));
+			XSSFSheet sheet = workbook.createSheet(fullName);
 			Row row = sheet.createRow(rowNum++);
 			Cell cell = row.createCell(colNum++);
 			cell.setCellValue("Candidats");
@@ -747,6 +755,10 @@ public class StatistiquesBean implements Serializable {
 		cell.setCellStyle(style2);
 		if (who.equals("candidat")) {
 			for (Candidat candidat : candidats) {
+				String fullName = (candidat.getNom().replace("'", " ") + " " + candidat.getPrenom().replace("'", " "));
+				if (fullName.length() >= 31) {
+					fullName = fullName.substring(0, 30);
+				}
 				colNum = 0;
 				row = sheet.createRow(rowNum++);
 				cell = row.createCell(colNum++);
@@ -754,19 +766,24 @@ public class StatistiquesBean implements Serializable {
 				cell.setCellStyle(style2);
 				for (Critere critere : criteres) {
 					cell = row.createCell(colNum++);
-					cell.setCellFormula("'" + (candidat.getNom().replace("'", " ") + " " + candidat.getPrenom().replace("'", " ")).substring(0, 30) + "'!"
+					cell.setCellFormula("'" + fullName + "'!"
 							+ resultCandidats.get(candidat).get(critere.getTexte()).formatAsString());
 					cell.setCellStyle(style);
 				}
 				cell = row.createCell(colNum++);
 				if (resultCandidats.get(candidat).containsKey("total")) {
-					cell.setCellFormula("'" + (candidat.getNom().replace("'", " ") + " " + candidat.getPrenom().replace("'", " ")).substring(0, 30) + "'!"
-							+ resultCandidats.get(candidat).get("total").formatAsString());
+					cell.setCellFormula(
+							"'" + fullName + "'!" + resultCandidats.get(candidat).get("total").formatAsString());
 					cell.setCellStyle(style);
 				}
 			}
 		} else {
 			for (Jury jury : jurys) {
+				String fullName = (jury.getUtilisateur().getNom().replace("'", " ") + " "
+						+ jury.getUtilisateur().getPrenom().replace("'", " "));
+				if (fullName.length() >= 31) {
+					fullName = fullName.substring(0, 30);
+				}
 				colNum = 0;
 				row = sheet.createRow(rowNum++);
 				cell = row.createCell(colNum++);
@@ -774,14 +791,13 @@ public class StatistiquesBean implements Serializable {
 				cell.setCellStyle(style2);
 				for (Critere critere : criteres) {
 					cell = row.createCell(colNum++);
-					cell.setCellFormula("'" + (jury.getUtilisateur().getNom().replace("'", " ") + " " + jury.getUtilisateur().getPrenom().replace("'", " ")).substring(0, 30)
-							+ "'!" + resultJurys.get(jury).get(critere.getTexte()).formatAsString());
+					cell.setCellFormula(
+							"'" + fullName + "'!" + resultJurys.get(jury).get(critere.getTexte()).formatAsString());
 					cell.setCellStyle(style);
 				}
 				cell = row.createCell(colNum++);
 				if (resultJurys.get(jury).containsKey("total")) {
-					cell.setCellFormula("'" + (jury.getUtilisateur().getNom().replace("'", " ") + " " + jury.getUtilisateur().getPrenom().replace("'", " ")).substring(0, 30)
-							+ "'!" + resultJurys.get(jury).get("total").formatAsString());
+					cell.setCellFormula("'" + fullName + "'!" + resultJurys.get(jury).get("total").formatAsString());
 					cell.setCellStyle(style);
 				}
 			}
