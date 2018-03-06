@@ -254,8 +254,8 @@ public class StatistiquesBean implements Serializable {
 						.add(new StatsCandidate(candidat.getNom() + " " + candidat.getPrenom(), 100, 0, 0, jurys));
 			} else {
 				notesByCandidats.add(new StatsCandidate(candidat.getNom() + " " + candidat.getPrenom(),
-						(double) (((double) evaluationsDone / (double) totalNotes) * 100),
-						evaluationCompletes, evaluations.size(), jurys));
+						(double) (((double) evaluationsDone / (double) totalNotes) * 100), evaluationCompletes,
+						evaluations.size(), jurys));
 			}
 		}
 		if (total == 0) {
@@ -298,8 +298,8 @@ public class StatistiquesBean implements Serializable {
 				notesByJurys.add(new StatsJury(user.getNom() + " " + user.getPrenom(), (double) 100, 0, 0, candidats));
 			} else {
 				notesByJurys.add(new StatsJury(user.getNom() + " " + user.getPrenom(),
-						(double) (((double) evaluationsDone / (double) totalNotes) * 100),
-						evaluationCompletes, evaluations.size(), candidats));
+						(double) (((double) evaluationsDone / (double) totalNotes) * 100), evaluationCompletes,
+						evaluations.size(), candidats));
 			}
 		}
 	}
@@ -465,6 +465,9 @@ public class StatistiquesBean implements Serializable {
 			cell = row.createCell(colNum++);
 			cell.setCellValue("Total");
 			cell.setCellStyle(style2);
+			cell = row.createCell(colNum++);
+			cell.setCellValue("Commentaire Général");
+			cell.setCellStyle(style2);
 			if (needSignature) {
 				cell = row.createCell(colNum++);
 				cell.setCellValue("Signatures");
@@ -480,12 +483,13 @@ public class StatistiquesBean implements Serializable {
 				cell.setCellStyle(style2);
 				sb.append("SUM(");
 				List<Note> notes = eval.getNotes();
-				notes.sort((a,b) -> {
+				notes.sort((a, b) -> {
 					int comp1 = a.getCritere().getCategorie().compareTo(b.getCritere().getCategorie());
-					if(comp1 !=0)
+					if (comp1 != 0) {
 						return comp1;
-					else
+					} else {
 						return a.getCritere().getIdcritere() - b.getCritere().getIdcritere();
+					}
 				});
 				for (Note note : notes) {
 					if (!notesByCriteres.containsKey(note.getCritere())) {
@@ -495,9 +499,8 @@ public class StatistiquesBean implements Serializable {
 					cell.setCellValue(niveaux.get(note.getNiveau()));
 					cell.setCellStyle(style2);
 					notesByCriteres.get(note.getCritere()).add(cell.getAddress().formatAsString());
-					sb.append("Parametres!")
-							.append(mapParam.get(note.getCritere().getTexte()))
-							.append("*VLOOKUP(").append(cell.getAddress().formatAsString()).append(",")
+					sb.append("Parametres!").append(mapParam.get(note.getCritere().getTexte())).append("*VLOOKUP(")
+							.append(cell.getAddress().formatAsString()).append(",")
 							.append(paramRange.get(note.getCritere())).append(",2,FALSE)");
 					cell = row.createCell(colNum++);
 					cell.setCellValue(note.getCommentaire());
@@ -517,6 +520,10 @@ public class StatistiquesBean implements Serializable {
 					cell.setCellStyle(style);
 					colNum++;
 				}
+				cell = row.createCell(colNum);
+				cell.setCellValue(eval.getCommentaire());
+				cell.setCellStyle(style2);
+				colNum++;
 				if (needSignature) {
 					for (Signature signature : eval.getSignatures()) {
 						cell = row.createCell(colNum);
@@ -580,8 +587,7 @@ public class StatistiquesBean implements Serializable {
 				StringBuilder sb = new StringBuilder();
 				sb.append("SUM(");
 				for (String[] values : adresses) {
-					sb.append(values[1]).append("*Parametres!")
-							.append(mapParam.get(values[0])).append("+");
+					sb.append(values[1]).append("*Parametres!").append(mapParam.get(values[0])).append("+");
 				}
 				sb.setLength(sb.length() - 1);
 				sb.append(")");
@@ -591,7 +597,7 @@ public class StatistiquesBean implements Serializable {
 			}
 		}
 	}
-	
+
 	private void fillJurysPages(XSSFWorkbook workbook, List<Critere> criteres) {
 		for (Jury jury : jurys) {
 			resultJurys.put(jury, new HashMap<>());
@@ -616,6 +622,9 @@ public class StatistiquesBean implements Serializable {
 			cell = row.createCell(colNum++);
 			cell.setCellValue("Total");
 			cell.setCellStyle(style2);
+			cell = row.createCell(colNum++);
+			cell.setCellValue("Commentaire Général");
+			cell.setCellStyle(style2);
 			for (Evaluation eval : evaluations) {
 				row = sheet.createRow(rowNum++);
 				colNum = 0;
@@ -624,7 +633,16 @@ public class StatistiquesBean implements Serializable {
 				StringBuilder sb = new StringBuilder();
 				cell.setCellStyle(style2);
 				sb.append("SUM(");
-				for (Note note : eval.getNotes()) {
+				List<Note> notes = eval.getNotes();
+				notes.sort((a, b) -> {
+					int comp1 = a.getCritere().getCategorie().compareTo(b.getCritere().getCategorie());
+					if (comp1 != 0) {
+						return comp1;
+					} else {
+						return a.getCritere().getIdcritere() - b.getCritere().getIdcritere();
+					}
+				});
+				for (Note note : notes) {
 					if (!notesByCriteres.containsKey(note.getCritere())) {
 						notesByCriteres.put(note.getCritere(), new ArrayList<>());
 					}
@@ -632,9 +650,8 @@ public class StatistiquesBean implements Serializable {
 					cell.setCellValue(niveaux.get(note.getNiveau()));
 					cell.setCellStyle(style2);
 					notesByCriteres.get(note.getCritere()).add(cell.getAddress().formatAsString());
-					sb.append("Parametres!")
-							.append(mapParam.get(note.getCritere().getTexte()))
-							.append("*VLOOKUP(").append(cell.getAddress().formatAsString()).append(",")
+					sb.append("Parametres!").append(mapParam.get(note.getCritere().getTexte())).append("*VLOOKUP(")
+							.append(cell.getAddress().formatAsString()).append(",")
 							.append(paramRange.get(note.getCritere())).append(",2,FALSE)");
 					cell = row.createCell(colNum++);
 					cell.setCellValue(note.getCommentaire());
@@ -655,6 +672,10 @@ public class StatistiquesBean implements Serializable {
 					cell.setCellStyle(style);
 					colNum++;
 				}
+				cell = row.createCell(colNum);
+				cell.setCellValue(eval.getCommentaire());
+				cell.setCellStyle(style2);
+				colNum++;
 			}
 			colNum = 0;
 			row = sheet.createRow(rowNum);
@@ -694,8 +715,7 @@ public class StatistiquesBean implements Serializable {
 				StringBuilder sb = new StringBuilder();
 				sb.append("SUM(");
 				for (String[] values : adresses) {
-					sb.append(values[1]).append("*Parametres!")
-							.append(mapParam.get(values[0])).append("+");
+					sb.append(values[1]).append("*Parametres!").append(mapParam.get(values[0])).append("+");
 				}
 				sb.setLength(sb.length() - 1);
 				sb.append(")");
@@ -705,7 +725,7 @@ public class StatistiquesBean implements Serializable {
 			}
 		}
 	}
-	
+
 	private void fillResultsPage(XSSFWorkbook workbook, List<Critere> criteres, String who) {
 		int rowNum = 0;
 		int colNum = 0;
