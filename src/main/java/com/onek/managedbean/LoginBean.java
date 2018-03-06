@@ -10,6 +10,7 @@ import javax.faces.event.ComponentSystemEvent;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.service.UserService;
@@ -17,6 +18,7 @@ import com.onek.utils.Navigation;
 
 @Configuration
 @Component("login")
+@Scope("session")
 public class LoginBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = Logger.getLogger(LoginBean.class);	

@@ -12,6 +12,7 @@ import javax.faces.event.ComponentSystemEvent;
 
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Evenement;
@@ -22,6 +23,7 @@ import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Navigation;
 
 @Component("accueil")
+@Scope("session")
 public class AccueilBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 

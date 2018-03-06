@@ -16,11 +16,13 @@ import javax.faces.event.ComponentSystemEvent;
 
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.utils.Navigation;
 
 @Component("downloadApk")
+@Scope("session")
 public class DownloadApk implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = Logger.getLogger(DownloadApk.class);

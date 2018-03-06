@@ -97,7 +97,7 @@ public class Candidat implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((idcandidat == null) ? 0 : idcandidat.hashCode());
+		result = prime * result + ((evenement == null) ? 0 : evenement.hashCode());
 		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
 		result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());
 		return result;
@@ -112,10 +112,10 @@ public class Candidat implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Candidat other = (Candidat) obj;
-		if (idcandidat == null) {
-			if (other.idcandidat != null)
+		if (evenement == null) {
+			if (other.evenement != null)
 				return false;
-		} else if (!idcandidat.equals(other.idcandidat))
+		} else if (!evenement.equals(other.evenement))
 			return false;
 		if (nom == null) {
 			if (other.nom != null)
@@ -129,4 +129,7 @@ public class Candidat implements Serializable {
 			return false;
 		return true;
 	}
+
+	
+	
 }

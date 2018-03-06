@@ -16,6 +16,7 @@ import javax.faces.event.ComponentSystemEvent;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
@@ -27,6 +28,7 @@ import com.onek.utils.Navigation;
 import au.com.bytecode.opencsv.CSVReader;
 
 @Component("candidate")
+@Scope("session")
 public class CandidateBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -164,7 +166,8 @@ public class CandidateBean implements Serializable {
 		if (firstName.isEmpty()) {
 			firstName = "";
 		}
-
+		messagedoublon="";
+		homonyme=false;
 		Candidat newCandidat = new Candidat();
 		newCandidat.setPrenom(firstName);
 		newCandidat.setNom(lastName);
@@ -172,12 +175,10 @@ public class CandidateBean implements Serializable {
 		for (Candidat candidat : candidats) {
 			if (candidat.getNom().toLowerCase().equals(lastName.toLowerCase())
 					&& candidat.getPrenom().toLowerCase().equals(firstName.toLowerCase())) {
-				if (firstName.isEmpty()) {
-					messagedoublon = "Le candidat " + lastName + " " + firstName
-							+ " existe déja. Voulez-vous l'ajouter ?";
-				} else {
-					messagedoublon = "Le candidat " + lastName + " existe déja. Voulez-vous l'ajouter ?";
-				}
+
+				messagedoublon = "Le candidat " + lastName + " " + firstName
+						+ " ne peut pas être ajouter car il existe déja.";
+
 				homonyme = true;
 				return;
 			}
@@ -220,8 +221,8 @@ public class CandidateBean implements Serializable {
 		List<String[]> data = new ArrayList<String[]>();
 		List<Candidat> importedCandidats = new ArrayList<>();
 		boolean homonymeDetected = false;
-
-		try (CSVReader reader = new CSVReader(new InputStreamReader(event.getFile().getInputstream()), ';')) {
+		List<Candidat> homonymes = new ArrayList<>();
+		try (CSVReader reader = new CSVReader(new InputStreamReader(event.getFile().getInputstream()), ',', '\"')) {
 			String[] nextLine = null;
 			// récupération des données du fichier
 			try {
@@ -272,26 +273,42 @@ public class CandidateBean implements Serializable {
 			}
 
 			if (!importedCandidats.isEmpty()) {
+
 				for (Candidat importedcandidat : importedCandidats) {
+					homonymeDetected = false;
 					for (Candidat candidat : candidats) {
-						if (candidat.getNom().toLowerCase().equals(importedcandidat.getNom().toLowerCase())
-								&& candidat.getPrenom().toLowerCase().equals(importedcandidat.getPrenom().toLowerCase())) {
-							showMessageImport(
-									"La liste des candidats a été importée avec succès,<br/>mais des candidats homonymes ont été détectés.");
+						if (candidat.getNom().toLowerCase().equals(importedcandidat.getNom().toLowerCase()) && candidat
+								.getPrenom().toLowerCase().equals(importedcandidat.getPrenom().toLowerCase())) {
+							homonymes.add(candidat);
 							homonymeDetected = true;
 							break;
 						}
 					}
-					candidats.add(importedcandidat);
+					if (!homonymeDetected) {
+						candidats.add(importedcandidat);
+					}
 				}
-				candidateService.addCandidates(importedCandidats);
+
+				importedCandidats.removeAll(homonymes);
+
+				if (importedCandidats.size() > 0) {
+					candidateService.addCandidates(importedCandidats);
+				}
 			}
 		} catch (IOException e) {
 			showMessageImport("Le contenu de votre fichier est incorrect ! Merci de le modifier et réessayer.");
 			return;
 		}
-		if (!homonymeDetected) {
+		if (homonymes.isEmpty()) {
 			showMessageImport("La liste des candidats a été importée avec succès !");
+		} else {
+			StringBuilder listehomonyme = new StringBuilder(
+					"Les candidats ci-dessous n'ont pas été ajoutés car ils existent déja <br />  ");
+			for (Candidat candidat : homonymes) {
+				listehomonyme.append(candidat.getNom()).append(" ").append(candidat.getPrenom()).append("<br />");
+			}
+			listehomonyme.setLength(listehomonyme.length());
+			showMessageImport(listehomonyme.toString());
 		}
 	}
 
@@ -320,8 +337,15 @@ public class CandidateBean implements Serializable {
 		externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"modeleCandidat.csv\"");
 		Writer writer = externalContext.getResponseOutputWriter();
 		try {
-			writer.write("nom;prenom\n");
-			writer.write("Smith;James");
+			writer.write("nom,prenom");
+			writer.write(System.getProperty("line.separator"));
+			for (Candidat candidat : candidats) {
+				
+				writer.write(candidat.getNom() + "," + candidat.getPrenom());
+
+				writer.write(System.getProperty("line.separator"));
+			}
+
 		} finally {
 			if (writer != null) {
 				writer.close();

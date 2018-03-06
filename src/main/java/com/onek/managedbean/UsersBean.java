@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Utilisateur;
@@ -15,13 +16,15 @@ import com.onek.service.UserService;
 import com.onek.utils.Navigation;
 
 @Component("users")
+@Scope("session")
 public class UsersBean {
 	
 	@Autowired
 	private UserService userService;
 	
 	private int iduser;	
-	private List<Utilisateur> users = new ArrayList<>();
+	private List<Utilisateur> usersactif = new ArrayList<>();
+	private List<Utilisateur> usersdeleted = new ArrayList<>();
 	private List<Utilisateur> filteredusers = new ArrayList<>();
 	private List<Utilisateur> selectedusers = new ArrayList<>();
 	
@@ -34,9 +37,18 @@ public class UsersBean {
 		}
 		String loginUtilisateur = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
 		utilisateurPrincipal = userService.findByLogin(loginUtilisateur);
-		users = userService.getAllUsersExceptCurrentAndAnonymous(utilisateurPrincipal.getIduser());
+		usersactif = userService.getAllUsersExceptCurrentAndAnonymous(utilisateurPrincipal.getIduser());
+		usersdeleted = userService.getDeletenotAno();
 	}
 	
+	public List<Utilisateur> getUsersdeleted() {
+		return usersdeleted;
+	}
+
+	public void setUsersdeleted(List<Utilisateur> usersdeleted) {
+		this.usersdeleted = usersdeleted;
+	}
+
 	public int getIduser() {
 		return iduser;
 	}
@@ -45,12 +57,12 @@ public class UsersBean {
 		this.iduser = iduser;
 	}
 	
-	public List<Utilisateur> getUsers() {
-		return users;
+	public List<Utilisateur> getUsersactif() {
+		return usersactif;
 	}
 	
-	public void setUsers(List<Utilisateur> users) {
-		this.users = users;
+	public void setUsersactif(List<Utilisateur> users) {
+		this.usersactif = users;
 	}
 	
 	public List<Utilisateur> getFilteredusers() {
@@ -75,7 +87,10 @@ public class UsersBean {
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		iduser = Integer.valueOf(params.get("iduser"));
 		if(iduser != utilisateurPrincipal.getIduser()) {
+			Utilisateur user = userService.findUserById(iduser);
 			userService.deleteUser(iduser);
+			usersactif.remove(user);
+			usersdeleted.add(user);
 		}		
 	}
 	
@@ -85,12 +100,22 @@ public class UsersBean {
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		iduser = Integer.valueOf(params.get("iduser"));
 		Utilisateur user = userService.findUserById(iduser);
-		user.setIsdeleted(false);		
-		userService.updateUserInfos(user);		
+		
+		usersdeleted.remove(user);
+		user.setIsdeleted(false);	
+		usersactif.add(user);
+		userService.updateUserInfos(user);	
+		
 	}
 	
 	public void createUser() {
 		Navigation.redirect("addUser.xhtml?i=1");
-	}	
+	}
+	public void archiveuser() {
+		Navigation.redirect("userdeleted.xhtml?i=1");
+	}
+	public void retour() {
+		Navigation.redirect("users.xhtml?i=1");
+	}
 
 }

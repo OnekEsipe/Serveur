@@ -169,4 +169,8 @@ public class UserServiceImpl implements UserService, Serializable {
 
 		return emailService.sendMail(user.getMail(), "[ONEK'] Inscription", message);
 	}
+	@Override
+	public List<Utilisateur> getDeletenotAno(){
+		return userDao.getDeletenotAno();
+	}
 }
