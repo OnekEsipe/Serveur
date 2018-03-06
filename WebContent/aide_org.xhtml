@@ -12,35 +12,9 @@
 	</link>
 	<h:outputStylesheet library="css" name="header_footer.css" />
 </h:head>
-<h:body>
-	<header>
-		<div class="ui-g">
-			<div class="ui-g-1">
-				<p:graphicImage name="/image/logo.png" width="50" />
-			</div>
-			<div class="ui-g-11">
-				<h1 class="hf">ONEK'</h1>
-			</div>
-		</div>
-	</header>
-	<div style="margin-top: 67px;">
-		<h:form>
-			<p:tabMenu activeIndex="#{param.i}">
-				<p:menuitem value="Mes événements" outcome="accueil.xhtml">
-					<f:param name="i" value="0" />
-				</p:menuitem>
-				<p:menuitem value="Mon compte Organisateur" outcome="account.xhtml">
-					<f:param name="i" value="1" />
-				</p:menuitem>
-				<p:menuitem value="Aide" outcome="aide_org.xhtml">
-					<f:param name="i" value="2" />
-				</p:menuitem>
-				<p:menuitem value="Déconnexion" outcome="index.xhtml">
-					<f:param name="i" value="3" />
-				</p:menuitem>
-			</p:tabMenu>
-		</h:form>
-	</div>
+	<!-- Insertion du header + menu -->
+	<ui:include src="#{accueil.typeMenu}" />
+	<br />
 		<object data="/manuels/ManuelUtilisationOrganisateur.pdf"
 			type="application/pdf" width="400" height="500">
 			Lien alternatif : <a href="/manuels/ManuelUtilisationOrganisateur.pdf">test.pdf</a>
