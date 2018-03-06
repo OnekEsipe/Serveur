@@ -29,7 +29,7 @@
 			<div class="ui-g">
 				<div class="ui-g-7">
 					<p:panel id="AttributionAutomatique"
-						rendered="#{attributionjc.isopen}"
+						rendered="#{not attributionjc.isopen}"
 						header="Attribuer des candidats automatiquement"
 						style="height:150px">
 						<div class="ui-g">
@@ -126,7 +126,7 @@
 						<div class="ui-g-4">
 							<p:commandButton value="Vider les attributions"
 								actionListener="#{attributionjc.clearButton}"
-								rendered="#{attributionjc.isopen}" update="tableCheckBox" />
+								rendered="#{not attributionjc.isopen}" update="tableCheckBox" />
 						</div>
 					</div>
 				</h:form>

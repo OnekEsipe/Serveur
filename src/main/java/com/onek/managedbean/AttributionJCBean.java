@@ -119,7 +119,7 @@ public class AttributionJCBean implements Serializable {
 				return;
 			}
 			setIdEvent((Integer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("idEvent"));
-			isopen = true;
+			isopen = false;
 			attribJC = new LinkedHashMap<>();
 			attribJCDisabledCheckBox = new LinkedHashMap<>();
 			attributionFinal = new LinkedHashMap<>();
@@ -128,7 +128,7 @@ public class AttributionJCBean implements Serializable {
 			// l'attribution deja realisee + init du message d'avertissement
 			status = evenement.findById(idEvent).getStatus();
 			if (!status.equals("Brouillon")) {
-				isopen = false;
+				isopen = true;
 			}
 			candidatsJurys = candidatservice.findCandidatesByEvent(idEvent);
 			juryList = juryservice.findJurysByIdevent(idEvent);
@@ -141,7 +141,7 @@ public class AttributionJCBean implements Serializable {
 					for (Candidat candidatAttributed : candidatesList) {
 						candidatesPreChecked.put(candidatAttributed, true);
 					}
-					if (isopen == false) {
+					if (isopen == true) {
 						attribJCDisabledCheckBox.put(entryAssociation.getKey(), candidatesPreChecked);
 					}
 					attribJC.put(entryAssociation.getKey(), candidatesPreChecked);
