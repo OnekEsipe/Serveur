@@ -177,7 +177,7 @@ public class CandidateBean implements Serializable {
 					&& candidat.getPrenom().toLowerCase().equals(firstName.toLowerCase())) {
 
 				messagedoublon = "Le candidat " + lastName + " " + firstName
-						+ " ne peut pas être ajouté car il existe déja.";
+						+ " ne peut pas être ajouter car il existe déja.";
 
 				homonyme = true;
 				return;
@@ -222,7 +222,7 @@ public class CandidateBean implements Serializable {
 		List<Candidat> importedCandidats = new ArrayList<>();
 		boolean homonymeDetected = false;
 		List<Candidat> homonymes = new ArrayList<>();
-		try (CSVReader reader = new CSVReader(new InputStreamReader(event.getFile().getInputstream()), ',', '\"')) {
+		try (CSVReader reader = new CSVReader(new InputStreamReader(event.getFile().getInputstream()), ';', '\"')) {
 			String[] nextLine = null;
 			// récupération des données du fichier
 			try {
@@ -337,11 +337,12 @@ public class CandidateBean implements Serializable {
 		externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"modeleCandidat.csv\"");
 		Writer writer = externalContext.getResponseOutputWriter();
 		try {
-			writer.write("nom,prenom");
+			writer.write("nom;prenom");
 			writer.write(System.getProperty("line.separator"));
 			for (Candidat candidat : candidats) {
 				
 				writer.write(candidat.getNom() + "," + candidat.getPrenom());
+
 				writer.write(System.getProperty("line.separator"));
 			}
 
