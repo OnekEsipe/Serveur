@@ -43,7 +43,7 @@
 			<h:form>
 				<p:dataTable id="tab-users" var="utilisateur"
 					value="#{users.usersactif}" scrollable="true" scrollHeight="500"
-					sortBy="#{utilisateur.login}">
+					sortBy="#{utilisateur.login}" emptyMessage="Aucun utilisateur trouvé.">
 					<f:facet name="header">
 						Liste des utilisateurs
 					</f:facet>

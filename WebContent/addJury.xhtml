@@ -78,7 +78,7 @@
 				<!-- Debut liste jurys anonymes -->
 				<p:dataTable id="tabJurysAnos" var="utilisateursAno"
 					style="display:none;" value="#{addjury.utilisateursAnos}"
-					widgetVar="utilisateurTable2" scrollable="true" scrollHeight="300"
+					widgetVar="utilisateurTable2" scrollable="true" scrollHeight="300" 
 					rowKey="#{utilisateursAno.nom}" sortBy="#{utilisateursAno.nom}">
 					<!-- ********fin*********** -->
 					<p:column headerText="Nom">
@@ -117,7 +117,7 @@
 			</h:form>
 			<h:form id="tabJury">
 				<p:dataTable var="utilisateur" value="#{addjury.utilisateurs}"
-					scrollable="true" scrollHeight="300" sortBy="#{utilisateur.login}">
+					scrollable="true" scrollHeight="300" sortBy="#{utilisateur.login}" emptyMessage="Aucun jury pour cet événement.">
 
 					<!-- barre de recherche -->
 					<f:facet name="header">
