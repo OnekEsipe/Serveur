@@ -35,9 +35,10 @@
 					<h:form id="log" enctype="multipart/form-data">
 						<h2 id="format">
 							Le fichier doit être au format csv, le séparateur de champs
-							accepté est ",". <br /> L'encodage de fichier accepté est UTF-8. <br /> Le fichier doit obligatoirement contenir
-							une colonne "nom", la colonne "prenom" est facultative. <br />
-							Veuillez utiliser le modèle à télécharger
+							accepté est ",". <br /> L'encodage de fichier accepté est UTF-8.
+							<br /> Le fichier doit obligatoirement contenir une colonne
+							"nom", la colonne "prenom" est facultative. <br /> Veuillez
+							utiliser le modèle à télécharger
 						</h2>
 						<br />
 						<p:fileUpload fileUploadListener="#{candidate.fileImportCsv}"
@@ -86,6 +87,7 @@
 					<!-- ************Tableau des candidats**************** -->
 
 					<p:dataTable var="candidat" value="#{candidate.candidats}"
+						emptyMessage="Aucun candidat pour cet événement."
 						scrollable="true" scrollHeight="250">
 
 						<!-- barre de recherche -->
@@ -104,7 +106,7 @@
 						<!-- ********la colonne supprimée*********** -->
 						<p:column style="width:32px;text-align: center"
 							rendered="#{not eventAccueil.disabledSiBrouillon}">
-							
+
 							<p:commandButton id="iconOnly" icon="ui-icon-trash"
 								actionListener="#{candidate.supprimerCandidat}" ajax="true"
 								update="tabCandidat"

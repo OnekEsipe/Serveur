@@ -46,7 +46,8 @@
 				<br />
 				<div class="ui-g-6">
 					<p:dataTable var="juryStat" value="#{statistiques.notesByJurys}"
-						scrollable="true" scrollHeight="300">
+						scrollable="true" scrollHeight="300"
+						emptyMessage="Aucune attribution pour cet événement.">
 						<p:column headerText="Jury" filterBy="#{juryStat.name}"
 							filterMatchMode="contains">
 							<h:outputText value="#{juryStat.name}" />
@@ -80,7 +81,8 @@
 				<div class="ui-g-6">
 					<p:dataTable var="candiStat"
 						value="#{statistiques.notesByCandidats}" scrollable="true"
-						scrollHeight="300">
+						scrollHeight="300"
+						emptyMessage="Aucune attribution pour cet événement.">
 						<p:column headerText="Candidat" filterBy="#{candiStat.name}"
 							filterMatchMode="contains">
 							<h:outputText value="#{candiStat.name}" />
@@ -89,7 +91,8 @@
 							<p:progressBar value="#{candiStat.value}"
 								labelTemplate="{value}%" displayOnly="true" />
 						</p:column>
-						<p:column headerText="Terminées" sortBy="#{candiStat.notation}" style="text-align:center">
+						<p:column headerText="Terminées" sortBy="#{candiStat.notation}"
+							style="text-align:center">
 							<h:outputText value="#{candiStat.notation}"></h:outputText>
 						</p:column>
 						<p:column headerText="Evaluations manquantes par"

@@ -34,7 +34,7 @@
 			<div class="ui-g-9">
 				<h:form>
 					<div id="displayCriteres">
-						<p:dataTable var="critere" value="#{grille.criteres}">
+						<p:dataTable var="critere" value="#{grille.criteres}" emptyMessage="Aucun critère pour cet événement.">
 							<p:column headerText="Nom">
 								<h:outputText value="#{critere.texte}" />
 							</p:column>

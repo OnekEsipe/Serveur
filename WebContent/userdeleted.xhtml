@@ -28,7 +28,7 @@
 			<h:form>
 				<p:dataTable id="tab-users" var="utilisateur"
 					value="#{users.usersdeleted}" scrollable="true" scrollHeight="300"
-					sortBy="#{utilisateur.login}">
+					sortBy="#{utilisateur.login}" emptyMessage="Aucun utilisateur supprimé.">
 					<f:facet name="header">
 						Liste des utilisateurs supprimés
 					</f:facet>
