@@ -465,9 +465,11 @@ public class StatistiquesBean implements Serializable {
 			cell = row.createCell(colNum++);
 			cell.setCellValue("Total");
 			cell.setCellStyle(style2);
-			cell = row.createCell(colNum++);
-			cell.setCellValue("Signatures");
-			cell.setCellStyle(style2);
+			if (needSignature) {
+				cell = row.createCell(colNum++);
+				cell.setCellValue("Signatures");
+				cell.setCellStyle(style2);
+			}
 			for (Evaluation eval : evaluations) {
 				row = sheet.createRow(rowNum++);
 				colNum = 0;
@@ -477,7 +479,15 @@ public class StatistiquesBean implements Serializable {
 				StringBuilder sb = new StringBuilder();
 				cell.setCellStyle(style2);
 				sb.append("SUM(");
-				for (Note note : eval.getNotes()) {
+				List<Note> notes = eval.getNotes();
+				notes.sort((a,b) -> {
+					int comp1 = a.getCritere().getCategorie().compareTo(b.getCritere().getCategorie());
+					if(comp1 !=0)
+						return comp1;
+					else
+						return a.getCritere().getIdcritere() - b.getCritere().getIdcritere();
+				});
+				for (Note note : notes) {
 					if (!notesByCriteres.containsKey(note.getCritere())) {
 						notesByCriteres.put(note.getCritere(), new ArrayList<>());
 					}
