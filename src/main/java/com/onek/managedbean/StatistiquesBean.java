@@ -33,6 +33,7 @@ import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
@@ -49,6 +50,7 @@ import com.onek.service.EvenementService;
 import com.onek.utils.Navigation;
 
 @Component("statistiques")
+@Scope("session")
 public class StatistiquesBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;

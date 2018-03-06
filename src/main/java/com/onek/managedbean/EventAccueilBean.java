@@ -16,6 +16,7 @@ import javax.faces.event.ComponentSystemEvent;
 
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
@@ -36,6 +37,7 @@ import com.onek.utils.Navigation;
 import com.onek.utils.Password;
 
 @Component("eventAccueil")
+@Scope("session")
 public class EventAccueilBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 

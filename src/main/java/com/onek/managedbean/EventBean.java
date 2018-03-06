@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Evenement;
@@ -18,6 +19,7 @@ import com.onek.utils.Navigation;
 import com.onek.utils.Password;
 
 @Component("event")
+@Scope("session")
 public class EventBean implements Serializable {
 	@Autowired
 	private UserService userService;

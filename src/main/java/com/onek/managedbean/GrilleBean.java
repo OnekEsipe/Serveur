@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
@@ -25,6 +26,7 @@ import com.onek.service.GrilleService;
 import com.onek.utils.Navigation;
 
 @Component("grille")
+@Scope("session")
 public class GrilleBean {
 
 	@Autowired

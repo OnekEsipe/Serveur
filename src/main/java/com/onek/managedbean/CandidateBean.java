@@ -16,6 +16,7 @@ import javax.faces.event.ComponentSystemEvent;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
@@ -27,6 +28,7 @@ import com.onek.utils.Navigation;
 import au.com.bytecode.opencsv.CSVReader;
 
 @Component("candidate")
+@Scope("session")
 public class CandidateBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 

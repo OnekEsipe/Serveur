@@ -18,6 +18,7 @@ import javax.faces.event.ComponentSystemEvent;
 
 import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.onek.model.Candidat;
@@ -29,6 +30,7 @@ import com.onek.service.JuryService;
 import com.onek.utils.Navigation;
 
 @Component("attributionjc")
+@Scope("session")
 public class AttributionJCBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
