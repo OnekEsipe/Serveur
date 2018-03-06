@@ -37,7 +37,7 @@
 							Le fichier doit être au format csv, le séparateur de champs
 							accepté est ";". <br /> Le fichier doit obligatoirement contenir
 							une colonne "nom", la colonne "prenom" est facultative. <br />
-							Veuillez utiliser la liste à télécharger
+							Veuillez utiliser le modèle à télécharger
 						</h2>
 						<br />
 						<p:fileUpload fileUploadListener="#{candidate.fileImportCsv}"
@@ -46,7 +46,7 @@
 							label="Choisir un fichier" uploadLabel="Importer"
 							cancelLabel="Annuler" />
 						<br />
-						<p:commandButton value="Télécharger la liste des candidats"
+						<p:commandButton value="Télécharger un modèle"
 							action="#{candidate.telechargerModele}" ajax="false"
 							icon="ui-icon-arrowthick-1-s">
 						</p:commandButton>
