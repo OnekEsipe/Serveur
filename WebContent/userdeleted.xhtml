@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>ONEK' - Gestion des utilisateurs</title>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</link>
+	<h:outputStylesheet library="css" name="user.css" />
+	<h:outputStylesheet library="css" name="header_footer.css" />
+</h:head>
+<f:metadata>
+	<f:event type="preRenderView" listener="#{users.before}" />
+</f:metadata>
+<h:body>
+	<!-- Insertion du header + menu -->
+	<ui:include src="#{accueil.typeMenu}" />
+	<br />
+	<div class="page-wrap">
+		<!-- bouton création d'un utilisateur -->
+
+		<!-- Tableau des utilisateurs -->
+		<div class="ui-g tab-users">
+			<h:form>
+				<p:dataTable id="tab-users" var="utilisateur"
+					value="#{users.usersdeleted}" scrollable="true" scrollHeight="300"
+					sortBy="#{utilisateur.login}">
+					<f:facet name="header">
+						Liste des utilisateurs supprimés
+					</f:facet>
+
+					<p:column headerText="Login" sortBy="#{utilisateur.login}">
+						<h:outputText value="#{utilisateur.login}" />
+					</p:column>
+
+					<p:column headerText="Nom" sortBy="#{utilisateur.nom}">
+						<h:outputText value="#{utilisateur.nom}" />
+					</p:column>
+
+					<p:column headerText="Prénom" sortBy="#{utilisateur.prenom}">
+						<h:outputText value="#{utilisateur.prenom}" />
+					</p:column>
+
+					<p:column headerText="Type" sortBy="#{utilisateur.nomDroits}">
+						<h:outputText value="#{utilisateur.nomDroits}" />
+					</p:column>
+
+					<p:column style="width:32px;text-align: center">
+						<!-- Réactiver l'utilisateur -->
+						<p:commandButton id="reactiver" icon="ui-icon-unlocked"
+							actionListener="#{users.reactiverUser}" ajax="true"
+							update="tab-users">
+							<f:param name="iduser" value="#{utilisateur.iduser}" />
+						</p:commandButton>
+
+						<p:tooltip for="reactiver" value="Réactiver l'utilisateur"
+							position="left" />
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</div>
+		<div class="ui-g">
+			<div class="ui-g-2"></div>
+			<div class="ui-g-4">
+				<h:form>
+					<p:commandButton value="retour" icon="ui-icon-arrowthick-1-w"
+						actionListener="#{users.retour}" styleClass="bigbutton" />
+
+				</h:form>
+			</div>
+		</div>
+
+	</div>
+	<!-- Insertion du footer -->
+	<ui:include src="footer.xhtml" />
+</h:body>
+</html>
