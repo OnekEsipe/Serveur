@@ -8,7 +8,7 @@
 <h:head>
 	<title>ONEK' - Menu</title>
 	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">		
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</link>
 	<h:outputStylesheet library="css" name="header_footer.css" />
 </h:head>
@@ -23,26 +23,27 @@
 			</div>
 		</div>
 	</header>
-	<div class="menu-haut">
+	<div style="margin-top: 67px;">
 		<h:form>
 			<p:tabMenu activeIndex="#{param.i}">
 				<p:menuitem value="Mes événements" outcome="accueil.xhtml">
 					<f:param name="i" value="0" />
 				</p:menuitem>
-				<p:menuitem value="Gestion des utilisateurs" outcome="users.xhtml">
+				<p:menuitem value="Mon compte Organisateur" outcome="account.xhtml">
 					<f:param name="i" value="1" />
 				</p:menuitem>
-				<p:menuitem value="Mon compte Administrateur" outcome="account.xhtml">
+				<p:menuitem value="Aide" outcome="aide_admin.xhtml">
 					<f:param name="i" value="2" />
 				</p:menuitem>
-				<p:menuitem value="Aide" outcome="aide_admin.xhtml">
-					<f:param name="i" value="3" />
-				</p:menuitem>
 				<p:menuitem value="Déconnexion" outcome="index.xhtml">
-					<f:param name="i" value="4" />
+					<f:param name="i" value="3" />
 				</p:menuitem>
 			</p:tabMenu>
 		</h:form>
 	</div>
+	<object data="/manuels/ManuelUtilisationAdministrateur.pdf"
+		type="application/pdf" width="400" height="500">
+		Lien alternatif : <a href="/manuels/ManuelUtilisationAdministrateur.pdf">ManuelUtilisationAdministrateur.pdf</a>
+	</object>
 </h:body>
 </html>
