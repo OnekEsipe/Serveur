@@ -176,8 +176,8 @@ public class UserDaoImpl implements UserDao, Serializable {
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			users = (List<Utilisateur>) session.createQuery("from Utilisateur where (iduser != :iduser AND droits != :droits)" )
-					.setParameter("iduser", idcurrentUser).setParameter("droits", DroitsUtilisateur.ANONYME.toString()).list();
+			users = (List<Utilisateur>) session.createQuery("from Utilisateur where (iduser != :iduser AND droits != :droits AND isdeleted = :isdeleted)" )
+					.setParameter("iduser", idcurrentUser).setParameter("droits", DroitsUtilisateur.ANONYME.toString()).setParameter("isdeleted", false).list();
 			transaction.commit();
 			logger.info("Find all users except current and anonymous done !");
 		} catch (RuntimeException e) {
@@ -306,6 +306,27 @@ public class UserDaoImpl implements UserDao, Serializable {
 		try {
 			transaction = session.beginTransaction();
 			users = (List<Utilisateur>) session.createQuery("from Utilisateur where (isdeleted = :isdeleted AND droits != :droits)").setParameter("isdeleted", false).setParameter("droits", "A").list();
+			transaction.commit();
+			logger.info("Find all users done except deleted!");
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		} finally {
+			session.close();
+		}
+		return users;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Utilisateur> getDeletenotAno(){
+		List<Utilisateur> users = null;
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			users = (List<Utilisateur>) session.createQuery("from Utilisateur where (isdeleted = :isdeleted AND droits != :droits)").setParameter("isdeleted", true).setParameter("droits", "A").list();
 			transaction.commit();
 			logger.info("Find all users done except deleted!");
 		} catch (RuntimeException e) {
