@@ -46,6 +46,7 @@ public class EvaluationResourceTest {
 		note.setIdnote(1);
 		note.setNiveau(-1);
 		note.setCritere(critere);
+		notes.add(note);
 		Candidat c = new Candidat();
 		c.setIdcandidat(5);
 		Evenement event = new Evenement();
