@@ -269,6 +269,11 @@ public class EventAccueilBean implements Serializable {
 	}
 
 	public void eventUpdateButton() {
+		if (event.getCriteres().isEmpty() && !statut.equals("Brouillon") && event.getStatus().equals("Brouillon")) {
+			RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Modifier un événement", "Modification impossible, il faut au moins 1 critère dans la grille."));
+			return;
+		}
 		event.setDatestart(new Date(dateStart.getTime() + timeStart.getTime() + ecartHour));
 		event.setDatestop(new Date(dateEnd.getTime() + timeEnd.getTime() + ecartHour));
 		event.setStatus(statut);
