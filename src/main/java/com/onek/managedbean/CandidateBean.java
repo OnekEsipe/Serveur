@@ -177,7 +177,7 @@ public class CandidateBean implements Serializable {
 					&& candidat.getPrenom().toLowerCase().equals(firstName.toLowerCase())) {
 
 				messagedoublon = "Le candidat " + lastName + " " + firstName
-						+ " ne peut pas être ajouter car il existe déja.";
+						+ " ne peut pas être ajouté car il existe déjà.";
 
 				homonyme = true;
 				return;
