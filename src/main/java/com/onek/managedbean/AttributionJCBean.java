@@ -60,12 +60,11 @@ public class AttributionJCBean implements Serializable {
 	private Map<Jury, ArrayList<Candidat>> attributionFinal;
 
 	private Map<Jury, Map<Candidat, Boolean>> attribJC;
-	
+
 	// Gestion des checkbox : disabled si le statut événement n'est pas Brouillon
 	private Map<Jury, Map<Candidat, Boolean>> attribJCDisabledCheckBox;
 
 	private List<MessageAttrib> messageAttrib;
-	private String avertissementMessage;
 	private String avertMessage;
 
 	public Map<Jury, Map<Candidat, Boolean>> getAttribJCDisabledCheckBox() {
@@ -128,12 +127,8 @@ public class AttributionJCBean implements Serializable {
 			// Initialisation-update de la liste des candidats, utilisateurs, jurys et de
 			// l'attribution deja realisee + init du message d'avertissement
 			status = evenement.findById(idEvent).getStatus();
-			avertissementMessage = "";
-
 			if (!status.equals("Brouillon")) {
 				isopen = false;
-				avertissementMessage = "Statut de l'événement: " + status
-						+ ". Les suppressions d'attributions ne seront pas prises en compte.";
 			}
 			candidatsJurys = candidatservice.findCandidatesByEvent(idEvent);
 			juryList = juryservice.findJurysByIdevent(idEvent);
@@ -146,7 +141,7 @@ public class AttributionJCBean implements Serializable {
 					for (Candidat candidatAttributed : candidatesList) {
 						candidatesPreChecked.put(candidatAttributed, true);
 					}
-					if(isopen == false) {
+					if (isopen == false) {
 						attribJCDisabledCheckBox.put(entryAssociation.getKey(), candidatesPreChecked);
 					}
 					attribJC.put(entryAssociation.getKey(), candidatesPreChecked);
@@ -155,20 +150,18 @@ public class AttributionJCBean implements Serializable {
 			}
 
 			if (saveConfirmed) {
-				RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Confirmation", "Les modifications ont été enregistrées avec succès !"));
-				saveConfirmed = false;
+				if (isopen == false) {
+					RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Confirmation", "Les modifications ont été enregistrées avec succès !"));
+					saveConfirmed = false;
+				} else {
+					RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Confirmation",
+							"Les modifications ont été enregistrées avec succès ! ATTENTION : les jurys doivent raffraichir l'application pour récupérer les modifications"));
+					saveConfirmed = false;
+				}
 			}
-
 		}
-	}
-
-	public String getAvertissementMessage() {
-		return avertissementMessage;
-	}
-
-	public void setAvertissementMessage(String avertissementMessage) {
-		this.avertissementMessage = avertissementMessage;
 	}
 
 	public int getIdEvent() {
@@ -417,7 +410,7 @@ public class AttributionJCBean implements Serializable {
 		}
 		Collections.sort(messageAttrib, (o1, o2) -> o1.getJury().compareTo(o2.getJury()));
 	}
-	
+
 	private void showErrorAssignment(String logErrorAssignment) {
 		RequestContext.getCurrentInstance().showMessageInDialog(
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Erreur lors de l'attribution", logErrorAssignment));
