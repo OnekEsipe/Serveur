@@ -2,6 +2,7 @@ package com.onek.servicetest;
 
 import static org.junit.Assert.*;
 
+
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -239,7 +240,7 @@ public class UserServiceTest {
 
 	@Test
 	public void testuserExistAndCorrectPasswordOK() {
-		Utilisateur user = userService.findByLogin("bb");
+		Utilisateur user = userService.findByLogin("aa");
 		assertTrue(userService.userExistAndCorrectPassword(user.getLogin(),user.getMotdepasse()));
 	}
 	
