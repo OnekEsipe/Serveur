@@ -23,17 +23,27 @@
 	<div class="page-wrap">
 		<!-- bouton création d'un utilisateur -->
 		<div class="ui-g button-create">
-			<h:form>
-				<p:commandButton value="Créer un utilisateur" id="withIcon"
-					icon="ui-icon-plusthick" actionListener="#{users.createUser}"
-					styleClass="bigbutton" />
-			</h:form>
+			<div class="ui-g-12">
+				<h:form>
+					<div class="ui-g-6">
+						<p:commandButton value="Créer un utilisateur" id="withIcon"
+							icon="ui-icon-plusthick" actionListener="#{users.createUser}"
+							styleClass="bigbutton" />
+					</div>
+					<div class="ui-g-6">
+						<p:commandButton value="Utilisateurs supprimés"
+							icon="ui-icon-trash" actionListener="#{users.archiveuser}"
+							styleClass="bigbutton" />
+					</div>
+				</h:form>
+			</div>
 		</div>
 		<!-- Tableau des utilisateurs -->
 		<div class="ui-g tab-users">
 			<h:form>
-				<p:dataTable id="tab-users" var="utilisateur" value="#{users.users}"
-					scrollable="true" scrollHeight="500" sortBy="#{utilisateur.login}">
+				<p:dataTable id="tab-users" var="utilisateur"
+					value="#{users.usersactif}" scrollable="true" scrollHeight="500"
+					sortBy="#{utilisateur.login}">
 					<f:facet name="header">
 						Liste des utilisateurs
 					</f:facet>
@@ -58,20 +68,11 @@
 						<!-- Désactiver l'utilisateur -->
 						<p:commandButton id="supprimer" icon="ui-icon-locked"
 							actionListener="#{users.deleteUser}" ajax="true"
-							update="tab-users" rendered="#{not utilisateur.isdeleted}"
+							update="tab-users"
 							style="background-color: #B40404; border-color: #8A0808;">
 							<f:param name="iduser" value="#{utilisateur.iduser}" />
 						</p:commandButton>
 
-						<!-- Réactiver l'utilisateur -->
-						<p:commandButton id="reactiver" icon="ui-icon-unlocked"
-							actionListener="#{users.reactiverUser}" ajax="true"
-							update="tab-users" rendered="#{utilisateur.isdeleted}">
-							<f:param name="iduser" value="#{utilisateur.iduser}" />
-						</p:commandButton>
-
-						<p:tooltip for="reactiver" value="Réactiver l'utilisateur"
-							position="left" />
 						<p:tooltip for="supprimer" value="Désactiver l'utilisateur"
 							position="left" />
 					</p:column>

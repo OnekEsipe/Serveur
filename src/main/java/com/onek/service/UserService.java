@@ -22,5 +22,5 @@ public interface UserService {
 	public Utilisateur findByToken(String token);
 	public List<Utilisateur> getAllUsersExceptDeleted();
 	public boolean sendInscriptionMail(Utilisateur user, String password);
-
+	public List<Utilisateur> getDeletenotAno();
 }
