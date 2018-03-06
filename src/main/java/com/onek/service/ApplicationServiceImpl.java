@@ -119,7 +119,7 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 	@Override
 	public List<AccountResource> account(String login) {
 		Objects.requireNonNull(login);
-		Utilisateur user = userService.findByLogin(login);
+		Utilisateur user = userService.findByLogin(login);	
 		List<Jury> jurys = juryDao.findByUser(user);
 		List<AccountResource> accounts = new ArrayList<>();
 		// search idEvents for the login
@@ -128,6 +128,14 @@ public class ApplicationServiceImpl implements ApplicationService, Serializable 
 			Evenement event = jury.getEvenement();
 			if (eventIsEligible(event, jury)) {
 				idEvents.add(event.getIdevent());
+			}
+		}	
+		// hash password for anonymous jury
+		if (user.getDroits().equals(DroitsUtilisateur.ANONYME.toString())) {
+			try {
+				user.setMotdepasse(Encode.sha1(user.getMotdepasse()));
+			} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+				logger.error(this.getClass().getName(), e);				
 			}
 		}
 		Collections.sort(idEvents);
