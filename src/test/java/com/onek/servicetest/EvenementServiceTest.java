@@ -1,7 +1,9 @@
 package com.onek.servicetest;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.List;
@@ -23,11 +25,10 @@ public class EvenementServiceTest {
 	@Autowired
 	private EvenementService evenementService;
 	
-	private String generateCode(Evenement event) {
-		Password pass = new Password();
+	private String generateCode(Evenement event) {		
 		Integer id = event.getIdevent();
 		int length = (int) (Math.log10(id) + 1);
-		String codeEvent = id + pass.generateCode(10 - length);
+		String codeEvent = id + Password.generateCode(10 - length);
 		return codeEvent;
 	}
 
