@@ -46,7 +46,7 @@ public class EvenementResourceTest {
 		Descripteur d = new Descripteur();
 		d.setIddescripteur(1);
 		d.setNiveau("A");
-		d.setPoids(new BigDecimal(1.0));
+		d.setPoids(BigDecimal.valueOf(1.0));
 		d.setTexte("texte");
 		d.setCritere(createCritere());
 		return d;
@@ -55,7 +55,7 @@ public class EvenementResourceTest {
 	private Critere createCritere() {
 		Critere c = new Critere();
 		c.setCategorie("categorie");
-		c.setCoefficient(new BigDecimal(2.0));
+		c.setCoefficient(BigDecimal.valueOf(2.0));
 		c.setIdcritere(1);
 		c.setTexte("texte");
 		c.setDescripteurs(new ArrayList<>());
