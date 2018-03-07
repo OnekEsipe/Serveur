@@ -1,0 +1,1349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Persistency="http:///schemas/Persistency/NS/0" xmlns:UMLLabProfile="http:///schemas/UMLLabProfile/NS/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Persistency/NS/0 pathmap://PERSISTENCY_PROFILES/Persistency.profile.uml#Persistency_2-Annotation-Persistency http:///schemas/UMLLabProfile/NS/0 pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile-Annotation_2-UMLLabProfile">
+  <uml:Model xmi:id="_NJpT8CH6EeiYRrsE_Lm32g" name="ServeurModel">
+    <eAnnotations xmi:id="_NOmscCH6EeiYRrsE_Lm32g" source="http://ns.yatta.de/umllab">
+      <contents xmi:type="ecore:EAnnotation" xmi:id="_NOmscSH6EeiYRrsE_Lm32g" source="codegen">
+        <details xmi:id="_NOmsciH6EeiYRrsE_Lm32g" key="codegenDirectory" value="/Serveur/src/main/java"/>
+        <details xmi:id="_N3Qn4CH6EeiYRrsE_Lm32g" key="AssociatedSourceCode" value="/Serveur/src/main/java/com/onek/model/Candidat.java;3488269344/1;/Serveur/src/main/java/com/onek/model/Critere.java;431945766/1;/Serveur/src/main/java/com/onek/model/Descripteur.java;689844878/1;/Serveur/src/main/java/com/onek/model/Evaluation.java;2218009957/1;/Serveur/src/main/java/com/onek/model/Evenement.java;2209077314/1;/Serveur/src/main/java/com/onek/model/Jury.java;3246812091/1;/Serveur/src/main/java/com/onek/model/Note.java;3380703173/1;/Serveur/src/main/java/com/onek/model/Signature.java;3822196499/1;/Serveur/src/main/java/com/onek/model/Utilisateur.java;462481214/1;"/>
+      </contents>
+    </eAnnotations>
+    <elementImport xmi:id="_NmXsMCH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+    </elementImport>
+    <elementImport xmi:id="_NmXsMSH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#byte"/>
+    </elementImport>
+    <elementImport xmi:id="_NmXsMiH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#char"/>
+    </elementImport>
+    <elementImport xmi:id="_NmYTQCH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+    </elementImport>
+    <elementImport xmi:id="_NmYTQSH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#float"/>
+    </elementImport>
+    <elementImport xmi:id="_NmYTQiH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+    </elementImport>
+    <elementImport xmi:id="_NmYTQyH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+    </elementImport>
+    <elementImport xmi:id="_NmYTRCH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#short"/>
+    </elementImport>
+    <elementImport xmi:id="_NmYTRSH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </elementImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_NkIQgCH6EeiYRrsE_Lm32g" name="com">
+      <packagedElement xmi:type="uml:Package" xmi:id="_NkIQgSH6EeiYRrsE_Lm32g" name="onek">
+        <packagedElement xmi:type="uml:Package" xmi:id="_NkT2sCH6EeiYRrsE_Lm32g" name="model">
+          <packagedElement xmi:type="uml:Class" xmi:id="_NmUo4CH6EeiYRrsE_Lm32g" name="Candidat">
+            <ownedComment xmi:id="_NvCgACH6EeiYRrsE_Lm32g">
+              <body>The persistent class for the candidats database table.&#xD;
+ *</body>
+            </ownedComment>
+            <ownedAttribute xmi:id="_Nt4pcCH6EeiYRrsE_Lm32g" name="idcandidat">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nt5QgCH6EeiYRrsE_Lm32g" name="nom">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nt53kSH6EeiYRrsE_Lm32g" name="prenom">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nt53kyH6EeiYRrsE_Lm32g" name="evenement" type="_NnVVgCH6EeiYRrsE_Lm32g" association="_NuXKkCH6EeiYRrsE_Lm32g">
+              <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Nt53lSH6EeiYRrsE_Lm32g"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nt6eoCH6EeiYRrsE_Lm32g" name="evaluations" type="_NnDBoCH6EeiYRrsE_Lm32g" isOrdered="true" association="_Nt7FsSH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Nt6eoSH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <interfaceRealization xmi:id="_NtSMgCH6EeiYRrsE_Lm32g" client="_NmUo4CH6EeiYRrsE_Lm32g" supplier="_Nq1VcCH6EeiYRrsE_Lm32g" contract="_Nq1VcCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_NuzPcSH6EeiYRrsE_Lm32g" name="addEvaluation" specification="_NrD-8CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nuz2gCH6EeiYRrsE_Lm32g" name="evaluation" type="_NnDBoCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nuz2gSH6EeiYRrsE_Lm32g" type="_NnDBoCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getEvaluations().add(evaluation);&#xD;
+		evaluation.setCandidat(this);&#xD;
+&#xD;
+		return evaluation;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nuz2giH6EeiYRrsE_Lm32g" name="removeEvaluation" specification="_NrEmASH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nuz2gyH6EeiYRrsE_Lm32g" name="evaluation" type="_NnDBoCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nuz2hCH6EeiYRrsE_Lm32g" type="_NnDBoCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getEvaluations().remove(evaluation);&#xD;
+		evaluation.setCandidat(null);&#xD;
+&#xD;
+		return evaluation;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nuz2hSH6EeiYRrsE_Lm32g" name="toString" specification="_NmbWkCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nuz2hiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>return nom + &quot; &quot; + prenom;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nuz2hyH6EeiYRrsE_Lm32g" name="hashCode" specification="_Nmb9oyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nuz2iCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>final int prime = 31;&#xD;
+		int result = 1;&#xD;
+		result = prime * result + ((evenement == null) ? 0 : evenement.hashCode());&#xD;
+		result = prime * result + ((nom == null) ? 0 : nom.hashCode());&#xD;
+		result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());&#xD;
+		return result;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu0dkCH6EeiYRrsE_Lm32g" name="equals" specification="_NtXFASH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu0dkSH6EeiYRrsE_Lm32g" name="obj" type="_NtTaoSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu0dkiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (this == obj)&#xD;
+			return true;&#xD;
+		if (obj == null)&#xD;
+			return false;&#xD;
+		if (getClass() != obj.getClass())&#xD;
+			return false;&#xD;
+		Candidat other = (Candidat) obj;&#xD;
+		if (evenement == null) {&#xD;
+			if (other.evenement != null)&#xD;
+				return false;&#xD;
+		} else if (!evenement.equals(other.evenement))&#xD;
+			return false;&#xD;
+		if (nom == null) {&#xD;
+			if (other.nom != null)&#xD;
+				return false;&#xD;
+		} else if (!nom.equals(other.nom))&#xD;
+			return false;&#xD;
+		if (prenom == null) {&#xD;
+			if (other.prenom != null)&#xD;
+				return false;&#xD;
+		} else if (!prenom.equals(other.prenom))&#xD;
+			return false;&#xD;
+		return true;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="_NmaIcCH6EeiYRrsE_Lm32g" name="Candidat">
+              <eAnnotations xmi:id="_NmaIcSH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_NmaIciH6EeiYRrsE_Lm32g" key="create"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_NmavgSH6EeiYRrsE_Lm32g" type="_NmUo4CH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NmbWkCH6EeiYRrsE_Lm32g" name="toString" method="_Nuz2hSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NmbWkSH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Nmb9oyH6EeiYRrsE_Lm32g" name="hashCode" method="_Nuz2hyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NmcksCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NrD-8CH6EeiYRrsE_Lm32g" name="addEvaluation" method="_NuzPcSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NrD-8SH6EeiYRrsE_Lm32g" name="evaluation" type="_NnDBoCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NrD-8iH6EeiYRrsE_Lm32g" type="_NnDBoCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NrEmASH6EeiYRrsE_Lm32g" name="removeEvaluation" method="_Nuz2giH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NrEmAiH6EeiYRrsE_Lm32g" name="evaluation" type="_NnDBoCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NrEmAyH6EeiYRrsE_Lm32g" type="_NnDBoCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NtXFASH6EeiYRrsE_Lm32g" name="equals" method="_Nu0dkCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NtXsECH6EeiYRrsE_Lm32g" name="obj" type="_NtTaoSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NtXsESH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_NmiEQCH6EeiYRrsE_Lm32g" name="Critere">
+            <ownedComment xmi:id="_NvDHECH6EeiYRrsE_Lm32g">
+              <body>The persistent class for the criteres database table.&#xD;
+ *</body>
+            </ownedComment>
+            <ownedAttribute xmi:id="_Nt7swCH6EeiYRrsE_Lm32g" name="idcritere">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nt8T0SH6EeiYRrsE_Lm32g" name="categorie">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nt864SH6EeiYRrsE_Lm32g" name="coefficient" type="_NrHpUCH6EeiYRrsE_Lm32g"/>
+            <ownedAttribute xmi:id="_Nt864yH6EeiYRrsE_Lm32g" name="texte">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nt865SH6EeiYRrsE_Lm32g" name="evenement" type="_NnVVgCH6EeiYRrsE_Lm32g" association="_NuXxoCH6EeiYRrsE_Lm32g">
+              <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Nt9h8SH6EeiYRrsE_Lm32g"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nt9h8iH6EeiYRrsE_Lm32g" name="notes" type="_NoCgICH6EeiYRrsE_Lm32g" isOrdered="true" association="_Nt-JAiH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Nt-JACH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nt-JAyH6EeiYRrsE_Lm32g" name="descripteurs" type="_Nm1mQCH6EeiYRrsE_Lm32g" isOrdered="true" association="_Nt-wEiH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Nt-wECH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <interfaceRealization xmi:id="_NtY6MCH6EeiYRrsE_Lm32g" client="_NmiEQCH6EeiYRrsE_Lm32g" supplier="_Nq1VcCH6EeiYRrsE_Lm32g" contract="_Nq1VcCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu1EoCH6EeiYRrsE_Lm32g" name="addNote" specification="_NrO-ECH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu1EoSH6EeiYRrsE_Lm32g" name="note" type="_NoCgICH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu1EoiH6EeiYRrsE_Lm32g" type="_NoCgICH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getNotes().add(note);&#xD;
+		note.setCritere(this);&#xD;
+&#xD;
+		return note;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu1EoyH6EeiYRrsE_Lm32g" name="removeNote" specification="_NrPlIiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu1EpCH6EeiYRrsE_Lm32g" name="note" type="_NoCgICH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu1EpSH6EeiYRrsE_Lm32g" type="_NoCgICH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getNotes().remove(note);&#xD;
+		note.setCritere(null);&#xD;
+&#xD;
+		return note;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu1rsCH6EeiYRrsE_Lm32g" name="addDescripteur" specification="_NrQMMiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu1rsSH6EeiYRrsE_Lm32g" name="descripteur" type="_Nm1mQCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu1rsiH6EeiYRrsE_Lm32g" type="_Nm1mQCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getDescripteurs().add(descripteur);&#xD;
+		descripteur.setCritere(this);&#xD;
+&#xD;
+		return descripteur;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu1rsyH6EeiYRrsE_Lm32g" name="removeDescripteur" specification="_NrQzQSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu1rtCH6EeiYRrsE_Lm32g" name="descripteur" type="_Nm1mQCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu1rtSH6EeiYRrsE_Lm32g" type="_Nm1mQCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getDescripteurs().remove(descripteur);&#xD;
+		descripteur.setCritere(null);&#xD;
+&#xD;
+		return descripteur;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu1rtiH6EeiYRrsE_Lm32g" name="printDescripteurs" specification="_NmrOMCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu1rtyH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>StringBuilder sb = new StringBuilder();&#xD;
+		for (Descripteur descripteur : descripteurs) {&#xD;
+			sb.append(descripteur.toString()).append(&quot;\n&quot;).append(&quot; &quot;);&#xD;
+		}&#xD;
+		if (sb.length() > 0) {&#xD;
+			sb.setLength(sb.length() - 1);&#xD;
+		}&#xD;
+		return sb.toString();&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu1ruCH6EeiYRrsE_Lm32g" name="hashCode" specification="_NmrOMyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu1ruSH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>final int prime = 31;&#xD;
+		int result = 1;&#xD;
+		result = prime * result + ((idcritere == null) ? 0 : idcritere.hashCode());&#xD;
+		return result;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu2SwCH6EeiYRrsE_Lm32g" name="equals" specification="_NtaIUCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu2SwSH6EeiYRrsE_Lm32g" name="obj" type="_NtTaoSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu2SwiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (this == obj)&#xD;
+			return true;&#xD;
+		if (obj == null)&#xD;
+			return false;&#xD;
+		if (getClass() != obj.getClass())&#xD;
+			return false;&#xD;
+		Critere other = (Critere) obj;&#xD;
+		if (idcritere == null) {&#xD;
+			if (other.idcritere != null)&#xD;
+				return false;&#xD;
+		} else if (!idcritere.equals(other.idcritere))&#xD;
+			return false;&#xD;
+		return true;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="_NmpZACH6EeiYRrsE_Lm32g" name="Critere">
+              <eAnnotations xmi:id="_NmqAECH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_NmqAESH6EeiYRrsE_Lm32g" key="create"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_NmqAEyH6EeiYRrsE_Lm32g" type="_NmiEQCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NmrOMCH6EeiYRrsE_Lm32g" name="printDescripteurs" method="_Nu1rtiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NmrOMSH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NmrOMyH6EeiYRrsE_Lm32g" name="hashCode" method="_Nu1ruCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nmr1QCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NrO-ECH6EeiYRrsE_Lm32g" name="addNote" method="_Nu1EoCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NrO-ESH6EeiYRrsE_Lm32g" name="note" type="_NoCgICH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NrPlICH6EeiYRrsE_Lm32g" type="_NoCgICH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NrPlIiH6EeiYRrsE_Lm32g" name="removeNote" method="_Nu1EoyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NrPlIyH6EeiYRrsE_Lm32g" name="note" type="_NoCgICH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NrQMMCH6EeiYRrsE_Lm32g" type="_NoCgICH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NrQMMiH6EeiYRrsE_Lm32g" name="addDescripteur" method="_Nu1rsCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NrQMMyH6EeiYRrsE_Lm32g" name="descripteur" type="_Nm1mQCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NrQMNCH6EeiYRrsE_Lm32g" type="_Nm1mQCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NrQzQSH6EeiYRrsE_Lm32g" name="removeDescripteur" method="_Nu1rsyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NrQzQiH6EeiYRrsE_Lm32g" name="descripteur" type="_Nm1mQCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NrRaUCH6EeiYRrsE_Lm32g" type="_Nm1mQCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NtaIUCH6EeiYRrsE_Lm32g" name="equals" method="_Nu2SwCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NtaIUSH6EeiYRrsE_Lm32g" name="obj" type="_NtTaoSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NtaIUiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_Nm1mQCH6EeiYRrsE_Lm32g" name="Descripteur">
+            <ownedComment xmi:id="_NvDHEyH6EeiYRrsE_Lm32g">
+              <body>The persistent class for the descripteurs database table.&#xD;
+ *</body>
+            </ownedComment>
+            <ownedAttribute xmi:id="_Nt-wESH6EeiYRrsE_Lm32g" name="critere" type="_NmiEQCH6EeiYRrsE_Lm32g" association="_Nt-wEiH6EeiYRrsE_Lm32g">
+              <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NuHS8CH6EeiYRrsE_Lm32g"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nt_XICH6EeiYRrsE_Lm32g" name="iddescripteur">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuBMUCH6EeiYRrsE_Lm32g" name="niveau">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuBzYSH6EeiYRrsE_Lm32g" name="poids" type="_NrHpUCH6EeiYRrsE_Lm32g"/>
+            <ownedAttribute xmi:id="_NuBzYyH6EeiYRrsE_Lm32g" name="texte">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <interfaceRealization xmi:id="_Ntb9gCH6EeiYRrsE_Lm32g" client="_Nm1mQCH6EeiYRrsE_Lm32g" supplier="_Nq1VcCH6EeiYRrsE_Lm32g" contract="_Nq1VcCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu250SH6EeiYRrsE_Lm32g" name="toString" specification="_Nm9iECH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu250iH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>return niveau + &quot;\n&quot; + &quot;(Poids = &quot; + poids + &quot;\n ,&quot; + &quot;Description = &quot; + texte + &quot;)&quot;;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="_Nm87ACH6EeiYRrsE_Lm32g" name="Descripteur">
+              <eAnnotations xmi:id="_Nm87ASH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_Nm87AiH6EeiYRrsE_Lm32g" key="create"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_Nm87BCH6EeiYRrsE_Lm32g" type="_Nm1mQCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Nm9iECH6EeiYRrsE_Lm32g" name="toString" method="_Nu250SH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nm9iESH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_NnDBoCH6EeiYRrsE_Lm32g" name="Evaluation">
+            <ownedComment xmi:id="_NvDuIiH6EeiYRrsE_Lm32g">
+              <body>The persistent class for the evaluations database table.&#xD;
+ *</body>
+            </ownedComment>
+            <ownedAttribute xmi:id="_Nt7FsCH6EeiYRrsE_Lm32g" name="candidat" type="_NmUo4CH6EeiYRrsE_Lm32g" association="_Nt7FsSH6EeiYRrsE_Lm32g">
+              <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NuOnsSH6EeiYRrsE_Lm32g"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuH6ACH6EeiYRrsE_Lm32g" name="idevaluation">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuIhECH6EeiYRrsE_Lm32g" name="commentaire">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuNZkCH6EeiYRrsE_Lm32g" name="datedernieremodif" type="_NrYIACH6EeiYRrsE_Lm32g"/>
+            <ownedAttribute xmi:id="_NuOAoCH6EeiYRrsE_Lm32g" name="issigned">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuPOwCH6EeiYRrsE_Lm32g" name="jury" type="_NnwzUCH6EeiYRrsE_Lm32g" association="_Nua08SH6EeiYRrsE_Lm32g">
+              <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NuPOwiH6EeiYRrsE_Lm32g"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuP10CH6EeiYRrsE_Lm32g" name="notes" type="_NoCgICH6EeiYRrsE_Lm32g" isOrdered="true" association="_NuQc4SH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NuP10SH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuQc4iH6EeiYRrsE_Lm32g" name="signatures" type="_NoTl4CH6EeiYRrsE_Lm32g" isOrdered="true" association="_NuRD8SH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NuQc4yH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <interfaceRealization xmi:id="_NtdysCH6EeiYRrsE_Lm32g" client="_NnDBoCH6EeiYRrsE_Lm32g" supplier="_Nq1VcCH6EeiYRrsE_Lm32g" contract="_Nq1VcCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu4H8SH6EeiYRrsE_Lm32g" name="addNote" specification="_Nrgq4CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu4vACH6EeiYRrsE_Lm32g" name="note" type="_NoCgICH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu4vASH6EeiYRrsE_Lm32g" type="_NoCgICH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getNotes().add(note);&#xD;
+		note.setEvaluation(this);&#xD;
+&#xD;
+		return note;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu4vAiH6EeiYRrsE_Lm32g" name="removeNote" specification="_NrhR8iH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu4vAyH6EeiYRrsE_Lm32g" name="note" type="_NoCgICH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu4vBCH6EeiYRrsE_Lm32g" type="_NoCgICH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getNotes().remove(note);&#xD;
+		note.setEvaluation(null);&#xD;
+&#xD;
+		return note;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu4vBSH6EeiYRrsE_Lm32g" name="addSignature" specification="_Nrh5AiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu4vBiH6EeiYRrsE_Lm32g" name="signature" type="_NoTl4CH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu4vByH6EeiYRrsE_Lm32g" type="_NoTl4CH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getSignatures().add(signature);&#xD;
+		signature.setEvaluation(this);&#xD;
+&#xD;
+		return signature;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu5WECH6EeiYRrsE_Lm32g" name="removeSignature" specification="_NrigESH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu5WESH6EeiYRrsE_Lm32g" name="signature" type="_NoTl4CH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu5WEiH6EeiYRrsE_Lm32g" type="_NoTl4CH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getSignatures().remove(signature);&#xD;
+		signature.setEvaluation(null);&#xD;
+&#xD;
+		return signature;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="_NnLkgCH6EeiYRrsE_Lm32g" name="Evaluation">
+              <eAnnotations xmi:id="_NnMLkCH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_NnMLkSH6EeiYRrsE_Lm32g" key="create"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_NnMLkyH6EeiYRrsE_Lm32g" type="_NnDBoCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Nrgq4CH6EeiYRrsE_Lm32g" name="addNote" method="_Nu4H8SH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nrgq4SH6EeiYRrsE_Lm32g" name="note" type="_NoCgICH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NrhR8CH6EeiYRrsE_Lm32g" type="_NoCgICH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NrhR8iH6EeiYRrsE_Lm32g" name="removeNote" method="_Nu4vAiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NrhR8yH6EeiYRrsE_Lm32g" name="note" type="_NoCgICH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nrh5ACH6EeiYRrsE_Lm32g" type="_NoCgICH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Nrh5AiH6EeiYRrsE_Lm32g" name="addSignature" method="_Nu4vBSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nrh5AyH6EeiYRrsE_Lm32g" name="signature" type="_NoTl4CH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nrh5BCH6EeiYRrsE_Lm32g" type="_NoTl4CH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NrigESH6EeiYRrsE_Lm32g" name="removeSignature" method="_Nu5WECH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NrigEiH6EeiYRrsE_Lm32g" name="signature" type="_NoTl4CH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NrigEyH6EeiYRrsE_Lm32g" type="_NoTl4CH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_NnVVgCH6EeiYRrsE_Lm32g" name="Evenement">
+            <ownedComment xmi:id="_NvEVMSH6EeiYRrsE_Lm32g">
+              <body>The persistent class for the evenements database table.&#xD;
+ *</body>
+            </ownedComment>
+            <ownedAttribute xmi:id="_NuSSECH6EeiYRrsE_Lm32g" name="idevent">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuTgMCH6EeiYRrsE_Lm32g" name="code">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuTgMiH6EeiYRrsE_Lm32g" name="datestart" type="_NrYIACH6EeiYRrsE_Lm32g"/>
+            <ownedAttribute xmi:id="_NuUHQCH6EeiYRrsE_Lm32g" name="datestop" type="_NrYIACH6EeiYRrsE_Lm32g"/>
+            <ownedAttribute xmi:id="_NuUuUCH6EeiYRrsE_Lm32g" name="isdeleted">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuUuUiH6EeiYRrsE_Lm32g" name="isopened">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuVVYSH6EeiYRrsE_Lm32g" name="nom">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuV8cSH6EeiYRrsE_Lm32g" name="signingneeded">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuV8cyH6EeiYRrsE_Lm32g" name="status">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuWjgSH6EeiYRrsE_Lm32g" name="candidats" type="_NmUo4CH6EeiYRrsE_Lm32g" isOrdered="true" association="_NuXKkCH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NuWjgiH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuXKkSH6EeiYRrsE_Lm32g" name="criteres" type="_NmiEQCH6EeiYRrsE_Lm32g" isOrdered="true" association="_NuXxoCH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NuXKkiH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuXxoSH6EeiYRrsE_Lm32g" name="utilisateur" type="_NohBQCH6EeiYRrsE_Lm32g" association="_NuwMICH6EeiYRrsE_Lm32g">
+              <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NuXxoyH6EeiYRrsE_Lm32g"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuYYsCH6EeiYRrsE_Lm32g" name="jurys" type="_NnwzUCH6EeiYRrsE_Lm32g" isOrdered="true" association="_NuY_wSH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NuYYsSH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <interfaceRealization xmi:id="_Ntg2ACH6EeiYRrsE_Lm32g" client="_NnVVgCH6EeiYRrsE_Lm32g" supplier="_Nq1VcCH6EeiYRrsE_Lm32g" contract="_Nq1VcCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu59ISH6EeiYRrsE_Lm32g" name="addCandidat" specification="_Nss9sCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu59IiH6EeiYRrsE_Lm32g" name="candidat" type="_NmUo4CH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu59IyH6EeiYRrsE_Lm32g" type="_NmUo4CH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getCandidats().add(candidat);&#xD;
+		candidat.setEvenement(this);&#xD;
+&#xD;
+		return candidat;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu6kMCH6EeiYRrsE_Lm32g" name="removeCandidat" specification="_NstkwCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu6kMSH6EeiYRrsE_Lm32g" name="candidat" type="_NmUo4CH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu6kMiH6EeiYRrsE_Lm32g" type="_NmUo4CH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getCandidats().remove(candidat);&#xD;
+		candidat.setEvenement(null);&#xD;
+&#xD;
+		return candidat;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu6kMyH6EeiYRrsE_Lm32g" name="addCritere" specification="_NstkxCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu6kNCH6EeiYRrsE_Lm32g" name="critere" type="_NmiEQCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu6kNSH6EeiYRrsE_Lm32g" type="_NmiEQCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getCriteres().add(critere);&#xD;
+		critere.setEvenement(this);&#xD;
+&#xD;
+		return critere;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu6kNiH6EeiYRrsE_Lm32g" name="removeCritere" specification="_NsuL0iH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu6kNyH6EeiYRrsE_Lm32g" name="critere" type="_NmiEQCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu6kOCH6EeiYRrsE_Lm32g" type="_NmiEQCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getCriteres().remove(critere);&#xD;
+		critere.setEvenement(null);&#xD;
+&#xD;
+		return critere;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu7LQCH6EeiYRrsE_Lm32g" name="addJury" specification="_Nsuy4SH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu7LQSH6EeiYRrsE_Lm32g" name="jury" type="_NnwzUCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu7LQiH6EeiYRrsE_Lm32g" type="_NnwzUCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getJurys().add(jury);&#xD;
+		jury.setEvenement(this);&#xD;
+&#xD;
+		return jury;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu7LQyH6EeiYRrsE_Lm32g" name="removeJury" specification="_NsvZ8CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu7LRCH6EeiYRrsE_Lm32g" name="jury" type="_NnwzUCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu7LRSH6EeiYRrsE_Lm32g" type="_NnwzUCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getJurys().remove(jury);&#xD;
+		jury.setEvenement(null);&#xD;
+&#xD;
+		return jury;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu7LRiH6EeiYRrsE_Lm32g" name="isDeleted" specification="_NngUoCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu7LRyH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (getIsdeleted()) {&#xD;
+			return &quot;Oui&quot;;&#xD;
+		} else {&#xD;
+			return &quot;Non&quot;;&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu7yUCH6EeiYRrsE_Lm32g" name="hashCode" specification="_Nng7siH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu7yUSH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>final int prime = 31;&#xD;
+		int result = 1;&#xD;
+		result = prime * result + ((code == null) ? 0 : code.hashCode());&#xD;
+		result = prime * result + ((idevent == null) ? 0 : idevent.hashCode());&#xD;
+		return result;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu7yUiH6EeiYRrsE_Lm32g" name="equals" specification="_NtiEICH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu7yUyH6EeiYRrsE_Lm32g" name="obj" type="_NtTaoSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu7yVCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (this == obj)&#xD;
+			return true;&#xD;
+		if (obj == null)&#xD;
+			return false;&#xD;
+		if (getClass() != obj.getClass())&#xD;
+			return false;&#xD;
+		Evenement other = (Evenement) obj;&#xD;
+		if (code == null) {&#xD;
+			if (other.code != null)&#xD;
+				return false;&#xD;
+		} else if (!code.equals(other.code))&#xD;
+			return false;&#xD;
+		if (idevent == null) {&#xD;
+			if (other.idevent != null)&#xD;
+				return false;&#xD;
+		} else if (!idevent.equals(other.idevent))&#xD;
+			return false;&#xD;
+		return true;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="_NnfGgCH6EeiYRrsE_Lm32g" name="Evenement">
+              <eAnnotations xmi:id="_NnftkCH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_NnftkSH6EeiYRrsE_Lm32g" key="create"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_NnftkyH6EeiYRrsE_Lm32g" type="_NnVVgCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NngUoCH6EeiYRrsE_Lm32g" name="isDeleted" method="_Nu7LRiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nng7sCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Nng7siH6EeiYRrsE_Lm32g" name="hashCode" method="_Nu7yUCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NnhiwCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Nss9sCH6EeiYRrsE_Lm32g" name="addCandidat" method="_Nu59ISH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nss9sSH6EeiYRrsE_Lm32g" name="candidat" type="_NmUo4CH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nss9siH6EeiYRrsE_Lm32g" type="_NmUo4CH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NstkwCH6EeiYRrsE_Lm32g" name="removeCandidat" method="_Nu6kMCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NstkwSH6EeiYRrsE_Lm32g" name="candidat" type="_NmUo4CH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NstkwiH6EeiYRrsE_Lm32g" type="_NmUo4CH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NstkxCH6EeiYRrsE_Lm32g" name="addCritere" method="_Nu6kMyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NstkxSH6EeiYRrsE_Lm32g" name="critere" type="_NmiEQCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NsuL0CH6EeiYRrsE_Lm32g" type="_NmiEQCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NsuL0iH6EeiYRrsE_Lm32g" name="removeCritere" method="_Nu6kNiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NsuL0yH6EeiYRrsE_Lm32g" name="critere" type="_NmiEQCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NsuL1CH6EeiYRrsE_Lm32g" type="_NmiEQCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Nsuy4SH6EeiYRrsE_Lm32g" name="addJury" method="_Nu7LQCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nsuy4iH6EeiYRrsE_Lm32g" name="jury" type="_NnwzUCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nsuy4yH6EeiYRrsE_Lm32g" type="_NnwzUCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NsvZ8CH6EeiYRrsE_Lm32g" name="removeJury" method="_Nu7LQyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NsvZ8SH6EeiYRrsE_Lm32g" name="jury" type="_NnwzUCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NsvZ8iH6EeiYRrsE_Lm32g" type="_NnwzUCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NtiEICH6EeiYRrsE_Lm32g" name="equals" method="_Nu7yUiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NtiEISH6EeiYRrsE_Lm32g" name="obj" type="_NtTaoSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NtirMCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_NnwzUCH6EeiYRrsE_Lm32g" name="Jury">
+            <ownedComment xmi:id="_NvE8QCH6EeiYRrsE_Lm32g">
+              <body>The persistent class for the jurys database table.&#xD;
+ *</body>
+            </ownedComment>
+            <ownedAttribute xmi:id="_NuY_wCH6EeiYRrsE_Lm32g" name="evenement" type="_NnVVgCH6EeiYRrsE_Lm32g" association="_NuY_wSH6EeiYRrsE_Lm32g">
+              <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NubcASH6EeiYRrsE_Lm32g"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuZm0CH6EeiYRrsE_Lm32g" name="idjury">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuaN4CH6EeiYRrsE_Lm32g" name="evaluations" type="_NnDBoCH6EeiYRrsE_Lm32g" isOrdered="true" association="_Nua08SH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Nua08CH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NucDECH6EeiYRrsE_Lm32g" name="utilisateur" type="_NohBQCH6EeiYRrsE_Lm32g" association="_NuwzMCH6EeiYRrsE_Lm32g">
+              <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NucDEiH6EeiYRrsE_Lm32g"/>
+            </ownedAttribute>
+            <interfaceRealization xmi:id="_Ntm8oCH6EeiYRrsE_Lm32g" client="_NnwzUCH6EeiYRrsE_Lm32g" supplier="_Nq1VcCH6EeiYRrsE_Lm32g" contract="_Nq1VcCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu9AcCH6EeiYRrsE_Lm32g" name="addEvaluation" specification="_Ns0ScCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu9AcSH6EeiYRrsE_Lm32g" name="evaluation" type="_NnDBoCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu9AciH6EeiYRrsE_Lm32g" type="_NnDBoCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getEvaluations().add(evaluation);&#xD;
+		evaluation.setJury(this);&#xD;
+&#xD;
+		return evaluation;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu9AcyH6EeiYRrsE_Lm32g" name="removeEvaluation" specification="_Ns05gyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu9AdCH6EeiYRrsE_Lm32g" name="evaluation" type="_NnDBoCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu9AdSH6EeiYRrsE_Lm32g" type="_NnDBoCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getEvaluations().remove(evaluation);&#xD;
+		evaluation.setJury(null);&#xD;
+&#xD;
+		return evaluation;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu9ngCH6EeiYRrsE_Lm32g" name="hashCode" specification="_Nn6kUCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu9ngSH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>final int prime = 31;&#xD;
+		int result = 1;&#xD;
+		result = prime * result + ((idjury == null) ? 0 : idjury.hashCode());&#xD;
+		return result;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu9ngiH6EeiYRrsE_Lm32g" name="equals" specification="_NtoKwCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu9ngyH6EeiYRrsE_Lm32g" name="o" type="_NtTaoSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu9nhCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (o == null || !(o instanceof Jury)) {&#xD;
+			return false;&#xD;
+		}&#xD;
+		Jury jury = (Jury) o;&#xD;
+		return idjury == jury.idjury;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="_Nn5WMCH6EeiYRrsE_Lm32g" name="Jury">
+              <eAnnotations xmi:id="_Nn59QCH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_Nn59QSH6EeiYRrsE_Lm32g" key="create"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_Nn59QyH6EeiYRrsE_Lm32g" type="_NnwzUCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Nn6kUCH6EeiYRrsE_Lm32g" name="hashCode" method="_Nu9ngCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nn7LYCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Ns0ScCH6EeiYRrsE_Lm32g" name="addEvaluation" method="_Nu9AcCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Ns05gCH6EeiYRrsE_Lm32g" name="evaluation" type="_NnDBoCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Ns05gSH6EeiYRrsE_Lm32g" type="_NnDBoCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Ns05gyH6EeiYRrsE_Lm32g" name="removeEvaluation" method="_Nu9AcyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Ns05hCH6EeiYRrsE_Lm32g" name="evaluation" type="_NnDBoCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Ns05hSH6EeiYRrsE_Lm32g" type="_NnDBoCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NtoKwCH6EeiYRrsE_Lm32g" name="equals" method="_Nu9ngiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NtoKwSH6EeiYRrsE_Lm32g" name="o" type="_NtTaoSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NtoKwiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_NoCgICH6EeiYRrsE_Lm32g" name="Note">
+            <ownedComment xmi:id="_NvE8QyH6EeiYRrsE_Lm32g">
+              <body>The persistent class for the notes database table.&#xD;
+ *</body>
+            </ownedComment>
+            <ownedAttribute xmi:id="_Nt-JASH6EeiYRrsE_Lm32g" name="critere" type="_NmiEQCH6EeiYRrsE_Lm32g" association="_Nt-JAiH6EeiYRrsE_Lm32g">
+              <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NuoQUSH6EeiYRrsE_Lm32g"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuQc4CH6EeiYRrsE_Lm32g" name="evaluation" type="_NnDBoCH6EeiYRrsE_Lm32g" association="_NuQc4SH6EeiYRrsE_Lm32g">
+              <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Nuo3YSH6EeiYRrsE_Lm32g"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NudRMCH6EeiYRrsE_Lm32g" name="idnote">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuefUCH6EeiYRrsE_Lm32g" name="commentaire">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NumbICH6EeiYRrsE_Lm32g" name="date" type="_NrYIACH6EeiYRrsE_Lm32g"/>
+            <ownedAttribute xmi:id="_NunpQCH6EeiYRrsE_Lm32g" name="niveau">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+            </ownedAttribute>
+            <interfaceRealization xmi:id="_NtqnACH6EeiYRrsE_Lm32g" client="_NoCgICH6EeiYRrsE_Lm32g" supplier="_Nq1VcCH6EeiYRrsE_Lm32g" contract="_Nq1VcCH6EeiYRrsE_Lm32g"/>
+            <ownedOperation xmi:id="_NoMRICH6EeiYRrsE_Lm32g" name="Note">
+              <eAnnotations xmi:id="_NoM4MCH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_NoM4MSH6EeiYRrsE_Lm32g" key="create"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_NoM4MyH6EeiYRrsE_Lm32g" type="_NoCgICH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_NoTl4CH6EeiYRrsE_Lm32g" name="Signature">
+            <ownedComment xmi:id="_NvFjUSH6EeiYRrsE_Lm32g">
+              <body>The persistent class for the signatures database table.&#xD;
+ *</body>
+            </ownedComment>
+            <ownedAttribute xmi:id="_NuRD8CH6EeiYRrsE_Lm32g" name="evaluation" type="_NnDBoCH6EeiYRrsE_Lm32g" association="_NuRD8SH6EeiYRrsE_Lm32g">
+              <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NurToCH6EeiYRrsE_Lm32g"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NupecCH6EeiYRrsE_Lm32g" name="idsignature">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuqFgCH6EeiYRrsE_Lm32g" name="nom">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuqskSH6EeiYRrsE_Lm32g" name="signature">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#byte"/>
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NuqskiH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <interfaceRealization xmi:id="_NttqUCH6EeiYRrsE_Lm32g" client="_NoTl4CH6EeiYRrsE_Lm32g" supplier="_Nq1VcCH6EeiYRrsE_Lm32g" contract="_Nq1VcCH6EeiYRrsE_Lm32g"/>
+            <ownedOperation xmi:id="_NocIwCH6EeiYRrsE_Lm32g" name="Signature">
+              <eAnnotations xmi:id="_Nocv0CH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_Nocv0SH6EeiYRrsE_Lm32g" key="create"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_Nocv0yH6EeiYRrsE_Lm32g" type="_NoTl4CH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_NohBQCH6EeiYRrsE_Lm32g" name="Utilisateur">
+            <ownedComment xmi:id="_NvFjVCH6EeiYRrsE_Lm32g">
+              <body>The persistent class for the utilisateurs database table.&#xD;
+ *</body>
+            </ownedComment>
+            <ownedAttribute xmi:id="_NushwCH6EeiYRrsE_Lm32g" name="iduser">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NutI0CH6EeiYRrsE_Lm32g" name="datetoken" type="_NrYIACH6EeiYRrsE_Lm32g"/>
+            <ownedAttribute xmi:id="_Nutv4CH6EeiYRrsE_Lm32g" name="droits">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuuW8CH6EeiYRrsE_Lm32g" name="isdeleted">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuuW8iH6EeiYRrsE_Lm32g" name="login">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuuW9CH6EeiYRrsE_Lm32g" name="mail">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nuu-ACH6EeiYRrsE_Lm32g" name="motdepasse">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nuu-AiH6EeiYRrsE_Lm32g" name="nom">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_Nuu-BCH6EeiYRrsE_Lm32g" name="prenom">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuvlECH6EeiYRrsE_Lm32g" name="token">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuvlEiH6EeiYRrsE_Lm32g" name="evenements" type="_NnVVgCH6EeiYRrsE_Lm32g" isOrdered="true" association="_NuwMICH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NuvlEyH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_NuwMISH6EeiYRrsE_Lm32g" name="jurys" type="_NnwzUCH6EeiYRrsE_Lm32g" isOrdered="true" association="_NuwzMCH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NuwMIiH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <interfaceRealization xmi:id="_NtvfgCH6EeiYRrsE_Lm32g" client="_NohBQCH6EeiYRrsE_Lm32g" supplier="_Nq1VcCH6EeiYRrsE_Lm32g" contract="_Nq1VcCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_Nu_csCH6EeiYRrsE_Lm32g" name="addEvenement" specification="_NtH0cCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Nu_csSH6EeiYRrsE_Lm32g" name="evenement" type="_NnVVgCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_Nu_csiH6EeiYRrsE_Lm32g" type="_NnVVgCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getEvenements().add(evenement);&#xD;
+		evenement.setUtilisateur(this);&#xD;
+&#xD;
+		return evenement;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_NvADwCH6EeiYRrsE_Lm32g" name="removeEvenement" specification="_NtH0dCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NvADwSH6EeiYRrsE_Lm32g" name="evenement" type="_NnVVgCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NvADwiH6EeiYRrsE_Lm32g" type="_NnVVgCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getEvenements().remove(evenement);&#xD;
+		evenement.setUtilisateur(null);&#xD;
+&#xD;
+		return evenement;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_NvADwyH6EeiYRrsE_Lm32g" name="addJury" specification="_NtIbgiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NvADxCH6EeiYRrsE_Lm32g" name="jury" type="_NnwzUCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NvADxSH6EeiYRrsE_Lm32g" type="_NnwzUCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getJurys().add(jury);&#xD;
+		jury.setUtilisateur(this);&#xD;
+&#xD;
+		return jury;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_NvADxiH6EeiYRrsE_Lm32g" name="removeJury" specification="_NtJCkCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NvADxyH6EeiYRrsE_Lm32g" name="jury" type="_NnwzUCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NvADyCH6EeiYRrsE_Lm32g" type="_NnwzUCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>getJurys().remove(jury);&#xD;
+		jury.setUtilisateur(null);&#xD;
+&#xD;
+		return jury;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_NvADySH6EeiYRrsE_Lm32g" name="getNomDroits" specification="_Not1kCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NvADyiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (getDroits().equals(DroitsUtilisateur.ADMINISTRATEUR.toString())) {&#xD;
+			return DroitsUtilisateur.ADMINISTRATEUR.getValue();&#xD;
+		}&#xD;
+		if (getDroits().equals(DroitsUtilisateur.ORGANISATEUR.toString())) {&#xD;
+			return DroitsUtilisateur.ORGANISATEUR.getValue();&#xD;
+		}&#xD;
+		if (getDroits().equals(DroitsUtilisateur.JURY.toString())) {&#xD;
+			return DroitsUtilisateur.JURY.getValue();&#xD;
+		}		&#xD;
+		return DroitsUtilisateur.ANONYME.getValue();&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_NvAq0CH6EeiYRrsE_Lm32g" name="toString" specification="_NoucoSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NvAq0SH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>return nom + &quot; &quot; + prenom;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_NvAq0iH6EeiYRrsE_Lm32g" name="hashCode" specification="_NovDsyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NvAq0yH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>final int prime = 31;&#xD;
+		int result = 1;&#xD;
+		result = prime * result + ((iduser == null) ? 0 : iduser.hashCode());&#xD;
+		result = prime * result + ((nom == null) ? 0 : nom.hashCode());&#xD;
+		result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());&#xD;
+		return result;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_NvAq1CH6EeiYRrsE_Lm32g" name="equals" specification="_NtwtoCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NvAq1SH6EeiYRrsE_Lm32g" name="obj" type="_NtTaoSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NvAq1iH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (this == obj)&#xD;
+			return true;&#xD;
+		if (obj == null)&#xD;
+			return false;&#xD;
+		if (getClass() != obj.getClass())&#xD;
+			return false;&#xD;
+		Utilisateur other = (Utilisateur) obj;&#xD;
+		if (iduser == null) {&#xD;
+			if (other.iduser != null)&#xD;
+				return false;&#xD;
+		} else if (!iduser.equals(other.iduser))&#xD;
+			return false;&#xD;
+		if (nom == null) {&#xD;
+			if (other.nom != null)&#xD;
+				return false;&#xD;
+		} else if (!nom.equals(other.nom))&#xD;
+			return false;&#xD;
+		if (prenom == null) {&#xD;
+			if (other.prenom != null)&#xD;
+				return false;&#xD;
+		} else if (!prenom.equals(other.prenom))&#xD;
+			return false;&#xD;
+		return true;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="_NosAYCH6EeiYRrsE_Lm32g" name="Utilisateur">
+              <eAnnotations xmi:id="_NosncCH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_NosncSH6EeiYRrsE_Lm32g" key="create"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_NosncyH6EeiYRrsE_Lm32g" type="_NohBQCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_Not1kCH6EeiYRrsE_Lm32g" name="getNomDroits" method="_NvADySH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_Not1kSH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NoucoSH6EeiYRrsE_Lm32g" name="toString" method="_NvAq0CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NoucoiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NovDsyH6EeiYRrsE_Lm32g" name="hashCode" method="_NvAq0iH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NovqwCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NtH0cCH6EeiYRrsE_Lm32g" name="addEvenement" method="_Nu_csCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NtH0cSH6EeiYRrsE_Lm32g" name="evenement" type="_NnVVgCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NtH0ciH6EeiYRrsE_Lm32g" type="_NnVVgCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NtH0dCH6EeiYRrsE_Lm32g" name="removeEvenement" method="_NvADwCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NtH0dSH6EeiYRrsE_Lm32g" name="evenement" type="_NnVVgCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NtIbgCH6EeiYRrsE_Lm32g" type="_NnVVgCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NtIbgiH6EeiYRrsE_Lm32g" name="addJury" method="_NvADwyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NtIbgyH6EeiYRrsE_Lm32g" name="jury" type="_NnwzUCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NtIbhCH6EeiYRrsE_Lm32g" type="_NnwzUCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NtJCkCH6EeiYRrsE_Lm32g" name="removeJury" method="_NvADxiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NtJCkSH6EeiYRrsE_Lm32g" name="jury" type="_NnwzUCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NtJCkiH6EeiYRrsE_Lm32g" type="_NnwzUCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_NtwtoCH6EeiYRrsE_Lm32g" name="equals" method="_NvAq1CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_NtwtoSH6EeiYRrsE_Lm32g" name="obj" type="_NtTaoSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="_NtxUsCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_Nt7FsSH6EeiYRrsE_Lm32g" name="" memberEnd="_Nt6eoCH6EeiYRrsE_Lm32g _Nt7FsCH6EeiYRrsE_Lm32g"/>
+          <packagedElement xmi:type="uml:Association" xmi:id="_Nt-JAiH6EeiYRrsE_Lm32g" name="" memberEnd="_Nt9h8iH6EeiYRrsE_Lm32g _Nt-JASH6EeiYRrsE_Lm32g"/>
+          <packagedElement xmi:type="uml:Association" xmi:id="_Nt-wEiH6EeiYRrsE_Lm32g" name="" memberEnd="_Nt-JAyH6EeiYRrsE_Lm32g _Nt-wESH6EeiYRrsE_Lm32g"/>
+          <packagedElement xmi:type="uml:Association" xmi:id="_NuQc4SH6EeiYRrsE_Lm32g" name="" memberEnd="_NuP10CH6EeiYRrsE_Lm32g _NuQc4CH6EeiYRrsE_Lm32g"/>
+          <packagedElement xmi:type="uml:Association" xmi:id="_NuRD8SH6EeiYRrsE_Lm32g" name="" memberEnd="_NuQc4iH6EeiYRrsE_Lm32g _NuRD8CH6EeiYRrsE_Lm32g"/>
+          <packagedElement xmi:type="uml:Association" xmi:id="_NuXKkCH6EeiYRrsE_Lm32g" name="" memberEnd="_NuWjgSH6EeiYRrsE_Lm32g _Nt53kyH6EeiYRrsE_Lm32g"/>
+          <packagedElement xmi:type="uml:Association" xmi:id="_NuXxoCH6EeiYRrsE_Lm32g" name="" memberEnd="_NuXKkSH6EeiYRrsE_Lm32g _Nt865SH6EeiYRrsE_Lm32g"/>
+          <packagedElement xmi:type="uml:Association" xmi:id="_NuY_wSH6EeiYRrsE_Lm32g" name="" memberEnd="_NuYYsCH6EeiYRrsE_Lm32g _NuY_wCH6EeiYRrsE_Lm32g"/>
+          <packagedElement xmi:type="uml:Association" xmi:id="_Nua08SH6EeiYRrsE_Lm32g" name="" memberEnd="_NuaN4CH6EeiYRrsE_Lm32g _NuPOwCH6EeiYRrsE_Lm32g"/>
+          <packagedElement xmi:type="uml:Association" xmi:id="_NuwMICH6EeiYRrsE_Lm32g" name="" memberEnd="_NuvlEiH6EeiYRrsE_Lm32g _NuXxoSH6EeiYRrsE_Lm32g"/>
+          <packagedElement xmi:type="uml:Association" xmi:id="_NuwzMCH6EeiYRrsE_Lm32g" name="" memberEnd="_NuwMISH6EeiYRrsE_Lm32g _NucDECH6EeiYRrsE_Lm32g"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_NlbRACH6EeiYRrsE_Lm32g" name="utils">
+          <packagedElement xmi:type="uml:Enumeration" xmi:id="_NtAfsCH6EeiYRrsE_Lm32g" name="DroitsUtilisateur"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_NkIQgiH6EeiYRrsE_Lm32g" name="java">
+      <packagedElement xmi:type="uml:Package" xmi:id="_NkI3kCH6EeiYRrsE_Lm32g" name="io">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_Nq1VcCH6EeiYRrsE_Lm32g" name="Serializable"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_NkI3kyH6EeiYRrsE_Lm32g" name="util">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_Nq8qMSH6EeiYRrsE_Lm32g" name="List"/>
+        <packagedElement xmi:type="uml:DataType" xmi:id="_NrYIACH6EeiYRrsE_Lm32g" name="Date"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_NkZ9UCH6EeiYRrsE_Lm32g" name="math">
+        <packagedElement xmi:type="uml:DataType" xmi:id="_NrHpUCH6EeiYRrsE_Lm32g" name="BigDecimal"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_NtTaoCH6EeiYRrsE_Lm32g" name="lang">
+        <packagedElement xmi:type="uml:Class" xmi:id="_NtTaoSH6EeiYRrsE_Lm32g" name="Object"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_NkI3kSH6EeiYRrsE_Lm32g" name="javax">
+      <packagedElement xmi:type="uml:Package" xmi:id="_NkI3kiH6EeiYRrsE_Lm32g" name="persistence">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_NrljYCH6EeiYRrsE_Lm32g" name="Entity"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_NrpNwSH6EeiYRrsE_Lm32g" name="GeneratedValue"/>
+        <packagedElement xmi:type="uml:Enumeration" xmi:id="_NrtfMSH6EeiYRrsE_Lm32g" name="GenerationType"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_Nrzl0SH6EeiYRrsE_Lm32g" name="Id"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_Nr66kSH6EeiYRrsE_Lm32g" name="JoinColumn"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_NsBoQSH6EeiYRrsE_Lm32g" name="ManyToOne"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_NsIV8SH6EeiYRrsE_Lm32g" name="NamedQuery"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_NsPDoSH6EeiYRrsE_Lm32g" name="OneToMany"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_NsWYYCH6EeiYRrsE_Lm32g" name="Table"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_NsdtICH6EeiYRrsE_Lm32g" name="Temporal"/>
+        <packagedElement xmi:type="uml:Enumeration" xmi:id="_Nska0SH6EeiYRrsE_Lm32g" name="TemporalType"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_Ns2usCH6EeiYRrsE_Lm32g" name="Column"/>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:id="_NOnTgCH6EeiYRrsE_Lm32g">
+      <eAnnotations xmi:id="_NOnTgSH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile-Annotation_2-UMLLabProfile"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile"/>
+    </profileApplication>
+    <profileApplication xmi:id="_NmV3ACH6EeiYRrsE_Lm32g">
+      <eAnnotations xmi:id="_NmV3ASH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://PERSISTENCY_PROFILES/Persistency.profile.uml#Persistency_2-Annotation-Persistency"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://PERSISTENCY_PROFILES/Persistency.profile.uml#Persistency_2"/>
+    </profileApplication>
+  </uml:Model>
+  <UMLLabProfile:TargetLanguage xmi:id="_NOnTgiH6EeiYRrsE_Lm32g" base_Package="_NJpT8CH6EeiYRrsE_Lm32g">
+    <languageName>java</languageName>
+  </UMLLabProfile:TargetLanguage>
+  <Persistency:Table xmi:id="_NmWeECH6EeiYRrsE_Lm32g" tableName="candidats" base_Classifier="_NmUo4CH6EeiYRrsE_Lm32g"/>
+  <Persistency:JPA1StyledElement xmi:id="_NmXFICH6EeiYRrsE_Lm32g" base_Element="_NmUo4CH6EeiYRrsE_Lm32g"/>
+  <Persistency:TechnicalSupplement xmi:id="_NmY6UCH6EeiYRrsE_Lm32g" base_Classifier="_NmUo4CH6EeiYRrsE_Lm32g" serialVersionUID="1"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NmavgCH6EeiYRrsE_Lm32g" base_Element="_NmaIcCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Nmb9oCH6EeiYRrsE_Lm32g" base_Element="_NmbWkCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_Nmb9oSH6EeiYRrsE_Lm32g" base_Element="_NmbWkCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_Nmb9oiH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NmcksSH6EeiYRrsE_Lm32g" base_Element="_Nmb9oyH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_NmdLwCH6EeiYRrsE_Lm32g" base_Element="_Nmb9oyH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NmdLwSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="_NmdLwiH6EeiYRrsE_Lm32g" base_Element="_NmUo4CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NmdLwyH6EeiYRrsE_Lm32g" name="NamedQuery">
+      <annotationParameters xmi:id="_NmdLxCH6EeiYRrsE_Lm32g" name="name" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvCgASH6EeiYRrsE_Lm32g" value="&quot;Candidat.findAll&quot;"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_Nmdy0CH6EeiYRrsE_Lm32g" name="query" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvCgAiH6EeiYRrsE_Lm32g" value="&quot;SELECT c FROM Candidat c&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <Persistency:Table xmi:id="_Nmm8wCH6EeiYRrsE_Lm32g" tableName="criteres" base_Classifier="_NmiEQCH6EeiYRrsE_Lm32g"/>
+  <Persistency:JPA1StyledElement xmi:id="_Nmnj0CH6EeiYRrsE_Lm32g" base_Element="_NmiEQCH6EeiYRrsE_Lm32g"/>
+  <Persistency:TechnicalSupplement xmi:id="_NmoK4CH6EeiYRrsE_Lm32g" base_Classifier="_NmiEQCH6EeiYRrsE_Lm32g" serialVersionUID="1"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NmqAEiH6EeiYRrsE_Lm32g" base_Element="_NmpZACH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NmrOMiH6EeiYRrsE_Lm32g" base_Element="_NmrOMCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Nmr1QSH6EeiYRrsE_Lm32g" base_Element="_NmrOMyH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_NmscUCH6EeiYRrsE_Lm32g" base_Element="_NmrOMyH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NmscUSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="_NmtDYCH6EeiYRrsE_Lm32g" base_Element="_NmiEQCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NmtqcCH6EeiYRrsE_Lm32g" name="NamedQuery">
+      <annotationParameters xmi:id="_NmtqcSH6EeiYRrsE_Lm32g" name="name" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvDHESH6EeiYRrsE_Lm32g" value="&quot;Critere.findAll&quot;"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_NmtqciH6EeiYRrsE_Lm32g" name="query" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvDHEiH6EeiYRrsE_Lm32g" value="&quot;SELECT c FROM Critere c&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <Persistency:Table xmi:id="_Nm7F0CH6EeiYRrsE_Lm32g" tableName="descripteurs" base_Classifier="_Nm1mQCH6EeiYRrsE_Lm32g"/>
+  <Persistency:JPA1StyledElement xmi:id="_Nm7s4CH6EeiYRrsE_Lm32g" base_Element="_Nm1mQCH6EeiYRrsE_Lm32g"/>
+  <Persistency:TechnicalSupplement xmi:id="_Nm7s4SH6EeiYRrsE_Lm32g" base_Classifier="_Nm1mQCH6EeiYRrsE_Lm32g" serialVersionUID="1"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Nm87AyH6EeiYRrsE_Lm32g" base_Element="_Nm87ACH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Nm-JICH6EeiYRrsE_Lm32g" base_Element="_Nm9iECH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_Nm-wMCH6EeiYRrsE_Lm32g" base_Element="_Nm9iECH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_Nm-wMSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="_Nm-wMiH6EeiYRrsE_Lm32g" base_Element="_Nm1mQCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_Nm_XQCH6EeiYRrsE_Lm32g" name="NamedQuery">
+      <annotationParameters xmi:id="_Nm_XQSH6EeiYRrsE_Lm32g" name="name" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvDuICH6EeiYRrsE_Lm32g" value="&quot;Descripteur.findAll&quot;"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_Nm_XQiH6EeiYRrsE_Lm32g" name="query" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvDuISH6EeiYRrsE_Lm32g" value="&quot;SELECT d FROM Descripteur d&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <Persistency:Table xmi:id="_NnJvUCH6EeiYRrsE_Lm32g" tableName="evaluations" base_Classifier="_NnDBoCH6EeiYRrsE_Lm32g"/>
+  <Persistency:JPA1StyledElement xmi:id="_NnKWYCH6EeiYRrsE_Lm32g" base_Element="_NnDBoCH6EeiYRrsE_Lm32g"/>
+  <Persistency:TechnicalSupplement xmi:id="_NnK9cCH6EeiYRrsE_Lm32g" base_Classifier="_NnDBoCH6EeiYRrsE_Lm32g" serialVersionUID="1"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NnMLkiH6EeiYRrsE_Lm32g" base_Element="_NnLkgCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_NnNZsCH6EeiYRrsE_Lm32g" base_Element="_NnDBoCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NnNZsSH6EeiYRrsE_Lm32g" name="NamedQuery">
+      <annotationParameters xmi:id="_NnNZsiH6EeiYRrsE_Lm32g" name="name" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvDuIyH6EeiYRrsE_Lm32g" value="&quot;Evaluation.findAll&quot;"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_NnNZsyH6EeiYRrsE_Lm32g" name="query" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvEVMCH6EeiYRrsE_Lm32g" value="&quot;SELECT e FROM Evaluation e&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <Persistency:Table xmi:id="_NnbcICH6EeiYRrsE_Lm32g" tableName="evenements" base_Classifier="_NnVVgCH6EeiYRrsE_Lm32g"/>
+  <Persistency:JPA1StyledElement xmi:id="_NncqQCH6EeiYRrsE_Lm32g" base_Element="_NnVVgCH6EeiYRrsE_Lm32g"/>
+  <Persistency:TechnicalSupplement xmi:id="_NndRUCH6EeiYRrsE_Lm32g" base_Classifier="_NnVVgCH6EeiYRrsE_Lm32g" serialVersionUID="1"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NnftkiH6EeiYRrsE_Lm32g" base_Element="_NnfGgCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nng7sSH6EeiYRrsE_Lm32g" base_Element="_NngUoCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NnhiwSH6EeiYRrsE_Lm32g" base_Element="_Nng7siH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_NnhiwiH6EeiYRrsE_Lm32g" base_Element="_Nng7siH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NnhiwyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="_Nniw4CH6EeiYRrsE_Lm32g" base_Element="_NnVVgCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_Nniw4SH6EeiYRrsE_Lm32g" name="NamedQuery">
+      <annotationParameters xmi:id="_Nniw4iH6EeiYRrsE_Lm32g" name="name" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvEVMiH6EeiYRrsE_Lm32g" value="&quot;Evenement.findAll&quot;"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_Nniw4yH6EeiYRrsE_Lm32g" name="query" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvEVMyH6EeiYRrsE_Lm32g" value="&quot;SELECT e FROM Evenement e&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <Persistency:Table xmi:id="_Nn3hACH6EeiYRrsE_Lm32g" tableName="jurys" base_Classifier="_NnwzUCH6EeiYRrsE_Lm32g"/>
+  <Persistency:JPA1StyledElement xmi:id="_Nn4IECH6EeiYRrsE_Lm32g" base_Element="_NnwzUCH6EeiYRrsE_Lm32g"/>
+  <Persistency:TechnicalSupplement xmi:id="_Nn4vICH6EeiYRrsE_Lm32g" base_Classifier="_NnwzUCH6EeiYRrsE_Lm32g" serialVersionUID="1"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Nn59QiH6EeiYRrsE_Lm32g" base_Element="_Nn5WMCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Nn7LYSH6EeiYRrsE_Lm32g" base_Element="_Nn6kUCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_Nn7LYiH6EeiYRrsE_Lm32g" base_Element="_Nn6kUCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_Nn7LYyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="_Nn7ycCH6EeiYRrsE_Lm32g" base_Element="_NnwzUCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_Nn8ZgCH6EeiYRrsE_Lm32g" name="NamedQuery">
+      <annotationParameters xmi:id="_Nn8ZgSH6EeiYRrsE_Lm32g" name="name" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvE8QSH6EeiYRrsE_Lm32g" value="&quot;Jury.findAll&quot;"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_Nn8ZgiH6EeiYRrsE_Lm32g" name="query" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvE8QiH6EeiYRrsE_Lm32g" value="&quot;SELECT j FROM Jury j&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <Persistency:Table xmi:id="_NoJN0CH6EeiYRrsE_Lm32g" tableName="notes" base_Classifier="_NoCgICH6EeiYRrsE_Lm32g"/>
+  <Persistency:JPA1StyledElement xmi:id="_NoKb8CH6EeiYRrsE_Lm32g" base_Element="_NoCgICH6EeiYRrsE_Lm32g"/>
+  <Persistency:TechnicalSupplement xmi:id="_NoLDACH6EeiYRrsE_Lm32g" base_Classifier="_NoCgICH6EeiYRrsE_Lm32g" serialVersionUID="1"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NoM4MiH6EeiYRrsE_Lm32g" base_Element="_NoMRICH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_NoNfQCH6EeiYRrsE_Lm32g" base_Element="_NoCgICH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NoNfQSH6EeiYRrsE_Lm32g" name="NamedQuery">
+      <annotationParameters xmi:id="_NoNfQiH6EeiYRrsE_Lm32g" name="name" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvE8RCH6EeiYRrsE_Lm32g" value="&quot;Note.findAll&quot;"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_NoNfQyH6EeiYRrsE_Lm32g" name="query" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvFjUCH6EeiYRrsE_Lm32g" value="&quot;SELECT n FROM Note n&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <Persistency:Table xmi:id="_NoaTkCH6EeiYRrsE_Lm32g" tableName="signatures" base_Classifier="_NoTl4CH6EeiYRrsE_Lm32g"/>
+  <Persistency:JPA1StyledElement xmi:id="_Noa6oCH6EeiYRrsE_Lm32g" base_Element="_NoTl4CH6EeiYRrsE_Lm32g"/>
+  <Persistency:TechnicalSupplement xmi:id="_NobhsCH6EeiYRrsE_Lm32g" base_Classifier="_NoTl4CH6EeiYRrsE_Lm32g" serialVersionUID="1"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Nocv0iH6EeiYRrsE_Lm32g" base_Element="_NocIwCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_NodW4CH6EeiYRrsE_Lm32g" base_Element="_NoTl4CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NodW4SH6EeiYRrsE_Lm32g" name="NamedQuery">
+      <annotationParameters xmi:id="_NodW4iH6EeiYRrsE_Lm32g" name="name" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvFjUiH6EeiYRrsE_Lm32g" value="&quot;Signature.findAll&quot;"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_NodW4yH6EeiYRrsE_Lm32g" name="query" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvFjUyH6EeiYRrsE_Lm32g" value="&quot;SELECT s FROM Signature s&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <Persistency:Table xmi:id="_NooWACH6EeiYRrsE_Lm32g" tableName="utilisateurs" base_Classifier="_NohBQCH6EeiYRrsE_Lm32g"/>
+  <Persistency:JPA1StyledElement xmi:id="_Noo9ECH6EeiYRrsE_Lm32g" base_Element="_NohBQCH6EeiYRrsE_Lm32g"/>
+  <Persistency:TechnicalSupplement xmi:id="_NoqLMCH6EeiYRrsE_Lm32g" base_Classifier="_NohBQCH6EeiYRrsE_Lm32g" serialVersionUID="1"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NosnciH6EeiYRrsE_Lm32g" base_Element="_NosAYCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NoucoCH6EeiYRrsE_Lm32g" base_Element="_Not1kCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NovDsCH6EeiYRrsE_Lm32g" base_Element="_NoucoSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_NovDsSH6EeiYRrsE_Lm32g" base_Element="_NoucoSH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NovDsiH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NovqwSH6EeiYRrsE_Lm32g" base_Element="_NovDsyH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_NowR0CH6EeiYRrsE_Lm32g" base_Element="_NovDsyH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NowR0SH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="_Noxf8CH6EeiYRrsE_Lm32g" base_Element="_NohBQCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_Noxf8SH6EeiYRrsE_Lm32g" name="NamedQuery">
+      <annotationParameters xmi:id="_Noxf8iH6EeiYRrsE_Lm32g" name="name" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvFjVSH6EeiYRrsE_Lm32g" value="&quot;Utilisateur.findAll&quot;"/>
+      </annotationParameters>
+      <annotationParameters xmi:id="_Noxf8yH6EeiYRrsE_Lm32g" name="query" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_NvGKYCH6EeiYRrsE_Lm32g" value="&quot;SELECT u FROM Utilisateur u&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Reference xmi:id="_Nq8qMCH6EeiYRrsE_Lm32g" base_Element="_Nq1VcCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NrCw0CH6EeiYRrsE_Lm32g" base_Element="_Nq8qMSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NrEmACH6EeiYRrsE_Lm32g" base_Element="_NrD-8CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NrFNECH6EeiYRrsE_Lm32g" base_Element="_NrEmASH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NrNv8CH6EeiYRrsE_Lm32g" base_Element="_NrHpUCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NrPlISH6EeiYRrsE_Lm32g" base_Element="_NrO-ECH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NrQMMSH6EeiYRrsE_Lm32g" base_Element="_NrPlIiH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NrQzQCH6EeiYRrsE_Lm32g" base_Element="_NrQMMiH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NrRaUSH6EeiYRrsE_Lm32g" base_Element="_NrQzQSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NrfcwCH6EeiYRrsE_Lm32g" base_Element="_NrYIACH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NrhR8SH6EeiYRrsE_Lm32g" base_Element="_Nrgq4CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nrh5ASH6EeiYRrsE_Lm32g" base_Element="_NrhR8iH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NrigECH6EeiYRrsE_Lm32g" base_Element="_Nrh5AiH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NrigFCH6EeiYRrsE_Lm32g" base_Element="_NrigESH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NrpNwCH6EeiYRrsE_Lm32g" base_Element="_NrljYCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NrtfMCH6EeiYRrsE_Lm32g" base_Element="_NrpNwSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_Nrzl0CH6EeiYRrsE_Lm32g" base_Element="_NrtfMSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_Nr66kCH6EeiYRrsE_Lm32g" base_Element="_Nrzl0SH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NsBoQCH6EeiYRrsE_Lm32g" base_Element="_Nr66kSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NsIV8CH6EeiYRrsE_Lm32g" base_Element="_NsBoQSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NsPDoCH6EeiYRrsE_Lm32g" base_Element="_NsIV8SH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NsVxUCH6EeiYRrsE_Lm32g" base_Element="_NsPDoSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NsdGECH6EeiYRrsE_Lm32g" base_Element="_NsWYYCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_Nska0CH6EeiYRrsE_Lm32g" base_Element="_NsdtICH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NsrIgCH6EeiYRrsE_Lm32g" base_Element="_Nska0SH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nss9syH6EeiYRrsE_Lm32g" base_Element="_Nss9sCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NstkwyH6EeiYRrsE_Lm32g" base_Element="_NstkwCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NsuL0SH6EeiYRrsE_Lm32g" base_Element="_NstkxCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nsuy4CH6EeiYRrsE_Lm32g" base_Element="_NsuL0iH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nsuy5CH6EeiYRrsE_Lm32g" base_Element="_Nsuy4SH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NsvZ8yH6EeiYRrsE_Lm32g" base_Element="_NsvZ8CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Ns05giH6EeiYRrsE_Lm32g" base_Element="_Ns0ScCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Ns1gkCH6EeiYRrsE_Lm32g" base_Element="_Ns05gyH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_Ns7AICH6EeiYRrsE_Lm32g" base_Element="_Ns2usCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NtGmUCH6EeiYRrsE_Lm32g" base_Element="_NtAfsCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NtH0cyH6EeiYRrsE_Lm32g" base_Element="_NtH0cCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NtIbgSH6EeiYRrsE_Lm32g" base_Element="_NtH0dCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NtIbhSH6EeiYRrsE_Lm32g" base_Element="_NtIbgiH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NtJCkyH6EeiYRrsE_Lm32g" base_Element="_NtJCkCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_NtXFACH6EeiYRrsE_Lm32g" base_Element="_NtTaoSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NtXsEiH6EeiYRrsE_Lm32g" base_Element="_NtXFASH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_NtXsEyH6EeiYRrsE_Lm32g" base_Element="_NtXFASH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NtXsFCH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NtavYCH6EeiYRrsE_Lm32g" base_Element="_NtaIUCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_NtavYSH6EeiYRrsE_Lm32g" base_Element="_NtaIUCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NtavYiH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NtirMSH6EeiYRrsE_Lm32g" base_Element="_NtiEICH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_NtjSQCH6EeiYRrsE_Lm32g" base_Element="_NtiEICH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NtjSQSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_Ntox0CH6EeiYRrsE_Lm32g" base_Element="_NtoKwCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_Ntox0SH6EeiYRrsE_Lm32g" base_Element="_NtoKwCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_Ntox0iH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_NtxUsSH6EeiYRrsE_Lm32g" base_Element="_NtwtoCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_NtxUsiH6EeiYRrsE_Lm32g" base_Element="_NtwtoCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_NtxUsyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <Persistency:PrimaryKey xmi:id="_Nt4pcSH6EeiYRrsE_Lm32g" base_Property="_Nt4pcCH6EeiYRrsE_Lm32g"/>
+  <Persistency:GeneratedValueMapping xmi:id="_Nt4pciH6EeiYRrsE_Lm32g" base_Property="_Nt4pcCH6EeiYRrsE_Lm32g" strategy="IDENTITY"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nt53kCH6EeiYRrsE_Lm32g" base_Element="_Nt5QgCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nt53kiH6EeiYRrsE_Lm32g" base_Element="_Nt53kSH6EeiYRrsE_Lm32g"/>
+  <Persistency:JoinColumns xmi:id="_Nt53lCH6EeiYRrsE_Lm32g" base_Property="_Nt53kyH6EeiYRrsE_Lm32g">
+    <columns xmi:id="_NuzPcCH6EeiYRrsE_Lm32g" label="idevent" unique="true"/>
+  </Persistency:JoinColumns>
+  <Persistency:PrimaryKey xmi:id="_Nt7swSH6EeiYRrsE_Lm32g" base_Property="_Nt7swCH6EeiYRrsE_Lm32g"/>
+  <Persistency:GeneratedValueMapping xmi:id="_Nt8T0CH6EeiYRrsE_Lm32g" base_Property="_Nt7swCH6EeiYRrsE_Lm32g" strategy="IDENTITY"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nt864CH6EeiYRrsE_Lm32g" base_Element="_Nt8T0SH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nt864iH6EeiYRrsE_Lm32g" base_Element="_Nt864SH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nt865CH6EeiYRrsE_Lm32g" base_Element="_Nt864yH6EeiYRrsE_Lm32g"/>
+  <Persistency:JoinColumns xmi:id="_Nt9h8CH6EeiYRrsE_Lm32g" base_Property="_Nt865SH6EeiYRrsE_Lm32g">
+    <columns xmi:id="_Nu0dkyH6EeiYRrsE_Lm32g" label="idevent" unique="true"/>
+  </Persistency:JoinColumns>
+  <Persistency:PrimaryKey xmi:id="_Nt_-MCH6EeiYRrsE_Lm32g" base_Property="_Nt_XICH6EeiYRrsE_Lm32g"/>
+  <Persistency:GeneratedValueMapping xmi:id="_Nt_-MSH6EeiYRrsE_Lm32g" base_Property="_Nt_XICH6EeiYRrsE_Lm32g" strategy="IDENTITY"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuBzYCH6EeiYRrsE_Lm32g" base_Element="_NuBMUCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuBzYiH6EeiYRrsE_Lm32g" base_Element="_NuBzYSH6EeiYRrsE_Lm32g"/>
+  <Persistency:Column xmi:id="_NuGE0CH6EeiYRrsE_Lm32g" base_Property="_NuBzYyH6EeiYRrsE_Lm32g" length="500"/>
+  <Persistency:JoinColumns xmi:id="_NuGr4CH6EeiYRrsE_Lm32g" base_Property="_Nt-wESH6EeiYRrsE_Lm32g">
+    <columns xmi:id="_Nu250CH6EeiYRrsE_Lm32g" label="idcritere" unique="true"/>
+  </Persistency:JoinColumns>
+  <Persistency:PrimaryKey xmi:id="_NuH6ASH6EeiYRrsE_Lm32g" base_Property="_NuH6ACH6EeiYRrsE_Lm32g"/>
+  <Persistency:GeneratedValueMapping xmi:id="_NuH6AiH6EeiYRrsE_Lm32g" base_Property="_NuH6ACH6EeiYRrsE_Lm32g" strategy="IDENTITY"/>
+  <Persistency:Column xmi:id="_NuMygCH6EeiYRrsE_Lm32g" base_Property="_NuIhECH6EeiYRrsE_Lm32g" length="500"/>
+  <Persistency:Temporal xmi:id="_NuNZkSH6EeiYRrsE_Lm32g" base_Property="_NuNZkCH6EeiYRrsE_Lm32g" temporalType="TIMESTAMP"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuOAoSH6EeiYRrsE_Lm32g" base_Element="_NuOAoCH6EeiYRrsE_Lm32g"/>
+  <Persistency:JoinColumns xmi:id="_NuOnsCH6EeiYRrsE_Lm32g" base_Property="_Nt7FsCH6EeiYRrsE_Lm32g">
+    <columns xmi:id="_Nu3g4CH6EeiYRrsE_Lm32g" label="idcandidat" unique="true"/>
+  </Persistency:JoinColumns>
+  <Persistency:JoinColumns xmi:id="_NuPOwSH6EeiYRrsE_Lm32g" base_Property="_NuPOwCH6EeiYRrsE_Lm32g">
+    <columns xmi:id="_Nu4H8CH6EeiYRrsE_Lm32g" label="idjuryeval" unique="true"/>
+  </Persistency:JoinColumns>
+  <Persistency:PrimaryKey xmi:id="_NuSSESH6EeiYRrsE_Lm32g" base_Property="_NuSSECH6EeiYRrsE_Lm32g"/>
+  <Persistency:GeneratedValueMapping xmi:id="_NuS5ICH6EeiYRrsE_Lm32g" base_Property="_NuSSECH6EeiYRrsE_Lm32g" strategy="IDENTITY"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuTgMSH6EeiYRrsE_Lm32g" base_Element="_NuTgMCH6EeiYRrsE_Lm32g"/>
+  <Persistency:Temporal xmi:id="_NuTgMyH6EeiYRrsE_Lm32g" base_Property="_NuTgMiH6EeiYRrsE_Lm32g" temporalType="TIMESTAMP"/>
+  <Persistency:Temporal xmi:id="_NuUHQSH6EeiYRrsE_Lm32g" base_Property="_NuUHQCH6EeiYRrsE_Lm32g" temporalType="TIMESTAMP"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuUuUSH6EeiYRrsE_Lm32g" base_Element="_NuUuUCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuVVYCH6EeiYRrsE_Lm32g" base_Element="_NuUuUiH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuV8cCH6EeiYRrsE_Lm32g" base_Element="_NuVVYSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuV8ciH6EeiYRrsE_Lm32g" base_Element="_NuV8cSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuWjgCH6EeiYRrsE_Lm32g" base_Element="_NuV8cyH6EeiYRrsE_Lm32g"/>
+  <Persistency:JoinColumns xmi:id="_NuXxoiH6EeiYRrsE_Lm32g" base_Property="_NuXxoSH6EeiYRrsE_Lm32g">
+    <columns xmi:id="_Nu59ICH6EeiYRrsE_Lm32g" label="iduser" unique="true"/>
+  </Persistency:JoinColumns>
+  <Persistency:PrimaryKey xmi:id="_NuZm0SH6EeiYRrsE_Lm32g" base_Property="_NuZm0CH6EeiYRrsE_Lm32g"/>
+  <Persistency:GeneratedValueMapping xmi:id="_NuZm0iH6EeiYRrsE_Lm32g" base_Property="_NuZm0CH6EeiYRrsE_Lm32g" strategy="IDENTITY"/>
+  <Persistency:JoinColumns xmi:id="_NubcACH6EeiYRrsE_Lm32g" base_Property="_NuY_wCH6EeiYRrsE_Lm32g">
+    <columns xmi:id="_Nu8ZYCH6EeiYRrsE_Lm32g" label="idevent" unique="true"/>
+  </Persistency:JoinColumns>
+  <Persistency:JoinColumns xmi:id="_NucDESH6EeiYRrsE_Lm32g" base_Property="_NucDECH6EeiYRrsE_Lm32g">
+    <columns xmi:id="_Nu8ZYSH6EeiYRrsE_Lm32g" label="iduser" unique="true"/>
+  </Persistency:JoinColumns>
+  <Persistency:PrimaryKey xmi:id="_NudRMSH6EeiYRrsE_Lm32g" base_Property="_NudRMCH6EeiYRrsE_Lm32g"/>
+  <Persistency:GeneratedValueMapping xmi:id="_Nud4QCH6EeiYRrsE_Lm32g" base_Property="_NudRMCH6EeiYRrsE_Lm32g" strategy="IDENTITY"/>
+  <Persistency:Column xmi:id="_NulNACH6EeiYRrsE_Lm32g" base_Property="_NuefUCH6EeiYRrsE_Lm32g" length="500"/>
+  <Persistency:Temporal xmi:id="_NunCMCH6EeiYRrsE_Lm32g" base_Property="_NumbICH6EeiYRrsE_Lm32g" temporalType="TIMESTAMP"/>
+  <UMLLabProfile:StyledElement xmi:id="_NunpQSH6EeiYRrsE_Lm32g" base_Element="_NunpQCH6EeiYRrsE_Lm32g"/>
+  <Persistency:JoinColumns xmi:id="_NuoQUCH6EeiYRrsE_Lm32g" base_Property="_Nt-JASH6EeiYRrsE_Lm32g">
+    <columns xmi:id="_Nu-OkCH6EeiYRrsE_Lm32g" label="idcritere" unique="true"/>
+  </Persistency:JoinColumns>
+  <Persistency:JoinColumns xmi:id="_Nuo3YCH6EeiYRrsE_Lm32g" base_Property="_NuQc4CH6EeiYRrsE_Lm32g">
+    <columns xmi:id="_Nu-OkSH6EeiYRrsE_Lm32g" label="idevaluation" unique="true"/>
+  </Persistency:JoinColumns>
+  <Persistency:PrimaryKey xmi:id="_NupecSH6EeiYRrsE_Lm32g" base_Property="_NupecCH6EeiYRrsE_Lm32g"/>
+  <Persistency:GeneratedValueMapping xmi:id="_NupeciH6EeiYRrsE_Lm32g" base_Property="_NupecCH6EeiYRrsE_Lm32g" strategy="IDENTITY"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuqskCH6EeiYRrsE_Lm32g" base_Element="_NuqFgCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Array xmi:id="_NuqskyH6EeiYRrsE_Lm32g" base_Element="_NuqskSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuqslCH6EeiYRrsE_Lm32g" base_Element="_NuqskSH6EeiYRrsE_Lm32g"/>
+  <Persistency:JoinColumns xmi:id="_NuqslSH6EeiYRrsE_Lm32g" base_Property="_NuRD8CH6EeiYRrsE_Lm32g">
+    <columns xmi:id="_Nu-1oCH6EeiYRrsE_Lm32g" label="idevaluation" unique="true"/>
+  </Persistency:JoinColumns>
+  <Persistency:PrimaryKey xmi:id="_NushwSH6EeiYRrsE_Lm32g" base_Property="_NushwCH6EeiYRrsE_Lm32g"/>
+  <Persistency:GeneratedValueMapping xmi:id="_NushwiH6EeiYRrsE_Lm32g" base_Property="_NushwCH6EeiYRrsE_Lm32g" strategy="IDENTITY"/>
+  <Persistency:Temporal xmi:id="_NutI0SH6EeiYRrsE_Lm32g" base_Property="_NutI0CH6EeiYRrsE_Lm32g" temporalType="TIMESTAMP"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nutv4SH6EeiYRrsE_Lm32g" base_Element="_Nutv4CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuuW8SH6EeiYRrsE_Lm32g" base_Element="_NuuW8CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuuW8yH6EeiYRrsE_Lm32g" base_Element="_NuuW8iH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuuW9SH6EeiYRrsE_Lm32g" base_Element="_NuuW9CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nuu-ASH6EeiYRrsE_Lm32g" base_Element="_Nuu-ACH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nuu-AyH6EeiYRrsE_Lm32g" base_Element="_Nuu-AiH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_Nuu-BSH6EeiYRrsE_Lm32g" base_Element="_Nuu-BCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_NuvlESH6EeiYRrsE_Lm32g" base_Element="_NuvlECH6EeiYRrsE_Lm32g"/>
+</xmi:XMI>

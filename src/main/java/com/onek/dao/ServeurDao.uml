@@ -1,0 +1,2893 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:UMLLabProfile="http:///schemas/UMLLabProfile/NS/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/UMLLabProfile/NS/0 pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile-Annotation_2-UMLLabProfile">
+  <uml:Model xmi:id="_-twcsCH6EeiYRrsE_Lm32g" name="ServeurDao">
+    <eAnnotations xmi:id="_-2HHcCH6EeiYRrsE_Lm32g" source="http://ns.yatta.de/umllab">
+      <contents xmi:type="ecore:EAnnotation" xmi:id="_-2HHcSH6EeiYRrsE_Lm32g" source="codegen">
+        <details xmi:id="_-2HHciH6EeiYRrsE_Lm32g" key="codegenDirectory" value="/Serveur/src/main/java"/>
+        <details xmi:id="__bZl0CH6EeiYRrsE_Lm32g" key="AssociatedSourceCode" value="/Serveur/src/main/java/com/onek/dao/CandidatesDao.java;3348321696/1;/Serveur/src/main/java/com/onek/dao/CandidatesDaoImpl.java;1209665096/1;/Serveur/src/main/java/com/onek/dao/CritereDao.java;692530145/1;/Serveur/src/main/java/com/onek/dao/CritereDaoImpl.java;3001144221/1;/Serveur/src/main/java/com/onek/dao/DescripteurDao.java;2506091535/1;/Serveur/src/main/java/com/onek/dao/DescripteurDaoImpl.java;3985393729/1;/Serveur/src/main/java/com/onek/dao/EvaluationDao.java;849370510/1;/Serveur/src/main/java/com/onek/dao/EvaluationDaoImpl.java;57566576/1;/Serveur/src/main/java/com/onek/dao/EvenementDao.java;3526037148/1;/Serveur/src/main/java/com/onek/dao/EvenementDaoImpl.java;3556154332/1;/Serveur/src/main/java/com/onek/dao/JuryDao.java;1104486900/1;/Serveur/src/main/java/com/onek/dao/UserDao.java;4171543743/1;/Serveur/src/main/java/com/onek/dao/NoteDao.java;3114631347/1;/Serveur/src/main/java/com/onek/dao/NoteDaoImpl.java;1535047251/1;/Serveur/src/main/java/com/onek/dao/SignatureDao.java;3487219280/1;/Serveur/src/main/java/com/onek/dao/SignatureDaoImpl.java;2465298044/1;/Serveur/src/main/java/com/onek/dao/JuryDaoImpl.java;1178185215/1;/Serveur/src/main/java/com/onek/dao/UserDaoImpl.java;2391364444/1;"/>
+      </contents>
+    </eAnnotations>
+    <elementImport xmi:id="__JevYCH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+    </elementImport>
+    <elementImport xmi:id="__JevYSH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#byte"/>
+    </elementImport>
+    <elementImport xmi:id="__JevYiH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#char"/>
+    </elementImport>
+    <elementImport xmi:id="__JevYyH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+    </elementImport>
+    <elementImport xmi:id="__JevZCH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#float"/>
+    </elementImport>
+    <elementImport xmi:id="__JevZSH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+    </elementImport>
+    <elementImport xmi:id="__JevZiH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+    </elementImport>
+    <elementImport xmi:id="__JevZyH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#short"/>
+    </elementImport>
+    <elementImport xmi:id="__JfWcCH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </elementImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="__IdbsCH6EeiYRrsE_Lm32g" name="com">
+      <packagedElement xmi:type="uml:Package" xmi:id="__IdbsSH6EeiYRrsE_Lm32g" name="onek">
+        <packagedElement xmi:type="uml:Package" xmi:id="__IeCwiH6EeiYRrsE_Lm32g" name="model">
+          <packagedElement xmi:type="uml:Class" xmi:id="__OP6oCH6EeiYRrsE_Lm32g" name="Candidat"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="__OWoUSH6EeiYRrsE_Lm32g" name="Evaluation"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="__OXPYSH6EeiYRrsE_Lm32g" name="Note"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="__OaSsCH6EeiYRrsE_Lm32g" name="Critere"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="__Ocu8CH6EeiYRrsE_Lm32g" name="Descripteur"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="__OiOgCH6EeiYRrsE_Lm32g" name="Jury"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="__OnHACH6EeiYRrsE_Lm32g" name="Evenement"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="__OsmkCH6EeiYRrsE_Lm32g" name="Utilisateur"/>
+          <packagedElement xmi:type="uml:Class" xmi:id="__O0iYCH6EeiYRrsE_Lm32g" name="Signature"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="__Iep0CH6EeiYRrsE_Lm32g" name="dao">
+          <packagedElement xmi:type="uml:Interface" xmi:id="__JeIUCH6EeiYRrsE_Lm32g" name="CandidatesDao">
+            <ownedOperation xmi:id="__JfWcSH6EeiYRrsE_Lm32g" name="findCandidatesByEvent">
+              <ownedParameter xmi:id="__JfWciH6EeiYRrsE_Lm32g" name="idEvent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__JfWcyH6EeiYRrsE_Lm32g" type="__OP6oCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__JfWdCH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Jf9gCH6EeiYRrsE_Lm32g" name="supprimerCandidat">
+              <ownedParameter xmi:id="__Jf9gSH6EeiYRrsE_Lm32g" name="idcandidat">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Jf9giH6EeiYRrsE_Lm32g" name="findCandidatesById">
+              <ownedParameter xmi:id="__Jf9gyH6EeiYRrsE_Lm32g" name="idcandidat">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PJSgSH6EeiYRrsE_Lm32g" type="__OP6oCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PIEYCH6EeiYRrsE_Lm32g" name="addCandidate">
+              <ownedParameter xmi:id="__PIrcCH6EeiYRrsE_Lm32g" name="candidat" type="__OP6oCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PIrcSH6EeiYRrsE_Lm32g" name="addCandidates">
+              <ownedParameter xmi:id="__PIrciH6EeiYRrsE_Lm32g" name="candidates" type="__OOsgCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="__JgkkCH6EeiYRrsE_Lm32g" name="CandidatesDaoImpl">
+            <ownedAttribute xmi:id="__P0A4CH6EeiYRrsE_Lm32g" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P0n8CH6EeiYRrsE_Lm32g" value="1L"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P0n8iH6EeiYRrsE_Lm32g" name="logger" visibility="private" isLeaf="true" isStatic="true" type="__OS98SH6EeiYRrsE_Lm32g" isReadOnly="true" association="__QRT4CH6EeiYRrsE_Lm32g">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P0n8yH6EeiYRrsE_Lm32g" value="Logger.getLogger(CandidatesDaoImpl.class)"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P1PACH6EeiYRrsE_Lm32g" name="sessionFactory" visibility="private" type="__OUMESH6EeiYRrsE_Lm32g" association="__QR68SH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__OX2cSH6EeiYRrsE_Lm32g" client="__JgkkCH6EeiYRrsE_Lm32g" supplier="__JeIUCH6EeiYRrsE_Lm32g" contract="__JeIUCH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__PJ5kCH6EeiYRrsE_Lm32g" client="__JgkkCH6EeiYRrsE_Lm32g" supplier="__ORIwCH6EeiYRrsE_Lm32g" contract="__ORIwCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QA1MCH6EeiYRrsE_Lm32g" name="findCandidatesByEvent" specification="__JhysCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QA1MSH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QA1MiH6EeiYRrsE_Lm32g" type="__OP6oCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QA1MyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if(idevent &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;idevent must be positive&quot;);&#xD;
+		}&#xD;
+		List&lt;Candidat> candidates = new ArrayList&lt;>();&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			candidates = (List&lt;Candidat>) session.createQuery(&quot;from Candidat where evenement.idevent = :idevent order by nom&quot;).setParameter(&quot;idevent&quot;, idevent) .list();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find candidates by event done !&quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}		&#xD;
+		return candidates;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QA1NCH6EeiYRrsE_Lm32g" name="addCandidate" specification="__PKgoCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QA1NSH6EeiYRrsE_Lm32g" name="candidat" type="__OP6oCH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(candidat);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.save(candidat);&#xD;
+			transaction.commit();			&#xD;
+			logger.info(&quot;Add candidate done !&quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}		&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QA1NiH6EeiYRrsE_Lm32g" name="addCandidates" specification="__PLHsiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QA1NyH6EeiYRrsE_Lm32g" name="candidates" type="__OOsgCH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(candidates);&#xD;
+		if(candidates.isEmpty()) {&#xD;
+			throw new IllegalStateException(&quot;list must not be empty&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			candidates.forEach(candidat -> session.save(candidat));&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Add all candidates done !&quot;);	&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}			&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QA1OCH6EeiYRrsE_Lm32g" name="supprimerCandidat" specification="__JjA0CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QA1OSH6EeiYRrsE_Lm32g" name="idcandidat">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if(idcandidat &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;idcandidate must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			&#xD;
+			List&lt;Evaluation> evaluationToDelete = (List&lt;Evaluation>) session.createQuery(&quot;FROM Evaluation WHERE idcandidat = :idcandidat&quot;).setParameter(&quot;idcandidat&quot;, idcandidat).getResultList();&#xD;
+			for(Evaluation evaluation : evaluationToDelete) {&#xD;
+				List&lt;Note> notesToDelete = (List&lt;Note>) session.createQuery(&quot;FROM Note WHERE idevaluation = :idevaluation&quot;).setParameter(&quot;idevaluation&quot;, evaluation.getIdevaluation()).getResultList();&#xD;
+				for (Note note : notesToDelete) {&#xD;
+					session.delete(note);&#xD;
+				}&#xD;
+				session.delete(evaluation);&#xD;
+			}&#xD;
+			&#xD;
+			Candidat candidatSupprime = (Candidat) session.createQuery(&quot;FROM Candidat WHERE idcandidat = :idcandidat&quot;).setParameter(&quot;idcandidat&quot;, idcandidat).getSingleResult();&#xD;
+			session.delete(candidatSupprime);&#xD;
+			&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Delete candidate done !&quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}		&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QA1OiH6EeiYRrsE_Lm32g" name="findCandidatesById" specification="__Jjn4SH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QA1OyH6EeiYRrsE_Lm32g" name="idcandidat">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QA1PCH6EeiYRrsE_Lm32g" type="__OP6oCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>if(idcandidat &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;idcandidate must be positive&quot;);&#xD;
+		}&#xD;
+		Candidat candidat = null;&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			candidat = (Candidat) session.createQuery(&quot;from Candidat where idcandidat = :idcandidat&quot;).setParameter(&quot;idcandidat&quot;, idcandidat).getSingleResult();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find candidate by id done !&quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return candidat;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="__JhysCH6EeiYRrsE_Lm32g" name="findCandidatesByEvent" method="__QA1MCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__JhysSH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__JhysiH6EeiYRrsE_Lm32g" type="__OP6oCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__JhysyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__JjA0CH6EeiYRrsE_Lm32g" name="supprimerCandidat" method="__QA1OCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__JjA0SH6EeiYRrsE_Lm32g" name="idcandidat">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Jjn4SH6EeiYRrsE_Lm32g" name="findCandidatesById" method="__QA1OiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__Jjn4iH6EeiYRrsE_Lm32g" name="idcandidat">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PM84CH6EeiYRrsE_Lm32g" type="__OP6oCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PKgoCH6EeiYRrsE_Lm32g" name="addCandidate" method="__QA1NCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PKgoSH6EeiYRrsE_Lm32g" name="candidat" type="__OP6oCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PLHsiH6EeiYRrsE_Lm32g" name="addCandidates" method="__QA1NiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PLuwCH6EeiYRrsE_Lm32g" name="candidates" type="__OOsgCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Interface" xmi:id="__JmEICH6EeiYRrsE_Lm32g" name="CritereDao">
+            <ownedOperation xmi:id="__JmrMCH6EeiYRrsE_Lm32g" name="findById">
+              <ownedParameter xmi:id="__JmrMSH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__POLASH6EeiYRrsE_Lm32g" type="__OaSsCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__JnSQCH6EeiYRrsE_Lm32g" name="supprimerCritere">
+              <ownedParameter xmi:id="__JnSQSH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PNj8CH6EeiYRrsE_Lm32g" name="addCriteres">
+              <ownedParameter xmi:id="__PNj8SH6EeiYRrsE_Lm32g" name="criteres" type="__OOsgCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__POLAiH6EeiYRrsE_Lm32g" name="addCritere">
+              <ownedParameter xmi:id="__POLAyH6EeiYRrsE_Lm32g" name="critere" type="__OaSsCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__POyECH6EeiYRrsE_Lm32g" name="updateCritere">
+              <ownedParameter xmi:id="__POyESH6EeiYRrsE_Lm32g" name="critere" type="__OaSsCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="__Jn5UCH6EeiYRrsE_Lm32g" name="CritereDaoImpl">
+            <ownedAttribute xmi:id="__P12ECH6EeiYRrsE_Lm32g" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P12ESH6EeiYRrsE_Lm32g" value="1L"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P12EyH6EeiYRrsE_Lm32g" name="logger" visibility="private" isLeaf="true" isStatic="true" type="__OS98SH6EeiYRrsE_Lm32g" isReadOnly="true" association="__QSiASH6EeiYRrsE_Lm32g">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P12FCH6EeiYRrsE_Lm32g" value="Logger.getLogger(CritereDaoImpl.class)"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P2dICH6EeiYRrsE_Lm32g" name="sessionFactory" visibility="private" type="__OUMESH6EeiYRrsE_Lm32g" association="__QSiBCH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__OdWASH6EeiYRrsE_Lm32g" client="__Jn5UCH6EeiYRrsE_Lm32g" supplier="__JmEICH6EeiYRrsE_Lm32g" contract="__JmEICH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__POyEiH6EeiYRrsE_Lm32g" client="__Jn5UCH6EeiYRrsE_Lm32g" supplier="__ORIwCH6EeiYRrsE_Lm32g" contract="__ORIwCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QBcQCH6EeiYRrsE_Lm32g" name="addCriteres" specification="__PPZICH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QBcQSH6EeiYRrsE_Lm32g" name="criteres" type="__OOsgCH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(criteres);&#xD;
+		if(criteres.isEmpty()) {&#xD;
+			throw new IllegalStateException(&quot;list must not be empty&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			for (Critere critere : criteres) {&#xD;
+				session.save(critere);&#xD;
+				for (Descripteur descripteur : critere.getDescripteurs()) {&#xD;
+					session.save(descripteur);&#xD;
+				}&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Add criterias and descriptors done !&quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QBcQiH6EeiYRrsE_Lm32g" name="findById" specification="__KCwECH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QBcQyH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QBcRCH6EeiYRrsE_Lm32g" type="__OaSsCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>if(id &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		Critere critere = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			critere = (Critere) session.createQuery(&quot;FROM Critere WHERE idcritere = :id&quot;).setParameter(&quot;id&quot;, id)&#xD;
+					.getSingleResult();&#xD;
+			Hibernate.initialize(critere.getDescripteurs());&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find criteria by id done !&quot;);&#xD;
+			&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();			&#xD;
+		}	
+		return critere;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QBcRSH6EeiYRrsE_Lm32g" name="addCritere" specification="__PQnQCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QBcRiH6EeiYRrsE_Lm32g" name="critere" type="__OaSsCH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(critere);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.save(critere);&#xD;
+			for (Descripteur descripteur : critere.getDescripteurs()) {&#xD;
+				session.save(descripteur);&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Add criteria and descriptors done !&quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QBcRyH6EeiYRrsE_Lm32g" name="supprimerCritere" specification="__KD-MCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QBcSCH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if(id &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			Critere critere = findById(id);		&#xD;
+			for (Descripteur descripteur : critere.getDescripteurs()) {			&#xD;
+				session.createQuery(&quot;delete from Descripteur where iddescripteur = :iddescripteur&quot;)&#xD;
+				.setParameter(&quot;iddescripteur&quot;, descripteur.getIddescripteur()).executeUpdate();&#xD;
+			}&#xD;
+			session.createQuery(&quot;delete from Critere where idcritere = :idcritere&quot;)&#xD;
+			.setParameter(&quot;idcritere&quot;, id).executeUpdate();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Delete criteria and descriptors done !&quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QBcSSH6EeiYRrsE_Lm32g" name="updateCritere" specification="__PQnRCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QBcSiH6EeiYRrsE_Lm32g" name="critere" type="__OaSsCH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(critere);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.update(critere);&#xD;
+			for (Descripteur descripteur : critere.getDescripteurs()) {&#xD;
+				session.save(descripteur);&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Update criteria and descriptors done !&quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="__KCwECH6EeiYRrsE_Lm32g" name="findById" method="__QBcQiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__KCwESH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PQAMyH6EeiYRrsE_Lm32g" type="__OaSsCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KD-MCH6EeiYRrsE_Lm32g" name="supprimerCritere" method="__QBcRyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__KD-MSH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PPZICH6EeiYRrsE_Lm32g" name="addCriteres" method="__QBcQCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PPZISH6EeiYRrsE_Lm32g" name="criteres" type="__OOsgCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PQnQCH6EeiYRrsE_Lm32g" name="addCritere" method="__QBcRSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PQnQSH6EeiYRrsE_Lm32g" name="critere" type="__OaSsCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PQnRCH6EeiYRrsE_Lm32g" name="updateCritere" method="__QBcSSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PROUCH6EeiYRrsE_Lm32g" name="critere" type="__OaSsCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Interface" xmi:id="__KIPoCH6EeiYRrsE_Lm32g" name="DescripteurDao">
+            <ownedOperation xmi:id="__PR1YCH6EeiYRrsE_Lm32g" name="supprimerDescripteur">
+              <ownedParameter xmi:id="__PR1YSH6EeiYRrsE_Lm32g" name="descripteur" type="__Ocu8CH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="__KI2sCH6EeiYRrsE_Lm32g" name="DescripteurDaoImpl">
+            <ownedAttribute xmi:id="__P3EMCH6EeiYRrsE_Lm32g" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P3EMSH6EeiYRrsE_Lm32g" value="1L"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P3EMyH6EeiYRrsE_Lm32g" name="logger" visibility="private" isLeaf="true" isStatic="true" type="__OS98SH6EeiYRrsE_Lm32g" isReadOnly="true" association="__QTJESH6EeiYRrsE_Lm32g">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P3ENCH6EeiYRrsE_Lm32g" value="Logger.getLogger(DescripteurDaoImpl.class)"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P3ENSH6EeiYRrsE_Lm32g" name="sessionFactory" visibility="private" type="__OUMESH6EeiYRrsE_Lm32g" association="__QTwICH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__OfyQCH6EeiYRrsE_Lm32g" client="__KI2sCH6EeiYRrsE_Lm32g" supplier="__KIPoCH6EeiYRrsE_Lm32g" contract="__KIPoCH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__PR1YiH6EeiYRrsE_Lm32g" client="__KI2sCH6EeiYRrsE_Lm32g" supplier="__ORIwCH6EeiYRrsE_Lm32g" contract="__ORIwCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QCDUCH6EeiYRrsE_Lm32g" name="supprimerDescripteur" specification="__PSccCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QCDUSH6EeiYRrsE_Lm32g" name="descripteur" type="__Ocu8CH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(descripteur);
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.delete(descripteur);
+			transaction.commit();
+			logger.info(&quot;Delete descripteur done !&quot;);	
+		}
+		catch(RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			logger.error(this.getClass().getName(), e);
+		}
+		finally {
+			session.close();
+		}			
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="__PSccCH6EeiYRrsE_Lm32g" name="supprimerDescripteur" method="__QCDUCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PSccSH6EeiYRrsE_Lm32g" name="descripteur" type="__Ocu8CH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Interface" xmi:id="__KLS8CH6EeiYRrsE_Lm32g" name="EvaluationDao">
+            <ownedOperation xmi:id="__KL6ACH6EeiYRrsE_Lm32g" name="findById">
+              <ownedParameter xmi:id="__KL6ASH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PTDgiH6EeiYRrsE_Lm32g" type="__OWoUSH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KL6AiH6EeiYRrsE_Lm32g" name="findByIdCandidate">
+              <ownedParameter xmi:id="__KL6AyH6EeiYRrsE_Lm32g" name="idCandidat">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KL6BCH6EeiYRrsE_Lm32g" type="__OWoUSH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__KMhECH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KMhESH6EeiYRrsE_Lm32g" name="findByIdJury">
+              <ownedParameter xmi:id="__KMhEiH6EeiYRrsE_Lm32g" name="idJury">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KMhEyH6EeiYRrsE_Lm32g" type="__OWoUSH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__KMhFCH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KNIICH6EeiYRrsE_Lm32g" name="deleteEvaluation">
+              <ownedParameter xmi:id="__KNIISH6EeiYRrsE_Lm32g" name="idJury">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KNIIiH6EeiYRrsE_Lm32g" name="idCandidat">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PTqkCH6EeiYRrsE_Lm32g" name="update">
+              <ownedParameter xmi:id="__PTqkSH6EeiYRrsE_Lm32g" name="evaluation" type="__OWoUSH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PURoCH6EeiYRrsE_Lm32g" name="saveEvaluation">
+              <ownedParameter xmi:id="__PURoSH6EeiYRrsE_Lm32g" name="candidat" type="__OP6oCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__PURoiH6EeiYRrsE_Lm32g" name="jury" type="__OiOgCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__PURoyH6EeiYRrsE_Lm32g" name="date" type="__OhAYCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__PURpCH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="__KOWQCH6EeiYRrsE_Lm32g" name="EvaluationDaoImpl">
+            <ownedAttribute xmi:id="__P3rQiH6EeiYRrsE_Lm32g" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P3rQyH6EeiYRrsE_Lm32g" value="1L"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P4SUCH6EeiYRrsE_Lm32g" name="logger" visibility="private" isLeaf="true" isStatic="true" type="__OS98SH6EeiYRrsE_Lm32g" isReadOnly="true" association="__QTwIyH6EeiYRrsE_Lm32g">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P4SUSH6EeiYRrsE_Lm32g" value="Logger.getLogger(EvaluationDaoImpl.class)"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P4SUiH6EeiYRrsE_Lm32g" name="sessionFactory" visibility="private" type="__OUMESH6EeiYRrsE_Lm32g" association="__QUXMSH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__OkDsCH6EeiYRrsE_Lm32g" client="__KOWQCH6EeiYRrsE_Lm32g" supplier="__KLS8CH6EeiYRrsE_Lm32g" contract="__KLS8CH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__PU4sCH6EeiYRrsE_Lm32g" client="__KOWQCH6EeiYRrsE_Lm32g" supplier="__ORIwCH6EeiYRrsE_Lm32g" contract="__ORIwCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QCDUiH6EeiYRrsE_Lm32g" name="findById" specification="__KT10CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QCDUyH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QCDVCH6EeiYRrsE_Lm32g" type="__OWoUSH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>if(id &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		Evaluation evaluation = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			evaluation = (Evaluation) session.createQuery(&quot;FROM Evaluation WHERE idevaluation = :id&quot;)&#xD;
+					.setParameter(&quot;id&quot;, id).getSingleResult();&#xD;
+			Hibernate.initialize(evaluation.getNotes());&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find evaluation by id done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}
+		return evaluation;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QCDVSH6EeiYRrsE_Lm32g" name="update" specification="__PVfwCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QCDViH6EeiYRrsE_Lm32g" name="evaluation" type="__OWoUSH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(evaluation);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.update(evaluation);&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Update evaluation done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QCqYCH6EeiYRrsE_Lm32g" name="findByIdCandidate" specification="__KUc4iH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QCqYSH6EeiYRrsE_Lm32g" name="idCandidat">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QCqYiH6EeiYRrsE_Lm32g" type="__OWoUSH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QCqYyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if(idCandidat &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		List&lt;Evaluation> evaluations = new ArrayList&lt;>();&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			evaluations = (List&lt;Evaluation>) session.createQuery(&quot;FROM Evaluation WHERE idcandidat = :id&quot;)&#xD;
+					.setParameter(&quot;id&quot;, idCandidat).list();&#xD;
+			for (Evaluation evaluation : evaluations) {&#xD;
+				Hibernate.initialize(evaluation.getNotes());&#xD;
+				Hibernate.initialize(evaluation.getSignatures());&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find evaluation by id candidate done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return evaluations;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QCqZCH6EeiYRrsE_Lm32g" name="findByIdJury" specification="__KWSECH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QCqZSH6EeiYRrsE_Lm32g" name="idJury">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QCqZiH6EeiYRrsE_Lm32g" type="__OWoUSH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QCqZyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if(idJury &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		List&lt;Evaluation> evaluations = new ArrayList&lt;>();&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			evaluations = (List&lt;Evaluation>) session.createQuery(&quot;FROM Evaluation WHERE idjuryeval = :id&quot;)&#xD;
+					.setParameter(&quot;id&quot;, idJury).list();&#xD;
+			for (Evaluation evaluation : evaluations) {&#xD;
+				Hibernate.initialize(evaluation.getNotes());&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find evaluation by id jury done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return evaluations;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QCqaCH6EeiYRrsE_Lm32g" name="deleteEvaluation" specification="__KXgMCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QCqaSH6EeiYRrsE_Lm32g" name="idJury">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QCqaiH6EeiYRrsE_Lm32g" name="idCandidat">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if(idJury &lt; 1 || idCandidat &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			Evaluation evaluationToDelete = (Evaluation) session&#xD;
+					.createQuery(&quot;FROM Evaluation WHERE idjuryeval = :idJury AND idcandidat = :idCandidat&quot;)&#xD;
+					.setParameter(&quot;idJury&quot;, idJury).setParameter(&quot;idCandidat&quot;, idCandidat).getSingleResult();&#xD;
+			List&lt;Note> notesToDelete = (List&lt;Note>) session.createQuery(&quot;FROM Note WHERE idevaluation = :idevaluation&quot;)&#xD;
+					.setParameter(&quot;idevaluation&quot;, evaluationToDelete.getIdevaluation()).getResultList();&#xD;
+			for (Note note : notesToDelete) {&#xD;
+				session.delete(note);&#xD;
+			}&#xD;
+			session.delete(evaluationToDelete);&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Delete evaluation done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QCqayH6EeiYRrsE_Lm32g" name="saveEvaluation" specification="__PWt4CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QCqbCH6EeiYRrsE_Lm32g" name="candidat" type="__OP6oCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__QCqbSH6EeiYRrsE_Lm32g" name="jury" type="__OiOgCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__QCqbiH6EeiYRrsE_Lm32g" name="date" type="__OhAYCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__QCqbyH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>Objects.requireNonNull(candidat);&#xD;
+		Objects.requireNonNull(jury);&#xD;
+		Objects.requireNonNull(date);&#xD;
+		if(idevent &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+&#xD;
+			// Creation de l'evaluation&#xD;
+			Evaluation evaluation = new Evaluation();&#xD;
+			evaluation.setCandidat(candidat);&#xD;
+			evaluation.setCommentaire(&quot;&quot;);&#xD;
+			evaluation.setDatedernieremodif(date);&#xD;
+			evaluation.setJury(jury);&#xD;
+			evaluation.setIssigned(false);&#xD;
+			session.save(evaluation);&#xD;
+&#xD;
+			// Creation de notes (initialisé à -1) pour chaque criteres de l'evenement&#xD;
+			List&lt;Critere> criteres = (List&lt;Critere>) session.createQuery(&quot;FROM Critere WHERE idevent = :idevent&quot;)&#xD;
+					.setParameter(&quot;idevent&quot;, idevent).getResultList();&#xD;
+			for (Critere critere : criteres) {&#xD;
+				Note note = new Note();&#xD;
+				note.setCommentaire(&quot;&quot;);&#xD;
+				note.setCritere(critere);&#xD;
+				note.setDate(date);&#xD;
+				note.setEvaluation(evaluation);&#xD;
+				note.setNiveau(-1);&#xD;
+				session.save(note);&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Add evaluation done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="__KT10CH6EeiYRrsE_Lm32g" name="findById" method="__QCDUiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__KT10SH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PU4sSH6EeiYRrsE_Lm32g" type="__OWoUSH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KUc4iH6EeiYRrsE_Lm32g" name="findByIdCandidate" method="__QCqYCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__KVD8CH6EeiYRrsE_Lm32g" name="idCandidat">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KVD8SH6EeiYRrsE_Lm32g" type="__OWoUSH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__KVD8iH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KWSECH6EeiYRrsE_Lm32g" name="findByIdJury" method="__QCqZCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__KWSESH6EeiYRrsE_Lm32g" name="idJury">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KWSEiH6EeiYRrsE_Lm32g" type="__OWoUSH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__KWSEyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KXgMCH6EeiYRrsE_Lm32g" name="deleteEvaluation" method="__QCqaCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__KXgMSH6EeiYRrsE_Lm32g" name="idJury">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KXgMiH6EeiYRrsE_Lm32g" name="idCandidat">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PVfwCH6EeiYRrsE_Lm32g" name="update" method="__QCDVSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PVfwSH6EeiYRrsE_Lm32g" name="evaluation" type="__OWoUSH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PWt4CH6EeiYRrsE_Lm32g" name="saveEvaluation" method="__QCqayH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PWt4SH6EeiYRrsE_Lm32g" name="candidat" type="__OP6oCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__PWt4iH6EeiYRrsE_Lm32g" name="jury" type="__OiOgCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__PWt4yH6EeiYRrsE_Lm32g" name="date" type="__OhAYCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__PWt5CH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Interface" xmi:id="__KcYsCH6EeiYRrsE_Lm32g" name="EvenementDao">
+            <ownedOperation xmi:id="__Kdm0CH6EeiYRrsE_Lm32g" name="findById">
+              <ownedParameter xmi:id="__Kdm0SH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PZKICH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Kdm0iH6EeiYRrsE_Lm32g" name="findByIdUser">
+              <ownedParameter xmi:id="__Kdm0yH6EeiYRrsE_Lm32g" name="idUser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KeN4CH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__KeN4SH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KeN4iH6EeiYRrsE_Lm32g" name="findByCode">
+              <ownedParameter xmi:id="__KeN4yH6EeiYRrsE_Lm32g" name="code">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PZKISH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Ke08CH6EeiYRrsE_Lm32g" name="findAll">
+              <ownedParameter xmi:id="__Ke08SH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__Ke08iH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KfcACH6EeiYRrsE_Lm32g" name="supprimerEvent">
+              <ownedParameter xmi:id="__KfcASH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PYjECH6EeiYRrsE_Lm32g" name="addEvenement">
+              <ownedParameter xmi:id="__PYjESH6EeiYRrsE_Lm32g" name="event" type="__OnHACH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__PYjEiH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PZxMCH6EeiYRrsE_Lm32g" name="editEvenement">
+              <ownedParameter xmi:id="__PZxMSH6EeiYRrsE_Lm32g" name="event" type="__OnHACH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="__KgqICH6EeiYRrsE_Lm32g" name="EvenementDaoImpl">
+            <ownedAttribute xmi:id="__P45YiH6EeiYRrsE_Lm32g" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P5gcCH6EeiYRrsE_Lm32g" value="1L"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P5gciH6EeiYRrsE_Lm32g" name="logger" visibility="private" isLeaf="true" isStatic="true" type="__OS98SH6EeiYRrsE_Lm32g" isReadOnly="true" association="__QU-QSH6EeiYRrsE_Lm32g">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P5gcyH6EeiYRrsE_Lm32g" value="Logger.getLogger(EvenementDaoImpl.class)"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P5gdCH6EeiYRrsE_Lm32g" name="sessionFactory" visibility="private" type="__OUMESH6EeiYRrsE_Lm32g" association="__QVlUSH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__OpjQCH6EeiYRrsE_Lm32g" client="__KgqICH6EeiYRrsE_Lm32g" supplier="__KcYsCH6EeiYRrsE_Lm32g" contract="__KcYsCH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__PaYQCH6EeiYRrsE_Lm32g" client="__KgqICH6EeiYRrsE_Lm32g" supplier="__ORIwCH6EeiYRrsE_Lm32g" contract="__ORIwCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QDRcCH6EeiYRrsE_Lm32g" name="addEvenement" specification="__Pa_UCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QDRcSH6EeiYRrsE_Lm32g" name="event" type="__OnHACH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__QDRciH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(event);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.save(event);	&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Duplicate event done ! &quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return event;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QDRcyH6EeiYRrsE_Lm32g" name="findById" specification="__Kh4QCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QDRdCH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QDRdSH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>if(id &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		Evenement event = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			event = (Evenement) session.createQuery(&quot;FROM Evenement WHERE idevent = :id&quot;).setParameter(&quot;id&quot;, id)&#xD;
+					.getSingleResult();&#xD;
+			Hibernate.initialize(event.getCriteres());&#xD;
+			Hibernate.initialize(event.getCandidats());&#xD;
+			Hibernate.initialize(event.getJurys());&#xD;
+			List&lt;Critere> criteres = event.getCriteres();&#xD;
+			for (Critere c : criteres) {&#xD;
+				Hibernate.initialize(c.getDescripteurs());&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find event done - Id: &quot; + event.getIdevent());&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return event;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QDRdiH6EeiYRrsE_Lm32g" name="findByIdUser" specification="__KifUiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QDRdyH6EeiYRrsE_Lm32g" name="idUser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QDReCH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QDReSH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if(idUser &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		List&lt;Evenement> events = new ArrayList&lt;>();&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			events = (List&lt;Evenement>) session&#xD;
+					.createQuery(&quot;FROM Evenement WHERE (isdeleted = :isDeleted AND iduser = :iduser)&quot;)&#xD;
+					.setParameter(&quot;iduser&quot;, idUser).setParameter(&quot;isDeleted&quot;, false).list();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find event by id user done !&quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return events;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QDReiH6EeiYRrsE_Lm32g" name="findByCode" specification="__KjtcyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QDReyH6EeiYRrsE_Lm32g" name="code">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QDRfCH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(code);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		Evenement event = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			event = (Evenement) session.createQuery(&quot;FROM Evenement WHERE code = :code&quot;)&#xD;
+					.setParameter(&quot;code&quot;, code).getSingleResult();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find event by code done !&quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return event;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QD4gCH6EeiYRrsE_Lm32g" name="editEvenement" specification="__PcNcSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QD4gSH6EeiYRrsE_Lm32g" name="event" type="__OnHACH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(event);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.update(event);&#xD;
+			transaction.commit();&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QD4giH6EeiYRrsE_Lm32g" name="findAll" specification="__Kk7kCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QD4gyH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QD4hCH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>List&lt;Evenement> events = new ArrayList&lt;>();		&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();	&#xD;
+			events = (List&lt;Evenement>) session.createQuery(&quot;from Evenement&quot;).list();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find all events done !&quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}		&#xD;
+		return events;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QD4hSH6EeiYRrsE_Lm32g" name="supprimerEvent" specification="__KlipCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QD4hiH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if(idevent &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			Evenement event = (Evenement) session.createQuery(&quot;from Evenement where idevent = :idevent&quot;).setParameter(&quot;idevent&quot;, idevent).getSingleResult();&#xD;
+			event.setIsdeleted(true);&#xD;
+			session.update(event);&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Delete event done (isDeleted = true) - Id: &quot; + event.getIdevent());&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}		&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="__Kh4QCH6EeiYRrsE_Lm32g" name="findById" method="__QDRcyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__Kh4QSH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PbmYiH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KifUiH6EeiYRrsE_Lm32g" name="findByIdUser" method="__QDRdiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__KifUyH6EeiYRrsE_Lm32g" name="idUser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KjGYCH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__KjGYSH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KjtcyH6EeiYRrsE_Lm32g" name="findByCode" method="__QDReiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__KjtdCH6EeiYRrsE_Lm32g" name="code">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PcNcCH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Kk7kCH6EeiYRrsE_Lm32g" name="findAll" method="__QD4giH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__Kk7kSH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__Kk7kiH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KlipCH6EeiYRrsE_Lm32g" name="supprimerEvent" method="__QD4hSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__KlipSH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Pa_UCH6EeiYRrsE_Lm32g" name="addEvenement" method="__QDRcCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__Pa_USH6EeiYRrsE_Lm32g" name="event" type="__OnHACH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__Pa_UiH6EeiYRrsE_Lm32g" type="__OnHACH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PcNcSH6EeiYRrsE_Lm32g" name="editEvenement" method="__QD4gCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PcNciH6EeiYRrsE_Lm32g" name="event" type="__OnHACH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Interface" xmi:id="__Kp0ECH6EeiYRrsE_Lm32g" name="JuryDao">
+            <ownedOperation xmi:id="__KqbICH6EeiYRrsE_Lm32g" name="juryIsAssigned">
+              <ownedParameter xmi:id="__KqbISH6EeiYRrsE_Lm32g" name="idUser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KqbIiH6EeiYRrsE_Lm32g" name="idEvent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KqbIyH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KrCMCH6EeiYRrsE_Lm32g" name="findJuryAndAnonymousByIdEvent">
+              <ownedParameter xmi:id="__KrCMSH6EeiYRrsE_Lm32g" name="idEvent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KrCMiH6EeiYRrsE_Lm32g" name="login">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KrpQCH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__KrpQSH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KrpQiH6EeiYRrsE_Lm32g" name="findAnonymousByIdEvent">
+              <ownedParameter xmi:id="__KrpQyH6EeiYRrsE_Lm32g" name="idEvent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KsQUCH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__KsQUSH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KsQUiH6EeiYRrsE_Lm32g" name="findJurysByIdevent">
+              <ownedParameter xmi:id="__KsQUyH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KsQVCH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__Ks3YCH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Ks3YSH6EeiYRrsE_Lm32g" name="listJurysByEvent">
+              <ownedParameter xmi:id="__Ks3YiH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__Ks3YyH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__Ks3ZCH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KtecCH6EeiYRrsE_Lm32g" name="findJurysAnnonymesByEvent">
+              <ownedParameter xmi:id="__KtecSH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KteciH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__KtecyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KuFgCH6EeiYRrsE_Lm32g" name="supprimerUtilisateur">
+              <ownedParameter xmi:id="__KuFgSH6EeiYRrsE_Lm32g" name="iduser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__KuFgiH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KuFgyH6EeiYRrsE_Lm32g" name="findById">
+              <ownedParameter xmi:id="__KuFhCH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PfQwSH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KuskCH6EeiYRrsE_Lm32g" name="findJuryById">
+              <ownedParameter xmi:id="__KuskSH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PfQwiH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__KuskiH6EeiYRrsE_Lm32g" name="supprimerUtilisateurAnonyme">
+              <ownedParameter xmi:id="__KuskyH6EeiYRrsE_Lm32g" name="iduser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PdbkCH6EeiYRrsE_Lm32g" name="findByUser">
+              <ownedParameter xmi:id="__PeCoCH6EeiYRrsE_Lm32g" name="user" type="__OsmkCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__PeCoSH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__PeCoiH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PepsCH6EeiYRrsE_Lm32g" name="addJuryToEvent">
+              <ownedParameter xmi:id="__PepsSH6EeiYRrsE_Lm32g" name="jury" type="__OiOgCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PepsiH6EeiYRrsE_Lm32g" name="addListJurys">
+              <ownedParameter xmi:id="__PepsyH6EeiYRrsE_Lm32g" name="jurys" type="__OOsgCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Interface" xmi:id="__KxI0CH6EeiYRrsE_Lm32g" name="UserDao">
+            <ownedAttribute xmi:id="__K2oYSH6EeiYRrsE_Lm32g" name="allUsers" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" association="__QL0UCH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__K2oYiH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__K5EoSH6EeiYRrsE_Lm32g" name="allUsersExceptDeletedansAno" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" association="__QL0UiH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QO3oCH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="__K1aQCH6EeiYRrsE_Lm32g" name="deleteUser">
+              <ownedParameter xmi:id="__K1aQSH6EeiYRrsE_Lm32g" name="idUser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__K1aQiH6EeiYRrsE_Lm32g" name="userExist">
+              <ownedParameter xmi:id="__K1aQyH6EeiYRrsE_Lm32g" name="login">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__K2BUCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__K2BUSH6EeiYRrsE_Lm32g" name="findByLogin">
+              <ownedParameter xmi:id="__K2oYCH6EeiYRrsE_Lm32g" name="login">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PhF8SH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__K3PcCH6EeiYRrsE_Lm32g" name="getAllUsersExceptCurrentAndAnonymous">
+              <ownedParameter xmi:id="__K3PcSH6EeiYRrsE_Lm32g" name="idcurrentUser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__K3PciH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__K3PcyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__K32gCH6EeiYRrsE_Lm32g" name="mailExist">
+              <ownedParameter xmi:id="__K32gSH6EeiYRrsE_Lm32g" name="mail">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__K32giH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__K32gyH6EeiYRrsE_Lm32g" name="findByMail">
+              <ownedParameter xmi:id="__K32hCH6EeiYRrsE_Lm32g" name="mail">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PhF8iH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__K4dkCH6EeiYRrsE_Lm32g" name="findUserById">
+              <ownedParameter xmi:id="__K4dkSH6EeiYRrsE_Lm32g" name="iduser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PhtACH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__K4dkiH6EeiYRrsE_Lm32g" name="findByToken">
+              <ownedParameter xmi:id="__K5EoCH6EeiYRrsE_Lm32g" name="token">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PhtASH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Pf30CH6EeiYRrsE_Lm32g" name="addUser">
+              <ownedParameter xmi:id="__Pf30SH6EeiYRrsE_Lm32g" name="user" type="__OsmkCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Pf30iH6EeiYRrsE_Lm32g" name="updateUserInfos">
+              <ownedParameter xmi:id="__Pf30yH6EeiYRrsE_Lm32g" name="user" type="__OsmkCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Pge4CH6EeiYRrsE_Lm32g" name="addJurysAnonymes">
+              <ownedParameter xmi:id="__Pge4SH6EeiYRrsE_Lm32g" name="utilisateurs" type="__OOsgCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__Pge4iH6EeiYRrsE_Lm32g" name="event" type="__OnHACH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Interface" xmi:id="__K650CH6EeiYRrsE_Lm32g" name="NoteDao">
+            <ownedAttribute xmi:id="__K7g4CH6EeiYRrsE_Lm32g" name="allNotes" type="__OXPYSH6EeiYRrsE_Lm32g" isOrdered="true" association="__QL0VCH6EeiYRrsE_Lm32g">
+              <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__K8H8CH6EeiYRrsE_Lm32g" value="*"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="__K8H8SH6EeiYRrsE_Lm32g" name="findNoteById">
+              <ownedParameter xmi:id="__K8H8iH6EeiYRrsE_Lm32g" name="idnote">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PiUEyH6EeiYRrsE_Lm32g" type="__OXPYSH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PhtAiH6EeiYRrsE_Lm32g" name="addNote">
+              <ownedParameter xmi:id="__PhtAyH6EeiYRrsE_Lm32g" name="note" type="__OXPYSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__PiUECH6EeiYRrsE_Lm32g" type="__OXPYSH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PiUESH6EeiYRrsE_Lm32g" name="update">
+              <ownedParameter xmi:id="__PiUEiH6EeiYRrsE_Lm32g" name="note" type="__OXPYSH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="__K9WECH6EeiYRrsE_Lm32g" name="NoteDaoImpl">
+            <ownedAttribute xmi:id="__P6ukCH6EeiYRrsE_Lm32g" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P6ukSH6EeiYRrsE_Lm32g" value="1L"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P6ukyH6EeiYRrsE_Lm32g" name="logger" visibility="private" isLeaf="true" isStatic="true" type="__OS98SH6EeiYRrsE_Lm32g" isReadOnly="true" association="__QWMYCH6EeiYRrsE_Lm32g">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P6ulCH6EeiYRrsE_Lm32g" value="Logger.getLogger(NoteDaoImpl.class)"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P7VoCH6EeiYRrsE_Lm32g" name="sessionFactory" visibility="private" type="__OUMESH6EeiYRrsE_Lm32g" association="__QWMYyH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__OytMCH6EeiYRrsE_Lm32g" client="__K9WECH6EeiYRrsE_Lm32g" supplier="__K650CH6EeiYRrsE_Lm32g" contract="__K650CH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__Pi7ICH6EeiYRrsE_Lm32g" client="__K9WECH6EeiYRrsE_Lm32g" supplier="__ORIwCH6EeiYRrsE_Lm32g" contract="__ORIwCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QEfkCH6EeiYRrsE_Lm32g" name="addNote" specification="__PjiMCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QEfkSH6EeiYRrsE_Lm32g" name="note" type="__OXPYSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__QEfkiH6EeiYRrsE_Lm32g" type="__OXPYSH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(note);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.save(note);&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Add mark done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return note;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QEfkyH6EeiYRrsE_Lm32g" name="update" specification="__PkJQCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QEflCH6EeiYRrsE_Lm32g" name="note" type="__OXPYSH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(note);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.update(note);&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Update mark done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QEflSH6EeiYRrsE_Lm32g" name="getAllNotes" specification="__K-kMCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QEfliH6EeiYRrsE_Lm32g" type="__OXPYSH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QEflyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>List&lt;Note> notes = null;&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+&#xD;
+		transaction = session.beginTransaction();&#xD;
+		notes = (List&lt;Note>) session.createQuery(&quot;from Note&quot;).list();&#xD;
+		transaction.commit();&#xD;
+&#xD;
+		session.close();&#xD;
+		return notes;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QEfmCH6EeiYRrsE_Lm32g" name="findNoteById" specification="__K_LRCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QEfmSH6EeiYRrsE_Lm32g" name="idnote">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QEfmiH6EeiYRrsE_Lm32g" type="__OXPYSH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>if(idnote &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;); &#xD;
+		}&#xD;
+		Note note = null;&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		session.beginTransaction();&#xD;
+		note = (Note) session.createQuery(&quot;from Note where idnote = :idnote&quot;)&#xD;
+				.setParameter(&quot;idnote&quot;, idnote).getSingleResult();&#xD;
+		session.getTransaction().commit();&#xD;
+		session.close();&#xD;
+		return note;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="__K-kMCH6EeiYRrsE_Lm32g" name="getAllNotes" method="__QEflSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__K-kMSH6EeiYRrsE_Lm32g" type="__OXPYSH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__K-kMiH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__K_LRCH6EeiYRrsE_Lm32g" name="findNoteById" method="__QEfmCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__K_LRSH6EeiYRrsE_Lm32g" name="idnote">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PkwUCH6EeiYRrsE_Lm32g" type="__OXPYSH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PjiMCH6EeiYRrsE_Lm32g" name="addNote" method="__QEfkCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PjiMSH6EeiYRrsE_Lm32g" name="note" type="__OXPYSH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__PjiMiH6EeiYRrsE_Lm32g" type="__OXPYSH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PkJQCH6EeiYRrsE_Lm32g" name="update" method="__QEfkyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PkJQSH6EeiYRrsE_Lm32g" name="note" type="__OXPYSH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Interface" xmi:id="__LCOkCH6EeiYRrsE_Lm32g" name="SignatureDao">
+            <ownedOperation xmi:id="__PkwUSH6EeiYRrsE_Lm32g" name="addSignature">
+              <ownedParameter xmi:id="__PkwUiH6EeiYRrsE_Lm32g" name="signature" type="__O0iYCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="__LC1oCH6EeiYRrsE_Lm32g" name="SignatureDaoImpl">
+            <ownedAttribute xmi:id="__P78sCH6EeiYRrsE_Lm32g" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P78sSH6EeiYRrsE_Lm32g" value="1L"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P78syH6EeiYRrsE_Lm32g" name="logger" visibility="private" isLeaf="true" isStatic="true" type="__OS98SH6EeiYRrsE_Lm32g" isReadOnly="true" association="__QWzcSH6EeiYRrsE_Lm32g">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P78tCH6EeiYRrsE_Lm32g" value="Logger.getLogger(SignatureDaoImpl.class)"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P78tSH6EeiYRrsE_Lm32g" name="sessionFactory" visibility="private" type="__OUMESH6EeiYRrsE_Lm32g" association="__QXagSH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__O1wgCH6EeiYRrsE_Lm32g" client="__LC1oCH6EeiYRrsE_Lm32g" supplier="__LCOkCH6EeiYRrsE_Lm32g" contract="__LCOkCH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__PlXYCH6EeiYRrsE_Lm32g" client="__LC1oCH6EeiYRrsE_Lm32g" supplier="__ORIwCH6EeiYRrsE_Lm32g" contract="__ORIwCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QEfmyH6EeiYRrsE_Lm32g" name="addSignature" specification="__Pl-cCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QEfnCH6EeiYRrsE_Lm32g" name="signature" type="__O0iYCH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(signature);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.save(signature);&#xD;
+			transaction.commit();			&#xD;
+			logger.info(&quot;Add signature done !&quot;);&#xD;
+		}&#xD;
+		catch(RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}&#xD;
+		finally {&#xD;
+			session.close();&#xD;
+		}		&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="__Pl-cCH6EeiYRrsE_Lm32g" name="addSignature" method="__QEfmyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__Pl-cSH6EeiYRrsE_Lm32g" name="signature" type="__O0iYCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="__LF48CH6EeiYRrsE_Lm32g" name="JuryDaoImpl">
+            <ownedAttribute xmi:id="__P8jwiH6EeiYRrsE_Lm32g" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P8jwyH6EeiYRrsE_Lm32g" value="1L"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P9K0SH6EeiYRrsE_Lm32g" name="logger" visibility="private" isLeaf="true" isStatic="true" type="__OS98SH6EeiYRrsE_Lm32g" isReadOnly="true" association="__QXahCH6EeiYRrsE_Lm32g">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P9K0iH6EeiYRrsE_Lm32g" value="Logger.getLogger(JuryDaoImpl.class)"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P9K0yH6EeiYRrsE_Lm32g" name="sessionFactory" visibility="private" type="__OUMESH6EeiYRrsE_Lm32g" association="__QYBkSH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__O4z0SH6EeiYRrsE_Lm32g" client="__LF48CH6EeiYRrsE_Lm32g" supplier="__Kp0ECH6EeiYRrsE_Lm32g" contract="__Kp0ECH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__PmlgCH6EeiYRrsE_Lm32g" client="__LF48CH6EeiYRrsE_Lm32g" supplier="__ORIwCH6EeiYRrsE_Lm32g" contract="__ORIwCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QFGoCH6EeiYRrsE_Lm32g" name="juryIsAssigned" specification="__LHHECH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QFGoSH6EeiYRrsE_Lm32g" name="idUser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QFGoiH6EeiYRrsE_Lm32g" name="idEvent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QFGoyH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (idUser &lt; 1 || idEvent &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		Long result = -1L;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			result = (Long) session.createQuery(&quot;SELECT COUNT(j) FROM Jury j WHERE (iduser = :idu AND idevent = :ide)&quot;)&#xD;
+					.setParameter(&quot;idu&quot;, idUser).setParameter(&quot;ide&quot;, idEvent).getSingleResult();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Check if jury is assigned done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return result > 0;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QFGpCH6EeiYRrsE_Lm32g" name="findJuryAndAnonymousByIdEvent" specification="__LHuIiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QFGpSH6EeiYRrsE_Lm32g" name="idEvent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QFGpiH6EeiYRrsE_Lm32g" name="login">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QFGpyH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QFGqCH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>Objects.requireNonNull(login);&#xD;
+		if (idEvent &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		List&lt;Jury> jurys = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			jurys = (List&lt;Jury>) session.createQuery(&#xD;
+					&quot;SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND (u.login = :login OR u.droits = 'A') AND u.isdeleted IS FALSE&quot;)&#xD;
+					.setParameter(&quot;idEvent&quot;, idEvent).setParameter(&quot;login&quot;, login).list();&#xD;
+			logger.info(&quot;TAILLE LISTE:&quot; + jurys.size());&#xD;
+			for (Jury jury : jurys) {&#xD;
+				Hibernate.initialize(jury.getUtilisateur());&#xD;
+				Hibernate.initialize(jury.getEvaluations());&#xD;
+				List&lt;Evaluation> evaluations = jury.getEvaluations();&#xD;
+				for (Evaluation evaluation : evaluations) {&#xD;
+					Hibernate.initialize(evaluation.getNotes());&#xD;
+					List&lt;Note> notes = evaluation.getNotes();&#xD;
+					for (Note note : notes) {&#xD;
+						Critere critere = note.getCritere();&#xD;
+						Hibernate.initialize(critere.getDescripteurs());&#xD;
+					}&#xD;
+				}&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find jury and anonymous by id event done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return jurys;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QFGqSH6EeiYRrsE_Lm32g" name="findAnonymousByIdEvent" specification="__LJjUCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QFGqiH6EeiYRrsE_Lm32g" name="idEvent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QFGqyH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QFGrCH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (idEvent &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		List&lt;Jury> jurys = new ArrayList&lt;>();&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			jurys = (List&lt;Jury>) session.createQuery(&#xD;
+					&quot;SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE idevent = :idEvent AND j.utilisateur = u AND u.droits = :droits AND u.isdeleted IS FALSE&quot;)&#xD;
+					.setParameter(&quot;idEvent&quot;, idEvent).setParameter(&quot;droits&quot;, DroitsUtilisateur.ANONYME.toString())&#xD;
+					.list();&#xD;
+			for (Jury jury : jurys) {&#xD;
+				Hibernate.initialize(jury.getUtilisateur());&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find anonymous by id event done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return jurys;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QFGrSH6EeiYRrsE_Lm32g" name="findByUser" specification="__PnMkCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QFGriH6EeiYRrsE_Lm32g" name="user" type="__OsmkCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__QFGryH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QFGsCH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>Objects.requireNonNull(user);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		List&lt;Jury> jurys = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			jurys = (List&lt;Jury>) session.createQuery(&#xD;
+					&quot;SELECT DISTINCT j FROM Jury j, Utilisateur u WHERE j.utilisateur = :user AND u.isdeleted IS FALSE&quot;)&#xD;
+					.setParameter(&quot;user&quot;, user).list();&#xD;
+			for (Jury jury : jurys) {&#xD;
+				Hibernate.initialize(jury.getEvenement());&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find jury by user done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return jurys;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QFtsCH6EeiYRrsE_Lm32g" name="findJurysByIdevent" specification="__LLYgCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QFtsSH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QFtsiH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QFtsyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (idevent &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		List&lt;Jury> jurys = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			jurys = (List&lt;Jury>) session.createQuery(&quot;from Jury where evenement.idevent = :idevent&quot;)&#xD;
+					.setParameter(&quot;idevent&quot;, idevent).list();&#xD;
+			for (Jury jury : jurys) {&#xD;
+				Hibernate.initialize(jury.getEvaluations());&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find jury by id event done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return jurys;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QFttCH6EeiYRrsE_Lm32g" name="listJurysByEvent" specification="__LL_lCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QFttSH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QFttiH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QFttyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (idevent &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		List&lt;Utilisateur> utilisateurs = new ArrayList&lt;>();&#xD;
+		List&lt;Jury> jurys = new ArrayList&lt;>();&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			jurys = (List&lt;Jury>) session.createQuery(&quot;from Jury where evenement.idevent = :idevent&quot;)&#xD;
+					.setParameter(&quot;idevent&quot;, idevent).list();&#xD;
+			for (Jury jury : jurys) {&#xD;
+				Utilisateur u = (Utilisateur) session.createQuery(&quot;from Utilisateur where iduser = :iduser&quot;)&#xD;
+						.setParameter(&quot;iduser&quot;, jury.getUtilisateur().getIduser()).getSingleResult();&#xD;
+				utilisateurs.add(u);&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find jury by id event done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return utilisateurs;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QFtuCH6EeiYRrsE_Lm32g" name="findJurysAnnonymesByEvent" specification="__LNNsCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QFtuSH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QFtuiH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QFtuyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (idevent &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		List&lt;Utilisateur> utilisateurs = new ArrayList&lt;>();&#xD;
+		List&lt;Jury> jurys = new ArrayList&lt;>();&#xD;
+		List&lt;Utilisateur> utilisateursAnnonymes = new ArrayList&lt;>();&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			jurys = (List&lt;Jury>) session.createQuery(&quot;from Jury where evenement.idevent = :idevent&quot;)&#xD;
+					.setParameter(&quot;idevent&quot;, idevent).list();&#xD;
+			for (Jury jury : jurys) {&#xD;
+				utilisateurs = (List&lt;Utilisateur>) session.createQuery(&quot;from Utilisateur where iduser = :iduser&quot;)&#xD;
+						.setParameter(&quot;iduser&quot;, jury.getUtilisateur().getIduser()).list();&#xD;
+			}&#xD;
+			for (Utilisateur utilisateur : utilisateurs) {&#xD;
+				if ((utilisateur.getDroits().equals(DroitsUtilisateur.ANONYME.toString()))&#xD;
+						&amp;&amp; (utilisateur.getIsdeleted() == false)) {&#xD;
+					utilisateursAnnonymes.add(utilisateur);&#xD;
+				}&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find jurys and anonymous by id event done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return utilisateursAnnonymes;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QFtvCH6EeiYRrsE_Lm32g" name="supprimerUtilisateurAnonyme" specification="__LOb0CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QFtvSH6EeiYRrsE_Lm32g" name="iduser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (iduser &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.createQuery(&quot;delete from Utilisateur where iduser = :iduser&quot;).setParameter(&quot;iduser&quot;, iduser)&#xD;
+					.executeUpdate();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Delete jury done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QFtviH6EeiYRrsE_Lm32g" name="supprimerUtilisateur" specification="__LPC4CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QFtvyH6EeiYRrsE_Lm32g" name="iduser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QFtwCH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (iduser &lt; 1 || idevent &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			Jury jury = (Jury)session&#xD;
+					.createQuery(&quot;FROM Jury WHERE iduser = :iduser AND idevent = :idevent &quot;)&#xD;
+					.setParameter(&quot;iduser&quot;, iduser).setParameter(&quot;idevent&quot;, idevent).getSingleResult();&#xD;
+			List&lt;Evaluation> evaluationToDelete = (List&lt;Evaluation>) session&#xD;
+					.createQuery(&quot;FROM Evaluation WHERE idjuryeval = :iduser&quot;).setParameter(&quot;iduser&quot;, jury.getIdjury())&#xD;
+					.getResultList();&#xD;
+			for (Evaluation evaluation : evaluationToDelete) {&#xD;
+				System.out.println(&quot;id evaluation &quot;+evaluation.getIdevaluation());&#xD;
+				List&lt;Note> notesToDelete = (List&lt;Note>) session&#xD;
+						.createQuery(&quot;FROM Note WHERE idevaluation = :idevaluation&quot;)&#xD;
+						.setParameter(&quot;idevaluation&quot;, evaluation.getIdevaluation()).getResultList();&#xD;
+				for (Note note : notesToDelete) {&#xD;
+					session.delete(note);&#xD;
+				}&#xD;
+				session.delete(evaluation);&#xD;
+			}&#xD;
+			session.delete(jury);&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Delete jury done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QGUwCH6EeiYRrsE_Lm32g" name="addJuryToEvent" specification="__PoasCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QGUwSH6EeiYRrsE_Lm32g" name="jury" type="__OiOgCH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(jury);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.save(jury);&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Add jury done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QGUwiH6EeiYRrsE_Lm32g" name="addListJurys" specification="__PoatCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QGUwyH6EeiYRrsE_Lm32g" name="jurys" type="__OOsgCH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(jurys);&#xD;
+		if (jurys.isEmpty()) {&#xD;
+			throw new IllegalStateException(&quot;List must not be empty&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			jurys.forEach(jury -> session.save(jury));&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Add all jurys done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QGUxCH6EeiYRrsE_Lm32g" name="findById" specification="__LQRACH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QGUxSH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QGUxiH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>if (id &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Utilisateur jury = null;&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		try {&#xD;
+			session.beginTransaction();&#xD;
+			 jury = (Utilisateur) session.createQuery(&quot;FROM Utilisateur WHERE iduser = :id&quot;).setParameter(&quot;id&quot;, id)&#xD;
+					.getSingleResult();&#xD;
+			session.getTransaction().commit();&#xD;
+			&#xD;
+		} catch (NoResultException e) {&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		}finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return jury;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QGUxyH6EeiYRrsE_Lm32g" name="findJuryById" specification="__LQ4EiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QGUyCH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QGUySH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>if (id &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		session.beginTransaction();&#xD;
+		Jury jury = (Jury) session.createQuery(&quot;FROM Jury WHERE idjury = :id&quot;).setParameter(&quot;id&quot;, id).getSingleResult();&#xD;
+		session.getTransaction().commit();&#xD;
+		session.close();&#xD;
+		return jury;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="__LHHECH6EeiYRrsE_Lm32g" name="juryIsAssigned" method="__QFGoCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LHHESH6EeiYRrsE_Lm32g" name="idUser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__LHHEiH6EeiYRrsE_Lm32g" name="idEvent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__LHHEyH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LHuIiH6EeiYRrsE_Lm32g" name="findJuryAndAnonymousByIdEvent" method="__QFGpCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LIVMCH6EeiYRrsE_Lm32g" name="idEvent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__LIVMSH6EeiYRrsE_Lm32g" name="login">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__LIVMiH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__LIVMyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LJjUCH6EeiYRrsE_Lm32g" name="findAnonymousByIdEvent" method="__QFGqSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LJjUSH6EeiYRrsE_Lm32g" name="idEvent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__LJjUiH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__LJjUyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LLYgCH6EeiYRrsE_Lm32g" name="findJurysByIdevent" method="__QFtsCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LLYgSH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__LLYgiH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__LLYgyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LL_lCH6EeiYRrsE_Lm32g" name="listJurysByEvent" method="__QFttCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LL_lSH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__LMmoCH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__LMmoSH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LNNsCH6EeiYRrsE_Lm32g" name="findJurysAnnonymesByEvent" method="__QFtuCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LNNsSH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__LNNsiH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__LNNsyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LOb0CH6EeiYRrsE_Lm32g" name="supprimerUtilisateurAnonyme" method="__QFtvCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LOb0SH6EeiYRrsE_Lm32g" name="iduser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LPC4CH6EeiYRrsE_Lm32g" name="supprimerUtilisateur" method="__QFtviH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LPC4SH6EeiYRrsE_Lm32g" name="iduser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__LPC4iH6EeiYRrsE_Lm32g" name="idevent">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LQRACH6EeiYRrsE_Lm32g" name="findById" method="__QGUxCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LQRASH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__Ppo0iH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LQ4EiH6EeiYRrsE_Lm32g" name="findJuryById" method="__QGUxyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LQ4EyH6EeiYRrsE_Lm32g" name="id">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__Ppo0yH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PnMkCH6EeiYRrsE_Lm32g" name="findByUser" method="__QFGrSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PnMkSH6EeiYRrsE_Lm32g" name="user" type="__OsmkCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__PnMkiH6EeiYRrsE_Lm32g" type="__OiOgCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__PnMkyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PoasCH6EeiYRrsE_Lm32g" name="addJuryToEvent" method="__QGUwCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PoasSH6EeiYRrsE_Lm32g" name="jury" type="__OiOgCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PoatCH6EeiYRrsE_Lm32g" name="addListJurys" method="__QGUwiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PpBwCH6EeiYRrsE_Lm32g" name="jurys" type="__OOsgCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="__LYM0CH6EeiYRrsE_Lm32g" name="UserDaoImpl">
+            <ownedAttribute xmi:id="__P9x4CH6EeiYRrsE_Lm32g" name="serialVersionUID" visibility="private" isLeaf="true" isStatic="true" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P-Y8CH6EeiYRrsE_Lm32g" value="1L"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P-Y8iH6EeiYRrsE_Lm32g" name="logger" visibility="private" isLeaf="true" isStatic="true" type="__OS98SH6EeiYRrsE_Lm32g" isReadOnly="true" association="__QYooSH6EeiYRrsE_Lm32g">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="__P-Y8yH6EeiYRrsE_Lm32g" value="Logger.getLogger(UserDaoImpl.class)"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="__P-Y9CH6EeiYRrsE_Lm32g" name="sessionFactory" visibility="private" type="__OUMESH6EeiYRrsE_Lm32g" association="__QZPsSH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__O9FQCH6EeiYRrsE_Lm32g" client="__LYM0CH6EeiYRrsE_Lm32g" supplier="__KxI0CH6EeiYRrsE_Lm32g" contract="__KxI0CH6EeiYRrsE_Lm32g"/>
+            <interfaceRealization xmi:id="__PqP4CH6EeiYRrsE_Lm32g" client="__LYM0CH6EeiYRrsE_Lm32g" supplier="__ORIwCH6EeiYRrsE_Lm32g" contract="__ORIwCH6EeiYRrsE_Lm32g"/>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QG70CH6EeiYRrsE_Lm32g" name="updateUserInfos" specification="__Pq28CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QG70SH6EeiYRrsE_Lm32g" name="user" type="__OsmkCH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(user);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.update(user);&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Update user done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QG70iH6EeiYRrsE_Lm32g" name="findByLogin" specification="__LeTcCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QG70yH6EeiYRrsE_Lm32g" name="login">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QG71CH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(login);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		Utilisateur user = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			user = (Utilisateur) session.createQuery(&quot;from Utilisateur where login = :login&quot;)&#xD;
+					.setParameter(&quot;login&quot;, login).getSingleResult();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find user by login !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return user;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QG71SH6EeiYRrsE_Lm32g" name="addJurysAnonymes" specification="__PsFECH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QG71iH6EeiYRrsE_Lm32g" name="utilisateurs" type="__OOsgCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__QG71yH6EeiYRrsE_Lm32g" name="event" type="__OnHACH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(utilisateurs);&#xD;
+		Objects.requireNonNull(event);&#xD;
+		if(utilisateurs.isEmpty()) {&#xD;
+			throw new IllegalStateException(&quot;List must not be empty&quot;);&#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			for (Utilisateur utilisateur : utilisateurs) {&#xD;
+				session.save(utilisateur);&#xD;
+				Jury jury = new Jury();&#xD;
+				jury.setEvenement(event);&#xD;
+				jury.setUtilisateur(utilisateur);&#xD;
+				session.save(jury);&#xD;
+			}&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Add anonymous done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QG72CH6EeiYRrsE_Lm32g" name="getAllUsers" specification="__LfhkSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QG72SH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QG72iH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>List&lt;Utilisateur> users = new ArrayList&lt;>();&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			users = (List&lt;Utilisateur>) session.createQuery(&quot;from Utilisateur&quot;).list();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find all users done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return users;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QHi4CH6EeiYRrsE_Lm32g" name="deleteUser" specification="__LgIpCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QHi4SH6EeiYRrsE_Lm32g" name="idUser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if(idUser &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;); &#xD;
+		}&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			Utilisateur utilisateur = (Utilisateur) session.createQuery(&quot;from Utilisateur where iduser = :iduser&quot;)&#xD;
+					.setParameter(&quot;iduser&quot;, idUser).getSingleResult();&#xD;
+			utilisateur.setIsdeleted(true);&#xD;
+			session.update(utilisateur);&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Delete user done (isDeleted = true) - Id: &quot; + utilisateur.getIduser());&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QHi4iH6EeiYRrsE_Lm32g" name="addUser" specification="__Pt6QCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QHi4yH6EeiYRrsE_Lm32g" name="user" type="__OsmkCH6EeiYRrsE_Lm32g"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(user);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			session.save(user);&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Add user done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QHi5CH6EeiYRrsE_Lm32g" name="getAllUsersExceptCurrentAndAnonymous" specification="__LgvsyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QHi5SH6EeiYRrsE_Lm32g" name="idcurrentUser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QHi5iH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QHi5yH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (idcurrentUser &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;); &#xD;
+		}
+		List&lt;Utilisateur> users = new ArrayList&lt;>();&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			users = (List&lt;Utilisateur>) session.createQuery(&quot;from Utilisateur where (iduser != :iduser AND droits != :droits)&quot; )&#xD;
+					.setParameter(&quot;iduser&quot;, idcurrentUser).setParameter(&quot;droits&quot;, DroitsUtilisateur.ANONYME.toString()).list();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find all users except current and anonymous done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return users;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QIJ8CH6EeiYRrsE_Lm32g" name="mailExist" specification="__Lh90CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QIJ8SH6EeiYRrsE_Lm32g" name="mail">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QIJ8iH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>Objects.requireNonNull(mail);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		Long result = -1L;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			result = (Long) session.createQuery(&quot;SELECT COUNT(e) from Utilisateur e WHERE e.mail = :mail&quot;)&#xD;
+					.setParameter(&quot;mail&quot;, mail).getSingleResult();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Check if mail exist done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return result == 1;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QIJ8yH6EeiYRrsE_Lm32g" name="userExist" specification="__Lik4CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QIJ9CH6EeiYRrsE_Lm32g" name="login">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QIJ9SH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>Objects.requireNonNull(login);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		Long result = -1L;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			result = (Long) session.createQuery(&quot;SELECT COUNT(e) from Utilisateur e WHERE e.login =:login&quot;)&#xD;
+					.setParameter(&quot;login&quot;, login).getSingleResult();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Check if login exist done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return result == 1;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QIJ9iH6EeiYRrsE_Lm32g" name="findByMail" specification="__Lik5SH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QIJ9yH6EeiYRrsE_Lm32g" name="mail">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QIJ-CH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(mail);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		Utilisateur user = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			user = (Utilisateur) session.createQuery(&quot;from Utilisateur where mail = :mail&quot;).setParameter(&quot;mail&quot;, mail)&#xD;
+					.getSingleResult();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find user by mail done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return user;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QIxACH6EeiYRrsE_Lm32g" name="findUserById" specification="__LjL8yH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QIxASH6EeiYRrsE_Lm32g" name="iduser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QIxAiH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>if(iduser &lt; 1) {&#xD;
+			throw new IllegalArgumentException(&quot;id must be positive&quot;); &#xD;
+		}&#xD;
+		Utilisateur user = null;&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		session.beginTransaction();&#xD;
+		 user = (Utilisateur) session.createQuery(&quot;from Utilisateur where iduser = :iduser&quot;)&#xD;
+				.setParameter(&quot;iduser&quot;, iduser).getSingleResult();&#xD;
+		session.getTransaction().commit();&#xD;
+		session.close();&#xD;
+		return user;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QIxAyH6EeiYRrsE_Lm32g" name="findByToken" specification="__LjzAiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QIxBCH6EeiYRrsE_Lm32g" name="token">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__QIxBSH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+              <language>java</language>
+              <body>Objects.requireNonNull(token);&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		Utilisateur user = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			user = (Utilisateur) session.createQuery(&quot;from Utilisateur where token = :token&quot;).setParameter(&quot;token&quot;, token)&#xD;
+					.getSingleResult();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find user by token done !&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return user;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="__QJYECH6EeiYRrsE_Lm32g" name="getAllUsersExceptDeletedansAno" specification="__LkaEiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__QJYESH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__QJYEiH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>List&lt;Utilisateur> users = null;&#xD;
+		Session session = sessionFactory.openSession();&#xD;
+		Transaction transaction = null;&#xD;
+		try {&#xD;
+			transaction = session.beginTransaction();&#xD;
+			users = (List&lt;Utilisateur>) session.createQuery(&quot;from Utilisateur where (isdeleted = :isdeleted AND droits != :droits)&quot;).setParameter(&quot;isdeleted&quot;, false).setParameter(&quot;droits&quot;, &quot;A&quot;).list();&#xD;
+			transaction.commit();&#xD;
+			logger.info(&quot;Find all users done except deleted!&quot;);&#xD;
+		} catch (RuntimeException e) {&#xD;
+			if (transaction != null) {&#xD;
+				transaction.rollback();&#xD;
+			}&#xD;
+			logger.error(this.getClass().getName(), e);&#xD;
+		} finally {&#xD;
+			session.close();&#xD;
+		}&#xD;
+		return users;&#xD;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="__LeTcCH6EeiYRrsE_Lm32g" name="findByLogin" method="__QG70iH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__Le6gCH6EeiYRrsE_Lm32g" name="login">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PreAiH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LfhkSH6EeiYRrsE_Lm32g" name="getAllUsers" method="__QG72CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LfhkiH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__LfhkyH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LgIpCH6EeiYRrsE_Lm32g" name="deleteUser" method="__QHi4CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LgvsCH6EeiYRrsE_Lm32g" name="idUser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LgvsyH6EeiYRrsE_Lm32g" name="getAllUsersExceptCurrentAndAnonymous" method="__QHi5CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LgvtCH6EeiYRrsE_Lm32g" name="idcurrentUser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__LhWwCH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__LhWwSH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Lh90CH6EeiYRrsE_Lm32g" name="mailExist" method="__QIJ8CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__Lh90SH6EeiYRrsE_Lm32g" name="mail">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__Lh90iH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Lik4CH6EeiYRrsE_Lm32g" name="userExist" method="__QIJ8yH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__Lik4SH6EeiYRrsE_Lm32g" name="login">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__Lik4iH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Lik5SH6EeiYRrsE_Lm32g" name="findByMail" method="__QIJ9iH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LjL8CH6EeiYRrsE_Lm32g" name="mail">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PvIYCH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LjL8yH6EeiYRrsE_Lm32g" name="findUserById" method="__QIxACH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LjL9CH6EeiYRrsE_Lm32g" name="iduser">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PvIYSH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LjzAiH6EeiYRrsE_Lm32g" name="findByToken" method="__QIxAyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LjzAyH6EeiYRrsE_Lm32g" name="token">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="__PvIYiH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__LkaEiH6EeiYRrsE_Lm32g" name="getAllUsersExceptDeletedansAno" method="__QJYECH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__LkaEyH6EeiYRrsE_Lm32g" type="__OsmkCH6EeiYRrsE_Lm32g" isOrdered="true" direction="return">
+                <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__LkaFCH6EeiYRrsE_Lm32g" value="*"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Pq28CH6EeiYRrsE_Lm32g" name="updateUserInfos" method="__QG70CH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__Pq28SH6EeiYRrsE_Lm32g" name="user" type="__OsmkCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__PsFECH6EeiYRrsE_Lm32g" name="addJurysAnonymes" method="__QG71SH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__PsFESH6EeiYRrsE_Lm32g" name="utilisateurs" type="__OOsgCH6EeiYRrsE_Lm32g"/>
+              <ownedParameter xmi:id="__PsFEiH6EeiYRrsE_Lm32g" name="event" type="__OnHACH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="__Pt6QCH6EeiYRrsE_Lm32g" name="addUser" method="__QHi4iH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="__Pt6QSH6EeiYRrsE_Lm32g" name="user" type="__OsmkCH6EeiYRrsE_Lm32g"/>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QL0UCH6EeiYRrsE_Lm32g" name="" memberEnd="__K2oYSH6EeiYRrsE_Lm32g __QL0USH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QL0USH6EeiYRrsE_Lm32g" name="" type="__KxI0CH6EeiYRrsE_Lm32g" association="__QL0UCH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QL0UiH6EeiYRrsE_Lm32g" name="" memberEnd="__K5EoSH6EeiYRrsE_Lm32g __QL0UyH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QL0UyH6EeiYRrsE_Lm32g" name="" type="__KxI0CH6EeiYRrsE_Lm32g" association="__QL0UiH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QL0VCH6EeiYRrsE_Lm32g" name="" memberEnd="__K7g4CH6EeiYRrsE_Lm32g __QL0VSH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QL0VSH6EeiYRrsE_Lm32g" name="" type="__K650CH6EeiYRrsE_Lm32g" association="__QL0VCH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QRT4CH6EeiYRrsE_Lm32g" name="" memberEnd="__QRT4SH6EeiYRrsE_Lm32g __P0n8iH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QRT4SH6EeiYRrsE_Lm32g" name="" type="__JgkkCH6EeiYRrsE_Lm32g" association="__QRT4CH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QR68SH6EeiYRrsE_Lm32g" name="" memberEnd="__QR68iH6EeiYRrsE_Lm32g __P1PACH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QR68iH6EeiYRrsE_Lm32g" name="" type="__JgkkCH6EeiYRrsE_Lm32g" association="__QR68SH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QSiASH6EeiYRrsE_Lm32g" name="" memberEnd="__QSiAiH6EeiYRrsE_Lm32g __P12EyH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QSiAiH6EeiYRrsE_Lm32g" name="" type="__Jn5UCH6EeiYRrsE_Lm32g" association="__QSiASH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QSiBCH6EeiYRrsE_Lm32g" name="" memberEnd="__QSiBSH6EeiYRrsE_Lm32g __P2dICH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QSiBSH6EeiYRrsE_Lm32g" name="" type="__Jn5UCH6EeiYRrsE_Lm32g" association="__QSiBCH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QTJESH6EeiYRrsE_Lm32g" name="" memberEnd="__QTJEiH6EeiYRrsE_Lm32g __P3EMyH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QTJEiH6EeiYRrsE_Lm32g" name="" type="__KI2sCH6EeiYRrsE_Lm32g" association="__QTJESH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QTwICH6EeiYRrsE_Lm32g" name="" memberEnd="__QTwISH6EeiYRrsE_Lm32g __P3ENSH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QTwISH6EeiYRrsE_Lm32g" name="" type="__KI2sCH6EeiYRrsE_Lm32g" association="__QTwICH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QTwIyH6EeiYRrsE_Lm32g" name="" memberEnd="__QTwJCH6EeiYRrsE_Lm32g __P4SUCH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QTwJCH6EeiYRrsE_Lm32g" name="" type="__KOWQCH6EeiYRrsE_Lm32g" association="__QTwIyH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QUXMSH6EeiYRrsE_Lm32g" name="" memberEnd="__QUXMiH6EeiYRrsE_Lm32g __P4SUiH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QUXMiH6EeiYRrsE_Lm32g" name="" type="__KOWQCH6EeiYRrsE_Lm32g" association="__QUXMSH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QU-QSH6EeiYRrsE_Lm32g" name="" memberEnd="__QU-QiH6EeiYRrsE_Lm32g __P5gciH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QU-QiH6EeiYRrsE_Lm32g" name="" type="__KgqICH6EeiYRrsE_Lm32g" association="__QU-QSH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QVlUSH6EeiYRrsE_Lm32g" name="" memberEnd="__QVlUiH6EeiYRrsE_Lm32g __P5gdCH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QVlUiH6EeiYRrsE_Lm32g" name="" type="__KgqICH6EeiYRrsE_Lm32g" association="__QVlUSH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QWMYCH6EeiYRrsE_Lm32g" name="" memberEnd="__QWMYSH6EeiYRrsE_Lm32g __P6ukyH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QWMYSH6EeiYRrsE_Lm32g" name="" type="__K9WECH6EeiYRrsE_Lm32g" association="__QWMYCH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QWMYyH6EeiYRrsE_Lm32g" name="" memberEnd="__QWMZCH6EeiYRrsE_Lm32g __P7VoCH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QWMZCH6EeiYRrsE_Lm32g" name="" type="__K9WECH6EeiYRrsE_Lm32g" association="__QWMYyH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QWzcSH6EeiYRrsE_Lm32g" name="" memberEnd="__QWzciH6EeiYRrsE_Lm32g __P78syH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QWzciH6EeiYRrsE_Lm32g" name="" type="__LC1oCH6EeiYRrsE_Lm32g" association="__QWzcSH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QXagSH6EeiYRrsE_Lm32g" name="" memberEnd="__QXagiH6EeiYRrsE_Lm32g __P78tSH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QXagiH6EeiYRrsE_Lm32g" name="" type="__LC1oCH6EeiYRrsE_Lm32g" association="__QXagSH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QXahCH6EeiYRrsE_Lm32g" name="" memberEnd="__QXahSH6EeiYRrsE_Lm32g __P9K0SH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QXahSH6EeiYRrsE_Lm32g" name="" type="__LF48CH6EeiYRrsE_Lm32g" association="__QXahCH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QYBkSH6EeiYRrsE_Lm32g" name="" memberEnd="__QYBkiH6EeiYRrsE_Lm32g __P9K0yH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QYBkiH6EeiYRrsE_Lm32g" name="" type="__LF48CH6EeiYRrsE_Lm32g" association="__QYBkSH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QYooSH6EeiYRrsE_Lm32g" name="" memberEnd="__QYooiH6EeiYRrsE_Lm32g __P-Y8iH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QYooiH6EeiYRrsE_Lm32g" name="" type="__LYM0CH6EeiYRrsE_Lm32g" association="__QYooSH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="__QZPsSH6EeiYRrsE_Lm32g" name="" memberEnd="__QZPsiH6EeiYRrsE_Lm32g __P-Y9CH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="__QZPsiH6EeiYRrsE_Lm32g" name="" type="__LYM0CH6EeiYRrsE_Lm32g" association="__QZPsSH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="__I1PICH6EeiYRrsE_Lm32g" name="utils">
+          <packagedElement xmi:type="uml:Enumeration" xmi:id="__O4MwSH6EeiYRrsE_Lm32g" name="DroitsUtilisateur"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="__IeCwCH6EeiYRrsE_Lm32g" name="java">
+      <packagedElement xmi:type="uml:Package" xmi:id="__IeCwSH6EeiYRrsE_Lm32g" name="util">
+        <packagedElement xmi:type="uml:Interface" xmi:id="__OOsgCH6EeiYRrsE_Lm32g" name="List"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="__ORv0SH6EeiYRrsE_Lm32g" name="ArrayList"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="__OSW4SH6EeiYRrsE_Lm32g" name="Objects"/>
+        <packagedElement xmi:type="uml:DataType" xmi:id="__OhAYCH6EeiYRrsE_Lm32g" name="Date"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="__Iep0SH6EeiYRrsE_Lm32g" name="io">
+        <packagedElement xmi:type="uml:Interface" xmi:id="__ORIwCH6EeiYRrsE_Lm32g" name="Serializable"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="__IfQ4CH6EeiYRrsE_Lm32g" name="org">
+      <packagedElement xmi:type="uml:Package" xmi:id="__IfQ4SH6EeiYRrsE_Lm32g" name="apache">
+        <packagedElement xmi:type="uml:Package" xmi:id="__IfQ4iH6EeiYRrsE_Lm32g" name="log4j">
+          <packagedElement xmi:type="uml:Class" xmi:id="__OS98SH6EeiYRrsE_Lm32g" name="Logger"/>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="__IfQ4yH6EeiYRrsE_Lm32g" name="hibernate">
+        <packagedElement xmi:type="uml:Interface" xmi:id="__OTlASH6EeiYRrsE_Lm32g" name="Session"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="__OUMESH6EeiYRrsE_Lm32g" name="SessionFactory"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="__OUzISH6EeiYRrsE_Lm32g" name="Transaction"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="__OcH4CH6EeiYRrsE_Lm32g" name="Hibernate"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="__IfQ5CH6EeiYRrsE_Lm32g" name="springframework">
+        <packagedElement xmi:type="uml:Package" xmi:id="__IfQ5SH6EeiYRrsE_Lm32g" name="beans">
+          <packagedElement xmi:type="uml:Package" xmi:id="__IfQ5iH6EeiYRrsE_Lm32g" name="factory">
+            <packagedElement xmi:type="uml:Package" xmi:id="__IfQ5yH6EeiYRrsE_Lm32g" name="annotation">
+              <packagedElement xmi:type="uml:Interface" xmi:id="__OVaMSH6EeiYRrsE_Lm32g" name="Autowired"/>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="__IfQ6CH6EeiYRrsE_Lm32g" name="stereotype">
+          <packagedElement xmi:type="uml:Interface" xmi:id="__OWBQSH6EeiYRrsE_Lm32g" name="Repository"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="__I0oECH6EeiYRrsE_Lm32g" name="javax">
+      <packagedElement xmi:type="uml:Package" xmi:id="__I0oESH6EeiYRrsE_Lm32g" name="persistence">
+        <packagedElement xmi:type="uml:Class" xmi:id="__O3lsCH6EeiYRrsE_Lm32g" name="NoResultException"/>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:id="_-5RwMCH6EeiYRrsE_Lm32g">
+      <eAnnotations xmi:id="_-5SXQCH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile-Annotation_2-UMLLabProfile"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile"/>
+    </profileApplication>
+  </uml:Model>
+  <UMLLabProfile:TargetLanguage xmi:id="_-5SXQSH6EeiYRrsE_Lm32g" base_Package="_-twcsCH6EeiYRrsE_Lm32g">
+    <languageName>java</languageName>
+  </UMLLabProfile:TargetLanguage>
+  <UMLLabProfile:LegacyStyledElement xmi:id="__JhLoCH6EeiYRrsE_Lm32g" base_Element="__JgkkCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__JiZwCH6EeiYRrsE_Lm32g" base_Element="__JhysCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__JiZwSH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__JiZwiH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QKmMCH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__JiZwyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__JjA0iH6EeiYRrsE_Lm32g" base_Element="__JjA0CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__JjA0yH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__JjA1CH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QKmMSH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__Jjn4CH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__Jjn4yH6EeiYRrsE_Lm32g" base_Element="__Jjn4SH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__JkO8CH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__JkO8SH6EeiYRrsE_Lm32g" base_Element="__JgkkCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__JkO8iH6EeiYRrsE_Lm32g" name="Repository"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="__KCJACH6EeiYRrsE_Lm32g" base_Element="__Jn5UCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__KDXICH6EeiYRrsE_Lm32g" base_Element="__KCwECH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KDXISH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__KD-MiH6EeiYRrsE_Lm32g" base_Element="__KD-MCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KD-MyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__KElQCH6EeiYRrsE_Lm32g" base_Element="__Jn5UCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KElQSH6EeiYRrsE_Lm32g" name="Repository"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="__KJdwCH6EeiYRrsE_Lm32g" base_Element="__KI2sCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__KKE0CH6EeiYRrsE_Lm32g" base_Element="__KI2sCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KKE0SH6EeiYRrsE_Lm32g" name="Repository"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="__KTOwCH6EeiYRrsE_Lm32g" base_Element="__KOWQCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__KUc4CH6EeiYRrsE_Lm32g" base_Element="__KT10CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KUc4SH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__KVrACH6EeiYRrsE_Lm32g" base_Element="__KUc4iH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KVrASH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__KVrAiH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QKmMiH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__KVrAyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__KW5ICH6EeiYRrsE_Lm32g" base_Element="__KWSECH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KW5ISH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__KW5IiH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QLNQCH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__KW5IyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__KYHQCH6EeiYRrsE_Lm32g" base_Element="__KXgMCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KYHQSH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__KYHQiH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QLNQSH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__KYHQyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__KYuUCH6EeiYRrsE_Lm32g" base_Element="__KOWQCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KYuUSH6EeiYRrsE_Lm32g" name="Repository"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="__KhRMCH6EeiYRrsE_Lm32g" base_Element="__KgqICH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__KifUCH6EeiYRrsE_Lm32g" base_Element="__Kh4QCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KifUSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__KjGYiH6EeiYRrsE_Lm32g" base_Element="__KifUiH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KjtcCH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__KjtcSH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QLNQyH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__KjtciH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__KkUgCH6EeiYRrsE_Lm32g" base_Element="__KjtcyH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KkUgSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__KlioCH6EeiYRrsE_Lm32g" base_Element="__Kk7kCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KlioSH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__KlioiH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QLNRCH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__KlioyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:StyledElement xmi:id="__KmJsCH6EeiYRrsE_Lm32g" base_Element="__KlipCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__KmJsSH6EeiYRrsE_Lm32g" base_Element="__KgqICH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__KmwwCH6EeiYRrsE_Lm32g" name="Repository"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="__K99ICH6EeiYRrsE_Lm32g" base_Element="__K9WECH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__K_LQCH6EeiYRrsE_Lm32g" base_Element="__K-kMCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__K_LQSH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__K_LQiH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QMbYCH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__K_LQyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__K_yUCH6EeiYRrsE_Lm32g" base_Element="__K_LRCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__K_yUSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__K_yUiH6EeiYRrsE_Lm32g" base_Element="__K9WECH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__K_yUyH6EeiYRrsE_Lm32g" name="Repository"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="__LDcsCH6EeiYRrsE_Lm32g" base_Element="__LC1oCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__LEDwCH6EeiYRrsE_Lm32g" base_Element="__LC1oCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LEDwSH6EeiYRrsE_Lm32g" name="Repository"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="__LGgACH6EeiYRrsE_Lm32g" base_Element="__LF48CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__LHuICH6EeiYRrsE_Lm32g" base_Element="__LHHECH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LHuISH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LI8QCH6EeiYRrsE_Lm32g" base_Element="__LHuIiH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LI8QSH6EeiYRrsE_Lm32g" name="Override"/>
+    <annotations xmi:id="__LI8QiH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__LI8QyH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QMbYSH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LKxcCH6EeiYRrsE_Lm32g" base_Element="__LJjUCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LKxcSH6EeiYRrsE_Lm32g" name="Override"/>
+    <annotations xmi:id="__LKxciH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__LKxcyH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QMbYiH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LL_kCH6EeiYRrsE_Lm32g" base_Element="__LLYgCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LL_kSH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__LL_kiH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QMbZCH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__LL_kyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LMmoiH6EeiYRrsE_Lm32g" base_Element="__LL_lCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LMmoyH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__LMmpCH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QMbZSH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__LMmpSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LN0wCH6EeiYRrsE_Lm32g" base_Element="__LNNsCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LN0wSH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__LN0wiH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QMbZiH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__LN0wyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LOb0iH6EeiYRrsE_Lm32g" base_Element="__LOb0CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LOb0yH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LPp8CH6EeiYRrsE_Lm32g" base_Element="__LPC4CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LPp8SH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__LPp8iH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QMbZyH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__LPp8yH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LQ4ECH6EeiYRrsE_Lm32g" base_Element="__LQRACH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LQ4ESH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LRfICH6EeiYRrsE_Lm32g" base_Element="__LQ4EiH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LRfISH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LSGMCH6EeiYRrsE_Lm32g" base_Element="__LF48CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LSGMSH6EeiYRrsE_Lm32g" name="Repository"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="__LdsYCH6EeiYRrsE_Lm32g" base_Element="__LYM0CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__Le6gSH6EeiYRrsE_Lm32g" base_Element="__LeTcCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LfhkCH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LgIoCH6EeiYRrsE_Lm32g" base_Element="__LfhkSH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LgIoSH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__LgIoiH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QNCcCH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__LgIoyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LgvsSH6EeiYRrsE_Lm32g" base_Element="__LgIpCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LgvsiH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LhWwiH6EeiYRrsE_Lm32g" base_Element="__LgvsyH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LhWwyH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__LhWxCH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QNCcSH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__LhWxSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__Lh90yH6EeiYRrsE_Lm32g" base_Element="__Lh90CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__Lh91CH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__Lik4yH6EeiYRrsE_Lm32g" base_Element="__Lik4CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__Lik5CH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LjL8SH6EeiYRrsE_Lm32g" base_Element="__Lik5SH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LjL8iH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LjzACH6EeiYRrsE_Lm32g" base_Element="__LjL8yH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LjzASH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LkaECH6EeiYRrsE_Lm32g" base_Element="__LjzAiH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LkaESH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LlBICH6EeiYRrsE_Lm32g" base_Element="__LkaEiH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LlBISH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__LlBIiH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QNCciH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__LlBIyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__LloMCH6EeiYRrsE_Lm32g" base_Element="__LYM0CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__LloMSH6EeiYRrsE_Lm32g" name="Repository"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Reference xmi:id="__OPTkCH6EeiYRrsE_Lm32g" base_Element="__OOsgCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OP6oSH6EeiYRrsE_Lm32g" base_Element="__OP6oCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__ORv0CH6EeiYRrsE_Lm32g" base_Element="__ORIwCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OSW4CH6EeiYRrsE_Lm32g" base_Element="__ORv0SH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OS98CH6EeiYRrsE_Lm32g" base_Element="__OSW4SH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OTlACH6EeiYRrsE_Lm32g" base_Element="__OS98SH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OUMECH6EeiYRrsE_Lm32g" base_Element="__OTlASH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OUzICH6EeiYRrsE_Lm32g" base_Element="__OUMESH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OVaMCH6EeiYRrsE_Lm32g" base_Element="__OUzISH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OWBQCH6EeiYRrsE_Lm32g" base_Element="__OVaMSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OWoUCH6EeiYRrsE_Lm32g" base_Element="__OWBQSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OXPYCH6EeiYRrsE_Lm32g" base_Element="__OWoUSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OX2cCH6EeiYRrsE_Lm32g" base_Element="__OXPYSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__Oa5wCH6EeiYRrsE_Lm32g" base_Element="__OaSsCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OcH4SH6EeiYRrsE_Lm32g" base_Element="__OcH4CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OdWACH6EeiYRrsE_Lm32g" base_Element="__Ocu8CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OhncCH6EeiYRrsE_Lm32g" base_Element="__OhAYCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OiOgSH6EeiYRrsE_Lm32g" base_Element="__OiOgCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OnuECH6EeiYRrsE_Lm32g" base_Element="__OnHACH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__OtNoCH6EeiYRrsE_Lm32g" base_Element="__OsmkCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__O1JcCH6EeiYRrsE_Lm32g" base_Element="__O0iYCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__O4MwCH6EeiYRrsE_Lm32g" base_Element="__O3lsCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__O4z0CH6EeiYRrsE_Lm32g" base_Element="__O4MwSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Generics xmi:id="__PJSgCH6EeiYRrsE_Lm32g" genericsValue="Candidat" base_Element="__PIrciH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__PLHsCH6EeiYRrsE_Lm32g" base_Element="__PKgoCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PLHsSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Generics xmi:id="__PMV0CH6EeiYRrsE_Lm32g" genericsValue="Candidat" base_Element="__PLuwCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__PMV0SH6EeiYRrsE_Lm32g" base_Element="__PLHsiH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PMV0iH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Generics xmi:id="__POLACH6EeiYRrsE_Lm32g" genericsValue="Critere" base_Element="__PNj8SH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Generics xmi:id="__PQAMCH6EeiYRrsE_Lm32g" genericsValue="Critere" base_Element="__PPZISH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__PQAMSH6EeiYRrsE_Lm32g" base_Element="__PPZICH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PQAMiH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__PQnQiH6EeiYRrsE_Lm32g" base_Element="__PQnQCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PQnQyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__PROUSH6EeiYRrsE_Lm32g" base_Element="__PQnRCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PROUiH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__PTDgCH6EeiYRrsE_Lm32g" base_Element="__PSccCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PTDgSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__PVfwiH6EeiYRrsE_Lm32g" base_Element="__PVfwCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PVfwyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__PXU8CH6EeiYRrsE_Lm32g" base_Element="__PWt4CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PXU8SH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__PXU8iH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QLNQiH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="__PXU8yH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__PbmYCH6EeiYRrsE_Lm32g" base_Element="__Pa_UCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PbmYSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__Pc0gCH6EeiYRrsE_Lm32g" base_Element="__PcNcSH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__Pc0gSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Generics xmi:id="__PfQwCH6EeiYRrsE_Lm32g" genericsValue="Jury" base_Element="__PepsyH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Generics xmi:id="__PhF8CH6EeiYRrsE_Lm32g" genericsValue="Utilisateur" base_Element="__Pge4SH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__PjiMyH6EeiYRrsE_Lm32g" base_Element="__PjiMCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PjiNCH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__PkJQiH6EeiYRrsE_Lm32g" base_Element="__PkJQCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PkJQyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__Pl-ciH6EeiYRrsE_Lm32g" base_Element="__Pl-cCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__Pl-cyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__PnzoCH6EeiYRrsE_Lm32g" base_Element="__PnMkCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PnzoSH6EeiYRrsE_Lm32g" name="Override"/>
+    <annotations xmi:id="__PnzoiH6EeiYRrsE_Lm32g" name="SuppressWarnings">
+      <annotationParameters xmi:id="__PnzoyH6EeiYRrsE_Lm32g" skipName="true" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="__QMbYyH6EeiYRrsE_Lm32g" value="&quot;unchecked&quot;"/>
+      </annotationParameters>
+    </annotations>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__PoasiH6EeiYRrsE_Lm32g" base_Element="__PoasCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PoasyH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Generics xmi:id="__PpBwSH6EeiYRrsE_Lm32g" genericsValue="Jury" base_Element="__PpBwCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__Ppo0CH6EeiYRrsE_Lm32g" base_Element="__PoatCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__Ppo0SH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__PreACH6EeiYRrsE_Lm32g" base_Element="__Pq28CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PreASH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Generics xmi:id="__PssICH6EeiYRrsE_Lm32g" genericsValue="Utilisateur" base_Element="__PsFESH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__PtTMCH6EeiYRrsE_Lm32g" base_Element="__PsFECH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PtTMSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Annotations xmi:id="__PuhUCH6EeiYRrsE_Lm32g" base_Element="__Pt6QCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__PuhUSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:StyledElement xmi:id="__P0n8SH6EeiYRrsE_Lm32g" base_Element="__P0A4CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__P1PASH6EeiYRrsE_Lm32g" base_Element="__P1PACH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__P1PAiH6EeiYRrsE_Lm32g" name="Autowired"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:StyledElement xmi:id="__P12EiH6EeiYRrsE_Lm32g" base_Element="__P12ECH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__P2dISH6EeiYRrsE_Lm32g" base_Element="__P2dICH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__P2dIiH6EeiYRrsE_Lm32g" name="Autowired"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:StyledElement xmi:id="__P3EMiH6EeiYRrsE_Lm32g" base_Element="__P3EMCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__P3rQCH6EeiYRrsE_Lm32g" base_Element="__P3ENSH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__P3rQSH6EeiYRrsE_Lm32g" name="Autowired"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:StyledElement xmi:id="__P3rRCH6EeiYRrsE_Lm32g" base_Element="__P3rQiH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__P45YCH6EeiYRrsE_Lm32g" base_Element="__P4SUiH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__P45YSH6EeiYRrsE_Lm32g" name="Autowired"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:StyledElement xmi:id="__P5gcSH6EeiYRrsE_Lm32g" base_Element="__P45YiH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__P6HgCH6EeiYRrsE_Lm32g" base_Element="__P5gdCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__P6HgSH6EeiYRrsE_Lm32g" name="Autowired"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:StyledElement xmi:id="__P6ukiH6EeiYRrsE_Lm32g" base_Element="__P6ukCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__P7VoSH6EeiYRrsE_Lm32g" base_Element="__P7VoCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__P7VoiH6EeiYRrsE_Lm32g" name="Autowired"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:StyledElement xmi:id="__P78siH6EeiYRrsE_Lm32g" base_Element="__P78sCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__P8jwCH6EeiYRrsE_Lm32g" base_Element="__P78tSH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__P8jwSH6EeiYRrsE_Lm32g" name="Autowired"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:StyledElement xmi:id="__P9K0CH6EeiYRrsE_Lm32g" base_Element="__P8jwiH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__P9K1CH6EeiYRrsE_Lm32g" base_Element="__P9K0yH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__P9K1SH6EeiYRrsE_Lm32g" name="Autowired"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:StyledElement xmi:id="__P-Y8SH6EeiYRrsE_Lm32g" base_Element="__P9x4CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="__P_AACH6EeiYRrsE_Lm32g" base_Element="__P-Y9CH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="__P_AASH6EeiYRrsE_Lm32g" name="Autowired"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Reference xmi:id="__QR68CH6EeiYRrsE_Lm32g" base_Element="__QRT4CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QSiACH6EeiYRrsE_Lm32g" base_Element="__QR68SH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QSiAyH6EeiYRrsE_Lm32g" base_Element="__QSiASH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QTJECH6EeiYRrsE_Lm32g" base_Element="__QSiBCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QTJEyH6EeiYRrsE_Lm32g" base_Element="__QTJESH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QTwIiH6EeiYRrsE_Lm32g" base_Element="__QTwICH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QUXMCH6EeiYRrsE_Lm32g" base_Element="__QTwIyH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QU-QCH6EeiYRrsE_Lm32g" base_Element="__QUXMSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QVlUCH6EeiYRrsE_Lm32g" base_Element="__QU-QSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QVlUyH6EeiYRrsE_Lm32g" base_Element="__QVlUSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QWMYiH6EeiYRrsE_Lm32g" base_Element="__QWMYCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QWzcCH6EeiYRrsE_Lm32g" base_Element="__QWMYyH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QXagCH6EeiYRrsE_Lm32g" base_Element="__QWzcSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QXagyH6EeiYRrsE_Lm32g" base_Element="__QXagSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QYBkCH6EeiYRrsE_Lm32g" base_Element="__QXahCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QYooCH6EeiYRrsE_Lm32g" base_Element="__QYBkSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__QZPsCH6EeiYRrsE_Lm32g" base_Element="__QYooSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="__Qad0CH6EeiYRrsE_Lm32g" base_Element="__QZPsSH6EeiYRrsE_Lm32g"/>
+</xmi:XMI>

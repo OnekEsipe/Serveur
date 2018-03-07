@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:UMLLabProfile="http:///schemas/UMLLabProfile/NS/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/UMLLabProfile/NS/0 pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile-Annotation_2-UMLLabProfile">
+  <uml:Model xmi:id="_tKD8cCH6EeiYRrsE_Lm32g" name="ServeurUtils">
+    <eAnnotations xmi:id="_tSsUACH6EeiYRrsE_Lm32g" source="http://ns.yatta.de/umllab">
+      <contents xmi:type="ecore:EAnnotation" xmi:id="_tSsUASH6EeiYRrsE_Lm32g" source="codegen">
+        <details xmi:id="_tSsUAiH6EeiYRrsE_Lm32g" key="codegenDirectory" value="/Serveur/src/main/java"/>
+        <details xmi:id="_tgFPwCH6EeiYRrsE_Lm32g" key="AssociatedSourceCode" value="/Serveur/src/main/java/com/onek/utils/DroitsUtilisateur.java;2876606760/1;/Serveur/src/main/java/com/onek/utils/Encode.java;3540612079/1;/Serveur/src/main/java/com/onek/utils/Navigation.java;4263302646/1;/Serveur/src/main/java/com/onek/utils/Password.java;3416564047/1;/Serveur/src/main/java/com/onek/utils/StatutEvenement.java;188956149/1;"/>
+      </contents>
+    </eAnnotations>
+    <elementImport xmi:id="_taHxsyH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+    </elementImport>
+    <elementImport xmi:id="_taIYwCH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#byte"/>
+    </elementImport>
+    <elementImport xmi:id="_taIYwSH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#char"/>
+    </elementImport>
+    <elementImport xmi:id="_taIYwiH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+    </elementImport>
+    <elementImport xmi:id="_taIYwyH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#float"/>
+    </elementImport>
+    <elementImport xmi:id="_taIYxCH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+    </elementImport>
+    <elementImport xmi:id="_taIYxSH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+    </elementImport>
+    <elementImport xmi:id="_taIYxiH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#short"/>
+    </elementImport>
+    <elementImport xmi:id="_taIYxyH6EeiYRrsE_Lm32g">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </elementImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_tZ9ZoCH6EeiYRrsE_Lm32g" name="com">
+      <packagedElement xmi:type="uml:Package" xmi:id="_tZ9ZoSH6EeiYRrsE_Lm32g" name="onek">
+        <packagedElement xmi:type="uml:Package" xmi:id="_tZ_O0CH6EeiYRrsE_Lm32g" name="utils">
+          <packagedElement xmi:type="uml:Enumeration" xmi:id="_taGjkCH6EeiYRrsE_Lm32g" name="DroitsUtilisateur">
+            <ownedAttribute xmi:id="_ta1jYCH6EeiYRrsE_Lm32g" name="name" visibility="private">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_ta1jYSH6EeiYRrsE_Lm32g" value="&quot;&quot;"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_ta2KcSH6EeiYRrsE_Lm32g" name="value" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_ta2xgCH6EeiYRrsE_Lm32g" value="&quot;&quot;"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_taI_0CH6EeiYRrsE_Lm32g" name="DroitsUtilisateur" visibility="package" method="_ta7C8CH6EeiYRrsE_Lm32g">
+              <eAnnotations xmi:id="_taJm4CH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_taJm4SH6EeiYRrsE_Lm32g" key="create"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_taI_0SH6EeiYRrsE_Lm32g" name="name">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_taI_0iH6EeiYRrsE_Lm32g" name="value">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_taJm4iH6EeiYRrsE_Lm32g" type="_taGjkCH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_taJm4yH6EeiYRrsE_Lm32g" name="toString" method="_ta7qACH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_taJm5CH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedLiteral xmi:id="_taHKoCH6EeiYRrsE_Lm32g" name="ADMINISTRATEUR">
+              <specification xmi:type="uml:Expression" xmi:id="_taHKoSH6EeiYRrsE_Lm32g">
+                <operand xmi:type="uml:LiteralString" xmi:id="_ta9fNSH6EeiYRrsE_Lm32g" value="&quot;R&quot;"/>
+                <operand xmi:type="uml:LiteralString" xmi:id="_ta-GQCH6EeiYRrsE_Lm32g" value="&quot;Administrateur&quot;"/>
+              </specification>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_taHKoiH6EeiYRrsE_Lm32g" name="ORGANISATEUR">
+              <specification xmi:type="uml:Expression" xmi:id="_taHKoyH6EeiYRrsE_Lm32g">
+                <operand xmi:type="uml:LiteralString" xmi:id="_ta-GQSH6EeiYRrsE_Lm32g" value="&quot;O&quot;"/>
+                <operand xmi:type="uml:LiteralString" xmi:id="_ta-GQiH6EeiYRrsE_Lm32g" value="&quot;Organisateur&quot;"/>
+              </specification>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_taHKpCH6EeiYRrsE_Lm32g" name="JURY">
+              <specification xmi:type="uml:Expression" xmi:id="_taHxsCH6EeiYRrsE_Lm32g">
+                <operand xmi:type="uml:LiteralString" xmi:id="_ta-GQyH6EeiYRrsE_Lm32g" value="&quot;J&quot;"/>
+                <operand xmi:type="uml:LiteralString" xmi:id="_ta-GRCH6EeiYRrsE_Lm32g" value="&quot;Jury&quot;"/>
+              </specification>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_taHxsSH6EeiYRrsE_Lm32g" name="ANONYME">
+              <specification xmi:type="uml:Expression" xmi:id="_taHxsiH6EeiYRrsE_Lm32g">
+                <operand xmi:type="uml:LiteralString" xmi:id="_ta-GRSH6EeiYRrsE_Lm32g" value="&quot;A&quot;"/>
+                <operand xmi:type="uml:LiteralString" xmi:id="_ta-GRiH6EeiYRrsE_Lm32g" value="&quot;Jury anonyme&quot;"/>
+              </specification>
+            </ownedLiteral>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_taK1ACH6EeiYRrsE_Lm32g" name="Encode">
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_ta7qAiH6EeiYRrsE_Lm32g" name="sha1" specification="_taLcECH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_ta7qAyH6EeiYRrsE_Lm32g" name="s">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_ta7qBCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>Objects.requireNonNull(s);&#xD;
+		MessageDigest digest = MessageDigest.getInstance(&quot;SHA-1&quot;);&#xD;
+		digest.reset();		&#xD;
+		digest.update(s.getBytes(&quot;utf8&quot;));	&#xD;
+		return String.format(&quot;%040x&quot;, new BigInteger(1, digest.digest()));&#xD;
+ </body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_ta7qBSH6EeiYRrsE_Lm32g" name="sha256" specification="_taMDICH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_ta7qBiH6EeiYRrsE_Lm32g" name="s">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_ta7qByH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>Objects.requireNonNull(s);&#xD;
+		MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);&#xD;
+		digest.reset();		&#xD;
+		digest.update(s.getBytes(&quot;utf8&quot;));	&#xD;
+		return String.format(&quot;%040x&quot;, new BigInteger(1, digest.digest()));&#xD;
+ </body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="_taLcECH6EeiYRrsE_Lm32g" name="sha1" isStatic="true" method="_ta7qAiH6EeiYRrsE_Lm32g" raisedException="_taryYCH6EeiYRrsE_Lm32g _tapWICH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_taLcESH6EeiYRrsE_Lm32g" name="s">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_taLcEiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_taMDICH6EeiYRrsE_Lm32g" name="sha256" isStatic="true" method="_ta7qBSH6EeiYRrsE_Lm32g" raisedException="_taryYCH6EeiYRrsE_Lm32g _tapWICH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_taMDISH6EeiYRrsE_Lm32g" name="s">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_taMDIiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_taNRQCH6EeiYRrsE_Lm32g" name="Navigation">
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_ta8RECH6EeiYRrsE_Lm32g" name="redirect" specification="_taN4USH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_ta8RESH6EeiYRrsE_Lm32g" name="page">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>Objects.requireNonNull(page);
+		FacesContext fc = FacesContext.getCurrentInstance();
+		NavigationHandler nh = fc.getApplication().getNavigationHandler();
+		nh.handleNavigation(fc, null, String.format(&quot;%s%sfaces-redirect=true&quot;, page, page.contains(&quot;?&quot;) ? &quot;&amp;&quot; : &quot;?&quot;));
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_ta8REiH6EeiYRrsE_Lm32g" name="getURLParameter" specification="_taOfYSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_ta8REyH6EeiYRrsE_Lm32g" name="name">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_ta8RFCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>Objects.requireNonNull(name);
+		Map&lt;String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String result = params.get(name);
+		return &quot;&quot;.equals(result) ? null : result;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="_taN4USH6EeiYRrsE_Lm32g" name="redirect" isStatic="true" method="_ta8RECH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_taN4UiH6EeiYRrsE_Lm32g" name="page">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_taOfYSH6EeiYRrsE_Lm32g" name="getURLParameter" isStatic="true" method="_ta8REiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_taOfYiH6EeiYRrsE_Lm32g" name="name">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_taOfYyH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_taPGdSH6EeiYRrsE_Lm32g" name="Password">
+            <ownedAttribute xmi:id="_ta2xgSH6EeiYRrsE_Lm32g" name="random" visibility="private" isLeaf="true" isStatic="true" type="_tawq4CH6EeiYRrsE_Lm32g" isReadOnly="true" association="_ta_7cCH6EeiYRrsE_Lm32g">
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_ta3YkCH6EeiYRrsE_Lm32g" value="new SecureRandom()"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_ta3YkiH6EeiYRrsE_Lm32g" name="ALPHA_CAPS" visibility="private" isLeaf="true" isStatic="true" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_ta3_oCH6EeiYRrsE_Lm32g" value="&quot;ABCDEFGHJKLMNPQRSTUVWXYZ&quot;"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_ta4msSH6EeiYRrsE_Lm32g" name="ALPHA" visibility="private" isLeaf="true" isStatic="true" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_ta4msiH6EeiYRrsE_Lm32g" value="&quot;abcdefghijkmnopqrstuvwxyz&quot;"/>
+            </ownedAttribute>
+            <ownedAttribute xmi:id="_ta5NwSH6EeiYRrsE_Lm32g" name="NUMERIC" visibility="private" isLeaf="true" isStatic="true" isReadOnly="true">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_ta5NwiH6EeiYRrsE_Lm32g" value="&quot;0123456789&quot;"/>
+            </ownedAttribute>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_ta8RFSH6EeiYRrsE_Lm32g" name="initGeneratePassword" specification="_taQUkCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_ta8RFiH6EeiYRrsE_Lm32g" name="len">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_ta8RFyH6EeiYRrsE_Lm32g" name="dic">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_ta8RGCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>String result = &quot;&quot;;
+		for (int i = 0; i &lt; len; i++) {
+			int index = random.nextInt(dic.length());
+			result += dic.charAt(index);
+		}
+		return result;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_ta84ICH6EeiYRrsE_Lm32g" name="generatePassword" specification="_taQ7oCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_ta84ISH6EeiYRrsE_Lm32g" name="length">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_ta84IiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if(length &lt; 1 || length > Integer.MAX_VALUE) {
+			throw new IllegalArgumentException(&quot;length must be positive and inf Integer.MAX_VALUE&quot;);
+		}
+		String password = initGeneratePassword(length, ALPHA_CAPS + ALPHA + NUMERIC);
+		return password;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_ta84IyH6EeiYRrsE_Lm32g" name="generateCode" specification="_taRisCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_ta84JCH6EeiYRrsE_Lm32g" name="length">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_ta84JSH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if(length &lt; 1 || length > Integer.MAX_VALUE) {
+			throw new IllegalArgumentException(&quot;length must be positive and inf Integer.MAX_VALUE&quot;);
+		}
+		String password = initGeneratePassword(length, NUMERIC);
+		return password;
+	</body>
+            </ownedBehavior>
+            <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_ta84JiH6EeiYRrsE_Lm32g" name="verifyPasswordRule" specification="_taSJwCH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_ta84JyH6EeiYRrsE_Lm32g" name="password">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_ta84KCH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+              <language>java</language>
+              <body>if (password.length() >= 6 &amp;&amp; !password.toLowerCase().equals(password)) {
+			return true;
+		}
+		return false;
+	</body>
+            </ownedBehavior>
+            <ownedOperation xmi:id="_taQUkCH6EeiYRrsE_Lm32g" name="initGeneratePassword" visibility="private" isStatic="true" method="_ta8RFSH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_taQUkSH6EeiYRrsE_Lm32g" name="len">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_taQUkiH6EeiYRrsE_Lm32g" name="dic">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_taQUkyH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_taQ7oCH6EeiYRrsE_Lm32g" name="generatePassword" isStatic="true" method="_ta84ICH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_taQ7oSH6EeiYRrsE_Lm32g" name="length">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_taQ7oiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_taRisCH6EeiYRrsE_Lm32g" name="generateCode" isStatic="true" method="_ta84IyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_taRisSH6EeiYRrsE_Lm32g" name="length">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_taRisiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedOperation xmi:id="_taSJwCH6EeiYRrsE_Lm32g" name="verifyPasswordRule" isStatic="true" method="_ta84JiH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_taSJwSH6EeiYRrsE_Lm32g" name="password">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_taSJwiH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+              </ownedParameter>
+            </ownedOperation>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Enumeration" xmi:id="_taTX4CH6EeiYRrsE_Lm32g" name="StatutEvenement">
+            <ownedAttribute xmi:id="_ta6b4CH6EeiYRrsE_Lm32g" name="name" visibility="private">
+              <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              <defaultValue xmi:type="uml:LiteralString" xmi:id="_ta6b4SH6EeiYRrsE_Lm32g" value="&quot;&quot;"/>
+            </ownedAttribute>
+            <ownedOperation xmi:id="_taVNECH6EeiYRrsE_Lm32g" name="StatutEvenement" visibility="package" method="_ta9fMCH6EeiYRrsE_Lm32g">
+              <eAnnotations xmi:id="_taVNEiH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+                <details xmi:id="_taVNEyH6EeiYRrsE_Lm32g" key="create"/>
+              </eAnnotations>
+              <ownedParameter xmi:id="_taVNESH6EeiYRrsE_Lm32g" name="name">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+              <ownedParameter xmi:id="_taVNFCH6EeiYRrsE_Lm32g" type="_taTX4CH6EeiYRrsE_Lm32g" direction="return"/>
+            </ownedOperation>
+            <ownedOperation xmi:id="_taV0ICH6EeiYRrsE_Lm32g" name="toString" method="_ta9fMyH6EeiYRrsE_Lm32g">
+              <ownedParameter xmi:id="_taV0ISH6EeiYRrsE_Lm32g" direction="return">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedParameter>
+            </ownedOperation>
+            <ownedLiteral xmi:id="_taT-8CH6EeiYRrsE_Lm32g" name="BROUILLON">
+              <specification xmi:type="uml:Expression" xmi:id="_taT-8SH6EeiYRrsE_Lm32g">
+                <operand xmi:type="uml:LiteralString" xmi:id="_ta-tUCH6EeiYRrsE_Lm32g" value="&quot;Brouillon&quot;"/>
+              </specification>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_taT-8iH6EeiYRrsE_Lm32g" name="OUVERT">
+              <specification xmi:type="uml:Expression" xmi:id="_taT-8yH6EeiYRrsE_Lm32g">
+                <operand xmi:type="uml:LiteralString" xmi:id="_ta-tUSH6EeiYRrsE_Lm32g" value="&quot;Ouvert&quot;"/>
+              </specification>
+            </ownedLiteral>
+            <ownedLiteral xmi:id="_taT-9CH6EeiYRrsE_Lm32g" name="FERME">
+              <specification xmi:type="uml:Expression" xmi:id="_taT-9SH6EeiYRrsE_Lm32g">
+                <operand xmi:type="uml:LiteralString" xmi:id="_ta-tUiH6EeiYRrsE_Lm32g" value="&quot;Ferme&quot;"/>
+              </specification>
+            </ownedLiteral>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Association" xmi:id="_ta_7cCH6EeiYRrsE_Lm32g" name="" memberEnd="_ta_7cSH6EeiYRrsE_Lm32g _ta2xgSH6EeiYRrsE_Lm32g">
+            <ownedEnd xmi:id="_ta_7cSH6EeiYRrsE_Lm32g" name="" type="_taPGdSH6EeiYRrsE_Lm32g" association="_ta_7cCH6EeiYRrsE_Lm32g"/>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_tZ_14CH6EeiYRrsE_Lm32g" name="java">
+      <packagedElement xmi:type="uml:Package" xmi:id="_tZ_14SH6EeiYRrsE_Lm32g" name="io">
+        <packagedElement xmi:type="uml:Class" xmi:id="_tapWICH6EeiYRrsE_Lm32g" name="UnsupportedEncodingException"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_tZ_14iH6EeiYRrsE_Lm32g" name="math">
+        <packagedElement xmi:type="uml:DataType" xmi:id="_taqkQCH6EeiYRrsE_Lm32g" name="BigInteger"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_tZ_14yH6EeiYRrsE_Lm32g" name="security">
+        <packagedElement xmi:type="uml:Class" xmi:id="_tarLUCH6EeiYRrsE_Lm32g" name="MessageDigest"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_taryYCH6EeiYRrsE_Lm32g" name="NoSuchAlgorithmException"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_tawq4CH6EeiYRrsE_Lm32g" name="SecureRandom"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_tZ_15CH6EeiYRrsE_Lm32g" name="util">
+        <packagedElement xmi:type="uml:Class" xmi:id="_tasZcCH6EeiYRrsE_Lm32g" name="Objects"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_tatnkCH6EeiYRrsE_Lm32g" name="Map"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_taAc8CH6EeiYRrsE_Lm32g" name="javax">
+      <packagedElement xmi:type="uml:Package" xmi:id="_taAc8SH6EeiYRrsE_Lm32g" name="inject">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_tauOoCH6EeiYRrsE_Lm32g" name="Named"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_taAc8iH6EeiYRrsE_Lm32g" name="faces">
+        <packagedElement xmi:type="uml:Package" xmi:id="_taAc8yH6EeiYRrsE_Lm32g" name="application">
+          <packagedElement xmi:type="uml:Class" xmi:id="_tau1sCH6EeiYRrsE_Lm32g" name="NavigationHandler"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_taAc9CH6EeiYRrsE_Lm32g" name="bean">
+          <packagedElement xmi:type="uml:Interface" xmi:id="_tavcwCH6EeiYRrsE_Lm32g" name="RequestScoped"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_taBEACH6EeiYRrsE_Lm32g" name="context">
+          <packagedElement xmi:type="uml:Class" xmi:id="_tawD0CH6EeiYRrsE_Lm32g" name="FacesContext"/>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:id="_tUGpQCH6EeiYRrsE_Lm32g">
+      <eAnnotations xmi:id="_tUGpQSH6EeiYRrsE_Lm32g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile-Annotation_2-UMLLabProfile"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile"/>
+    </profileApplication>
+  </uml:Model>
+  <UMLLabProfile:TargetLanguage xmi:id="_tUGpQiH6EeiYRrsE_Lm32g" base_Package="_tKD8cCH6EeiYRrsE_Lm32g">
+    <languageName>java</languageName>
+  </UMLLabProfile:TargetLanguage>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_taJm5SH6EeiYRrsE_Lm32g" base_Element="_taJm4yH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_taKN8CH6EeiYRrsE_Lm32g" base_Element="_taJm4yH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_taKN8SH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_taN4UCH6EeiYRrsE_Lm32g" base_Element="_taNRQCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_taOfYCH6EeiYRrsE_Lm32g" base_Element="_taN4USH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:StyledElement xmi:id="_taPGcCH6EeiYRrsE_Lm32g" base_Element="_taOfYSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_taPGcSH6EeiYRrsE_Lm32g" base_Element="_taNRQCH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_taPGciH6EeiYRrsE_Lm32g" name="Named">
+      <annotationParameters xmi:id="_taPGcyH6EeiYRrsE_Lm32g" name="value" skipArray="true">
+        <valueSpecifications xmi:type="uml:LiteralString" xmi:id="_ta-GRyH6EeiYRrsE_Lm32g" value="&quot;navigation&quot;"/>
+      </annotationParameters>
+    </annotations>
+    <annotations xmi:id="_taPGdCH6EeiYRrsE_Lm32g" name="RequestScoped"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_taV0IiH6EeiYRrsE_Lm32g" base_Element="_taV0ICH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Annotations xmi:id="_taWbMCH6EeiYRrsE_Lm32g" base_Element="_taV0ICH6EeiYRrsE_Lm32g">
+    <annotations xmi:id="_taWbMSH6EeiYRrsE_Lm32g" name="Override"/>
+  </UMLLabProfile:Annotations>
+  <UMLLabProfile:Reference xmi:id="_tap9MCH6EeiYRrsE_Lm32g" base_Element="_tapWICH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_taqkQSH6EeiYRrsE_Lm32g" base_Element="_taqkQCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_tarLUSH6EeiYRrsE_Lm32g" base_Element="_tarLUCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_taryYSH6EeiYRrsE_Lm32g" base_Element="_taryYCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_tasZcSH6EeiYRrsE_Lm32g" base_Element="_tasZcCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_tatnkSH6EeiYRrsE_Lm32g" base_Element="_tatnkCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_tauOoSH6EeiYRrsE_Lm32g" base_Element="_tauOoCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_tau1sSH6EeiYRrsE_Lm32g" base_Element="_tau1sCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_tavcwSH6EeiYRrsE_Lm32g" base_Element="_tavcwCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_tawD0SH6EeiYRrsE_Lm32g" base_Element="_tawD0CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:Reference xmi:id="_taxR8CH6EeiYRrsE_Lm32g" base_Element="_tawq4CH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_ta2KcCH6EeiYRrsE_Lm32g" base_Element="_ta1jYCH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_ta3YkSH6EeiYRrsE_Lm32g" base_Element="_ta2xgSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_ta4msCH6EeiYRrsE_Lm32g" base_Element="_ta3YkiH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_ta5NwCH6EeiYRrsE_Lm32g" base_Element="_ta4msSH6EeiYRrsE_Lm32g"/>
+  <UMLLabProfile:LegacyStyledElement xmi:id="_ta6b4iH6EeiYRrsE_Lm32g" base_Element="_ta6b4CH6EeiYRrsE_Lm32g"/>
+  <uml:OpaqueBehavior xmi:id="_ta7C8CH6EeiYRrsE_Lm32g" name="DroitsUtilisateur" specification="_taI_0CH6EeiYRrsE_Lm32g">
+    <ownedParameter xmi:id="_ta7C8SH6EeiYRrsE_Lm32g" name="name">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedParameter>
+    <ownedParameter xmi:id="_ta7C8iH6EeiYRrsE_Lm32g" name="value">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedParameter>
+    <ownedParameter xmi:id="_ta7C8yH6EeiYRrsE_Lm32g" type="_taGjkCH6EeiYRrsE_Lm32g" direction="return"/>
+    <language>java</language>
+    <body>this.name = name;&#xD;
+		this.value = value;&#xD;
+	</body>
+  </uml:OpaqueBehavior>
+  <uml:OpaqueBehavior xmi:id="_ta7qACH6EeiYRrsE_Lm32g" name="toString" specification="_taJm4yH6EeiYRrsE_Lm32g">
+    <ownedParameter xmi:id="_ta7qASH6EeiYRrsE_Lm32g" direction="return">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedParameter>
+    <language>java</language>
+    <body>return name;&#xD;
+	</body>
+  </uml:OpaqueBehavior>
+  <uml:OpaqueBehavior xmi:id="_ta9fMCH6EeiYRrsE_Lm32g" name="StatutEvenement" specification="_taVNECH6EeiYRrsE_Lm32g">
+    <ownedParameter xmi:id="_ta9fMSH6EeiYRrsE_Lm32g" name="name">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedParameter>
+    <ownedParameter xmi:id="_ta9fMiH6EeiYRrsE_Lm32g" type="_taTX4CH6EeiYRrsE_Lm32g" direction="return"/>
+    <language>java</language>
+    <body>this.name = name;&#xD;
+	</body>
+  </uml:OpaqueBehavior>
+  <uml:OpaqueBehavior xmi:id="_ta9fMyH6EeiYRrsE_Lm32g" name="toString" specification="_taV0ICH6EeiYRrsE_Lm32g">
+    <ownedParameter xmi:id="_ta9fNCH6EeiYRrsE_Lm32g" direction="return">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedParameter>
+    <language>java</language>
+    <body>return name;&#xD;
+	</body>
+  </uml:OpaqueBehavior>
+  <UMLLabProfile:Reference xmi:id="_tbAigCH6EeiYRrsE_Lm32g" base_Element="_ta_7cCH6EeiYRrsE_Lm32g"/>
+</xmi:XMI>
