@@ -13,6 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import com.onek.model.Note;
 
+/**
+ * Dao du model Note
+ */
 @Repository
 public class NoteDaoImpl implements NoteDao, Serializable {
 	private static final long serialVersionUID = 1L;

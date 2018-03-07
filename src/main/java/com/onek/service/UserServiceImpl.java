@@ -16,6 +16,9 @@ import com.onek.model.Utilisateur;
 import com.onek.utils.DroitsUtilisateur;
 import com.onek.utils.Encode;
 
+/**
+ * Service UserServiceImpl
+ */
 @Service
 public class UserServiceImpl implements UserService, Serializable {
 	private static final long serialVersionUID = 1L;

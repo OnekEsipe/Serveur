@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.onek.model.Signature;
 
+/**
+ * Json signature
+ */
 public class SignatureResource implements Serializable {
 	private static final long serialVersionUID = 1L;
 

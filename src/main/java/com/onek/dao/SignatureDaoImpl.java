@@ -12,6 +12,9 @@ import org.springframework.stereotype.Repository;
 
 import com.onek.model.Signature;
 
+/**
+ * Dao du model Signature
+ */
 @Repository
 public class SignatureDaoImpl implements SignatureDao, Serializable {
 	private static final long serialVersionUID = 1L;

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import com.onek.dao.CandidatesDao;
 import com.onek.model.Candidat;
 
+/**
+ * Service CandidateServiceImpl
+ */
 @Service
 public class CandidateServiceImpl implements CandidateService, Serializable{
 	private static final long serialVersionUID = 1L;

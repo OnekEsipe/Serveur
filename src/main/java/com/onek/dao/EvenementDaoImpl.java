@@ -16,6 +16,9 @@ import org.springframework.stereotype.Repository;
 import com.onek.model.Critere;
 import com.onek.model.Evenement;
 
+/**
+ * Dao du model Evenement
+ */
 @Repository
 public class EvenementDaoImpl implements EvenementDao, Serializable {
 	private static final long serialVersionUID = 1L;
