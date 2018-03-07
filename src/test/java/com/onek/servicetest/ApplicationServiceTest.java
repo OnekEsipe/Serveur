@@ -163,24 +163,24 @@ public class ApplicationServiceTest {
 	
 	@Test(expected = IllegalStateException.class)
 	public void testICEventNotOpened() {
+		Evenement event = evenementService.findById(1);
+		event.setIsopened(false);
+		evenementService.editEvenement(event);
 		CodeEvenementResource cer = createCodeEvenementResource("aa", "1013902701");
-		applicationService.subscribe(cer);		
+		applicationService.subscribe(cer);			
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testICEventIsDeleted() {
 		Evenement event = evenementService.findById(1);
 		event.setIsopened(true);
 		event.setIsdeleted(true);
 		evenementService.editEvenement(event);
 		CodeEvenementResource cer = createCodeEvenementResource("aa", "1013902701");
-		assertFalse(applicationService.subscribe(cer));			
-		event.setIsopened(false);
-		event.setIsdeleted(false);	
-		evenementService.editEvenement(event);
+		applicationService.subscribe(cer);			
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testICEventIsClosed() {
 		Evenement event = evenementService.findById(1);
 		event.setIsopened(true);	
@@ -188,10 +188,7 @@ public class ApplicationServiceTest {
 		event.setStatus(StatutEvenement.FERME.toString());
 		evenementService.editEvenement(event);
 		CodeEvenementResource cer = createCodeEvenementResource("aa", "1013902701");
-		assertFalse(applicationService.subscribe(cer));		
-		event.setIsopened(false);
-		event.setStatus(StatutEvenement.BROUILLON.toString());
-		evenementService.editEvenement(event);
+		applicationService.subscribe(cer);	
 	}
 	
 	@Test(expected = IllegalStateException.class)
@@ -199,23 +196,21 @@ public class ApplicationServiceTest {
 		Evenement event = evenementService.findById(1);
 		event.setIsopened(true);	
 		event.setIsdeleted(false);	
+		event.setStatus(StatutEvenement.BROUILLON.toString());
 		evenementService.editEvenement(event);
 		CodeEvenementResource cer = createCodeEvenementResource("aa", "1013902701");
-		applicationService.subscribe(cer);	
-		event.setIsopened(false);		
-		evenementService.editEvenement(event);
+		applicationService.subscribe(cer);		
 	}
 	
 	@Test
 	public void testICSubscribeOK() {
 		Evenement event = evenementService.findById(1);
 		event.setIsopened(true);	
-		event.setIsdeleted(false);	
+		event.setIsdeleted(false);
+		event.setStatus(StatutEvenement.BROUILLON.toString());
 		evenementService.editEvenement(event);
 		CodeEvenementResource cer = createCodeEvenementResource("ii", "1013902701");
-		assertTrue(applicationService.subscribe(cer));	
-		event.setIsopened(false);		
-		evenementService.editEvenement(event);
+		assertTrue(applicationService.subscribe(cer));			
 	}
 
 	private CodeEvenementResource createCodeEvenementResource(String login, String code) {
