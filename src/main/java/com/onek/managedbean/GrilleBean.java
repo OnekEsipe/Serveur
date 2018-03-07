@@ -25,6 +25,9 @@ import com.onek.service.EvenementService;
 import com.onek.service.GrilleService;
 import com.onek.utils.Navigation;
 
+/**
+ * ManagedBean GrilleBean
+ */
 @Component("grille")
 @Scope("session")
 public class GrilleBean {
@@ -67,6 +70,9 @@ public class GrilleBean {
 	private boolean modification;
 	private Critere critereModif;
 
+	/**
+	 * Initilisation du nombre de niveaux possibles
+	 */
 	@PostConstruct
 	public void postInit() {
 		for (int i = 2; i < 7; i++) {
@@ -74,6 +80,11 @@ public class GrilleBean {
 		}
 	}
 
+	/**
+	 * Méthode appelée lors d'un GET sur la page grille.xhtml.<br/>
+	 * Elle permet d'initialiser les variables nécessaires à l'affichage.
+	 * @param e ComponentSystemEvent
+	 */
 	public void before(ComponentSystemEvent e) {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			if (!FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey("user")) {
@@ -96,6 +107,9 @@ public class GrilleBean {
 		criteres.sort(Comparator.comparing(Critere::getCategorie).thenComparing(Critere::getIdcritere));
 	}
 
+	/**
+	 * Ajout de critères dans la grille
+	 */
 	public void onClicAdd() {
 		Critere c;
 		if (modification) {
@@ -203,6 +217,9 @@ public class GrilleBean {
 		nbDescripteur = 2;
 	}
 
+	/**
+	 * Suppression d'un critère de la grille et de la liste des critères
+	 */
 	public void supprimerCritere() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
@@ -212,6 +229,10 @@ public class GrilleBean {
 		criteres.remove(critere);
 	}
 
+	/**
+	 * Modifie un critère en récupérant les descripteurs actuels afin de mettre à jour le critère.
+	 * Navgation vers la page addCritere.xhtml
+	 */
 	public void modifierCritere() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
@@ -257,162 +278,320 @@ public class GrilleBean {
 		Navigation.redirect("addCritere.xhtml");
 	}
 
+	/**
+	 * Navgation vers la page addCritere.xhtml
+	 */
 	public void onClicAddCritere() {
 		Navigation.redirect("addCritere.xhtml");
 	}
 
+	/**
+	 * Navgation vers la page grille.xhtml
+	 */
 	public void onClicReturn() {
 		Navigation.redirect("grille.xhtml");
 	}
 
+	/**
+	 * Getter de la variable nom
+	 * @return nom
+	 */
 	public String getNom() {
 		return nom;
 	}
 
+	/**
+	 * Setter de la variable nom
+	 * @param nom
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
+	/**
+	 * Getter de la variable coefficient
+	 * @return coefficient 
+	 */
 	public BigDecimal getCoefficient() {
 		return coefficient;
 	}
 
+	/**
+	 * Setter de la variable coefficient
+	 * @param coefficient 
+	 */
 	public void setCoefficient(BigDecimal coeffecient) {
 		this.coefficient = coeffecient;
 	}
 
+	/**
+	 * Getter de la variable categorie
+	 * @return categorie 
+	 */
 	public String getCategorie() {
 		return categorie;
 	}
 
+	/**
+	 * Setter de la variable categorie
+	 * @param categorie 
+	 */
 	public void setCategorie(String categorie) {
 		this.categorie = categorie;
 	}
-
+	
+	/**
+	 * Getter de la variable poids1
+	 * @return poids1 
+	 */
 	public BigDecimal getPoids1() {
 		return poids1;
 	}
 
+	/**
+	 * Setter de la variable poids1
+	 * @param poids1 
+	 */
 	public void setPoids1(BigDecimal poids1) {
 		this.poids1 = poids1;
 	}
 
+	/**
+	 * Getter de la variable poids2
+	 * @return poids2
+	 */
 	public BigDecimal getPoids2() {
 		return poids2;
 	}
 
+	/**
+	 * Setter de la variable poids2
+	 * @param poids2
+	 */
 	public void setPoids2(BigDecimal poids2) {
 		this.poids2 = poids2;
 	}
 
+	/**
+	 * Getter de la variable poids3
+	 * @return poids3
+	 */
 	public BigDecimal getPoids3() {
 		return poids3;
 	}
 
+	/**
+	 * Setter de la variable poids3
+	 * @param poids3
+	 */
 	public void setPoids3(BigDecimal poids3) {
 		this.poids3 = poids3;
 	}
 
+	/**
+	 * Getter de la variable poids4
+	 * @return poids4
+	 */
 	public BigDecimal getPoids4() {
 		return poids4;
 	}
 
+	/**
+	 * Setter de la variable poids4
+	 * @param poids4
+	 */
 	public void setPoids4(BigDecimal poids4) {
 		this.poids4 = poids4;
 	}
 
+	/**
+	 * Getter de la variable poids5
+	 * @return poids5
+	 */
 	public BigDecimal getPoids5() {
 		return poids5;
 	}
 
+	/**
+	 * Setter de la variable poids5
+	 * @param poids5
+	 */
 	public void setPoids5(BigDecimal poids5) {
 		this.poids5 = poids5;
 	}
 
+	/**
+	 * Getter de la variable poids6
+	 * @return poids6
+	 */
 	public BigDecimal getPoids6() {
 		return poids6;
 	}
 
+	/**
+	 * Setter de la variable poids6
+	 * @param poids6
+	 */
 	public void setPoids6(BigDecimal poids6) {
 		this.poids6 = poids6;
 	}
 
+	/**
+	 * Getter de la variable texte1
+	 * @return texte1
+	 */
 	public String getTexte1() {
 		return texte1;
 	}
 
+	/**
+	 * Setter de la variable texte1
+	 * @param texte1
+	 */
 	public void setTexte1(String texte1) {
 		this.texte1 = texte1;
 	}
 
+	/**
+	 * Getter de la variable texte2
+	 * @return texte2
+	 */
 	public String getTexte2() {
 		return texte2;
 	}
 
+	/**
+	 * Setter de la variable texte2
+	 * @param texte2
+	 */
 	public void setTexte2(String texte2) {
 		this.texte2 = texte2;
 	}
 
+	/**
+	 * Getter de la variable texte3
+	 * @return texte3
+	 */
 	public String getTexte3() {
 		return texte3;
 	}
 
+	/**
+	 * Setter de la variable texte3
+	 * @param texte3
+	 */
 	public void setTexte3(String texte3) {
 		this.texte3 = texte3;
 	}
 
+	/**
+	 * Getter de la variable texte4
+	 * @return texte4
+	 */
 	public String getTexte4() {
 		return texte4;
 	}
 
+	/**
+	 * Setter de la variable texte4
+	 * @param texte4
+	 */
 	public void setTexte4(String texte4) {
 		this.texte4 = texte4;
 	}
 
+	/**
+	 * Getter de la variable texte5
+	 * @return texte5
+	 */
 	public String getTexte5() {
 		return texte5;
 	}
 
+	/**
+	 * Setter de la variable texte5
+	 * @param texte5
+	 */
 	public void setTexte5(String texte5) {
 		this.texte5 = texte5;
 	}
 
+	/**
+	 * Getter de la variable texte6
+	 * @return texte6
+	 */
 	public String getTexte6() {
 		return texte6;
 	}
 
+	/**
+	 * Setter de la variable texte6
+	 * @param texte6
+	 */
 	public void setTexte6(String texte6) {
 		this.texte6 = texte6;
 	}
 
+	/**
+	 * Getter de la variable criteres
+	 * @return criteres Liste des critères
+	 */
 	public List<Critere> getCriteres() {
 		return criteres;
 	}
 
+	/**
+	 * Getter de la variable nbDescripteur
+	 * @return nbDescripteur
+	 */
 	public int getNbDescripteur() {
 		return nbDescripteur;
 	}
 
+	/**
+	 * Getter de la variable numbers
+	 * @return numbers Liste
+	 */
 	public List<Integer> getNumbers() {
 		return numbers;
 	}
 
+	/**
+	 * Setter de la variable setNbDescripteur
+	 * @param setNbDescripteur
+	 */
 	public void setNbDescripteur(int nbDescripteur) {
 		this.nbDescripteur = nbDescripteur;
 	}
 
+	/**
+	 * Getter de la variable idEvent
+	 * @return idEvent Id de l'événement
+	 */
 	public int getIdEvent() {
 		return idEvent;
 	}
 
+	/**
+	 * Setter de la variable idEvent
+	 * @param idEvent Id de l'événement
+	 */
 	public void setIdEvent(int id) {
 		this.idEvent = id;
 	}
 
+	/**
+	 * Getter de la variable modification
+	 * @return modification
+	 */
 	public boolean isModification() {
 		return modification;
 	}
 
+	/**
+	 * Setter de la variable modification
+	 * @param modification
+	 */
 	public void setModification(boolean modification) {
 		this.modification = modification;
 	}
