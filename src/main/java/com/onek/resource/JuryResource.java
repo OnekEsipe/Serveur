@@ -12,6 +12,9 @@ public class JuryResource implements Serializable {
 	@JsonProperty("Id")
 	private final Integer idJury;
 	
+	@JsonProperty("Login")
+	private final String login;
+	
 	@JsonProperty("LastName")
 	private final String nom;
 	
@@ -23,8 +26,9 @@ public class JuryResource implements Serializable {
 	
 	public JuryResource(Jury jury) {
 		idJury = jury.getIdjury();
+		login = jury.getUtilisateur().getLogin();
 		nom = jury.getUtilisateur().getNom();
-		prenom = jury.getUtilisateur().getPrenom();
+		prenom = jury.getUtilisateur().getPrenom();		
 	}
 	
 	public void setCandidates(List<CandidatResource> candidats) {
